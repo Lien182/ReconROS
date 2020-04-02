@@ -1,0 +1,1070 @@
+=========================================================================
+Time: Tue Aug 06 04:11:34 PM CEST 2013
+Running: run_batch_mode 257835952
+{COLLECTING:  INSTANCE DDR3_SDRAM    }
+{COLLECTING:  C_INTERCONNECT_S_AXI_MASTERS microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC OPTIONAL string none microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC}
+{COLLECTING:  C_INTERCONNECT_S_AXI_IS_ACLK_ASYNC 0 OPTIONAL_UPDATE integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_ACLK_RATIO 200000000 UPDATE integer 1 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_SECURE 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_AW_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_AR_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_W_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_R_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_B_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_WRITE_FIFO_DEPTH 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_WRITE_FIFO_DELAY 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_READ_FIFO_DEPTH 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_READ_FIFO_DELAY 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_WRITE_ACCEPTANCE 4 OPTIONAL INTEGER 4 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_READ_ACCEPTANCE 4 OPTIONAL INTEGER 4 }
+{COLLECTING:  C_S_AXI_ADDED_AXI_PARAMS TRUE CONSTANT   }
+{COLLECTING:  C_S_AXI_AXI_VER 1.06.a CONSTANT   }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_MASTERS none OPTIONAL string none }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_IS_ACLK_ASYNC 0 OPTIONAL_UPDATE integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_ACLK_RATIO 1 UPDATE integer 1 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_SECURE 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_AW_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_AR_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_W_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_R_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_B_REGISTER 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_WRITE_FIFO_DEPTH 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_READ_FIFO_DEPTH 0 OPTIONAL integer 0 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_WRITE_ACCEPTANCE 1 OPTIONAL_UPDATE integer 1 }
+{COLLECTING:  C_INTERCONNECT_S_AXI_CTRL_READ_ACCEPTANCE 1 OPTIONAL_UPDATE integer 1 }
+{COLLECTING:  C_S_AXI_CTRL_ADDED_AXI_PARAMS TRUE CONSTANT   }
+{COLLECTING:  C_S_AXI_CTRL_AXI_VER 1.01.a CONSTANT   }
+{COLLECTING:  C_MEM_PARTNO MT4JSF6464HY-1G1 REQUIRE STRING NOT_SET MT4JSF6464HY-1G1}
+{COLLECTING:  C_MEM_BASEPARTNO NOT_SET OPTIONAL STRING NOT_SET }
+{COLLECTING:  C_REFCLK_FREQ_EDK 0 OPTIONAL_UPDATE INTEGER 200 }
+{COLLECTING:  C_REFCLK_FREQ 200 OPTIONAL_UPDATE INTEGER 200 }
+{COLLECTING:  C_BYPASS_INIT_CAL FAST OPTIONAL STRING FAST }
+{COLLECTING:  C_IODELAY_GRP IODELAY_MIG OPTIONAL_UPDATE STRING IODELAY_MIG }
+{COLLECTING:  C_USE_EXTERNAL_IODELAY_CTRL 0 UPDATE INTEGER 0 }
+{COLLECTING:  C_DRAM_TYPE DDR3 OPTIONAL STRING DDR3 }
+{COLLECTING:  C_NCS_PER_RANK 1 OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_BANK_WIDTH 3 OPTIONAL_UPDATE INTEGER 3 }
+{COLLECTING:  C_CK_WIDTH 1 OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_CKE_WIDTH 1 OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_COL_WIDTH 10 OPTIONAL_UPDATE INTEGER 10 }
+{COLLECTING:  C_CS_WIDTH 1 OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_DM_WIDTH 8 OPTIONAL_UPDATE INTEGER 8 }
+{COLLECTING:  C_USE_DM_PORT 1 OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_DRAM_WIDTH 8 OPTIONAL INTEGER 8 }
+{COLLECTING:  C_DQS_WIDTH 8 OPTIONAL_UPDATE INTEGER 8 }
+{COLLECTING:  C_ROW_WIDTH 13 OPTIONAL_UPDATE INTEGER 13 }
+{COLLECTING:  C_DQ_WIDTH 64 OPTIONAL_UPDATE INTEGER 64 }
+{COLLECTING:  C_BURST_MODE 8 OPTIONAL STRING 8 }
+{COLLECTING:  C_BURST_TYPE SEQ OPTIONAL STRING SEQ }
+{COLLECTING:  C_IODELAY_HP_MODE ON OPTIONAL STRING ON }
+{COLLECTING:  C_CL 6 UPDATE INTEGER 6 }
+{COLLECTING:  C_CWL 5 UPDATE INTEGER 5 }
+{COLLECTING:  C_ADDR_CMD_MODE 1T UPDATE STRING 1T }
+{COLLECTING:  C_NBANK_MACHS 4 OPTIONAL INTEGER 4 }
+{COLLECTING:  C_ORDERING STRICT OPTIONAL STRING NORM STRICT}
+{COLLECTING:  C_RANKS 1 UPDATE INTEGER 1 }
+{COLLECTING:  C_CAL_WIDTH HALF OPTIONAL STRING HALF }
+{COLLECTING:  C_RTT_NOM 40 OPTIONAL STRING 40 }
+{COLLECTING:  C_RTT_WR OFF OPTIONAL STRING OFF }
+{COLLECTING:  C_OUTPUT_DRV HIGH OPTIONAL STRING HIGH }
+{COLLECTING:  C_REG_CTRL OFF OPTIONAL STRING OFF }
+{COLLECTING:  C_NDQS_COL0 3 UPDATE INTEGER 3 }
+{COLLECTING:  C_NDQS_COL1 5 UPDATE INTEGER 5 }
+{COLLECTING:  C_NDQS_COL2 0 UPDATE INTEGER 0 }
+{COLLECTING:  C_NDQS_COL3 0 UPDATE INTEGER 0 }
+{COLLECTING:  C_DQS_LOC_COL0 0x000000000000000000000000000000020100 UPDATE STD_LOGIC_VECTOR 0x000000000000000000000000000000020100 }
+{COLLECTING:  C_DQS_LOC_COL1 0x000000000000000000000000000706050403 UPDATE STD_LOGIC_VECTOR 0x000000000000000000000000000706050403 }
+{COLLECTING:  C_DQS_LOC_COL2 0x000000000000000000000000000000000000 UPDATE STD_LOGIC_VECTOR 0x000000000000000000000000000000000000 }
+{COLLECTING:  C_DQS_LOC_COL3 0x000000000000000000000000000000000000 UPDATE STD_LOGIC_VECTOR 0x000000000000000000000000000000000000 }
+{COLLECTING:  C_TCK_EDK 0 OPTIONAL_UPDATE INTEGER 0 }
+{COLLECTING:  C_TCK 2500 OPTIONAL_UPDATE INTEGER 0 }
+{COLLECTING:  C_TFAW -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TPRDI -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRRD -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRAS -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRCD -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TREFI -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRFC -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRP -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TRTP -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TWTR -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TZQI -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_TZQCS -1 OPTIONAL_UPDATE INTEGER -1 }
+{COLLECTING:  C_SLOT_0_CONFIG 0b00000001 UPDATE STD_LOGIC_VECTOR 0b00000001 }
+{COLLECTING:  C_SLOT_1_CONFIG 0b00000000 UPDATE STD_LOGIC_VECTOR 0b00000000 }
+{COLLECTING:  C_MEM_ADDR_ORDER BANK_ROW_COLUMN OPTIONAL STRING BANK_ROW_COLUMN }
+{COLLECTING:  C_ECC OFF OPTIONAL STRING OFF }
+{COLLECTING:  C_ECC_TEST OFF OPTIONAL STRING OFF }
+{COLLECTING:  C_S_AXI_ID_WIDTH 1 UPDATE INTEGER 4 }
+{COLLECTING:  C_S_AXI_ADDR_WIDTH 32 CONSTANT INTEGER 32 }
+{COLLECTING:  C_S_AXI_DATA_WIDTH 32 OPTIONAL INTEGER 32 }
+{COLLECTING:  C_S_AXI_SUPPORTS_NARROW_BURST Auto OPTIONAL_UPDATE INTEGER 1 }
+{COLLECTING:  C_S_AXI_REG_EN0 0x00000 OPTIONAL STD_LOGIC_VECTOR 0x00000 }
+{COLLECTING:  C_S_AXI_REG_EN1 0x01000 OPTIONAL STD_LOGIC_VECTOR 0x01000 }
+{COLLECTING:  C_RD_WR_ARB_ALGORITHM RD_PRI_REG OPTIONAL STRING RD_PRI_REG }
+{COLLECTING:  C_S_AXI_BASEADDR 0x20000000 OPTIONAL STD_LOGIC_VECTOR 0xFFFFFFFF 0x20000000}
+{COLLECTING:  C_S_AXI_HIGHADDR 0x3FFFFFFF OPTIONAL STD_LOGIC_VECTOR 0x00000000 0x3FFFFFFF}
+{COLLECTING:  C_S_AXI_PROTOCOL AXI4 CONSTANT STRING AXI4 }
+{COLLECTING:  C_S_AXI_CTRL_PROTOCOL AXI4LITE CONSTANT STRING AXI4LITE }
+{COLLECTING:  C_S_AXI_CTRL_ADDR_WIDTH 32 CONSTANT INTEGER 32 }
+{COLLECTING:  C_S_AXI_CTRL_DATA_WIDTH 32 CONSTANT INTEGER 32 }
+{COLLECTING:  C_S_AXI_CTRL_BASEADDR 0xFFFFFFFF OPTIONAL STD_LOGIC_VECTOR 0xFFFFFFFF }
+{COLLECTING:  C_S_AXI_CTRL_HIGHADDR 0x00000000 OPTIONAL STD_LOGIC_VECTOR 0x00000000 }
+{COLLECTING:  C_ECC_ONOFF_RESET_VALUE 1 OPTIONAL INTEGER 1 }
+{COLLECTING:  C_MMCM_EXT_LOC MMCM_ADV_X0Y8 OPTIONAL STRING NOT_SET MMCM_ADV_X0Y8}
+{COLLECTING:  HW_VER 1.06.a    }
+{SENDING PARAMETER: C_ADDR_CMD_MODE : 1T STRING UPDATE}
+{SENDING PARAMETER: C_BANK_WIDTH : 3 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_BURST_MODE : 8 STRING OPTIONAL}
+{SENDING PARAMETER: C_BURST_TYPE : SEQ STRING OPTIONAL}
+{SENDING PARAMETER: C_BYPASS_INIT_CAL : FAST STRING OPTIONAL}
+{SENDING PARAMETER: C_CAL_WIDTH : HALF STRING OPTIONAL}
+{SENDING PARAMETER: C_CK_WIDTH : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_CKE_WIDTH : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_CL : 6 INTEGER UPDATE}
+{SENDING PARAMETER: C_COL_WIDTH : 10 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_CS_WIDTH : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_CWL : 5 INTEGER UPDATE}
+{SENDING PARAMETER: C_DM_WIDTH : 8 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_DQ_WIDTH : 64 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_DQS_LOC_COL0 : 0x000000000000000000000000000000020100 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_DQS_LOC_COL1 : 0x000000000000000000000000000706050403 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_DQS_LOC_COL2 : 0x000000000000000000000000000000000000 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_DQS_LOC_COL3 : 0x000000000000000000000000000000000000 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_DQS_WIDTH : 8 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_DRAM_TYPE : DDR3 STRING OPTIONAL}
+{SENDING PARAMETER: C_DRAM_WIDTH : 8 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_ECC : OFF STRING OPTIONAL}
+{SENDING PARAMETER: C_ECC_ONOFF_RESET_VALUE : 1 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_ECC_TEST : OFF STRING OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_ACLK_RATIO : 200000000 integer UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_AR_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_AW_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_B_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_ACLK_RATIO : 1 integer UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_AR_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_AW_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_B_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_IS_ACLK_ASYNC : 0 integer OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_MASTERS : none string OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_R_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_READ_ACCEPTANCE : 1 integer OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_READ_FIFO_DEPTH : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_SECURE : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_W_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_WRITE_ACCEPTANCE : 1 integer OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_CTRL_WRITE_FIFO_DEPTH : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_IS_ACLK_ASYNC : 0 integer OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_MASTERS : {microblaze_0.M_AXI_DC & microblaze_0.M_AXI_IC} string OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_R_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_READ_ACCEPTANCE : 4 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_READ_FIFO_DELAY : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_READ_FIFO_DEPTH : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_SECURE : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_W_REGISTER : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_WRITE_ACCEPTANCE : 4 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_WRITE_FIFO_DELAY : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_INTERCONNECT_S_AXI_WRITE_FIFO_DEPTH : 0 integer OPTIONAL}
+{SENDING PARAMETER: C_IODELAY_GRP : IODELAY_MIG STRING OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_IODELAY_HP_MODE : ON STRING OPTIONAL}
+{SENDING PARAMETER: C_MEM_ADDR_ORDER : BANK_ROW_COLUMN STRING OPTIONAL}
+{SENDING PARAMETER: C_MEM_BASEPARTNO : NOT_SET STRING OPTIONAL}
+{SENDING PARAMETER: C_MEM_PARTNO : MT4JSF6464HY-1G1 STRING REQUIRE}
+{SENDING PARAMETER: C_MMCM_EXT_LOC : MMCM_ADV_X0Y8 STRING OPTIONAL}
+{SENDING PARAMETER: C_NBANK_MACHS : 4 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_NCS_PER_RANK : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_NDQS_COL0 : 3 INTEGER UPDATE}
+{SENDING PARAMETER: C_NDQS_COL1 : 5 INTEGER UPDATE}
+{SENDING PARAMETER: C_NDQS_COL2 : 0 INTEGER UPDATE}
+{SENDING PARAMETER: C_NDQS_COL3 : 0 INTEGER UPDATE}
+{SENDING PARAMETER: C_ORDERING : STRICT STRING OPTIONAL}
+{SENDING PARAMETER: C_OUTPUT_DRV : HIGH STRING OPTIONAL}
+{SENDING PARAMETER: C_RANKS : 1 INTEGER UPDATE}
+{SENDING PARAMETER: C_RD_WR_ARB_ALGORITHM : RD_PRI_REG STRING OPTIONAL}
+{SENDING PARAMETER: C_REFCLK_FREQ : 200 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_REFCLK_FREQ_EDK : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_REG_CTRL : OFF STRING OPTIONAL}
+{SENDING PARAMETER: C_ROW_WIDTH : 13 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_RTT_NOM : 40 STRING OPTIONAL}
+{SENDING PARAMETER: C_RTT_WR : OFF STRING OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_ADDED_AXI_PARAMS : TRUE {} CONSTANT}
+{SENDING PARAMETER: C_S_AXI_ADDR_WIDTH : 32 INTEGER CONSTANT}
+{SENDING PARAMETER: C_S_AXI_AXI_VER : 1.06.a {} CONSTANT}
+{SENDING PARAMETER: C_S_AXI_BASEADDR : 0x20000000 STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_CTRL_ADDED_AXI_PARAMS : TRUE {} CONSTANT}
+{SENDING PARAMETER: C_S_AXI_CTRL_ADDR_WIDTH : 32 INTEGER CONSTANT}
+{SENDING PARAMETER: C_S_AXI_CTRL_AXI_VER : 1.01.a {} CONSTANT}
+{SENDING PARAMETER: C_S_AXI_CTRL_BASEADDR : 0xFFFFFFFF STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_CTRL_DATA_WIDTH : 32 INTEGER CONSTANT}
+{SENDING PARAMETER: C_S_AXI_CTRL_HIGHADDR : 0x00000000 STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_CTRL_PROTOCOL : AXI4LITE STRING CONSTANT}
+{SENDING PARAMETER: C_S_AXI_DATA_WIDTH : 32 INTEGER OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_HIGHADDR : 0x3FFFFFFF STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_ID_WIDTH : 1 INTEGER UPDATE}
+{SENDING PARAMETER: C_S_AXI_PROTOCOL : AXI4 STRING CONSTANT}
+{SENDING PARAMETER: C_S_AXI_REG_EN0 : 0x00000 STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_REG_EN1 : 0x01000 STD_LOGIC_VECTOR OPTIONAL}
+{SENDING PARAMETER: C_S_AXI_SUPPORTS_NARROW_BURST : Auto INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_SLOT_0_CONFIG : 0b00000001 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_SLOT_1_CONFIG : 0b00000000 STD_LOGIC_VECTOR UPDATE}
+{SENDING PARAMETER: C_TCK : 2500 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TCK_EDK : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TFAW : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TPRDI : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRAS : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRCD : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TREFI : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRFC : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRP : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRRD : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TRTP : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TWTR : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TZQCS : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_TZQI : -1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_USE_DM_PORT : 1 INTEGER OPTIONAL_UPDATE}
+{SENDING PARAMETER: C_USE_EXTERNAL_IODELAY_CTRL : 0 INTEGER UPDATE}
+{SENDING PARAMETER: HW_VER : 1.06.a {} {}}
+{SENDING PARAMETER: INSTANCE : DDR3_SDRAM {} {}}
+{Executing /opt/Xilinx/14.6/ISE_DS/ISE/coregen/ip/xilinx/other/com/xilinx/ip/mig_v3_92/bin/lin64/mig -cg_exc_inp mig_input.txt -cg_exc_out mig_output.txt}
+{SET: IGNORE C_S_AXI_HIGHADDR = 0x3FFFFFFF (BATCH:OPTIONAL::MHS:COMPVAL)}
+{SET: UPDREM C_CL = 6 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: UPDREM C_USE_DM_PORT = 1 (BATCH:OPTIONAL_UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_AW_REGISTER = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: CHECK C_CKE_WIDTH = 1 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDATE C_TRRD = 10000 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_R_REGISTER = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_BURST_MODE = 8 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_S_AXI_CTRL_BASEADDR = 0xFFFFFFFF (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_S_AXI_ADDR_WIDTH = 32 (BATCH:CONSTANT::MPD:MPDVAL)}
+{SET: IGNORE C_DRAM_TYPE = DDR3 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_IODELAY_GRP = IODELAY_MIG (BATCH:OPTIONAL_UPDATE:SKIP_BATCH:MPD:MPDVAL)}
+{SET: CHECK C_DQS_WIDTH = 8 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDATE C_TZQI = 128000000 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_RD_WR_ARB_ALGORITHM = RD_PRI_REG (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_BURST_TYPE = SEQ (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDREM C_ADDR_CMD_MODE = 1T (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: UPDATE C_TPRDI = 1000000 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDREM C_REFCLK_FREQ = 200 (BATCH:OPTIONAL_UPDATE::MPD:MPDVAL)}
+{SET: CHECK C_CK_WIDTH = 1 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: IGNORE C_DRAM_WIDTH = 8 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: CHECK C_NCS_PER_RANK = 1 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_AR_REGISTER = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: CHECK C_CS_WIDTH = 1 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDATE C_TRFC = 110000 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDREM C_SLOT_1_CONFIG = 0b00000000 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: UPDREM C_RANKS = 1 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_S_AXI_CTRL_HIGHADDR = 0x00000000 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_REG_CTRL = OFF (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_ECC = OFF (BATCH:OPTIONAL:CHECK:MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_SECURE = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDREM C_SLOT_0_CONFIG = 0b00000001 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_CAL_WIDTH = HALF (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_READ_ACCEPTANCE = 4 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_READ_FIFO_DEPTH = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDATE C_TRTP = 7500 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_TCK = 0 (BATCH:OPTIONAL_UPDATE:SKIP_BATCH:MPD:DEFVAL)}
+{SET: IGNORE C_IODELAY_HP_MODE = ON (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: CHECK C_ROW_WIDTH = 13 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDREM C_DM_WIDTH = 8 (BATCH:OPTIONAL_UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_ECC_ONOFF_RESET_VALUE = 1 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_S_AXI_BASEADDR = 0x20000000 (BATCH:OPTIONAL::MHS:COMPVAL)}
+{SET: IGNORE C_ORDERING = STRICT (BATCH:OPTIONAL::MHS:COMPVAL)}
+{SET: IGNORE C_RTT_NOM = 40 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDREM C_NDQS_COL0 = 3 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_S_AXI_DATA_WIDTH = 32 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_OUTPUT_DRV = HIGH (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDREM C_NDQS_COL1 = 5 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: CHECK C_DQ_WIDTH = 64 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDREM C_NDQS_COL2 = 0 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_NBANK_MACHS = 4 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDATE C_TRP = 13130 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDREM C_NDQS_COL3 = 0 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_WRITE_ACCEPTANCE = 4 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_WRITE_FIFO_DEPTH = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_W_REGISTER = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDATE C_TREFI = 7800000 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDATE C_TFAW = 37500 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_S_AXI_SUPPORTS_NARROW_BURST = Auto (BATCH:OPTIONAL_UPDATE::MPD:DEFVAL)}
+{SET: IGNORE C_RTT_WR = OFF (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDATE C_DQS_LOC_COL0 = 0x020100 (BATCH:UPDATE::MPD:COMPVAL)}
+{SET: CHECK C_BANK_WIDTH = 3 (BATCH:OPTIONAL_UPDATE:CHECK:MPD:MPDVAL)}
+{SET: UPDATE C_DQS_LOC_COL1 = 0x0706050403 (BATCH:UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_MEM_ADDR_ORDER = BANK_ROW_COLUMN (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: IGNORE C_INTERCONNECT_S_AXI_B_REGISTER = 0 (BATCH:OPTIONAL::MPD:MPDVAL)}
+{SET: UPDATE C_DQS_LOC_COL2 = 0 (BATCH:UPDATE::MPD:COMPVAL)}
+{SET: UPDATE C_TZQCS = 64 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDATE C_DQS_LOC_COL3 = 0 (BATCH:UPDATE::MPD:COMPVAL)}
+{SET: UPDREM C_CWL = 5 (BATCH:UPDATE::MPD:MPDVAL)}
+{SET: UPDATE C_TWTR = 7500 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDATE C_TRAS = 37500 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: IGNORE C_MEM_PARTNO = MT4JSF6464HY-1G1 (BATCH:REQUIRE::MHS:COMPVAL)}
+{SET: UPDATE C_TRCD = 13130 (BATCH:OPTIONAL_UPDATE::MPD:COMPVAL)}
+{SET: UPDREM C_COL_WIDTH = 10 (BATCH:OPTIONAL_UPDATE::MPD:MPDVAL)}
+{UCF Line : ############################################################################}
+{UCF LINE Match: --- {\#.*} ---############################################################################---}
+{UCF Line : ## }
+{UCF LINE Match: --- {\#.*} ---## ---}
+{UCF Line : ##  Xilinx, Inc. 2006            www.xilinx.com }
+{UCF LINE Match: --- {\#.*} ---##  Xilinx, Inc. 2006            www.xilinx.com ---}
+{UCF Line : ##  Tue Aug 6 16:11:34 2013}
+{UCF LINE Match: --- {\#.*} ---##  Tue Aug 6 16:11:34 2013---}
+{UCF Line : ##  Generated by MIG Version 3.92}
+{UCF LINE Match: --- {\#.*} ---##  Generated by MIG Version 3.92---}
+{UCF Line : ##  }
+{UCF LINE Match: --- {\#.*} ---##  ---}
+{UCF Line : ############################################################################}
+{UCF LINE Match: --- {\#.*} ---############################################################################---}
+{UCF Line : ##  File name :       example_top.ucf}
+{UCF LINE Match: --- {\#.*} ---##  File name :       example_top.ucf---}
+{UCF Line : ## }
+{UCF LINE Match: --- {\#.*} ---## ---}
+{UCF Line : ##  Details :     Constraints file}
+{UCF LINE Match: --- {\#.*} ---##  Details :     Constraints file---}
+{UCF Line : ##                    FPGA family:       virtex6}
+{UCF LINE Match: --- {\#.*} ---##                    FPGA family:       virtex6---}
+{UCF Line : ##                    FPGA:              xc6vlx240t-ff1156}
+{UCF LINE Match: --- {\#.*} ---##                    FPGA:              xc6vlx240t-ff1156---}
+{UCF Line : ##                    Speedgrade:        -1}
+{UCF LINE Match: --- {\#.*} ---##                    Speedgrade:        -1---}
+{UCF Line : ##                    Design Entry:      VERILOG}
+{UCF LINE Match: --- {\#.*} ---##                    Design Entry:      VERILOG---}
+{UCF Line : ##                    Design:            without Test bench}
+{UCF LINE Match: --- {\#.*} ---##                    Design:            without Test bench---}
+{UCF Line : ##                    No.Of Controllers: 1}
+{UCF LINE Match: --- {\#.*} ---##                    No.Of Controllers: 1---}
+{UCF Line : ##}
+{UCF LINE Match: --- {\#.*} ---##---}
+{UCF Line : ############################################################################ }
+{UCF LINE Match: --- {\#.*} ---############################################################################ ---}
+{UCF Line : ############################################################################}
+{UCF LINE Match: --- {\#.*} ---############################################################################---}
+{UCF Line : # Timing constraints                                                        #}
+{UCF LINE Match: --- {\#.*} ---# Timing constraints                                                        #---}
+{UCF Line : ############################################################################}
+{UCF LINE Match: --- {\#.*} ---############################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : NET "sys_clk_p" TNM_NET = TNM_sys_clk;}
+{UCF LINE Match: --- NET {"sys_clk_p"} TNM_NET = TNM_sys_clk {;} ---NET "sys_clk_p" TNM_NET = TNM_sys_clk;---}
+{UCF Line : TIMESPEC "TS_sys_clk" = PERIOD "TNM_sys_clk" 2.5 ns;}
+{UCF LINE Match: --- TIMESPEC {"TS_sys_clk"} = PERIOD {"TNM_sys_clk"} .* ---TIMESPEC "TS_sys_clk" = PERIOD "TNM_sys_clk" 2.5 ns;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : NET "clk_ref_p" TNM_NET = TNM_clk_ref;}
+{UCF LINE Match: --- NET {"clk_ref_p"} TNM_NET = TNM_clk_ref {;} ---NET "clk_ref_p" TNM_NET = TNM_clk_ref;---}
+{UCF Line : TIMESPEC "TS_clk_ref" = PERIOD "TNM_clk_ref" 5 ns ;}
+{UCF LINE Match: --- TIMESPEC {"TS_clk_ref"} = PERIOD {"TNM_clk_ref"} .* ---TIMESPEC "TS_clk_ref" = PERIOD "TNM_clk_ref" 5 ns ;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : # Constrain BUFR clocks used to synchronize data from IOB to fabric logic}
+{UCF LINE Match: --- {\#.*} ---# Constrain BUFR clocks used to synchronize data from IOB to fabric logic---}
+{UCF Line : # Note that ISE cannot infer this from other PERIOD constraints because}
+{UCF LINE Match: --- {\#.*} ---# Note that ISE cannot infer this from other PERIOD constraints because---}
+{UCF Line : # of the use of OSERDES blocks in the BUFR clock generation path}
+{UCF LINE Match: --- {\#.*} ---# of the use of OSERDES blocks in the BUFR clock generation path---}
+{UCF Line : NET "u_memc_ui_top/u_mem_intfc/phy_top0/clk_rsync[?]" TNM_NET = TNM_clk_rsync;}
+{UCF LINE Match: --- NET {".*clk_rsync.*"} TNM_NET = TNM_clk_rsync {;} ---NET "u_memc_ui_top/u_mem_intfc/phy_top0/clk_rsync[?]" TNM_NET = TNM_clk_rsync;---}
+{UCF Line : TIMESPEC "TS_clk_rsync" = PERIOD "TNM_clk_rsync" 5 ns;}
+{UCF LINE Match: --- TIMESPEC {"TS_clk_rsync"} = PERIOD {"TNM_clk_rsync"} .* ---TIMESPEC "TS_clk_rsync" = PERIOD "TNM_clk_rsync" 5 ns;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : # Paths between DQ/DQS ISERDES.Q outputs and CLB flops clocked by falling}
+{UCF LINE Match: --- {\#.*} ---# Paths between DQ/DQS ISERDES.Q outputs and CLB flops clocked by falling---}
+{UCF Line : # edge of BUFR will by design only be used if DYNCLKDIVSEL is asserted for}
+{UCF LINE Match: --- {\#.*} ---# edge of BUFR will by design only be used if DYNCLKDIVSEL is asserted for---}
+{UCF Line : # that particular flop. Mark this path as being a full-cycle, rather than}
+{UCF LINE Match: --- {\#.*} ---# that particular flop. Mark this path as being a full-cycle, rather than---}
+{UCF Line : # a half cycle path for timing purposes. NOTE: This constraint forces full-}
+{UCF LINE Match: --- {\#.*} ---# a half cycle path for timing purposes. NOTE: This constraint forces full----}
+{UCF Line : # cycle timing to be applied globally for all rising->falling edge paths}
+{UCF LINE Match: --- {\#.*} ---# cycle timing to be applied globally for all rising->falling edge paths---}
+{UCF Line : # in all resynchronizaton clock domains. If the user had modified the logic}
+{UCF LINE Match: --- {\#.*} ---# in all resynchronizaton clock domains. If the user had modified the logic---}
+{UCF Line : # in the resync clock domain such that other rising->falling edge paths}
+{UCF LINE Match: --- {\#.*} ---# in the resync clock domain such that other rising->falling edge paths---}
+{UCF Line : # exist, then constraint below should be modified to utilize pattern}
+{UCF LINE Match: --- {\#.*} ---# exist, then constraint below should be modified to utilize pattern---}
+{UCF Line : # matching to specific affect only the DQ/DQS ISERDES.Q outputs}
+{UCF LINE Match: --- {\#.*} ---# matching to specific affect only the DQ/DQS ISERDES.Q outputs---}
+{UCF Line : TIMEGRP "TG_clk_rsync_rise" = RISING  "TNM_clk_rsync";}
+{UCF LINE Match: --- TIMEGRP .* ---TIMEGRP "TG_clk_rsync_rise" = RISING  "TNM_clk_rsync";---}
+{UCF Line : TIMEGRP "TG_clk_rsync_fall" = FALLING "TNM_clk_rsync";}
+{UCF LINE Match: --- TIMEGRP .* ---TIMEGRP "TG_clk_rsync_fall" = FALLING "TNM_clk_rsync";---}
+{UCF Line : TIMESPEC "TS_clk_rsync_rise_to_fall" =}
+{UCF LINE Match: --- TIMESPEC {"TS_clk_rsync_rise_to_fall"} .* ---TIMESPEC "TS_clk_rsync_rise_to_fall" =---}
+{UCF Line :   FROM "TG_clk_rsync_rise" TO "TG_clk_rsync_fall" "TS_sys_clk" * 2;}
+{UCF LINE Match: --- FROM {"TG_clk_rsync_rise"} TO {"TG_clk_rsync_fall"} {"TS_sys_clk"} {\*} 2 {;} ---  FROM "TG_clk_rsync_rise" TO "TG_clk_rsync_fall" "TS_sys_clk" * 2;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : # Signal to select between controller and physical layer signals. Four divided by two clock}
+{UCF LINE Match: --- {\#.*} ---# Signal to select between controller and physical layer signals. Four divided by two clock---}
+{UCF Line : # cycles (4 memory clock cycles) are provided by design for the signal to settle down.}
+{UCF LINE Match: --- {\#.*} ---# cycles (4 memory clock cycles) are provided by design for the signal to settle down.---}
+{UCF Line : # Used only by the phy modules.}
+{UCF LINE Match: --- {\#.*} ---# Used only by the phy modules.---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_init/u_ff_phy_init_data_sel" TNM = "TNM_PHY_INIT_SEL";}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_init/u_ff_phy_init_data_sel" TNM = "TNM_PHY_INIT_SEL";-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_init/u_ff_phy_init_data_sel" TNM = "TNM_PHY_INIT_SEL";--}
+{UCF Line : TIMESPEC "TS_MC_PHY_INIT_SEL" = FROM "TNM_PHY_INIT_SEL" TO FFS = "TS_sys_clk"*4;}
+{UCF LINE Match: --- TIMESPEC {"TS_MC_PHY_INIT_SEL"} = FROM {"TNM_PHY_INIT_SEL"} TO FFS = {"TS_sys_clk".4} {;} ---TIMESPEC "TS_MC_PHY_INIT_SEL" = FROM "TNM_PHY_INIT_SEL" TO FFS = "TS_sys_clk"*4;---}
+{UCF Line : ############################################################################}
+{UCF LINE Match: --- {\#.*} ---############################################################################---}
+{UCF Line : ########################################################################}
+{UCF LINE Match: --- {\#.*} ---########################################################################---}
+{UCF Line : # Controller 0}
+{UCF LINE Match: --- {\#.*} ---# Controller 0---}
+{UCF Line : # Memory Device: DDR3_SDRAM->SODIMMs->MT4JSF6464HY-1G1}
+{UCF LINE Match: --- {\#.*} ---# Memory Device: DDR3_SDRAM->SODIMMs->MT4JSF6464HY-1G1---}
+{UCF Line : # Data Width:     64}
+{UCF LINE Match: --- {\#.*} ---# Data Width:     64---}
+{UCF Line : # Frequency:      400}
+{UCF LINE Match: --- {\#.*} ---# Frequency:      400---}
+{UCF Line : # Time Period:      2500}
+{UCF LINE Match: --- {\#.*} ---# Time Period:      2500---}
+{UCF Line : # Data Mask:     1}
+{UCF LINE Match: --- {\#.*} ---# Data Mask:     1---}
+{UCF Line : ########################################################################}
+{UCF LINE Match: --- {\#.*} ---########################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ################################################################################}
+{UCF LINE Match: --- {\#.*} ---################################################################################---}
+{UCF Line : # I/O STANDARDS}
+{UCF LINE Match: --- {\#.*} ---# I/O STANDARDS---}
+{UCF Line : ################################################################################}
+{UCF LINE Match: --- {\#.*} ---################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : NET  "ddr3_dq[*]"                               IOSTANDARD = SSTL15_T_DCI;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[*]"                               IOSTANDARD = SSTL15_T_DCI;-ddr3_dq-[*]-IOSTANDARD = SSTL15_T_DCI;}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_addr[*]"                             IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[*]"                             IOSTANDARD = SSTL15;-ddr3_addr-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_ba[*]"                               IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ba[*]"                               IOSTANDARD = SSTL15;-ddr3_ba-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_ba ==> ddr_ba  (ba) }
+{UCF Line : NET  "ddr3_ras_n"                               IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ras_n"                               IOSTANDARD = SSTL15;-ddr3_ras_n--IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_ras_n ==> ddr_ras_n  (ras_n) }
+{UCF Line : NET  "ddr3_cas_n"                               IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cas_n"                               IOSTANDARD = SSTL15;-ddr3_cas_n--IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_cas_n ==> ddr_cas_n  (cas_n) }
+{UCF Line : NET  "ddr3_we_n"                                IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_we_n"                                IOSTANDARD = SSTL15;-ddr3_we_n--IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_we_n ==> ddr_we_n  (we_n) }
+{UCF Line : NET  "ddr3_reset_n"                             IOSTANDARD = LVCMOS15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_reset_n"                             IOSTANDARD = LVCMOS15;-ddr3_reset_n--IOSTANDARD = LVCMOS15;}
+{ UCF RENAME : ddr3_reset_n ==> ddr_reset_n  (reset_n) }
+{UCF Line : NET  "ddr3_cke[*]"                              IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cke[*]"                              IOSTANDARD = SSTL15;-ddr3_cke-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_cke ==> ddr_cke  (cke) }
+{UCF Line : NET  "ddr3_odt[*]"                              IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_odt[*]"                              IOSTANDARD = SSTL15;-ddr3_odt-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_odt ==> ddr_odt  (odt) }
+{UCF Line : NET  "ddr3_cs_n[*]"                             IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cs_n[*]"                             IOSTANDARD = SSTL15;-ddr3_cs_n-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_cs_n ==> ddr_cs_n  (cs_n) }
+{UCF Line : NET  "ddr3_dm[*]"                               IOSTANDARD = SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[*]"                               IOSTANDARD = SSTL15;-ddr3_dm-[*]-IOSTANDARD = SSTL15;}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dqs_p[*]"                            IOSTANDARD = DIFF_SSTL15_T_DCI;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[*]"                            IOSTANDARD = DIFF_SSTL15_T_DCI;-ddr3_dqs_p-[*]-IOSTANDARD = DIFF_SSTL15_T_DCI;}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[*]"                            IOSTANDARD = DIFF_SSTL15_T_DCI;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[*]"                            IOSTANDARD = DIFF_SSTL15_T_DCI;-ddr3_dqs_n-[*]-IOSTANDARD = DIFF_SSTL15_T_DCI;}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_ck_p[*]"                             IOSTANDARD = DIFF_SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ck_p[*]"                             IOSTANDARD = DIFF_SSTL15;-ddr3_ck_p-[*]-IOSTANDARD = DIFF_SSTL15;}
+{ UCF RENAME : ddr3_ck_p ==> ddr_ck_p  (ck) }
+{UCF Line : NET  "ddr3_ck_n[*]"                             IOSTANDARD = DIFF_SSTL15;}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ck_n[*]"                             IOSTANDARD = DIFF_SSTL15;-ddr3_ck_n-[*]-IOSTANDARD = DIFF_SSTL15;}
+{ UCF RENAME : ddr3_ck_n ==> ddr_ck_n  (ck_n) }
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ###############################################################################}
+{UCF LINE Match: --- {\#.*} ---###############################################################################---}
+{UCF Line : #DCI_CASCADING}
+{UCF LINE Match: --- {\#.*} ---#DCI_CASCADING---}
+{UCF Line : #Syntax : CONFIG DCI_CASCADE = "<master> <slave1> <slave2> ..";}
+{UCF LINE Match: --- {\#.*} ---#Syntax : CONFIG DCI_CASCADE = "<master> <slave1> <slave2> ..";---}
+{UCF Line : ###############################################################################}
+{UCF LINE Match: --- {\#.*} ---###############################################################################---}
+{UCF Line : CONFIG DCI_CASCADE = "26 25";}
+{UCF LINE Match: --- CONFIG DCI_CASCADE = {".*"} {;} ---CONFIG DCI_CASCADE = "26 25";---}
+{UCF Line : CONFIG DCI_CASCADE = "36 35";}
+{UCF LINE Match: --- CONFIG DCI_CASCADE = {".*"} {;} ---CONFIG DCI_CASCADE = "36 35";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################---}
+{UCF Line : # Location Constraints}
+{UCF LINE Match: --- {\#.*} ---# Location Constraints---}
+{UCF Line : ##################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################---}
+{UCF Line : NET  "ddr3_dq[0]"                                LOC = "J11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[0]"                                LOC = "J11" ;          #Bank 35-ddr3_dq-[0]-LOC = "J11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[1]"                                LOC = "E13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[1]"                                LOC = "E13" ;          #Bank 35-ddr3_dq-[1]-LOC = "E13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[2]"                                LOC = "F13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[2]"                                LOC = "F13" ;          #Bank 35-ddr3_dq-[2]-LOC = "F13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[3]"                                LOC = "K11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[3]"                                LOC = "K11" ;          #Bank 35-ddr3_dq-[3]-LOC = "K11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[4]"                                LOC = "L11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[4]"                                LOC = "L11" ;          #Bank 35-ddr3_dq-[4]-LOC = "L11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[5]"                                LOC = "K13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[5]"                                LOC = "K13" ;          #Bank 35-ddr3_dq-[5]-LOC = "K13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[6]"                                LOC = "K12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[6]"                                LOC = "K12" ;          #Bank 35-ddr3_dq-[6]-LOC = "K12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[7]"                                LOC = "D11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[7]"                                LOC = "D11" ;          #Bank 35-ddr3_dq-[7]-LOC = "D11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[8]"                                LOC = "M13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[8]"                                LOC = "M13" ;          #Bank 35-ddr3_dq-[8]-LOC = "M13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[9]"                                LOC = "J14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[9]"                                LOC = "J14" ;          #Bank 35-ddr3_dq-[9]-LOC = "J14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[10]"                               LOC = "B13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[10]"                               LOC = "B13" ;          #Bank 35-ddr3_dq-[10]-LOC = "B13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[11]"                               LOC = "B12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[11]"                               LOC = "B12" ;          #Bank 35-ddr3_dq-[11]-LOC = "B12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[12]"                               LOC = "G10" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[12]"                               LOC = "G10" ;          #Bank 35-ddr3_dq-[12]-LOC = "G10" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[13]"                               LOC = "M11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[13]"                               LOC = "M11" ;          #Bank 35-ddr3_dq-[13]-LOC = "M11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[14]"                               LOC = "C12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[14]"                               LOC = "C12" ;          #Bank 35-ddr3_dq-[14]-LOC = "C12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[15]"                               LOC = "A11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[15]"                               LOC = "A11" ;          #Bank 35-ddr3_dq-[15]-LOC = "A11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[16]"                               LOC = "G11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[16]"                               LOC = "G11" ;          #Bank 35-ddr3_dq-[16]-LOC = "G11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[17]"                               LOC = "F11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[17]"                               LOC = "F11" ;          #Bank 35-ddr3_dq-[17]-LOC = "F11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[18]"                               LOC = "D14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[18]"                               LOC = "D14" ;          #Bank 35-ddr3_dq-[18]-LOC = "D14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[19]"                               LOC = "C14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[19]"                               LOC = "C14" ;          #Bank 35-ddr3_dq-[19]-LOC = "C14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[20]"                               LOC = "G12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[20]"                               LOC = "G12" ;          #Bank 35-ddr3_dq-[20]-LOC = "G12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[21]"                               LOC = "G13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[21]"                               LOC = "G13" ;          #Bank 35-ddr3_dq-[21]-LOC = "G13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[22]"                               LOC = "F14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[22]"                               LOC = "F14" ;          #Bank 35-ddr3_dq-[22]-LOC = "F14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[23]"                               LOC = "H14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[23]"                               LOC = "H14" ;          #Bank 35-ddr3_dq-[23]-LOC = "H14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[24]"                               LOC = "C19" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[24]"                               LOC = "C19" ;          #Bank 26-ddr3_dq-[24]-LOC = "C19" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[25]"                               LOC = "G20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[25]"                               LOC = "G20" ;          #Bank 26-ddr3_dq-[25]-LOC = "G20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[26]"                               LOC = "E19" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[26]"                               LOC = "E19" ;          #Bank 26-ddr3_dq-[26]-LOC = "E19" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[27]"                               LOC = "F20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[27]"                               LOC = "F20" ;          #Bank 26-ddr3_dq-[27]-LOC = "F20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[28]"                               LOC = "A20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[28]"                               LOC = "A20" ;          #Bank 26-ddr3_dq-[28]-LOC = "A20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[29]"                               LOC = "A21" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[29]"                               LOC = "A21" ;          #Bank 26-ddr3_dq-[29]-LOC = "A21" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[30]"                               LOC = "E22" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[30]"                               LOC = "E22" ;          #Bank 26-ddr3_dq-[30]-LOC = "E22" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[31]"                               LOC = "E23" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[31]"                               LOC = "E23" ;          #Bank 26-ddr3_dq-[31]-LOC = "E23" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[32]"                               LOC = "G21" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[32]"                               LOC = "G21" ;          #Bank 26-ddr3_dq-[32]-LOC = "G21" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[33]"                               LOC = "B21" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[33]"                               LOC = "B21" ;          #Bank 26-ddr3_dq-[33]-LOC = "B21" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[34]"                               LOC = "A23" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[34]"                               LOC = "A23" ;          #Bank 26-ddr3_dq-[34]-LOC = "A23" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[35]"                               LOC = "A24" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[35]"                               LOC = "A24" ;          #Bank 26-ddr3_dq-[35]-LOC = "A24" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[36]"                               LOC = "C20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[36]"                               LOC = "C20" ;          #Bank 26-ddr3_dq-[36]-LOC = "C20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[37]"                               LOC = "D20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[37]"                               LOC = "D20" ;          #Bank 26-ddr3_dq-[37]-LOC = "D20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[38]"                               LOC = "J20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[38]"                               LOC = "J20" ;          #Bank 26-ddr3_dq-[38]-LOC = "J20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[39]"                               LOC = "G22" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[39]"                               LOC = "G22" ;          #Bank 26-ddr3_dq-[39]-LOC = "G22" ;          #Bank 26}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[40]"                               LOC = "D26" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[40]"                               LOC = "D26" ;          #Bank 25-ddr3_dq-[40]-LOC = "D26" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[41]"                               LOC = "F26" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[41]"                               LOC = "F26" ;          #Bank 25-ddr3_dq-[41]-LOC = "F26" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[42]"                               LOC = "B26" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[42]"                               LOC = "B26" ;          #Bank 25-ddr3_dq-[42]-LOC = "B26" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[43]"                               LOC = "E26" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[43]"                               LOC = "E26" ;          #Bank 25-ddr3_dq-[43]-LOC = "E26" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[44]"                               LOC = "C24" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[44]"                               LOC = "C24" ;          #Bank 25-ddr3_dq-[44]-LOC = "C24" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[45]"                               LOC = "D25" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[45]"                               LOC = "D25" ;          #Bank 25-ddr3_dq-[45]-LOC = "D25" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[46]"                               LOC = "D27" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[46]"                               LOC = "D27" ;          #Bank 25-ddr3_dq-[46]-LOC = "D27" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[47]"                               LOC = "C25" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[47]"                               LOC = "C25" ;          #Bank 25-ddr3_dq-[47]-LOC = "C25" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[48]"                               LOC = "C27" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[48]"                               LOC = "C27" ;          #Bank 25-ddr3_dq-[48]-LOC = "C27" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[49]"                               LOC = "B28" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[49]"                               LOC = "B28" ;          #Bank 25-ddr3_dq-[49]-LOC = "B28" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[50]"                               LOC = "D29" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[50]"                               LOC = "D29" ;          #Bank 25-ddr3_dq-[50]-LOC = "D29" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[51]"                               LOC = "B27" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[51]"                               LOC = "B27" ;          #Bank 25-ddr3_dq-[51]-LOC = "B27" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[52]"                               LOC = "G27" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[52]"                               LOC = "G27" ;          #Bank 25-ddr3_dq-[52]-LOC = "G27" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[53]"                               LOC = "A28" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[53]"                               LOC = "A28" ;          #Bank 25-ddr3_dq-[53]-LOC = "A28" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[54]"                               LOC = "E24" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[54]"                               LOC = "E24" ;          #Bank 25-ddr3_dq-[54]-LOC = "E24" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[55]"                               LOC = "G25" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[55]"                               LOC = "G25" ;          #Bank 25-ddr3_dq-[55]-LOC = "G25" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[56]"                               LOC = "F28" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[56]"                               LOC = "F28" ;          #Bank 25-ddr3_dq-[56]-LOC = "F28" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[57]"                               LOC = "B31" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[57]"                               LOC = "B31" ;          #Bank 25-ddr3_dq-[57]-LOC = "B31" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[58]"                               LOC = "H29" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[58]"                               LOC = "H29" ;          #Bank 25-ddr3_dq-[58]-LOC = "H29" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[59]"                               LOC = "H28" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[59]"                               LOC = "H28" ;          #Bank 25-ddr3_dq-[59]-LOC = "H28" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[60]"                               LOC = "B30" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[60]"                               LOC = "B30" ;          #Bank 25-ddr3_dq-[60]-LOC = "B30" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[61]"                               LOC = "A30" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[61]"                               LOC = "A30" ;          #Bank 25-ddr3_dq-[61]-LOC = "A30" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[62]"                               LOC = "E29" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[62]"                               LOC = "E29" ;          #Bank 25-ddr3_dq-[62]-LOC = "E29" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_dq[63]"                               LOC = "F29" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dq[63]"                               LOC = "F29" ;          #Bank 25-ddr3_dq-[63]-LOC = "F29" ;          #Bank 25}
+{ UCF RENAME : ddr3_dq ==> ddr_dq  (dq) }
+{UCF Line : NET  "ddr3_addr[12]"                             LOC = "H15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[12]"                             LOC = "H15" ;          #Bank 36-ddr3_addr-[12]-LOC = "H15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[11]"                             LOC = "M15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[11]"                             LOC = "M15" ;          #Bank 36-ddr3_addr-[11]-LOC = "M15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[10]"                             LOC = "M16" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[10]"                             LOC = "M16" ;          #Bank 36-ddr3_addr-[10]-LOC = "M16" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[9]"                              LOC = "F15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[9]"                              LOC = "F15" ;          #Bank 36-ddr3_addr-[9]-LOC = "F15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[8]"                              LOC = "G15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[8]"                              LOC = "G15" ;          #Bank 36-ddr3_addr-[8]-LOC = "G15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[7]"                              LOC = "B15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[7]"                              LOC = "B15" ;          #Bank 36-ddr3_addr-[7]-LOC = "B15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[6]"                              LOC = "A15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[6]"                              LOC = "A15" ;          #Bank 36-ddr3_addr-[6]-LOC = "A15" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[5]"                              LOC = "J17" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[5]"                              LOC = "J17" ;          #Bank 36-ddr3_addr-[5]-LOC = "J17" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[4]"                              LOC = "D16" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[4]"                              LOC = "D16" ;          #Bank 36-ddr3_addr-[4]-LOC = "D16" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[3]"                              LOC = "E16" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[3]"                              LOC = "E16" ;          #Bank 36-ddr3_addr-[3]-LOC = "E16" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[2]"                              LOC = "B16" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[2]"                              LOC = "B16" ;          #Bank 36-ddr3_addr-[2]-LOC = "B16" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[1]"                              LOC = "A16" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[1]"                              LOC = "A16" ;          #Bank 36-ddr3_addr-[1]-LOC = "A16" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_addr[0]"                              LOC = "L14" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_addr[0]"                              LOC = "L14" ;          #Bank 36-ddr3_addr-[0]-LOC = "L14" ;          #Bank 36}
+{ UCF RENAME : ddr3_addr ==> ddr_addr  (a) }
+{UCF Line : NET  "ddr3_ba[2]"                                LOC = "L15" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ba[2]"                                LOC = "L15" ;          #Bank 36-ddr3_ba-[2]-LOC = "L15" ;          #Bank 36}
+{ UCF RENAME : ddr3_ba ==> ddr_ba  (ba) }
+{UCF Line : NET  "ddr3_ba[1]"                                LOC = "J19" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ba[1]"                                LOC = "J19" ;          #Bank 36-ddr3_ba-[1]-LOC = "J19" ;          #Bank 36}
+{ UCF RENAME : ddr3_ba ==> ddr_ba  (ba) }
+{UCF Line : NET  "ddr3_ba[0]"                                LOC = "K19" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ba[0]"                                LOC = "K19" ;          #Bank 36-ddr3_ba-[0]-LOC = "K19" ;          #Bank 36}
+{ UCF RENAME : ddr3_ba ==> ddr_ba  (ba) }
+{UCF Line : NET  "ddr3_ras_n"                                LOC = "L19" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ras_n"                                LOC = "L19" ;          #Bank 36-ddr3_ras_n--LOC = "L19" ;          #Bank 36}
+{ UCF RENAME : ddr3_ras_n ==> ddr_ras_n  (ras_n) }
+{UCF Line : NET  "ddr3_cas_n"                                LOC = "C17" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cas_n"                                LOC = "C17" ;          #Bank 36-ddr3_cas_n--LOC = "C17" ;          #Bank 36}
+{ UCF RENAME : ddr3_cas_n ==> ddr_cas_n  (cas_n) }
+{UCF Line : NET  "ddr3_we_n"                                 LOC = "B17" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_we_n"                                 LOC = "B17" ;          #Bank 36-ddr3_we_n--LOC = "B17" ;          #Bank 36}
+{ UCF RENAME : ddr3_we_n ==> ddr_we_n  (we_n) }
+{UCF Line : NET  "ddr3_reset_n"                              LOC = "E18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_reset_n"                              LOC = "E18" ;          #Bank 36-ddr3_reset_n--LOC = "E18" ;          #Bank 36}
+{ UCF RENAME : ddr3_reset_n ==> ddr_reset_n  (reset_n) }
+{UCF Line : NET  "ddr3_cke[0]"                               LOC = "M18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cke[0]"                               LOC = "M18" ;          #Bank 36-ddr3_cke-[0]-LOC = "M18" ;          #Bank 36}
+{ UCF RENAME : ddr3_cke ==> ddr_cke  (cke) }
+{UCF Line : NET  "ddr3_odt[0]"                               LOC = "F18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_odt[0]"                               LOC = "F18" ;          #Bank 36-ddr3_odt-[0]-LOC = "F18" ;          #Bank 36}
+{ UCF RENAME : ddr3_odt ==> ddr_odt  (odt) }
+{UCF Line : NET  "ddr3_cs_n[0]"                              LOC = "K18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_cs_n[0]"                              LOC = "K18" ;          #Bank 36-ddr3_cs_n-[0]-LOC = "K18" ;          #Bank 36}
+{ UCF RENAME : ddr3_cs_n ==> ddr_cs_n  (cs_n) }
+{UCF Line : NET  "ddr3_dm[0]"                                LOC = "E11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[0]"                                LOC = "E11" ;          #Bank 35-ddr3_dm-[0]-LOC = "E11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[1]"                                LOC = "B11" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[1]"                                LOC = "B11" ;          #Bank 35-ddr3_dm-[1]-LOC = "B11" ;          #Bank 35}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[2]"                                LOC = "E14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[2]"                                LOC = "E14" ;          #Bank 35-ddr3_dm-[2]-LOC = "E14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[3]"                                LOC = "D19" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[3]"                                LOC = "D19" ;          #Bank 26-ddr3_dm-[3]-LOC = "D19" ;          #Bank 26}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[4]"                                LOC = "B22" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[4]"                                LOC = "B22" ;          #Bank 26-ddr3_dm-[4]-LOC = "B22" ;          #Bank 26}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[5]"                                LOC = "A26" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[5]"                                LOC = "A26" ;          #Bank 25-ddr3_dm-[5]-LOC = "A26" ;          #Bank 25}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[6]"                                LOC = "A29" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[6]"                                LOC = "A29" ;          #Bank 25-ddr3_dm-[6]-LOC = "A29" ;          #Bank 25}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dm[7]"                                LOC = "A31" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dm[7]"                                LOC = "A31" ;          #Bank 25-ddr3_dm-[7]-LOC = "A31" ;          #Bank 25}
+{ UCF RENAME : ddr3_dm ==> ddr_dm  (dm) }
+{UCF Line : NET  "ddr3_dqs_p[0]"                             LOC = "D12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[0]"                             LOC = "D12" ;          #Bank 35-ddr3_dqs_p-[0]-LOC = "D12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[0]"                             LOC = "E12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[0]"                             LOC = "E12" ;          #Bank 35-ddr3_dqs_n-[0]-LOC = "E12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[1]"                             LOC = "H12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[1]"                             LOC = "H12" ;          #Bank 35-ddr3_dqs_p-[1]-LOC = "H12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[1]"                             LOC = "J12" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[1]"                             LOC = "J12" ;          #Bank 35-ddr3_dqs_n-[1]-LOC = "J12" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[2]"                             LOC = "A13" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[2]"                             LOC = "A13" ;          #Bank 35-ddr3_dqs_p-[2]-LOC = "A13" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[2]"                             LOC = "A14" ;          #Bank 35}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[2]"                             LOC = "A14" ;          #Bank 35-ddr3_dqs_n-[2]-LOC = "A14" ;          #Bank 35}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[3]"                             LOC = "H19" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[3]"                             LOC = "H19" ;          #Bank 26-ddr3_dqs_p-[3]-LOC = "H19" ;          #Bank 26}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[3]"                             LOC = "H20" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[3]"                             LOC = "H20" ;          #Bank 26-ddr3_dqs_n-[3]-LOC = "H20" ;          #Bank 26}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[4]"                             LOC = "B23" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[4]"                             LOC = "B23" ;          #Bank 26-ddr3_dqs_p-[4]-LOC = "B23" ;          #Bank 26}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[4]"                             LOC = "C23" ;          #Bank 26}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[4]"                             LOC = "C23" ;          #Bank 26-ddr3_dqs_n-[4]-LOC = "C23" ;          #Bank 26}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[5]"                             LOC = "B25" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[5]"                             LOC = "B25" ;          #Bank 25-ddr3_dqs_p-[5]-LOC = "B25" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[5]"                             LOC = "A25" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[5]"                             LOC = "A25" ;          #Bank 25-ddr3_dqs_n-[5]-LOC = "A25" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[6]"                             LOC = "H27" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[6]"                             LOC = "H27" ;          #Bank 25-ddr3_dqs_p-[6]-LOC = "H27" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[6]"                             LOC = "G28" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[6]"                             LOC = "G28" ;          #Bank 25-ddr3_dqs_n-[6]-LOC = "G28" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_dqs_p[7]"                             LOC = "C30" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_p[7]"                             LOC = "C30" ;          #Bank 25-ddr3_dqs_p-[7]-LOC = "C30" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_p ==> ddr_dqs_p  (dqs) }
+{UCF Line : NET  "ddr3_dqs_n[7]"                             LOC = "D30" ;          #Bank 25}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_dqs_n[7]"                             LOC = "D30" ;          #Bank 25-ddr3_dqs_n-[7]-LOC = "D30" ;          #Bank 25}
+{ UCF RENAME : ddr3_dqs_n ==> ddr_dqs_n  (dqs_n) }
+{UCF Line : NET  "ddr3_ck_p[0]"                              LOC = "G18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ck_p[0]"                              LOC = "G18" ;          #Bank 36-ddr3_ck_p-[0]-LOC = "G18" ;          #Bank 36}
+{ UCF RENAME : ddr3_ck_p ==> ddr_ck_p  (ck) }
+{UCF Line : NET  "ddr3_ck_n[0]"                              LOC = "H18" ;          #Bank 36}
+{UCF LINE Match: --- NET {"(ddr[23]_[^\[\"]*)(\[[^\"]*\])?"} (.*) ---NET  "ddr3_ck_n[0]"                              LOC = "H18" ;          #Bank 36-ddr3_ck_n-[0]-LOC = "H18" ;          #Bank 36}
+{ UCF RENAME : ddr3_ck_n ==> ddr_ck_n  (ck_n) }
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : ##The following locations must be reserved and cannot be used for external I/O because          ##}
+{UCF LINE Match: --- {\#.*} ---##The following locations must be reserved and cannot be used for external I/O because          ##---}
+{UCF Line : ##the I/O elements associated with these sites (IODELAY, OSERDES, and associated routing)       ##}
+{UCF LINE Match: --- {\#.*} ---##the I/O elements associated with these sites (IODELAY, OSERDES, and associated routing)       ##---}
+{UCF Line : ##are used to generate and route the clocks necessary for read data capture and synchronization ##}
+{UCF LINE Match: --- {\#.*} ---##are used to generate and route the clocks necessary for read data capture and synchronization ##---}
+{UCF Line : ##to the core clock domain. These pins should not be routed out on the user's PCB               ##}
+{UCF LINE Match: --- {\#.*} ---##to the core clock domain. These pins should not be routed out on the user's PCB               ##---}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : ##The logic of this pin is used internally to drive a BUFR in the column. This chosen pin must  ##}
+{UCF LINE Match: --- {\#.*} ---##The logic of this pin is used internally to drive a BUFR in the column. This chosen pin must  ##---}
+{UCF Line : ##be a clock pin capable of spanning to all of the banks containing data bytes in the particular##}
+{UCF LINE Match: --- {\#.*} ---##be a clock pin capable of spanning to all of the banks containing data bytes in the particular##---}
+{UCF Line : ##column. That is, all byte groups must be within +/- 1 bank of this pin. This pin cannot be    ##}
+{UCF LINE Match: --- {\#.*} ---##column. That is, all byte groups must be within +/- 1 bank of this pin. This pin cannot be    ##---}
+{UCF Line : ##used for other functions and should not be connected externally. If a different pin is chosen,##}
+{UCF LINE Match: --- {\#.*} ---##used for other functions and should not be connected externally. If a different pin is chosen,##---}
+{UCF Line : ##he corresponding LOC constraint must also be changed.                                         ##}
+{UCF LINE Match: --- {\#.*} ---##he corresponding LOC constraint must also be changed.                                         ##---}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : CONFIG PROHIBIT = F21,K16;}
+{UCF LINE Match: --- CONFIG PROHIBIT .* {;} ---CONFIG PROHIBIT = F21,K16;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : ##Place RSYNC OSERDES and IODELAY:                                                  ##}
+{UCF LINE Match: --- {\#.*} ---##Place RSYNC OSERDES and IODELAY:                                                  ##---}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: F21 -- Bank 26}
+{UCF LINE Match: --- {\#.*} ---##Site: F21 -- Bank 26---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_oserdes_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_oserdes_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_oserdes_rsync"--}
+{UCF Line :   LOC = "OLOGIC_X1Y179";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y179";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_odelay_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_odelay_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_odelay_rsync"--}
+{UCF Line :   LOC = "IODELAY_X1Y179";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y179";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_bufr_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_bufr_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col1.u_bufr_rsync"--}
+{UCF Line :   LOC = "BUFR_X1Y8";}
+{UCF LINE Match: --- LOC .* ---  LOC = "BUFR_X1Y8";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: K16 -- Bank 36}
+{UCF LINE Match: --- {\#.*} ---##Site: K16 -- Bank 36---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_oserdes_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_oserdes_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_oserdes_rsync"--}
+{UCF Line :   LOC = "OLOGIC_X2Y181";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X2Y181";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_odelay_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_odelay_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_odelay_rsync"--}
+{UCF Line :   LOC = "IODELAY_X2Y181";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X2Y181";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_bufr_rsync"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_bufr_rsync"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_loop_col0.u_bufr_rsync"--}
+{UCF Line :   LOC = "BUFR_X2Y9";}
+{UCF LINE Match: --- LOC .* ---  LOC = "BUFR_X2Y9";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : ##The logic of this pin is used internally to drive a BUFIO for the byte group. Any clock       ##}
+{UCF LINE Match: --- {\#.*} ---##The logic of this pin is used internally to drive a BUFIO for the byte group. Any clock       ##---}
+{UCF Line : ##capable pin in the same bank as the data byte group (DQS, DQ, DM if used) can be used for     ##}
+{UCF LINE Match: --- {\#.*} ---##capable pin in the same bank as the data byte group (DQS, DQ, DM if used) can be used for     ##---}
+{UCF Line : ##this pin. This pin cannot be used for other functions and should not be connected externally. ##}
+{UCF LINE Match: --- {\#.*} ---##this pin. This pin cannot be used for other functions and should not be connected externally. ##---}
+{UCF Line : ##If a different pin is chosen, the corresponding LOC constraint must also be changed.          ##}
+{UCF LINE Match: --- {\#.*} ---##If a different pin is chosen, the corresponding LOC constraint must also be changed.          ##---}
+{UCF Line : ##################################################################################################}
+{UCF LINE Match: --- {\#.*} ---##################################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : CONFIG PROHIBIT = B20,C13,C28,C29,D24,F19,K14,L13;}
+{UCF LINE Match: --- CONFIG PROHIBIT .* {;} ---CONFIG PROHIBIT = B20,C13,C28,C29,D24,F19,K14,L13;---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : ##Place CPT OSERDES and IODELAY:                                                    ##}
+{UCF LINE Match: --- {\#.*} ---##Place CPT OSERDES and IODELAY:                                                    ##---}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: C13 -- Bank 35}
+{UCF LINE Match: --- {\#.*} ---##Site: C13 -- Bank 35---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X2Y137";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X2Y137";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[0].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X2Y137";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X2Y137";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: K14 -- Bank 35}
+{UCF LINE Match: --- {\#.*} ---##Site: K14 -- Bank 35---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X2Y143";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X2Y143";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[1].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X2Y143";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X2Y143";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: L13 -- Bank 35}
+{UCF LINE Match: --- {\#.*} ---##Site: L13 -- Bank 35---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X2Y141";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X2Y141";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[2].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X2Y141";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X2Y141";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: B20 -- Bank 26}
+{UCF LINE Match: --- {\#.*} ---##Site: B20 -- Bank 26---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X1Y181";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y181";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[3].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X1Y181";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y181";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: F19 -- Bank 26}
+{UCF LINE Match: --- {\#.*} ---##Site: F19 -- Bank 26---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X1Y183";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y183";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[4].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X1Y183";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y183";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: C28 -- Bank 25}
+{UCF LINE Match: --- {\#.*} ---##Site: C28 -- Bank 25---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X1Y141";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y141";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[5].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X1Y141";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y141";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: C29 -- Bank 25}
+{UCF LINE Match: --- {\#.*} ---##Site: C29 -- Bank 25---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X1Y139";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y139";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[6].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X1Y139";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y139";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ##Site: D24 -- Bank 25}
+{UCF LINE Match: --- {\#.*} ---##Site: D24 -- Bank 25---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_oserdes_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_oserdes_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_oserdes_cpt"--}
+{UCF Line :   LOC = "OLOGIC_X1Y143";}
+{UCF LINE Match: --- LOC .* ---  LOC = "OLOGIC_X1Y143";---}
+{UCF Line : INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_odelay_cpt"}
+{UCF LINE Match: --- INST {"(u_memc_ui_top/.*)} ---INST "u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_odelay_cpt"-u_memc_ui_top/u_mem_intfc/phy_top0/u_phy_read/u_phy_rdclk_gen/gen_ck_cpt[7].u_odelay_cpt"--}
+{UCF Line :   LOC = "IODELAY_X1Y143";}
+{UCF LINE Match: --- LOC .* ---  LOC = "IODELAY_X1Y143";---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : ## MMCM_ADV CONSTRAINTS                                                             ##}
+{UCF LINE Match: --- {\#.*} ---## MMCM_ADV CONSTRAINTS                                                             ##---}
+{UCF Line : ######################################################################################}
+{UCF LINE Match: --- {\#.*} ---######################################################################################---}
+{UCF Line : }
+{UCF LINE Match: --- {} ------}
+{UCF Line : INST "u_infrastructure/u_mmcm_adv"      LOC = "MMCM_ADV_X0Y8"; #Banks 16, 26, 36}
+{UCF LINE Match: --- INST {"u_infrastructure/.*"} LOC = {"(MMCM.*)"} .* ---INST "u_infrastructure/u_mmcm_adv"      LOC = "MMCM_ADV_X0Y8"; #Banks 16, 26, 36-MMCM_ADV_X0Y8--}
+{SET: IGNORE C_MMCM_EXT_LOC = MMCM_ADV_X0Y8 (BATCH:OPTIONAL::MHS:COMPVAL)}
+RETURN: 0

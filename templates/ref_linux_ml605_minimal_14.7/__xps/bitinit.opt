@@ -1,0 +1,1 @@
+ -p xc6vlx240tff1156-1 -pe microblaze_0 bootloops/microblaze_0.elf

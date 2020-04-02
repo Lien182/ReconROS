@@ -1,0 +1,7 @@
+<<reconos_preproc>>
+
+lib reconos_v3_01_a reconos_pkg vhdl
+lib rt_<<NAME>>_v1_00_a reconos_thread vhdl
+<<generate for INCLUDES>>
+lib rt_<<NAME>>_v1_00_a <<File>> vhdl
+<<end generate>>
