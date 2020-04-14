@@ -2,6 +2,11 @@
 Easy to use framework for ROS2 FPGA-based hardware acceleration
 
 based on [ReconOS](http://reconos.de) 
+## Prepare the FPGA board
+
+You have to install ROS2 and ReconOS on your FPGA board. For getting started faster, there are preinstalled images:
+
+[Pynq-Board](https://drive.google.com/open?id=1jpM5JdEsSBhS2G0khN9klwKmpMt_bnnn)
 
 
 ## Installing
