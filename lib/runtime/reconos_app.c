@@ -97,7 +97,7 @@ void reconos_app_init() {
 	<<end generate>>
 
 	<<generate for RESOURCES(Type == "rosnode")>>
-	ros_node_init(<<NameLower>>);
+	ros_node_init(<<NameLower>>, <<Args>>);
 	<<end generate>>
 
 	<<generate for RESOURCES(Type == "rossub")>>

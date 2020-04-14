@@ -17,9 +17,8 @@
 static uint32_t node_nr = 0;
 static pthread_mutex_t mutexThreadInit = PTHREAD_MUTEX_INITIALIZER;
 
-int ros_node_init(struct ros_node_t *ros_node)
+int ros_node_init(struct ros_node_t *ros_node, char* name)
 {
-  char * node_name;
   ros_node->context = rcl_get_zero_initialized_context();
   ros_node->init_options = rcl_get_zero_initialized_init_options();
   ros_node->allocator = rcl_get_default_allocator();
@@ -53,17 +52,10 @@ int ros_node_init(struct ros_node_t *ros_node)
   rcl_node_options_t node_ops = rcl_node_get_default_options();
 
   ros_node->node_nr = node_nr;
+ 
 
-  if(asprintf(&node_name, "ReconROS_Node_%d", node_nr++) < 0)
-  {
-    pthread_mutex_unlock(&mutexThreadInit);
-    return -2;
-  }
-    
-
-  rc = rcl_node_init(&ros_node->node, node_name, "", &ros_node->context, &node_ops);
+  rc = rcl_node_init(&ros_node->node, name, "", &ros_node->context, &node_ops);
   if (rc != RCL_RET_OK) {
-    free(node_name);
     pthread_mutex_unlock(&mutexThreadInit);
     panic("Error in rcl_node_init\n");
     return -1;
@@ -71,7 +63,6 @@ int ros_node_init(struct ros_node_t *ros_node)
 
   pthread_mutex_unlock(&mutexThreadInit);
 
-  free(node_name);
   return 0;
 }
 

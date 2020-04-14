@@ -32,6 +32,7 @@ typedef struct {
 	uint32_t 	mode;
 	uint32_t 	wait_time;
 	char* 		topic;
+	char* 		nodename;
 	uint8_t*	msg;
 	uint32_t 	msg_length;
 }t_thread_settings;
@@ -99,12 +100,11 @@ uint32_t xor_hash(uint32_t * data, uint32_t length)
 void* node_thread(void * arg)
 {
 	int i = 0;
-
 	t_thread_settings* sett = (t_thread_settings*)arg;
 
 	pthread_mutex_lock (&mutex);
 
-	if(ros_node_init(&resources_rosnode[sett->cnt]) < 0)
+	if(ros_node_init(&resources_rosnode[sett->cnt],sett->nodename) < 0)
 	{
 		printf("Thread %d: ROS Node init failed \n", sett->cnt);
 		return (void*)-1;
@@ -207,6 +207,8 @@ int main(int argc, char **argv)
 	settings[0].msg = (uint8_t*)u32usorted;
 	settings[0].msg_length = BLOCK_SIZE * sizeof(uint32_t);
 	settings[0].topic = "unsorted";
+	settings[0].nodename = "node_1";
+	
 
 	settings[1].cnt = 1;
 	settings[1].mode = MODE_SUBSCRIBER;
@@ -214,6 +216,7 @@ int main(int argc, char **argv)
 	settings[1].msg = (uint8_t*)u32sorted;
 	settings[1].msg_length = BLOCK_SIZE * sizeof(uint32_t);
 	settings[1].topic = "sorted";
+	settings[1].nodename = "node_2";
 
 	pthread_create(&p1, NULL, &node_thread, &settings[0]);
 	pthread_create(&p2, NULL, &node_thread, &settings[1]);

@@ -18,7 +18,7 @@ struct ros_node_t {
     rcl_context_t       context;
     rcl_init_options_t  init_options;
     rcl_node_t          node;
-
+    rcl_allocator_t     allocator;
 };
 
 /*
@@ -28,7 +28,7 @@ struct ros_node_t {
  *  ros_node   - pointer to the ros_node
  * 
  */
-extern int ros_node_init(struct ros_node_t *ros_node);
+extern int ros_node_init(struct ros_node_t *ros_node, char * name);
 
 /*
  * Frees all used memory of the ros_node.

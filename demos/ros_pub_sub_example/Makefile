@@ -1,11 +1,11 @@
 CC = gcc
 
-CFLAGS += -g -Wall -I ../../../../../reconos/reconos -I lib/runtime/comp/ -I /opt/ros/dashing/include/ -I lib/include 
+CFLAGS += -g -Wno-unused-variable -Wall -I ../../../../reconos/reconos -I lib/runtime/comp/ -I /opt/ros/dashing/include/ -I lib/include 
 LDFLAGS += -lpthread -L /opt/ros/dashing/lib/*.so
 
 MKDIRP = mkdir -p
 
-OBJS = lib/runtime/comp/ros.o lib/runtime/comp/ros_sub.o lib/runtime/comp/ros_pub.o application/main.o 
+OBJS = lib/comp/ros.o lib/comp/ros_sub.o lib/comp/ros_pub.o application/main.o 
 
 BUILD_OBJS = $(OBJS:%=_build/%)
 

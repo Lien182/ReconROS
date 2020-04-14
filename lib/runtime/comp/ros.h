@@ -28,7 +28,7 @@ struct ros_node_t {
  *  ros_node   - pointer to the ros_node
  * 
  */
-extern int ros_node_init(struct ros_node_t *ros_node);
+extern int ros_node_init(struct ros_node_t *ros_node, char * name);
 
 /*
  * Frees all used memory of the ros_node.
