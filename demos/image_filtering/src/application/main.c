@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
 
 	int clk = reconos_clock_threads_set(100000);
 
-
+	reconos_thread_create_swt_filterdemo(0, 0);
 
 
 

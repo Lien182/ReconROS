@@ -6,4 +6,4 @@ demos/image_filtering/_build/lib/comp/ros.o
 
 demos/image_filtering/build.sw/
 
-tools/_pypack/reconos/__pycache__/__init__.cpython-36.pyc
+*.pyc
