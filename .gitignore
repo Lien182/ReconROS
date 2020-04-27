@@ -3,3 +3,7 @@ demos/image_filtering/_build/application/main.o
 demos/image_filtering/_build/lib/comp/ros_pub.o
 demos/image_filtering/_build/lib/comp/ros_sub.o
 demos/image_filtering/_build/lib/comp/ros.o
+
+demos/image_filtering/build.sw/
+
+tools/_pypack/reconos/__pycache__/__init__.cpython-36.pyc

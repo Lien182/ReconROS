@@ -77,6 +77,11 @@ extern struct ros_publisher_t <<NameLower>>_s;
 extern struct ros_publisher_t *<<NameLower>>;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "rosmsg")>>
+extern <<ROSDataType>> <<NameLower>>_s;
+extern <<ROSDataType>> *<<NameLower>>;;
+<<end generate>>
+
 /* == Application functions ============================================ */
 
 /*

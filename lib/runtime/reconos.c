@@ -1077,15 +1077,14 @@ intr:
 
 static inline int dt_ros_publish(struct hwslot *slot) {
 	int handle, ret;
-	uint32_t len,addr;
+	int msg_handle;
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSPUB);
-
-	addr = reconos_osif_read(slot->osif);
-	len  = reconos_osif_read(slot->osif);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSPUB);
 
 	debug("[reconos-dt-%d] (ros publish on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_publisher_publish(slot->rt->resources[handle].ptr, ((uint8_t*)addr), len));
+	SYSCALL_NONBLOCK(ret = ros_publisher_publish(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (uint32_t)ret);
@@ -1098,19 +1097,18 @@ intr:
 
 static inline int dt_ros_take(struct hwslot *slot) {
 	int handle;
-	uint32_t len;
-	uint8_t * addr;
+	int msg_handle;
 
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSUB);
-
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSUB);
 
 	debug("[reconos-dt-%d] (ros_take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_subscriber_take(slot->rt->resources[handle].ptr, &addr, &len););
+	SYSCALL_NONBLOCK(ros_subscriber_message_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
 	debug("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)addr);
-	reconos_osif_write(slot->osif, (uint32_t)len);
+	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
 	
 
 	return 0;
@@ -1120,20 +1118,17 @@ intr:
 }
 
 static inline int dt_ros_trytake(struct hwslot *slot) {
-	int handle, ret;
-	uint32_t len;
-	uint8_t * addr;
+	int handle, ret, msg_handle;
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSUB);
-
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSUB);
 
 	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_subscriber_try_take(slot->rt->resources[handle].ptr, &addr, &len));
+	SYSCALL_NONBLOCK(ret = ros_subscriber_message_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
 	
-	reconos_osif_write(slot->osif, (uint32_t)addr);
-	reconos_osif_write(slot->osif, (uint32_t)len);
 	reconos_osif_write(slot->osif, (uint32_t)ret);
 	
 

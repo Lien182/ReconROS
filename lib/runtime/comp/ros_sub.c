@@ -25,6 +25,10 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     ros_sub->sub = rcl_get_zero_initialized_subscription();
     rcl_subscription_options_t my_subscription_options = rcl_subscription_get_default_options();
 
+    //rcl_allocator_t allocator = rcl_get_default_allocator();
+    //rmw_init_subscription_allocation(&ros_sub->alloc, msg_type, bounds);
+
+
     rc = rcl_subscription_init(
         &ros_sub->sub,
         &ros_node->node,
@@ -64,9 +68,10 @@ int ros_subscriber_message_try_take(struct ros_subscriber_t *ros_sub, void * msg
     rmw_message_info_t messageInfo;
 
 
-    rcutils_allocator_t alloc = rcl_get_default_allocator();
+
+
     
-    rc = rcl_take(&ros_sub->sub, msg,  &messageInfo, &alloc );
+    rc = rcl_take(&ros_sub->sub, msg,  &messageInfo,NULL );
     
     if(rc != RCL_RET_OK)
     {

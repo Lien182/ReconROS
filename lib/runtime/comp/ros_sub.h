@@ -20,6 +20,7 @@ struct ros_subscriber_t {
     rcl_subscription_t          sub;
     void*                       message;
     uint32_t                    wait_time;
+    rmw_subscription_allocation_t alloc;
 };
 
 /*

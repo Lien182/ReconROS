@@ -56,8 +56,24 @@ def export_sw(args, swdir, link):
 		d["NameLower"] = (r.group + "_" + r.name).lower()
 		d["Type"] = r.type
 		d["TypeUpper"] = r.type.upper()
-		d["Args"] = ", ".join(r.args)
+		if r.type == "rossub":
+			for msg in prj.resources:
+				if msg.name == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2]+ ", " + r.args[3] 
+					break
+
+		elif r.type == "rospub":
+			for msg in prj.resources:
+				if msg.name == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] 
+					break
+		else:
+			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id
+		if r.type == "rosmsg":
+			d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]
+			d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create()"
+			d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
 		dictionary["RESOURCES"].append(d)
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:

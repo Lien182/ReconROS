@@ -10,6 +10,9 @@
 #include <rcl/node.h>
 #include <rcl/init_options.h>
 
+#include <sensor_msgs/msg/image.h>
+
+
 /*
  * Structure representing a ros node
  */
