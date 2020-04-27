@@ -25,10 +25,6 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     ros_sub->sub = rcl_get_zero_initialized_subscription();
     rcl_subscription_options_t my_subscription_options = rcl_subscription_get_default_options();
 
-    //const rosidl_message_type_support_t * my_type_support = //rosidl_typesupport_c__get_message_type_support_handle__sensor_msgs__msg__Image;
-    //ROSIDL_GET_MSG_TYPE_SUPPORT(sensor_msgs, msg, Image);
-
-
     rc = rcl_subscription_init(
         &ros_sub->sub,
         &ros_node->node,

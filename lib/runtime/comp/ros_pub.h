@@ -19,7 +19,6 @@
 struct ros_publisher_t {
     rcl_node_t*     node;
     rcl_publisher_t rcl_pub;
-    uint32_t        max_msg_size;
 };
 
 /*
@@ -29,7 +28,7 @@ struct ros_publisher_t {
  *  mb   - pointer to the mbox
  *  size - size of the mbox in 32bit-words
  */
-extern int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_node , char* topic_name, uint32_t max_msg_size);
+extern int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_node, const rosidl_message_type_support_t * msg_type, char* topic_name);
 
 /*
  * Frees all used memory of the mbox.
@@ -44,7 +43,7 @@ extern int ros_publisher_destroy(struct ros_publisher_t *ros_pub);
  *   mb  - pointer to the mbox
  *   msg - message to put into the mbox
  */
-extern int ros_publisher_publish(struct ros_publisher_t *ros_pub, uint8_t * msg, uint32_t msg_size);
+extern int ros_publisher_publish(struct ros_publisher_t *ros_pub, void * msg);
 
 
 #endif /* MBOX_H */
