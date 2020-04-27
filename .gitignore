@@ -1,0 +1,5 @@
+demos/image_filtering/ros_image_example
+demos/image_filtering/_build/application/main.o
+demos/image_filtering/_build/lib/comp/ros_pub.o
+demos/image_filtering/_build/lib/comp/ros_sub.o
+demos/image_filtering/_build/lib/comp/ros.o

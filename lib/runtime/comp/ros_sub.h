@@ -18,8 +18,7 @@
 struct ros_subscriber_t {
     rcl_node_t*                 node;
     rcl_subscription_t          sub;
-    uint32_t                    max_msg_size;
-    rcl_serialized_message_t    sub_msg;
+    void*                       message;
     uint32_t                    wait_time;
 };
 
@@ -30,7 +29,7 @@ struct ros_subscriber_t {
  *  mb   - pointer to the mbox
  *  size - size of the mbox in 32bit-words
  */
-extern int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ros_node, char* topic, uint32_t max_msg_size, uint32_t wait_time);
+extern int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ros_node, const rosidl_message_type_support_t * msg_type, char* topic, uint32_t wait_time);
 
 /*
  * Frees all used memory of the mbox.
@@ -49,7 +48,7 @@ extern int ros_subscriber_destroy(struct ros_subscriber_t *ros_sub);
  * 
  *   
  */
-extern int ros_subscriber_take(struct ros_subscriber_t *ros_sub, uint8_t ** msg, uint32_t * len);
+extern int ros_subscriber_message_take(struct ros_subscriber_t *ros_sub, void * msg);
 
 /*
  * Try to receive a message from the given topic.
@@ -60,7 +59,7 @@ extern int ros_subscriber_take(struct ros_subscriber_t *ros_sub, uint8_t ** msg,
  * 
  *   return 0 if data is available
  */
-extern int ros_subscriber_try_take(struct ros_subscriber_t *ros_sub, uint8_t ** msg, uint32_t * len);
+extern int ros_subscriber_message_try_take(struct ros_subscriber_t *ros_sub, void * msg);
 
 
 #endif /* ROSSUB_H */
