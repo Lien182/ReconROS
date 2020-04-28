@@ -1491,12 +1491,11 @@ package body reconos_pkg is
 		signal i_osif : in  i_osif_t;
 		signal o_osif : out o_osif_t;
 		handle        : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal addr   : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal len    : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
+		handle_msg    : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
 		signal result : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
 		variable done : out boolean
 	) is begin
-		osif_call_3_1(i_osif, o_osif, OSIF_CMD_ROS_PUBLISH, handle, addr, len, result, done);
+		osif_call_2_1(i_osif, o_osif, OSIF_CMD_ROS_PUBLISH, handle, handle_msg, result, done);
 	end procedure osif_ros_publish;
 
 	--
@@ -1506,11 +1505,11 @@ package body reconos_pkg is
 		signal i_osif : in  i_osif_t;
 		signal o_osif : out o_osif_t;
 		handle        : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal dest   : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal len    : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
+		handle_msg    : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
+		signal result : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
 		variable done : out boolean
 	) is begin
-		osif_call_1_2(i_osif, o_osif, OSIF_CMD_ROS_TAKE, handle, dest, len, done);
+		osif_call_2_1(i_osif, o_osif, OSIF_CMD_ROS_TAKE, handle, handle_msg,result done);
 	end procedure osif_ros_take;
 
 	--
@@ -1520,12 +1519,11 @@ package body reconos_pkg is
 		signal i_osif : in  i_osif_t;
 		signal o_osif : out o_osif_t;
 		handle        : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal dest   : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
-		signal len    : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
+		handle_msg    : in  std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
 		signal result : out std_logic_vector(C_OSIF_DATA_WIDTH - 1 downto 0);
 		variable done : out boolean
 	) is begin
-		osif_call_1_3(i_osif, o_osif, OSIF_CMD_ROS_TRYTAKE, handle, dest, len, result, done);
+		osif_call_2_1(i_osif, o_osif, OSIF_CMD_ROS_TRYTAKE, handle, dest, len, result, done);
 	end procedure osif_ros_trytake;	
 
 	--
