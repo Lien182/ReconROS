@@ -7,3 +7,6 @@ demos/image_filtering/_build/lib/comp/ros.o
 demos/image_filtering/build.sw/
 
 *.pyc
+
+demos/*/build.sw/
+demos/*/build.hw/
