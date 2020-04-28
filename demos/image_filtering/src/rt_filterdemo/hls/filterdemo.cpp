@@ -3,8 +3,10 @@
 
 #include "ap_cint.h"
 
+#define BLOCK_SIZE 16
 
 THREAD_ENTRY() {
+	RAM(uint32, BLOCK_SIZE, ram);
 	uint32 initdata;
 	
 	THREAD_INIT();
@@ -12,7 +14,9 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_image_msg );
+		uint32 msg_ptr = ROS_SUBSCRIBE_TAKE(resources_subdata, resources_image_msg );
+		MEM_READ(msg_ptr, ram, BLOCK_SIZE);
+		MEM_WRITE(ram, msg_ptr, BLOCK_SIZE);
 		ROS_PUBLISH(resources_pubdata,resources_image_msg);
 	}
 }
