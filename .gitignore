@@ -8,5 +8,11 @@ demos/image_filtering/build.sw/
 
 *.pyc
 
+*.o
+
 demos/*/build.sw/
 demos/*/build.hw/
+
+demos/ros_sort_demo/server_app/build.sw/
+demos/ros_sort_demo/server_app/build.hw/
+demos/ros_sort_demo/client_app/client_app
