@@ -117,7 +117,7 @@ void reconos_app_init() {
 	<<end generate>>
 
 	<<generate for RESOURCES(Type == "rosmsg")>>
-	<<NameLower>> = <<ROSDataTypeInitFunc>>;
+	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
 	<<end generate>>
 
 	

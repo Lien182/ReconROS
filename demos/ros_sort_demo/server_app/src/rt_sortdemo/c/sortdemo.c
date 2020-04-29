@@ -31,9 +31,7 @@ void bubblesort(uint32_t *data, int data_count) {
 }
 
 void *rt_sortdemo(void *data) {
-	uint32_t ret, len;
-
-	uint8_t * sort_data;
+	uint32_t ret;
 
 	while (1) {
 		MBOX_TRYGET(resources_address, ret);
@@ -42,10 +40,10 @@ void *rt_sortdemo(void *data) {
 			THREAD_EXIT();
 		}
 		printf("Wait for new data! \n");
-		ROS_SUBSCRIBE_TAKE(resources_subdata, sort_data, len);
-		printf("Received new data (len = %d)! \n", len);
-		bubblesort((uint32_t*)sort_data, len >> 2);
+		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg);
+		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_msg->data.size, resources_sort_msg->data.capacity);
+		bubblesort(resources_sort_msg->data.data, resources_sort_msg->data.size);
 		printf("Publish new data! \n");
-		ROS_PUBLISH(resources_pubdata, sort_data, len  );
+		ROS_PUBLISH(resources_pubdata, resources_sort_msg  );
 	}
 }

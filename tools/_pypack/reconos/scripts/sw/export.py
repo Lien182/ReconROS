@@ -71,9 +71,16 @@ def export_sw(args, swdir, link):
 			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id
 		if r.type == "rosmsg":
-			d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]
-			d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create()"
-			d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+			elif len(r.args) == 4:
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence__destroy"
+				d["ROSDataTypeSequenceLength"] = r.args[3]
 		dictionary["RESOURCES"].append(d)
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:
