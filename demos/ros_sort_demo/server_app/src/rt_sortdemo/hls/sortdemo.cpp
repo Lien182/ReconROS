@@ -1,9 +1,11 @@
 #include "reconos_calls.h"
 #include "reconos_thread.h"
-
 #include "ap_cint.h"
 
+#include <std_msgs/msg/u_int32_multi_array__struct.h>
+
 #define BLOCK_SIZE 2048
+#define OFFSETOF(type, member) ((uint32)(intptr_t)&(((type *)(void*)0)->member) )
 
 void sort_bubble(uint32 ram[BLOCK_SIZE]) {
 	unsigned int i, j;
@@ -37,17 +39,28 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 
 THREAD_ENTRY() {
 	RAM(uint32, BLOCK_SIZE, ram);
-	uint32 addr, len, initdata;
-	
+	uint32 addr, initdata;	
+	uint32 pMessage;
+	uint32 payload_addr[1];
+
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
 
 	while(1) {
 
-		ROS_SUBSCRIBE_TAKE(resources_subdata, addr, len );
-		MEM_READ(addr, ram, BLOCK_SIZE * 4);
+		pMessage = ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg );
+		//addr = OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + pMessage;
+		addr = 16 + pMessage; // ugly
+		
+		MEM_READ(addr, payload_addr, 4);
+		MBOX_PUT(resources_address,addr);
+		MBOX_PUT(resources_address,OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data));
+		MBOX_PUT(resources_acknowledge,payload_addr[0]);
+		
+		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
 		sort_bubble(ram);
-		MEM_WRITE(ram, initdata, BLOCK_SIZE * 4);
-		ROS_PUBLISH(resources_pubdata,initdata,BLOCK_SIZE * 4);
+		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
+		
+		ROS_PUBLISH(resources_pubdata,resources_sort_msg);
 	}
 }

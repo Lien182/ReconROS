@@ -34,11 +34,6 @@ void *rt_sortdemo(void *data) {
 	uint32_t ret;
 
 	while (1) {
-		MBOX_TRYGET(resources_address, ret);
-
-		if (ret == 0xffffffff) {
-			THREAD_EXIT();
-		}
 		printf("Wait for new data! \n");
 		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg);
 		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_msg->data.size, resources_sort_msg->data.capacity);

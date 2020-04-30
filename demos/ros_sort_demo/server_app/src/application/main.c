@@ -9,6 +9,9 @@
 
 #define BLOCK_SIZE 2048
 
+#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
+
+
 #define log(...) printf(__VA_ARGS__); fflush(stdout)
 
 void print_help() {
@@ -99,12 +102,17 @@ int main(int argc, char **argv) {
 	reconos_init();
 	reconos_app_init();
 
+	// VERY; VERY UGLY
+	memcpy(&resources_sort_msg_s, resources_sort_msg, sizeof(resources_sort_msg_s));
+	resources_sort_msg = &resources_sort_msg_s;
+
+
 	clk = reconos_clock_threads_set(100000);
 
 	log("creating %d hw-threads(clk = %d):", num_hwts,clk);
 	for (i = 0; i < num_hwts; i++) {
 		log(" %d", i);
-		reconos_thread_create_hwt_sortdemo(malloc(BLOCK_SIZE*sizeof(uint32_t)));
+		reconos_thread_create_hwt_sortdemo(0);
 	}
 	log("\n");
 
@@ -113,9 +121,10 @@ int main(int argc, char **argv) {
 		log(" %d", i);
 		reconos_thread_create_swt_sortdemo(0,0);
 	}
+	log("\n");
 
 #if 0	
-	log("\n");
+	
 
 	log("generating data ...\n");
 	data_count = num_blocks * BLOCK_SIZE;
@@ -162,9 +171,21 @@ int main(int argc, char **argv) {
 	}
 
 #endif
+printf(" Message pointer %x \n",resources_sort_msg);
 
-	while(1) sleep(1);
+printf("Calculated Offset %d \n", OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data));
 
+	while(1)
+	{
+		uint32_t addr = mbox_get(resources_address);
+		uint32_t payload_addr = mbox_get(resources_acknowledge);
+		printf("Addr: %x; PayloadAddr: %x; Diff: %x \n", addr, payload_addr, addr -payload_addr);
+
+		printf("Addr(SW): %x; SW PayloadAddr: %x; Diff: %x \n", &(resources_sort_msg->data.data), OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + (uint32_t)resources_sort_msg, (uint32_t)(resources_sort_msg->data.data) - addr);
+
+		printf("Message: %x=size, %x=capacity \n", resources_sort_msg->data.size, resources_sort_msg->data.capacity);
+		
+	} 
 #if 0
 	// do we really want to terminate?
 	log("sending terminate message:");

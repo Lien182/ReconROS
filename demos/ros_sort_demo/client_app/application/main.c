@@ -23,6 +23,7 @@
 
 #define ROS_TYPE_MESSAGE_TYPE rosidl_typesupport_c__get_message_type_support_handle__std_msgs__msg__UInt32MultiArray()
 
+#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
 
 pthread_mutex_t mutex;
 
@@ -231,6 +232,7 @@ int main(int argc, char **argv)
 	}
 
 
+	printf("Calculated Offset %d \n", OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data));
 
 	settings[0].cnt = 0;
 	settings[0].mode = MODE_PUBLISHER;
