@@ -5,7 +5,7 @@
 #include <std_msgs/msg/u_int32_multi_array__struct.h>
 
 #define BLOCK_SIZE 2048
-#define OFFSETOF(type, member) ((uint32)(intptr_t)&(((type *)(void*)0)->member) )
+
 
 void sort_bubble(uint32 ram[BLOCK_SIZE]) {
 	unsigned int i, j;
@@ -49,15 +49,11 @@ THREAD_ENTRY() {
 	while(1) {
 
 		pMessage = ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg );
-		//addr = OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + pMessage;
-		addr = 16 + pMessage; // ugly
-		
-		MEM_READ(addr, payload_addr, 4);
-		MBOX_PUT(resources_address,addr);
-		MBOX_PUT(resources_address,OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data));
-		MBOX_PUT(resources_acknowledge,payload_addr[0]);
-		
+		addr = OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + pMessage;
+
+		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
+
 		sort_bubble(ram);
 		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
 		

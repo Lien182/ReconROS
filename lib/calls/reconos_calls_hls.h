@@ -24,6 +24,10 @@
 #include "hls_stream.h"
 #include "ap_cint.h"
 
+/* == Helper definitions =============================================== */
+
+#define OFFSETOF(type, member) ((uint32)(intptr_t)&(((type *)(void*)0)->member) )
+
 /* == Constant definitions ============================================= */
 
 /*
