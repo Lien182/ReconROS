@@ -31,8 +31,7 @@ void bubblesort(uint32_t *data, int data_count) {
 }
 
 void *rt_sortdemo(void *data) {
-	uint32_t ret;
-
+	
 	while (1) {
 		printf("Wait for new data! \n");
 		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg);
