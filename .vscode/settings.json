@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "memory": "c",
+        "unordered_map": "c",
+        "assert.h": "c",
+        "array": "c",
+        "bitset": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "__tree": "c",
+        "deque": "c",
+        "list": "c",
+        "map": "c",
+        "queue": "c",
+        "random": "c",
+        "set": "c",
+        "stack": "c",
+        "string": "c",
+        "vector": "c"
+    }
+}

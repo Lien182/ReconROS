@@ -183,14 +183,14 @@
  * ROS functions
  */
 
-#define ROS_PUBLISH(p_handle, src, len) \
-	ros_publisher_publish(p_handle, src, len);
+#define ROS_PUBLISH(p_handle, p_handle_msg) \
+	ros_publisher_publish(p_handle, p_handle_msg);
 
-#define ROS_SUBSCRIBE_TRYTAKE(p_handle,dest) \
-	ros_subscriber_try_take(p_handle, &dest, &len);
+#define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg) \
+	ros_subscriber_message_try_take(p_handle, p_handle_msg);
 
-#define ROS_SUBSCRIBE_TAKE(p_handle, dest, len ) \
-	ros_subscriber_take(p_handle, &dest, &len);
+#define ROS_SUBSCRIBE_TAKE(p_handle, p_handle_msg ) \
+	ros_subscriber_message_take(p_handle, p_handle_msg);
 
 
 #endif /* RECONOS_CALLS_H */

@@ -24,6 +24,10 @@
 #include "hls_stream.h"
 #include "ap_cint.h"
 
+/* == Helper definitions =============================================== */
+
+#define OFFSETOF(type, member) ((uint32)(intptr_t)&(((type *)(void*)0)->member) )
+
 /* == Constant definitions ============================================= */
 
 /*
@@ -259,11 +263,10 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 
 
 
-#define ROS_PUBLISH(p_handle,addr,len)(\
+#define ROS_PUBLISH(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_PUBLISH),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_write(osif_hw2sw, addr),\
-	stream_write(osif_hw2sw, len),\
+	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
 /*
@@ -272,11 +275,10 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  *
  *   @see mbox_tryget
  */
-#define ROS_SUBSCRIBE_TRYTAKE(p_handle,dest, len)(\
+#define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	dest = stream_read(osif_sw2hw),\
-	len = stream_read(osif_sw2hw),\
+	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
 /*
@@ -285,11 +287,11 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  *
  *   @see mbox_tryput
  */
-#define ROS_SUBSCRIBE_TAKE(p_handle, dest, len )(\
+#define ROS_SUBSCRIBE_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	dest = stream_read(osif_sw2hw),\
-	len = stream_read(osif_sw2hw))
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
 
 
 /*

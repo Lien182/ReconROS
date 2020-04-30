@@ -4,7 +4,7 @@
       <file name="<<HLSDIR>>/reconos_calls.h" sc="0" tb="false" cflags=""/>
       <file name="<<HLSDIR>>/reconos_thread.h" sc="0" tb="false" cflags=""/>
     <<generate for FILES>>
-      <file name="<<HLSDIR>>/<<File>>" sc="0" tb="false" cflags=""/>
+      <file name="<<HLSDIR>>/<<File>>" sc="0" tb="false"  cflags="-I/opt/ros/dashing/include/ -m32"/>
     <<end generate>>
   </files>
   <solutions>

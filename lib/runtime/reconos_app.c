@@ -26,6 +26,8 @@
 #include "reconos.h"
 #include "utils.h"
 
+
+
 /* == Application resources ============================================ */
 
 /*
@@ -65,6 +67,12 @@ struct ros_subscriber_t *<<NameLower>> = &<<NameLower>>_s;
 struct ros_publisher_t <<NameLower>>_s;
 struct ros_publisher_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
+
+<<generate for RESOURCES(Type == "rosmsg")>>
+<<ROSDataType>> <<NameLower>>_s;
+<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
 
 <<generate for RESOURCES>>
 struct reconos_resource <<NameLower>>_res = {
@@ -107,6 +115,15 @@ void reconos_app_init() {
 	<<generate for RESOURCES(Type == "rospub")>>
 	ros_publisher_init(<<NameLower>>, resources_<<Args>>);
 	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
+	// VERY; VERY UGLY
+	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
+	<<NameLower>> = &<<NameLower>>_s;
+	<<end generate>>
+
+	
 }
 
 /*
@@ -140,6 +157,15 @@ void reconos_app_cleanup() {
 	<<generate for RESOURCES(Type == "rospub")>>
 	ros_publisher_destroy(<<NameLower>>);
 	<<end generate>>
+
+
+	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
+	<<end generate>>
+
+	
+
+
 }
 
 /*

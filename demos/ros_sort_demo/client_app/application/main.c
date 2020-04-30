@@ -21,6 +21,10 @@
 #define MODE_SUBSCRIBER	2
 #define MODE_NONE		99
 
+#define ROS_TYPE_MESSAGE_TYPE rosidl_typesupport_c__get_message_type_support_handle__std_msgs__msg__UInt32MultiArray()
+
+#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
+
 pthread_mutex_t mutex;
 
 struct ros_node_t 		resources_rosnode[2];
@@ -64,7 +68,7 @@ int check_data(uint32_t * data, uint32_t length)
 			return -1;
 		}
 	}
-
+	printf("\n");
 	return 0;
 }
 
@@ -95,12 +99,38 @@ uint32_t xor_hash(uint32_t * data, uint32_t length)
 	return ret;
 }
 
+void std_msgs__msg__UInt32MultiArray_fill_one_dim(std_msgs__msg__UInt32MultiArray * array, uint32_t * data, uint32_t size)
+{
+	array->data.data = data;
+	array->data.size = size;
+	array->data.capacity = size;
 
+	
+
+	array->layout.data_offset = 0;
+	array->layout.dim.size = 1;
+	array->layout.dim.capacity = 1;
+
+	
+	array->layout.dim.data = (std_msgs__msg__MultiArrayDimension*)malloc(sizeof(std_msgs__msg__MultiArrayDimension));
+
+	array->layout.dim.data->size = 1;
+	array->layout.dim.data->stride = 1;
+
+	array->layout.dim.data->label.data = (char*)malloc(sizeof(strlen("label"))+1);
+	strcpy(array->layout.dim.data->label.data, "label");
+
+	array->layout.dim.data->label.size = strlen("label");
+	array->layout.dim.data->label.capacity = strlen("label")+1;
+}
 
 void* node_thread(void * arg)
 {
 	int i = 0;
 	t_thread_settings* sett = (t_thread_settings*)arg;
+
+	std_msgs__msg__UInt32MultiArray * sort_msg = std_msgs__msg__UInt32MultiArray__create();
+
 
 	pthread_mutex_lock (&mutex);
 
@@ -113,7 +143,7 @@ void* node_thread(void * arg)
 
 	if(sett->mode == MODE_PUBLISHER)
 	{
-		if( ros_publisher_init(&resources_pubdata[sett->cnt], &resources_rosnode[sett->cnt], sett->topic, sett->msg_length) < 0 )
+		if( ros_publisher_init(&resources_pubdata[sett->cnt], &resources_rosnode[sett->cnt], ROS_TYPE_MESSAGE_TYPE, sett->topic) < 0 )
 		{
 			ros_node_destroy(&resources_rosnode[sett->cnt]);
 			return (void*)-1;
@@ -123,10 +153,12 @@ void* node_thread(void * arg)
 		for(i = 0; i < ITERATIONS; i++ )
 		{
 			random_data((uint32_t*)sett->msg, BLOCK_SIZE);
-			printf("[ReconROS_Node_%d] Hash %x \n", sett->cnt, xor_hash((uint32_t*)sett->msg, BLOCK_SIZE));
-			printf("[ReconROS_Node_%d]", sett->cnt);
-			check_data((uint32_t*)sett->msg, BLOCK_SIZE);
-			ros_publisher_publish(&resources_pubdata[sett->cnt], (uint8_t*)sett->msg, sett->msg_length);
+
+			std_msgs__msg__UInt32MultiArray_fill_one_dim(sort_msg, (uint32_t*)sett->msg, BLOCK_SIZE );
+			printf("[ReconROS_Node_%d_%d] Hash %x \n", sett->cnt,i, xor_hash((uint32_t*)sort_msg->data.data, BLOCK_SIZE));
+			printf("[ReconROS_Node_%d_%d]", sett->cnt,i);
+			check_data((uint32_t*)sort_msg->data.data, BLOCK_SIZE);
+			ros_publisher_publish(&resources_pubdata[sett->cnt], sort_msg);
 			usleep(sett->wait_time);
 		}
 
@@ -135,25 +167,25 @@ void* node_thread(void * arg)
 	}
 	else if(sett->mode == MODE_SUBSCRIBER)
 	{
-		ros_subscriber_init(&resources_subdata[sett->cnt], &resources_rosnode[sett->cnt], sett->topic, sett->msg_length, 100000);
+		ros_subscriber_init(&resources_subdata[sett->cnt], &resources_rosnode[sett->cnt],ROS_TYPE_MESSAGE_TYPE, sett->topic, 100000);
 
-		usleep(200000);	
+		
 
 		for(i = 0; i < ITERATIONS; i++ )
 		{
 			
-			ros_subscriber_take(&resources_subdata[sett->cnt], &sett->msg, &sett->msg_length);
+			ros_subscriber_message_take(&resources_subdata[sett->cnt], sort_msg);
 			usleep(sett->wait_time);
 
-			printf("[ReconROS_Node_%d] Hash %x \n", sett->cnt, xor_hash((uint32_t*)sett->msg, BLOCK_SIZE));
+			printf("[ReconROS_Node_%d_%d] Hash %x \n", sett->cnt,i, xor_hash((uint32_t*)sort_msg->data.data, BLOCK_SIZE));
 
-			printf("[ReconROS_Node_%d]", sett->cnt);
-			if(check_data((uint32_t*)sett->msg, BLOCK_SIZE) != 0)
-				printf("[ReconROS_Node_%d] Data is unsorted! \n", sett->cnt);
+			printf("[ReconROS_Node_%d_%d]", sett->cnt,i);
+			if(check_data((uint32_t*)sort_msg->data.data, BLOCK_SIZE) != 0)
+				printf("[ReconROS_Node_%d_%d] Data is unsorted! \n", sett->cnt,i);
 			else
-				printf("[ReconROS_Node_%d] Data is sorted \n", sett->cnt);
+				printf("[ReconROS_Node_%d_%d] Data is sorted \n", sett->cnt,i);
 
-			clear_data((uint32_t*)sett->msg, BLOCK_SIZE);
+			clear_data((uint32_t*)sort_msg->data.data, BLOCK_SIZE);
 		}
 
 		ros_subscriber_destroy(&resources_subdata[sett->cnt]);
@@ -200,10 +232,11 @@ int main(int argc, char **argv)
 	}
 
 
+	printf("Calculated Offset %d \n", OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data));
 
 	settings[0].cnt = 0;
 	settings[0].mode = MODE_PUBLISHER;
-	settings[0].wait_time = 100000;
+	settings[0].wait_time = 1000000;
 	settings[0].msg = (uint8_t*)u32usorted;
 	settings[0].msg_length = BLOCK_SIZE * sizeof(uint32_t);
 	settings[0].topic = "unsorted";
@@ -217,6 +250,8 @@ int main(int argc, char **argv)
 	settings[1].msg_length = BLOCK_SIZE * sizeof(uint32_t);
 	settings[1].topic = "sorted";
 	settings[1].nodename = "node_2";
+
+	
 
 	pthread_create(&p1, NULL, &node_thread, &settings[0]);
 	pthread_create(&p2, NULL, &node_thread, &settings[1]);
