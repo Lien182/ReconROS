@@ -93,10 +93,6 @@ int main(int argc, char **argv) {
 	reconos_init();
 	reconos_app_init();
 
-	// VERY; VERY UGLY
-	memcpy(&resources_sort_msg_s, resources_sort_msg, sizeof(resources_sort_msg_s));
-	resources_sort_msg = &resources_sort_msg_s;
-
 
 	clk = reconos_clock_threads_set(100000);
 
