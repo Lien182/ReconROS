@@ -1,11 +1,11 @@
 #!/bin/bash
 
-cd /mnt/project
+cd /mnt/project/build.sw/
 
 source /mnt/reconos/tools/settings.sh
 
-make clean
-make
+#make clean
+make -j$(nproc)
 
 chmod 777 /mnt/project -R
 

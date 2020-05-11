@@ -21,9 +21,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 #install ros
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y ros-dashing-ros-base
-
 RUN apt-get install --no-install-recommends -y nano gcc g++
-
+#Additional libs for slam
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y libopencv-dev libeigen3-dev
+RUN apt-get update
+RUN apt-get install --no-install-recommends -y libglew-dev
 RUN rosdep init
 RUN rosdep update
 RUN mkdir -p /ws

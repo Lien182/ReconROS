@@ -25,3 +25,7 @@ _build/%.o: %.c
 _build/%.o: %.cpp
 	$(MKDIRP) $(@D)
 	$(CC) $(CFLAGS) -x c -c $< -o $@
+
+_build/%.o: %.cc
+	$(MKDIRP) $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@

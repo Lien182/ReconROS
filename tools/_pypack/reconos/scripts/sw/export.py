@@ -108,7 +108,7 @@ def export_sw(args, swdir, link):
 	dictionary["BOARD"] = "_".join(prj.impinfo.board)
 	dictionary["REPO_REL"] = shutil2.relpath(prj.impinfo.repo, swdir)
 	dictionary["OBJS"] = [{"Source": shutil2.trimext(_) + ".o"}
-	                       for _ in shutil2.listfiles(swdir, True, "c[p]*$")]
+	                       for _ in shutil2.listfiles(swdir, True, "c[cp]*$")]
 
 	template.preproc(shutil2.join(swdir, "Makefile"), dictionary, "overwrite", force=True)
 
