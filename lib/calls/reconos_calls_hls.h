@@ -366,6 +366,27 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	}}
 
 /*
+ * Writes several words from the local ram into main memory. Therefore,
+ * divides a large request into smaller ones of length at most
+ * MEMIF_CHUNK_BYTES and splits request at page borders to guarantee
+ * correct address translation.
+ *
+ *   src - array to read data from
+ *   dst - start address to read from the main memory
+ *   len - number of bytes to transmit (bytes)
+ */
+
+#define MEM_WRITE_FROM_STREAM(src,dst,len){\
+	uint32 __len = len; \
+	stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+	stream_write(memif_hwt2mem, dst);\
+	for (; __len > 0; __len -= 4) {\
+		stream_write(memif_hwt2mem, src.read());\
+	}\
+	}
+
+
+/*
  * Terminates the current ReconOS thread.
  */
 #define THREAD_EXIT()(\
