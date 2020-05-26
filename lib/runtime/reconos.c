@@ -577,10 +577,10 @@ void hwslot_createdelegate(struct hwslot *slot) {
 	int ret;
 
 	/* Lock memory */
-	if(mlockall(MCL_CURRENT|MCL_FUTURE) == -1) {
-			printf("mlockall failed: %m\n");
-			exit(-2);
-	}
+	//if(mlockall(MCL_CURRENT|MCL_FUTURE) == -1) {
+	//		printf("mlockall failed: %m\n");
+	//		exit(-2);
+	//}
 
 	/* Initialize pthread attributes (default values) */
 	ret = pthread_attr_init(&attr);
@@ -611,7 +611,7 @@ void hwslot_createdelegate(struct hwslot *slot) {
 
 
 
-	pthread_create(&slot->dt, &attr, dt_delegate, slot);
+	pthread_create(&slot->dt, NULL, dt_delegate, slot);
 }	
 
 /*
