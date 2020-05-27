@@ -281,7 +281,7 @@ proc import_pcore { repo_path ip_name {libs ""} } {
 set ip_repo "pcores"
 set temp_dir "/tmp/reconos_tmp/"
 
-create_project -force managed_ip_project $temp_dir/managed_ip_project -part xc7z020clg484-1 -ip
+create_project -force managed_ip_project $temp_dir/managed_ip_project -part xc7z100ffg900-2 -ip
 set_property  ip_repo_paths  $ip_repo [current_project]
 
 create_fifo_interfaces $ip_repo 

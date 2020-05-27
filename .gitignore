@@ -16,3 +16,4 @@ demos/*/build.hw/
 demos/ros_sort_demo/server_app/build.sw/
 demos/ros_sort_demo/server_app/build.hw/
 demos/ros_sort_demo/client_app/client_app
+tools/arm-docker-build/Docker/qemu-arm-static
