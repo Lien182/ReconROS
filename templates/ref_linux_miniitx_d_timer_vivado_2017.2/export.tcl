@@ -90,7 +90,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     # Create new project if "new_project_name" is given.
     # Otherwise current project will be reused.
     if { [llength $new_project_name] > 0} {
-        create_project -force $new_project_name $new_project_path -part xc7z100iffg900-2L
+        create_project -force $new_project_name $new_project_path -part xc7z100ffg900-2
     }
 
 
@@ -99,7 +99,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     set proj_dir [get_property directory [current_project]]
     
     # Set project properties
-    set_property "board_part" "em.avnet.com:zed:part0:1.3" $proj_name
+    #set_property "board_part" "em.avnet.com:zed:part0:1.3" $proj_name
     set_property "default_lib" "xil_defaultlib" $proj_name
     set_property "sim.ip.auto_export_scripts" "1" $proj_name
     set_property "simulator_language" "Mixed" $proj_name
@@ -132,7 +132,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
 
     # Create 'synth_1' run (if not found)
     if {[string equal [get_runs -quiet synth_1] ""]} {
-        create_run -name synth_1 -part xc7z100iffg900-2L -flow {Vivado Synthesis 2016} -strategy "Vivado Synthesis Defaults" -constrset constrs_1
+        create_run -name synth_1 -part xc7z100ffg900-2 -flow {Vivado Synthesis 2016} -strategy "Vivado Synthesis Defaults" -constrset constrs_1
     } else {
         set_property strategy "Vivado Synthesis Defaults" [get_runs synth_1]
         set_property flow "Vivado Synthesis 2016" [get_runs synth_1]
@@ -143,7 +143,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
 
     # Create 'impl_1' run (if not found)
     if {[string equal [get_runs -quiet impl_1] ""]} {
-        create_run -name impl_1 -part xc7z100iffg900-2L -flow {Vivado Implementation 2016} -strategy "Vivado Implementation Defaults" -constrset constrs_1 -parent_run synth_1
+        create_run -name impl_1 -part xc7z100ffg900-2 -flow {Vivado Implementation 2016} -strategy "Vivado Implementation Defaults" -constrset constrs_1 -parent_run synth_1
     } else {
         set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
         set_property flow "Vivado Implementation 2016" [get_runs impl_1]
