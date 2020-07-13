@@ -1,8 +1,8 @@
 <<reconos_preproc>>
 
 CC = $(CROSS_COMPILE)gcc
-CFLAGS += -Wall -I <<REPO_REL>> -I lib/include -I /opt/ros/dashing/include/ -D RECONOS_OS_<<OS>> -D RECONOS_BOARD_<<BOARD>> <<CFLAGS>>
-LDFLAGS += -lpthread <<LDFLAGS>> -Bdynamic -L /opt/ros/dashing/lib/*.so
+CFLAGS += -Wall -I <<REPO_REL>> -I lib/include -I /opt/ros/dashing/include/ -I msg/my_reconros_services/install/my_reconros_services/include/ -D RECONOS_OS_<<OS>> -D RECONOS_BOARD_<<BOARD>> <<CFLAGS>>
+LDFLAGS += -lpthread <<LDFLAGS>> -Bdynamic -L /opt/ros/dashing/lib/*.so -L msg/my_reconros_services/install/my_reconros_services/lib/*.so
 
 MKDIRP = mkdir -p
 

@@ -4,6 +4,13 @@ import reconos.utils.template as template
 import logging
 import argparse
 
+import shutil
+import os
+import subprocess
+from os import listdir
+from os.path import isfile, join
+
+
 log = logging.getLogger(__name__)
 
 def get_cmd(prj):
@@ -113,6 +120,41 @@ def export_sw(args, swdir, link):
 
 	template.preproc(shutil2.join(swdir, "Makefile"), dictionary, "overwrite", force=True)
 
+	print(swdir + "/msg/") 
+	print(prj.dir + "/msg")
+	#
+	if shutil2.exists(swdir+ "/msg/"):
+		shutil2.rmtree(swdir+ "/msg/")
+
+	shutil2.mkdir(swdir + "/msg/")
+	
+
+	srv_files = [f for f in listdir(prj.dir + "/msg/srv/") if isfile(join(prj.dir + "/msg/srv/", f))]
+	print(srv_files)
+
+	msg_files = [f for f in listdir(prj.dir + "/msg/msg/") if isfile(join(prj.dir + "/msg/msg/", f))]
+	print(msg_files)
+
+	dictionary["interface_files"] = ""
+	for f in srv_files:
+		dictionary["interface_files"] += '"srv/'+f+'" '
+	
+	for f in msg_files:
+		dictionary["interface_files"] += '"msg/'+f+'" '
+
+
+	print(dictionary["interface_files"])	
+	prj.apply_template("ros_msg", dictionary, swdir+ "/msg/", link)
+	shutil.copytree( prj.dir + "/msg/srv/", swdir + "/msg/my_reconros_services/srv/")
+	shutil.copytree( prj.dir + "/msg/msg/", swdir + "/msg/my_reconros_services/msg/")
+
+
+	#bashCommand = "source /opt/ros/foxy/setup.bash; cd "+swdir+ "/msg; ros2 pkg create my_reconros_services --dependencies builtin_interfaces"
+	#print(bashCommand)
+	#sp = subprocess.Popen(["/bin/sh", "-c",bashCommand],shell=False, executable="/bin/bash")
+	#sp.communicate()
+
+	
 def export_sw_thread(args, swdir, link, thread):
 	prj = args.prj
 	swdir = swdir if swdir is not None else prj.basedir + ".sw" + "." + thread.lower()
