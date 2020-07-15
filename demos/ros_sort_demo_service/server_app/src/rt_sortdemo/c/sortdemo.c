@@ -33,13 +33,14 @@ void bubblesort(uint32_t *data, int data_count) {
 void *rt_sortdemo(void *data) {
 	
 	while (1) {
-		/*
+		
 		printf("Wait for new data! \n");
-		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg);
-		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_msg->sortdata.size, resources_sort_msg->sortdata.capacity);
-		bubblesort(resources_sort_msg->sortdata.data, resources_sort_msg->sortdata.size);
+		ROS_SERVICESERVER_TAKE(resources_srv, resources_sort_srv_req);
+		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_srv_req->unsorted.size, resources_sort_srv_req->unsorted.capacity);
+		bubblesort(resources_sort_srv_req->unsorted.data, resources_sort_srv_req->unsorted.size);
 		printf("Publish new data! \n");
-		ROS_PUBLISH(resources_pubdata, resources_sort_msg  );
-		*/
+		memcpy(resources_sort_srv_res, resources_sort_srv_req, sizeof(resources_sort_srv_req_s));
+		ROS_SERVICESERVER_SEND_RESPONSE(resources_srv, resources_sort_srv_res  );
+		
 	}
 }

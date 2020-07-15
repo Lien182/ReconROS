@@ -193,4 +193,14 @@
 	ros_subscriber_message_take(p_handle, p_handle_msg);
 
 
+#define ROS_SERVICESERVER_SEND_RESPONSE(p_handle, p_handle_msg) \
+	ros_service_server_send_response(p_handle, p_handle_msg);
+
+#define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg) \
+	ros_service_server_try_take_request(p_handle, p_handle_msg);
+
+#define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg ) \
+	ros_service_server_take_request(p_handle, p_handle_msg);
+
+
 #endif /* RECONOS_CALLS_H */

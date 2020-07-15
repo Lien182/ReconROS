@@ -31,7 +31,7 @@ int ros_service_server_init(struct ros_service_server_t *ros_service_server, str
         &service_ops);
 
 
-    return 0;
+    return ret;
 }
 
 

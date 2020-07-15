@@ -1,4 +1,3 @@
-int64 a
-int64 b
+uint32[] unsorted
 ---
-int64 sum
+uint32[] sorted
