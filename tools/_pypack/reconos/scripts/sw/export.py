@@ -45,6 +45,7 @@ def export_sw(args, swdir, link):
 	dictionary["CFLAGS"] = prj.impinfo.cflags
 	dictionary["LDFLAGS"] = prj.impinfo.ldflags
 	dictionary["THREADS"] = []
+	dictionary["ROSMsgHeader"] = ""
 	for t in prj.threads:
 		d = {}
 		d["Name"] = t.name.lower()
@@ -58,6 +59,7 @@ def export_sw(args, swdir, link):
 	dictionary["RESOURCES"] = []
 	for r in prj.resources:
 		d = {}
+		
 		d["Group"] = r.group.lower()
 		d["Id"] = r.id
 		d["NameUpper"] = (r.group + "_" + r.name).upper()
@@ -84,11 +86,29 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence__destroy"
 				d["ROSDataTypeSequenceLength"] = r.args[3]
+		if r.type == "rossrvmsgreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
+				print("Found Req!!")
+		if r.type == "rossrvmsgres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__destroy"
+
+
+				d["ROSDataTypeSequenceLength"] = " "
+				print("Found Res!!")
 		dictionary["RESOURCES"].append(d)
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:

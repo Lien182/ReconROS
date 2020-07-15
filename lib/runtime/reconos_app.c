@@ -68,11 +68,26 @@ struct ros_publisher_t <<NameLower>>_s;
 struct ros_publisher_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "rossrvs")>>
+struct ros_service_server_t <<NameLower>>_s;
+struct ros_service_server_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
+
 <<generate for RESOURCES(Type == "rosmsg")>>
 <<ROSDataType>> <<NameLower>>_s;
 <<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "rossrvmsgreq")>>
+<<ROSDataType>> <<NameLower>>_s;
+<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rossrvmsgres")>>
+<<ROSDataType>> <<NameLower>>_s;
+<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
 
 <<generate for RESOURCES>>
 struct reconos_resource <<NameLower>>_res = {
@@ -80,7 +95,6 @@ struct reconos_resource <<NameLower>>_res = {
 	.type = RECONOS_RESOURCE_TYPE_<<TypeUpper>>
 };
 <<end generate>>
-
 
 /* == Application functions ============================================ */
 
