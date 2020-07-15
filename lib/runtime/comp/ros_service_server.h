@@ -22,23 +22,10 @@ struct ros_service_server_t {
     
 };
 
-/*
- * Initializes the mbox. You must call this method before you
- * can use the mbox.
- *
- *  mb   - pointer to the mbox
- *  size - size of the mbox in 32bit-words
- */
+
 extern int ros_service_server_init(struct ros_service_server_t *ros_service_server, struct ros_node_t * ros_node, const rosidl_service_type_support_t * srv_type, char* topic, uint32_t wait_time);
 
-/*
- * Frees all used memory of the mbox.
- *
- *   mb - pointer to the mbox
- */
 extern int ros_service_server_destroy(struct ros_service_server_t *ros_service_server);
-
-
 
 extern int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req);
 
