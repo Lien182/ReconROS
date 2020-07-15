@@ -16,18 +16,77 @@
 
 #include "../utils.h"
 
-int ros_service_server_init(struct ros_service_server_t *ros_service_server, struct ros_node_t * ros_node, const rosidl_message_type_support_t * msg_type, char* topic, uint32_t wait_time)
+int ros_service_server_init(struct ros_service_server_t *ros_service_server, struct ros_node_t * ros_node, const rosidl_service_type_support_t * srv_type, char* service_name, uint32_t wait_time)
 {
+
+    rcl_ret_t ret = 0;
+
+    rcl_service_options_t service_ops = rcl_service_get_default_options();
+
+    ret = rcl_service_init(
+        &ros_service_server->service,
+        ros_service_server->node,
+        srv_type,
+        service_name,
+        &service_ops);
+
+
     return 0;
 }
 
-/*
- * Frees all used memory of the mbox.
- *
- *   mb - pointer to the mbox
- */
+
 int ros_service_server_destroy(struct ros_service_server_t *ros_service_server)
 {
-    //return rcl_subscription_fini(&ros_sub->sub, ros_sub->node);
+    return rcl_service_fini(&ros_service_server->service, ros_service_server->node);
+}
+
+
+
+int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req)
+{
+    rcl_ret_t rc;
+    
+    rc = rcl_take_request(
+        &ros_service_server->service,
+        &ros_service_server->request_id,
+        req);
+
+    
+    if(rc != RCL_RET_OK)
+    {
+        if(rc != RCL_RET_SERVICE_TAKE_FAILED)
+        {
+            debug("[ROS Service Server] Error number: %d\n", rc);
+            return -1;
+        }
+        else
+        {
+            //debug("[ROS Service Server] Return code : %d\n", rc);
+            return 1;
+        }        
+    }
+
+    return 0;
+}
+
+
+int ros_service_server_take_request(struct ros_service_server_t *ros_service_server, void * req)
+{
+    while(ros_service_server_try_take_request(ros_service_server, req) != 0)
+        usleep(ros_service_server->wait_time);
+
+    return 0;
+}
+
+int ros_service_server_send_response(struct ros_service_server_t *ros_service_server, void * res)
+{
+    rcl_ret_t rc;
+
+    rc = rcl_send_response(
+        &ros_service_server->service,
+        &ros_service_server->request_id, 
+        res);
+    
+    return rc;
 }
 
