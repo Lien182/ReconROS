@@ -77,6 +77,16 @@ def export_sw(args, swdir, link):
 				if msg.name == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] 
 					break
+
+		elif r.type == "rossrvs":
+			for msg in prj.resources:
+				print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
+		
+		
 		else:
 			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id

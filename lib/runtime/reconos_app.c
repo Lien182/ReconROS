@@ -137,6 +137,24 @@ void reconos_app_init() {
 	<<NameLower>> = &<<NameLower>>_s;
 	<<end generate>>
 
+	<<generate for RESOURCES(Type == "rossrvs")>>
+	ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rossrvmsgreq")>>
+	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
+	// VERY; VERY UGLY
+	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
+	<<NameLower>> = &<<NameLower>>_s;
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rossrvmsgres")>>
+	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
+	// VERY; VERY UGLY
+	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
+	<<NameLower>> = &<<NameLower>>_s;
+	<<end generate>>
+
 	
 }
 
@@ -177,7 +195,17 @@ void reconos_app_cleanup() {
 	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
 	<<end generate>>
 
+	<<generate for RESOURCES(Type == "rossrvs")>>
+	ros_service_server_destroy(<<NameLower>>);
+	<<end generate>>
 	
+	<<generate for RESOURCES(Type == "rossrvmsgreq")>>
+	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rossrvmsgres")>>
+	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
+	<<end generate>>
 
 
 }
