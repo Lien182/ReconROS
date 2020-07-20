@@ -19,6 +19,8 @@
 int ros_service_server_init(struct ros_service_server_t *ros_service_server, struct ros_node_t * ros_node, const rosidl_service_type_support_t * srv_type, char* service_name, uint32_t wait_time)
 {
 
+    ros_service_server->node = &ros_node->node;
+
     rcl_ret_t ret = 0;
 
     rcl_service_options_t service_ops = rcl_service_get_default_options();
@@ -30,7 +32,11 @@ int ros_service_server_init(struct ros_service_server_t *ros_service_server, str
         service_name,
         &service_ops);
 
-
+    if (RCL_RET_OK != ret) 
+    {
+        panic("[ROS Service Server]  Error in rcl_service_init %s; error code: %d \n", service_name, ret);
+        return -1;
+    }
     return ret;
 }
 
@@ -86,6 +92,12 @@ int ros_service_server_send_response(struct ros_service_server_t *ros_service_se
         &ros_service_server->service,
         &ros_service_server->request_id, 
         res);
+
+    if(rc != RCL_RET_OK)
+    {
+        printf("[ROS Service Server] Error sending response: %d\n", rc);
+        return -1;
+    }
     
     return rc;
 }

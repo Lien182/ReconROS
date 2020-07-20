@@ -16,4 +16,12 @@ demos/*/build.hw/
 demos/*/server_app/build.sw/
 demos/*/server_app/build.hw/
 demos/*/client_app/client_app
+
+demos/*/client_app/build
+demos/*/client_app/install
+demos/*/client_app/include
+demos/*/client_app/log
+
 tools/arm-docker-build/Docker/qemu-arm-static
+
+
