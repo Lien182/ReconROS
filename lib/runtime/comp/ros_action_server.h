@@ -28,10 +28,21 @@ extern int ros_action_server_init(struct ros_action_server_t *ros_action_server,
 
 extern int ros_action_server_destroy(struct ros_action_server_t *ros_action_server);
 
-//extern int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req);
+extern int ros_action_server_try_take_request(struct ros_action_server_t *ros_action_server_t, void * req);
 
-//extern int ros_service_server_take_request(struct ros_service_server_t *ros_service_server, void * req);
+extern int ros_action_server_try_take_goal_request(struct ros_action_server_t *ros_action_server, void * req);
 
-//extern int ros_service_server_send_response(struct ros_service_server_t *ros_service_server, void * res);
+extern int ros_action_server_take_goal_request(struct ros_action_server_t *ros_action_server, void * req);
+
+extern int ros_action_server_take_decide_request(struct ros_action_server_t *ros_action_server, void * goal_res, uint32_t accept);
+
+extern int ros_action_server_publish_feedback(struct ros_action_server_t *ros_action_server, void*  feedback_msg);
+
+extern int ros_action_server_try_take_result_request(struct ros_action_server_t *ros_action_server, void * goal_req);
+
+extern int ros_action_server_take_result_request(struct ros_action_server_t *ros_action_server, void * goal_req);
+
+extern int ros_action_server_send_result_response(struct ros_action_server_t *ros_action_server, void * goal_res);
+
 
 #endif /* ROSACTIONSERVER_H */

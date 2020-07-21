@@ -53,21 +53,25 @@ int ros_action_server_init(struct ros_action_server_t *ros_action_server, struct
 
 int ros_action_server_destroy(struct ros_action_server_t *ros_action_server)
 {
-    rcl_action_server_fini(&ros_action_server->action, ros_action_server->node);
+    rcl_ret_t ret = 0;
 
-    return rcl_clock_fini(&ros_action_server->clock);
+    ret |= rcl_action_server_fini(&ros_action_server->action, ros_action_server->node);
+    ret |= rcl_clock_fini(&ros_action_server->clock);
+
+    return ret;
 }
 
-/*
 
 
-int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req)
+
+
+int ros_action_server_try_take_goal_request(struct ros_action_server_t *ros_action_server, void * req)
 {
     rcl_ret_t rc;
     
-    rc = rcl_take_request(
-        &ros_service_server->service,
-        &ros_service_server->request_id,
+    rc = rcl_action_take_goal_request(
+        &ros_action_server->action,
+        &ros_action_server->request_id,
         req);
 
     
@@ -75,7 +79,7 @@ int ros_service_server_try_take_request(struct ros_service_server_t *ros_service
     {
         if(rc != RCL_RET_SERVICE_TAKE_FAILED)
         {
-            debug("[ROS Service Server] Error number: %d\n", rc);
+            debug("[ROS Action Server] Error number: %d\n", rc);
             return -1;
         }
         else
@@ -89,30 +93,86 @@ int ros_service_server_try_take_request(struct ros_service_server_t *ros_service
 }
 
 
-int ros_service_server_take_request(struct ros_service_server_t *ros_service_server, void * req)
+int ros_action_server_take_goal_request(struct ros_action_server_t *ros_action_server, void * req)
 {
-    while(ros_service_server_try_take_request(ros_service_server, req) != 0)
-        usleep(ros_service_server->wait_time);
+    while(ros_action_server_try_take_goal_request(ros_action_server, req) != 0)
+        usleep(ros_action_server->wait_time);
 
     return 0;
 }
 
-int ros_service_server_send_response(struct ros_service_server_t *ros_service_server, void * res)
+int ros_action_server_take_decide_request(struct ros_action_server_t *ros_action_server, void * goal_res, uint32_t accept)
 {
-    rcl_ret_t rc;
-
-    rc = rcl_send_response(
-        &ros_service_server->service,
-        &ros_service_server->request_id, 
-        res);
-
-    if(rc != RCL_RET_OK)
+    rcl_ret_t ret = 0;
+    if(accept == 1)
     {
-        printf("[ROS Service Server] Error sending response: %d\n", rc);
-        return -1;
+        rcl_action_goal_info_t goal_info = rcl_action_get_zero_initialized_goal_info();
+        // ... populate goal_info.uuid (unique_identifier_msgs/UUID)
+        // ... populate goal_info.stamp (builtin_interfaces/Time)
+        rcl_action_goal_handle_t * goal_handle = rcl_action_accept_new_goal(&ros_action_server->action, &goal_info);
+        // ... error_handling
+        // ... Populate goal response (client library type)
+        ret = rcl_action_send_goal_response(
+            &ros_action_server->action,
+            &ros_action_server->request_id,
+            goal_res);
+        // ... error handling, and sometime before shutdown finalize goal info message
+        //ret = rcl_action_goal_info_fini(&goal_info, &ros_action_server->action);
     }
+    else
+    {
+        /* code */
+    }
+
+    return ret;
     
+}
+
+int ros_action_server_publish_feedback(struct ros_action_server_t *ros_action_server, void*  feedback_msg)
+{
+    rcl_ret_t rc = 0;
+
+    rc = rcl_action_publish_feedback(
+            &ros_action_server->action,
+            feedback_msg);
+
     return rc;
 }
 
-*/
+
+int ros_action_server_try_take_result_request(struct ros_action_server_t *ros_action_server, void * goal_req)
+{
+    rcl_ret_t rc = 0;
+    
+    rc = rcl_action_take_result_request(
+        &ros_action_server->action,
+        &ros_action_server->request_id,
+        goal_req);
+
+    return rc;
+    
+}
+
+
+int ros_action_server_take_result_request(struct ros_action_server_t *ros_action_server, void * goal_req)
+{
+    while(ros_action_server_try_take_goal_request(ros_action_server, goal_req) != 0)
+        usleep(ros_action_server->wait_time);
+
+    return 0;
+}
+
+
+int ros_action_server_send_result_response(struct ros_action_server_t *ros_action_server, void * goal_res)
+{
+    rcl_ret_t rc = 0;
+
+    rc = rcl_action_send_result_response(
+        &ros_action_server->action,
+        &ros_action_server->request_id,
+        goal_res);
+
+    return rc;
+}
+
+
