@@ -48,8 +48,8 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		pMessage = OSIF_CMD_ROS_SERVICES_RESPONSE(resources_srv, resources_sort_srv_req );
-		addr = OFFSETOF(sort_msgs__srv__Sort_Request, data) + pMessage;
+		pMessage = ROS_SERVICESERVER_TAKE(resources_srv, resources_sort_srv_req );
+		addr = OFFSETOF(sorter_msgs__srv__Sort_Request, unsorted.data) + pMessage;
 
 		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
@@ -57,6 +57,6 @@ THREAD_ENTRY() {
 		sort_bubble(ram);
 		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
 		
-		OSIF_CMD_ROS_SERVICES_TAKE(resources_srv,resources_sort_srv_res);
+		ROS_SERVICESERVER_SEND_RESPONSE(resources_srv,resources_sort_srv_res);
 	}
 }

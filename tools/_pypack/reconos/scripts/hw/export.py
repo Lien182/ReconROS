@@ -166,7 +166,7 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 		msg_install_path = prj.dir + "/build.msg/install/"
 		if shutil2.exists(msg_install_path):
 			msg_packages = [f for f in listdir(msg_install_path) if isdir(join(msg_install_path, f))]
-			print(msg_packages)
+			#print(msg_packages)
 			for msg_pack in msg_packages:
 				dictionary["MSGINCLUDEDIR"] += "-I"+msg_install_path + msg_pack + "/include/ "
 
