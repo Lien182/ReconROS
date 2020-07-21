@@ -46,34 +46,38 @@
  *   self-describing
  *
  */
-#define OSIF_CMD_THREAD_GET_INIT_DATA  0x000000A0
-#define OSIF_CMD_THREAD_GET_STATE_ADDR 0x000000A1
-#define OSIF_CMD_THREAD_EXIT           0x000000A2
-#define OSIF_CMD_THREAD_YIELD          0x000000A3
-#define OSIF_CMD_THREAD_CLEAR_SIGNAL   0x000000A4
-#define OSIF_CMD_SEM_POST              0x000000B0
-#define OSIF_CMD_SEM_WAIT              0x000000B1
-#define OSIF_CMD_MUTEX_LOCK            0x000000C0
-#define OSIF_CMD_MUTEX_UNLOCK          0x000000C1
-#define OSIF_CMD_MUTEX_TRYLOCK         0x000000C2
-#define OSIF_CMD_COND_WAIT             0x000000D0
-#define OSIF_CMD_COND_SIGNAL           0x000000D1
-#define OSIF_CMD_COND_BROADCAST        0x000000D2
-#define OSIF_CMD_MBOX_GET              0x000000F0
-#define OSIF_CMD_MBOX_PUT              0x000000F1
-#define OSIF_CMD_MBOX_TRYGET           0x000000F2
-#define OSIF_CMD_MBOX_TRYPUT           0x000000F3
-#define OSIF_CMD_MASK                  0x000000FF
-#define OSIF_CMD_YIELD_MASK            0x80000000
+#define OSIF_CMD_THREAD_GET_INIT_DATA  	0x000000A0
+#define OSIF_CMD_THREAD_GET_STATE_ADDR 	0x000000A1
+#define OSIF_CMD_THREAD_EXIT           	0x000000A2
+#define OSIF_CMD_THREAD_YIELD          	0x000000A3
+#define OSIF_CMD_THREAD_CLEAR_SIGNAL   	0x000000A4
+#define OSIF_CMD_SEM_POST              	0x000000B0
+#define OSIF_CMD_SEM_WAIT              	0x000000B1
+#define OSIF_CMD_MUTEX_LOCK            	0x000000C0
+#define OSIF_CMD_MUTEX_UNLOCK          	0x000000C1
+#define OSIF_CMD_MUTEX_TRYLOCK         	0x000000C2
+#define OSIF_CMD_COND_WAIT             	0x000000D0
+#define OSIF_CMD_COND_SIGNAL           	0x000000D1
+#define OSIF_CMD_COND_BROADCAST        	0x000000D2
+#define OSIF_CMD_MBOX_GET              	0x000000F0
+#define OSIF_CMD_MBOX_PUT              	0x000000F1
+#define OSIF_CMD_MBOX_TRYGET           	0x000000F2
+#define OSIF_CMD_MBOX_TRYPUT           	0x000000F3
+#define OSIF_CMD_MASK                  	0x000000FF
+#define OSIF_CMD_YIELD_MASK            	0x80000000
 
-#define OSIF_SIGNAL_THREAD_START       0x01000000
-#define OSIF_SIGNAL_THREAD_RESUME      0x01000001
+#define OSIF_SIGNAL_THREAD_START       	0x01000000
+#define OSIF_SIGNAL_THREAD_RESUME      	0x01000001
 
-#define OSIF_INTERRUPTED               0x000000FF
+#define OSIF_INTERRUPTED               	0x000000FF
 
-#define OSIF_CMD_ROS_PUBLISH		   0x00000090
-#define OSIF_CMD_ROS_TAKE			   0x00000091
-#define OSIF_CMD_ROS_TRYTAKE		   0x00000092
+#define OSIF_CMD_ROS_PUBLISH		   	0x00000090
+#define OSIF_CMD_ROS_TAKE			   	0x00000091
+#define OSIF_CMD_ROS_TRYTAKE		   	0x00000092
+
+#define OSIF_CMD_ROS_SERVICES_RESPONSE 	0x00000093
+#define OSIF_CMD_ROS_SERVICES_TRYTAKE  	0x00000094	
+#define OSIF_CMD_ROS_SERVICES_TAKE 		0x00000095
 
 /*
  * Definition of memif commands
@@ -294,6 +298,38 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_read(osif_sw2hw))
 
 
+
+
+
+#define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_RESPONSE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+/*
+ * Tries to put a single word into the mbox specified by handle but does not
+ * blocks until the mbox gets populated.
+ *
+ *   @see mbox_tryget
+ */
+#define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+/*
+ * Tries to read a single word from the mbox specified by handle but does not
+ * blocks until the mbox gets free.
+ *
+ *   @see mbox_tryput
+ */
+#define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg )(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
 /*
  * Gets the pointer to the initialization data of the ReconOS thread
  * specified by reconos_hwt_setinitdata.

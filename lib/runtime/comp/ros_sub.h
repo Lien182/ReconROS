@@ -5,8 +5,6 @@
 #ifndef ROSSUB_H
 #define ROSSUB_H
 
-#include <std_msgs/msg/string.h>
-
 #include <rcl/node.h>
 #include <rcl/subscription.h>
 #include <stdint.h>

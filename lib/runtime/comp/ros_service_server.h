@@ -13,13 +13,12 @@
 /*
  * Structure representing a mbox
  */
-struct ros_service_server_t {
+struct ros_service_server_t 
+{
     rcl_node_t*             node;
     rcl_service_t           service;
-    rmw_request_id_t        request_id;
-   
-    uint32_t                wait_time;
-    
+    rmw_request_id_t        request_id;   
+    uint32_t                wait_time;    
 };
 
 
