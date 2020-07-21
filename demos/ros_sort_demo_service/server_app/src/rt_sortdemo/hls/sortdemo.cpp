@@ -2,7 +2,7 @@
 #include "reconos_thread.h"
 #include "ap_cint.h"
 
-#include <my_reconros_services/msg/sort.h>
+#include <sorter_msgs/srv/sort.h>
 
 #define BLOCK_SIZE 2048
 
@@ -48,8 +48,8 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		pMessage = ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg );
-		addr = OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + pMessage;
+		pMessage = OSIF_CMD_ROS_SERVICES_RESPONSE(resources_srv, resources_sort_srv_req );
+		addr = OFFSETOF(sort_msgs__srv__Sort_Request, data) + pMessage;
 
 		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
@@ -57,6 +57,6 @@ THREAD_ENTRY() {
 		sort_bubble(ram);
 		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
 		
-		ROS_PUBLISH(resources_pubdata,resources_sort_msg);
+		OSIF_CMD_ROS_SERVICES_TAKE(resources_srv,resources_sort_srv_res);
 	}
 }
