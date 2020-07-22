@@ -115,6 +115,43 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
+
+			
+		if r.type == "rosactionmsggoalreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Goal"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Goal" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Goal" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
+		if r.type == "rosactionmsggoalres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
+		if r.type == "rosactionmsgresultreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "	
+
+		if r.type == "rosactionmsgresultres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Result"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Result" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Result" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
+		if r.type == "rosactionmsgfeedback":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Feedback"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Feedback" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Feedback" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
 		dictionary["RESOURCES"].append(d)
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:

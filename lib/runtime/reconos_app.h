@@ -29,6 +29,7 @@
 #include "ros_pub.h"
 #include "ros_sub.h"
 #include "ros_service_server.h"
+#include "ros_action_server.h"
 
 #include <pthread.h>
 #include <semaphore.h>
