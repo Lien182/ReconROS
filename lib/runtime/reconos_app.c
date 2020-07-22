@@ -78,27 +78,12 @@ struct ros_action_server_t <<NameLower>>_s;
 struct ros_action_server_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
-<<generate for RESOURCES(Type == "rosmsg")>>
+<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 <<ROSDataType>> <<NameLower>>_s;
 <<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
-<<generate for RESOURCES(Type == "rossrvmsgreq")>>
-<<ROSDataType>> <<NameLower>>_s;
-<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
-<<end generate>>
-
-<<generate for RESOURCES(Type == "rossrvmsgres")>>
-<<ROSDataType>> <<NameLower>>_s;
-<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
-<<end generate>>
-
-<<generate for RESOURCES(Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
-<<ROSDataType>> <<NameLower>>_s;
-<<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
-<<end generate>>
-
-<<generate for RESOURCES(Type != "rosactionmsggoalres" and Type != "rosactionmsgresultreq")>>
+<<generate for RESOURCES>>
 struct reconos_resource <<NameLower>>_res = {
 	.ptr = &<<NameLower>>_s,
 	.type = RECONOS_RESOURCE_TYPE_<<TypeUpper>>
