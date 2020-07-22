@@ -56,6 +56,10 @@ def export_msg(args, msgdir, link):
 		if shutil2.exists(prj.dir + "/msg/"+msgs_packs+"/msg/"):
 			msg_files = [f for f in listdir(prj.dir + "/msg/"+msgs_packs+"/msg/") if isfile(join(prj.dir + "/msg/"+msgs_packs+"/msg/", f))]
 			print(msg_files)
+		action_files = {}
+		if shutil2.exists(prj.dir + "/msg/"+msgs_packs+"/action/"):
+			action_files = [f for f in listdir(prj.dir + "/msg/"+msgs_packs+"/action/") if isfile(join(prj.dir + "/msg/"+msgs_packs+"/action/", f))]
+			print(action_files)
 
 		dictionary["interface_files"] = ""
 		for f in srv_files:
@@ -64,6 +68,8 @@ def export_msg(args, msgdir, link):
 		for f in msg_files:
 			dictionary["interface_files"] += '"msg/'+f+'" '
 
+		for f in action_files:
+			dictionary["interface_files"] += '"action/'+f+'" '
 
 		print(dictionary["interface_files"])	
 		prj.apply_template("ros_msg", dictionary, msgdir + "/"+ msgs_packs, link)
@@ -71,7 +77,8 @@ def export_msg(args, msgdir, link):
 			shutil.copytree( prj.dir + "/msg/" + msgs_packs + "/srv/", msgdir + "/" + msgs_packs + "/srv/")
 		if shutil2.exists(prj.dir + "/msg/" + msgs_packs + "/msg/"):	
 			shutil.copytree( prj.dir + "/msg/" + msgs_packs + "/msg/", msgdir + "/" + msgs_packs + "/msg/")
-
+		if shutil2.exists(prj.dir + "/msg/" + msgs_packs + "/action/"):	
+			shutil.copytree( prj.dir + "/msg/" + msgs_packs + "/action/", msgdir + "/" + msgs_packs + "/action/")
 
 	# #bashCommand = "source /opt/ros/foxy/setup.bash; cd "+swdir+ "/msg; ros2 pkg create my_reconros_services --dependencies builtin_interfaces"
 	# #print(bashCommand)

@@ -14,15 +14,13 @@ def get_call(prj):
 	return build_cmd
 
 def get_parser(prj):
-	parser = argparse.ArgumentParser("build_hw", description="""
-		Builds the hardware project and generates a bitstream to
-		be downloaded to the FPGA.
-		""")
-	parser.add_argument("hwdir", help="alternative export directory", nargs="?")
+	parser = argparse.ArgumentParser("build_msg", description="""
+		Builds the ROS messages project """)
+	parser.add_argument("msgdir", help="alternative export directory", nargs="?")
 	return parser
 
 def build_cmd(args):
-	build(args.prj, args.hwdir)
+	build(args.prj, args.msgdir)
 
 
 def build(prj, msgdir):
