@@ -86,17 +86,12 @@ extern struct ros_service_server_t <<NameLower>>_s;
 extern struct ros_service_server_t *<<NameLower>>;
 <<end generate>>
 
-<<generate for RESOURCES(Type == "rosmsg")>>
-extern <<ROSDataType>> <<NameLower>>_s;
-extern <<ROSDataType>> *<<NameLower>>;
+<<generate for RESOURCES(Type == "rosactions")>>
+extern struct ros_action_server_t <<NameLower>>_s;
+extern struct ros_action_server_t *<<NameLower>>;
 <<end generate>>
 
-<<generate for RESOURCES(Type == "rossrvmsgreq")>>
-extern <<ROSDataType>> <<NameLower>>_s;
-extern <<ROSDataType>> *<<NameLower>>;
-<<end generate>>
-
-<<generate for RESOURCES(Type == "rossrvmsgres")>>
+<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 extern <<ROSDataType>> <<NameLower>>_s;
 extern <<ROSDataType>> *<<NameLower>>;
 <<end generate>>

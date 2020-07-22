@@ -25,6 +25,8 @@
 
 #include "ros_pub.h"
 #include "ros_sub.h"
+#include "ros_service_server.h"
+#include "ros_action_server.h"
 
 #include <unistd.h>
 #include <pthread.h>
@@ -202,5 +204,28 @@
 #define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg ) \
 	ros_service_server_take_request(p_handle, p_handle_msg);
 
+
+
+
+#define ROS_ACTIONSERVER_GOAL_TAKE(p_handle, p_handle_msg) \
+	ros_action_server_goal_take(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONSERVER_GOAL_TRYTAKE(p_handle,p_handle_msg) \
+	ros_action_server_goal_try_take(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONSERVER_GOAL_DECIDE(p_handle,accept) \
+	ros_action_server_goal_decide(p_handle, accept);
+
+#define ROS_ACTIONSERVER_RESULT_TAKE(p_handle) \
+	ros_action_server_result_take(p_handle);
+
+#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle) \
+	ros_action_server_result_try_take(p_handle);
+
+#define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg ) \
+	ros_action_server_result_send(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg ) \
+	ros_action_server_feedback(p_handle, (void*)p_handle_msg);
 
 #endif /* RECONOS_CALLS_H */
