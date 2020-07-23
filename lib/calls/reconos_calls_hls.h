@@ -79,6 +79,15 @@
 #define OSIF_CMD_ROS_SERVICES_TRYTAKE  	0x00000094	
 #define OSIF_CMD_ROS_SERVICES_TAKE 		0x00000095
 
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE		0x00000096
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE	0x00000097
+#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE	0x00000098
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE	0x00000099
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE	0x0000009A
+#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND	0x0000009B
+#define OSIF_CMD_ROS_ACTIONS_FEEDBACK		0x0000009C
+
+
 /*
  * Definition of memif commands
  *
@@ -330,6 +339,53 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
+
+//ROS Actions
+
+#define ROS_ACTION_SERVER_GOAL_REJECT       0
+#define ROS_ACTION_SERVER_GOAL_ACCEPT       1
+
+
+#define ROS_ACTIONSERVER_GOAL_TAKE(p_handle, p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_GOAL_TRYTAKE(p_handle,p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_GOAL_DECIDE(p_handle,accept)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, accept),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_TAKE(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_FEEDBACK),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
 /*
  * Gets the pointer to the initialization data of the ReconOS thread
  * specified by reconos_hwt_setinitdata.

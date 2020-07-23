@@ -55,7 +55,6 @@ void *rt_sortdemo(void *data) {
 		printf("Publish new data! \n");
 		
 		//Sort in place, boths messages refer to the same data location
-		memcpy(&resources_sort_action_result_res->result.sorted, &resources_sort_action_goal_req->goal.unsorted, sizeof(resources_sort_action_goal_req->goal.unsorted));
 		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
 		
 	}

@@ -2,7 +2,7 @@
 #include "reconos_thread.h"
 #include "ap_cint.h"
 
-#include <sorter_msgs/srv/sort.h>
+#include <sorter_msgs/action/sort.h>
 
 #define BLOCK_SIZE 2048
 
@@ -25,9 +25,17 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 	unsigned int i, k, stage;
 	uint32 tmp;
 
-	for(stage = 1; stage <= BLOCK_SIZE; stage++){
-		k = (stage % 2 == 1) ? 0 : 1;
-		for(i = k; i < BLOCK_SIZE - 1; i += 2){
+	for(stage = 1; stage <= size; stage++){
+		
+		for(i = 0; i < size - 1; i += 2){
+			if (ram[i] > ram[i + 1]) {
+				tmp = ram[i];
+				ram[i] = ram[i + 1];
+				ram[i + 1] = tmp;
+			}
+		}
+
+		for(i = 1; i < size - 1; i += 2){
 			if (ram[i] > ram[i + 1]) {
 				tmp = ram[i];
 				ram[i] = ram[i + 1];
@@ -48,15 +56,33 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		pMessage = ROS_SERVICESERVER_TAKE(resources_srv, resources_sort_srv_req );
-		addr = OFFSETOF(sorter_msgs__srv__Sort_Request, unsorted.data) + pMessage;
+		pMessage = ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
+		addr = OFFSETOF(sorter_msgs__action__Sort_SendGoal_Request, goal.unsorted.data) + pMessage;
 
 		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
-
+		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
+		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
 		sort_bubble(ram);
 		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
 		
-		ROS_SERVICESERVER_SEND_RESPONSE(resources_srv,resources_sort_srv_res);
+		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
 	}
 }
+
+
+/*
+		printf("Wait for new data! \n");
+		ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
+		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_action_goal_req->goal.unsorted.size, resources_sort_action_goal_req->goal.unsorted.capacity);
+		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
+		
+		printf("Decision done, now waiting for the result request. \n");
+		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
+		sort_net(resources_sort_action_goal_req->goal.unsorted.data, resources_sort_action_goal_req->goal.unsorted.size);
+		printf("Publish new data! \n");
+		
+		//Sort in place, boths messages refer to the same data location
+		memcpy(&resources_sort_action_result_res->result.sorted, &resources_sort_action_goal_req->goal.unsorted, sizeof(resources_sort_action_goal_req->goal.unsorted));
+		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
+*/
