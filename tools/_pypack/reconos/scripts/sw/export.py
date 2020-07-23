@@ -4,6 +4,13 @@ import reconos.utils.template as template
 import logging
 import argparse
 
+import shutil
+import os
+import subprocess
+from os import listdir
+from os.path import isfile, join
+
+
 log = logging.getLogger(__name__)
 
 def get_cmd(prj):
@@ -38,6 +45,7 @@ def export_sw(args, swdir, link):
 	dictionary["CFLAGS"] = prj.impinfo.cflags
 	dictionary["LDFLAGS"] = prj.impinfo.ldflags
 	dictionary["THREADS"] = []
+	dictionary["ROSMsgHeader"] = ""
 	for t in prj.threads:
 		d = {}
 		d["Name"] = t.name.lower()
@@ -51,6 +59,8 @@ def export_sw(args, swdir, link):
 	dictionary["RESOURCES"] = []
 	for r in prj.resources:
 		d = {}
+		
+		d["Group"] = r.group.lower()
 		d["Id"] = r.id
 		d["NameUpper"] = (r.group + "_" + r.name).upper()
 		d["NameLower"] = (r.group + "_" + r.name).lower()
@@ -67,6 +77,22 @@ def export_sw(args, swdir, link):
 				if msg.name == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] 
 					break
+
+		elif r.type == "rossrvs":
+			for msg in prj.resources:
+				print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
+		elif r.type == "rosactions":
+			for msg in prj.resources:
+				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_goal_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
+		
 		else:
 			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id
@@ -76,11 +102,62 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence__destroy"
 				d["ROSDataTypeSequenceLength"] = r.args[3]
+		if r.type == "rossrvmsgreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
+		if r.type == "rossrvmsgres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
+			
+		if r.type == "rosactionmsggoalreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_SendGoal_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_SendGoal_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_SendGoal_Request" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
+		if r.type == "rosactionmsggoalres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Response" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
+		if r.type == "rosactionmsgresultreq":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Request" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "	
+
+		if r.type == "rosactionmsgresultres":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_GetResult_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_GetResult_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_GetResult_Response" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
+		if r.type == "rosactionmsgfeedback":
+			if len(r.args) == 3: 
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_FeedbackMessage"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__destroy"
+				d["ROSDataTypeSequenceLength"] = " "
+
 		dictionary["RESOURCES"].append(d)
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:
@@ -108,10 +185,12 @@ def export_sw(args, swdir, link):
 	dictionary["BOARD"] = "_".join(prj.impinfo.board)
 	dictionary["REPO_REL"] = shutil2.relpath(prj.impinfo.repo, swdir)
 	dictionary["OBJS"] = [{"Source": shutil2.trimext(_) + ".o"}
-	                       for _ in shutil2.listfiles(swdir, True, "c[p]*$")]
+	                       for _ in shutil2.listfiles(swdir, True, "c[cp]*$")]
 
 	template.preproc(shutil2.join(swdir, "Makefile"), dictionary, "overwrite", force=True)
 
+	
+	
 def export_sw_thread(args, swdir, link, thread):
 	prj = args.prj
 	swdir = swdir if swdir is not None else prj.basedir + ".sw" + "." + thread.lower()

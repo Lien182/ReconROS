@@ -21,8 +21,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 #install ros
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y ros-dashing-ros-base
-
-RUN apt-get install --no-install-recommends -y nano gcc g++
+RUN apt-get install --no-install-recommends -y nano gcc g++ libopencv-dev libeigen3-dev libpython3.6-dev libglew-dev
 
 RUN rosdep init
 RUN rosdep update

@@ -7,6 +7,10 @@ import argparse
 import tempfile
 import subprocess
 
+import os
+from os import listdir
+from os.path import isfile, join, isdir
+
 log = logging.getLogger(__name__)
 
 def get_cmd(prj):
@@ -155,6 +159,19 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 		tmp = tempfile.TemporaryDirectory()
 
 		dictionary = {}
+
+		#Added
+		dictionary["MSGINCLUDEDIR"] = ""
+
+		msg_install_path = prj.dir + "/build.msg/install/"
+		if shutil2.exists(msg_install_path):
+			msg_packages = [f for f in listdir(msg_install_path) if isdir(join(msg_install_path, f))]
+			#print(msg_packages)
+			for msg_pack in msg_packages:
+				dictionary["MSGINCLUDEDIR"] += "-I"+msg_install_path + msg_pack + "/include/ "
+
+		#End Added
+
 		dictionary["PART"] = prj.impinfo.part
 		dictionary["NAME"] = thread.name.lower()
 		dictionary["MEM"] = thread.mem

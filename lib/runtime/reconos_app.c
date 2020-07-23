@@ -68,11 +68,20 @@ struct ros_publisher_t <<NameLower>>_s;
 struct ros_publisher_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
-<<generate for RESOURCES(Type == "rosmsg")>>
+<<generate for RESOURCES(Type == "rossrvs")>>
+struct ros_service_server_t <<NameLower>>_s;
+struct ros_service_server_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rosactions")>>
+struct ros_action_server_t <<NameLower>>_s;
+struct ros_action_server_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 <<ROSDataType>> <<NameLower>>_s;
 <<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
-
 
 <<generate for RESOURCES>>
 struct reconos_resource <<NameLower>>_res = {
@@ -80,7 +89,6 @@ struct reconos_resource <<NameLower>>_res = {
 	.type = RECONOS_RESOURCE_TYPE_<<TypeUpper>>
 };
 <<end generate>>
-
 
 /* == Application functions ============================================ */
 
@@ -109,20 +117,27 @@ void reconos_app_init() {
 	<<end generate>>
 
 	<<generate for RESOURCES(Type == "rossub")>>
-	ros_subscriber_init(<<NameLower>>, resources_<<Args>>);
+	ros_subscriber_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
 
 	<<generate for RESOURCES(Type == "rospub")>>
-	ros_publisher_init(<<NameLower>>, resources_<<Args>>);
+	ros_publisher_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
 
-	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
 	// VERY; VERY UGLY
 	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
 	<<NameLower>> = &<<NameLower>>_s;
 	<<end generate>>
 
+	<<generate for RESOURCES(Type == "rossrvs")>>
+	ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rosactions")>>
+	ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);
+	<<end generate>>
 	
 }
 
@@ -159,12 +174,17 @@ void reconos_app_cleanup() {
 	<<end generate>>
 
 
-	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
 	<<end generate>>
 
+	<<generate for RESOURCES(Type == "rossrvs")>>
+	ros_service_server_destroy(<<NameLower>>);
+	<<end generate>>
 	
-
+	<<generate for RESOURCES(Type == "rosactions")>>
+	ros_action_server_destroy(<<NameLower>>);
+	<<end generate>>
 
 }
 

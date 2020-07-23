@@ -46,34 +46,47 @@
  *   self-describing
  *
  */
-#define OSIF_CMD_THREAD_GET_INIT_DATA  0x000000A0
-#define OSIF_CMD_THREAD_GET_STATE_ADDR 0x000000A1
-#define OSIF_CMD_THREAD_EXIT           0x000000A2
-#define OSIF_CMD_THREAD_YIELD          0x000000A3
-#define OSIF_CMD_THREAD_CLEAR_SIGNAL   0x000000A4
-#define OSIF_CMD_SEM_POST              0x000000B0
-#define OSIF_CMD_SEM_WAIT              0x000000B1
-#define OSIF_CMD_MUTEX_LOCK            0x000000C0
-#define OSIF_CMD_MUTEX_UNLOCK          0x000000C1
-#define OSIF_CMD_MUTEX_TRYLOCK         0x000000C2
-#define OSIF_CMD_COND_WAIT             0x000000D0
-#define OSIF_CMD_COND_SIGNAL           0x000000D1
-#define OSIF_CMD_COND_BROADCAST        0x000000D2
-#define OSIF_CMD_MBOX_GET              0x000000F0
-#define OSIF_CMD_MBOX_PUT              0x000000F1
-#define OSIF_CMD_MBOX_TRYGET           0x000000F2
-#define OSIF_CMD_MBOX_TRYPUT           0x000000F3
-#define OSIF_CMD_MASK                  0x000000FF
-#define OSIF_CMD_YIELD_MASK            0x80000000
+#define OSIF_CMD_THREAD_GET_INIT_DATA  	0x000000A0
+#define OSIF_CMD_THREAD_GET_STATE_ADDR 	0x000000A1
+#define OSIF_CMD_THREAD_EXIT           	0x000000A2
+#define OSIF_CMD_THREAD_YIELD          	0x000000A3
+#define OSIF_CMD_THREAD_CLEAR_SIGNAL   	0x000000A4
+#define OSIF_CMD_SEM_POST              	0x000000B0
+#define OSIF_CMD_SEM_WAIT              	0x000000B1
+#define OSIF_CMD_MUTEX_LOCK            	0x000000C0
+#define OSIF_CMD_MUTEX_UNLOCK          	0x000000C1
+#define OSIF_CMD_MUTEX_TRYLOCK         	0x000000C2
+#define OSIF_CMD_COND_WAIT             	0x000000D0
+#define OSIF_CMD_COND_SIGNAL           	0x000000D1
+#define OSIF_CMD_COND_BROADCAST        	0x000000D2
+#define OSIF_CMD_MBOX_GET              	0x000000F0
+#define OSIF_CMD_MBOX_PUT              	0x000000F1
+#define OSIF_CMD_MBOX_TRYGET           	0x000000F2
+#define OSIF_CMD_MBOX_TRYPUT           	0x000000F3
+#define OSIF_CMD_MASK                  	0x000000FF
+#define OSIF_CMD_YIELD_MASK            	0x80000000
 
-#define OSIF_SIGNAL_THREAD_START       0x01000000
-#define OSIF_SIGNAL_THREAD_RESUME      0x01000001
+#define OSIF_SIGNAL_THREAD_START       	0x01000000
+#define OSIF_SIGNAL_THREAD_RESUME      	0x01000001
 
-#define OSIF_INTERRUPTED               0x000000FF
+#define OSIF_INTERRUPTED               	0x000000FF
 
-#define OSIF_CMD_ROS_PUBLISH		   0x00000090
-#define OSIF_CMD_ROS_TAKE			   0x00000091
-#define OSIF_CMD_ROS_TRYTAKE		   0x00000092
+#define OSIF_CMD_ROS_PUBLISH		   	0x00000090
+#define OSIF_CMD_ROS_TAKE			   	0x00000091
+#define OSIF_CMD_ROS_TRYTAKE		   	0x00000092
+
+#define OSIF_CMD_ROS_SERVICES_RESPONSE 	0x00000093
+#define OSIF_CMD_ROS_SERVICES_TRYTAKE  	0x00000094	
+#define OSIF_CMD_ROS_SERVICES_TAKE 		0x00000095
+
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE		0x00000096
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE	0x00000097
+#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE	0x00000098
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE	0x00000099
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE	0x0000009A
+#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND	0x0000009B
+#define OSIF_CMD_ROS_ACTIONS_FEEDBACK		0x0000009C
+
 
 /*
  * Definition of memif commands
@@ -294,6 +307,85 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_read(osif_sw2hw))
 
 
+
+
+
+#define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_RESPONSE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+/*
+ * Tries to put a single word into the mbox specified by handle but does not
+ * blocks until the mbox gets populated.
+ *
+ *   @see mbox_tryget
+ */
+#define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+/*
+ * Tries to read a single word from the mbox specified by handle but does not
+ * blocks until the mbox gets free.
+ *
+ *   @see mbox_tryput
+ */
+#define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg )(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+//ROS Actions
+
+#define ROS_ACTION_SERVER_GOAL_REJECT       0
+#define ROS_ACTION_SERVER_GOAL_ACCEPT       1
+
+
+#define ROS_ACTIONSERVER_GOAL_TAKE(p_handle, p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_GOAL_TRYTAKE(p_handle,p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_GOAL_DECIDE(p_handle,accept)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, accept),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_TAKE(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_FEEDBACK),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
 /*
  * Gets the pointer to the initialization data of the ReconOS thread
  * specified by reconos_hwt_setinitdata.
@@ -364,6 +456,27 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 			__rem -= 4;\
 		}\
 	}}
+
+/*
+ * Writes several words from the local ram into main memory. Therefore,
+ * divides a large request into smaller ones of length at most
+ * MEMIF_CHUNK_BYTES and splits request at page borders to guarantee
+ * correct address translation.
+ *
+ *   src - array to read data from
+ *   dst - start address to read from the main memory
+ *   len - number of bytes to transmit (bytes)
+ */
+
+#define MEM_WRITE_FROM_STREAM(src,dst,len){\
+	uint32 __len = len; \
+	stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+	stream_write(memif_hwt2mem, dst);\
+	for (; __len > 0; __len -= 4) {\
+		stream_write(memif_hwt2mem, src.read());\
+	}\
+	}
+
 
 /*
  * Terminates the current ReconOS thread.

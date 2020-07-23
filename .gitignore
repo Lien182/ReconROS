@@ -13,6 +13,22 @@ demos/image_filtering/build.sw/
 demos/*/build.sw/
 demos/*/build.hw/
 
-demos/ros_sort_demo/server_app/build.sw/
-demos/ros_sort_demo/server_app/build.hw/
-demos/ros_sort_demo/client_app/client_app
+demos/*/server_app/build.sw/
+demos/*/server_app/build.hw/
+demos/*/server_app/build.msg/
+demos/*/client_app/client_app
+
+demos/*/client_app/build
+demos/*/client_app/install
+demos/*/client_app/include
+demos/*/client_app/log
+
+demos/*/client_app/sorter_msgs/build
+demos/*/client_app/sorter_msgs/install
+demos/*/client_app/sorter_msgs/include
+demos/*/client_app/sorter_msgs/log
+
+
+tools/arm-docker-build/Docker/qemu-arm-static
+
+

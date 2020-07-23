@@ -311,7 +311,25 @@ class Project:
 				log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
 			
 				resource = Resource(r, match[0], match[1:], group)
-				self.resources.append(resource)
+
+				if resource.type == "rossrvmsg":
+					resource.name = resource.name + "_res"
+					resource.type = resource.type + "res"
+					self.resources.append(resource)
+					resource = Resource(r+"_req", match[0]+"req", match[1:], group)
+					self.resources.append(resource)
+				elif resource.type == "rosactionmsg":
+					resource.name = resource.name + "_goal_req"
+					resource.type = resource.type + "goalreq"
+					self.resources.append(resource)
+					resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
+					self.resources.append(resource)
+					resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
+					self.resources.append(resource)
+
+				else:
+					self.resources.append(resource)
+				
 
 	#
 	# Internal method parsing the slots from the project file.

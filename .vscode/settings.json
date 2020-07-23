@@ -19,6 +19,8 @@
         "set": "c",
         "stack": "c",
         "string": "c",
-        "vector": "c"
+        "vector": "c",
+        "*.tcc": "cpp",
+        "*.idl": "c"
     }
 }
