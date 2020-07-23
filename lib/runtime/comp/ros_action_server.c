@@ -171,7 +171,16 @@ int ros_action_server_feedback(struct ros_action_server_t *ros_action_server, vo
             &ros_action_server->action,
             feedback_msg);
 
-    return rc;
+    if (rc == RCL_RET_OK) 
+    {
+        printf("[ROS Action Server] Published feedback!\n");
+        return 0;
+    }
+    else 
+    {
+        printf("[ROS Action Server] Error publishing feedback!\n");
+        return rc;
+    }
 }
 
 typedef struct

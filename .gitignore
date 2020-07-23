@@ -23,6 +23,12 @@ demos/*/client_app/install
 demos/*/client_app/include
 demos/*/client_app/log
 
+demos/*/client_app/sorter_msgs/build
+demos/*/client_app/sorter_msgs/install
+demos/*/client_app/sorter_msgs/include
+demos/*/client_app/sorter_msgs/log
+
+
 tools/arm-docker-build/Docker/qemu-arm-static
 
 

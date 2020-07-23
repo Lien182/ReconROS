@@ -20,6 +20,7 @@
         "stack": "c",
         "string": "c",
         "vector": "c",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "*.idl": "c"
     }
 }

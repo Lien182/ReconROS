@@ -5,30 +5,40 @@
 
 
 
-void bubblesort(uint32_t *data, int data_count) {
-	int i;
+void sort_net(uint32_t * ram, uint32_t size) {
+	unsigned int i,  stage;
 	uint32_t tmp;
-	int s, n, newn;
 
-	s = 1;
-	n = data_count - 1;
-	newn = n;
-
-	while (s) {
-		s = 0;
-		for (i = 0; i < n; i++) {
-			if (data[i] > data[i + 1]) {
-				tmp = data[i];
-				data[i] = data[i + 1];
-				data[i + 1] = tmp;
-				newn = i;
-				s = 1;
+	for(stage = 1; stage <= size; stage++){
+		
+		for(i = 0; i < size - 1; i += 2){
+			if (ram[i] > ram[i + 1]) {
+				tmp = ram[i];
+				ram[i] = ram[i + 1];
+				ram[i + 1] = tmp;
 			}
 		}
 
-		n = newn;
+		for(i = 1; i < size - 1; i += 2){
+			if (ram[i] > ram[i + 1]) {
+				tmp = ram[i];
+				ram[i] = ram[i + 1];
+				ram[i + 1] = tmp;
+			}
+		}
+		if((stage % 256) == 0)
+		{
+			resources_sort_action_feedback->goal_id = resources_sort_action_goal_req->goal_id;
+			resources_sort_action_feedback->feedback.percent = (float)stage /(float)size * 100.0f;
+			ROS_ACTIONSERVER_FEEDBACK(resources_actionsrv,resources_sort_action_feedback);
+			printf("Feedback sent \n");
+			usleep(100000);
+		}
+			
+
 	}
 }
+
 
 void *rt_sortdemo(void *data) {
 	
@@ -36,14 +46,16 @@ void *rt_sortdemo(void *data) {
 		
 		printf("Wait for new data! \n");
 		ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
-		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_action_goal_req->unsorted.size, resources_sort_action_goal_req->unsorted.capacity);
-		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_ACCEPT_GOAL);
-
+		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_action_goal_req->goal.unsorted.size, resources_sort_action_goal_req->goal.unsorted.capacity);
+		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
+		
+		printf("Decision done, now waiting for the result request. \n");
 		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
-		bubblesort(resources_sort_action_goal_req->unsorted.data, resources_sort_action_goal_req->unsorted.size);
+		sort_net(resources_sort_action_goal_req->goal.unsorted.data, resources_sort_action_goal_req->goal.unsorted.size);
 		printf("Publish new data! \n");
-		#warning TODO
-		memcpy(resources_sort_action_result_res, resources_sort_action_goal_req, sizeof(resources_sort_action_result_res_s));
+		
+		//Sort in place, boths messages refer to the same data location
+		memcpy(&resources_sort_action_result_res->result.sorted, &resources_sort_action_goal_req->goal.unsorted, sizeof(resources_sort_action_goal_req->goal.unsorted));
 		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
 		
 	}

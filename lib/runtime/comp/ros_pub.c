@@ -49,8 +49,9 @@ int ros_publisher_publish(struct ros_publisher_t *ros_pub, void * msg)
   rc = rcl_publish(&ros_pub->rcl_pub, msg, NULL);
   if (rc == RCL_RET_OK) {
     debug("[ROS Publisher] Published message!\n");
+    return 0;
   } else {
     debug("[ROS Publisher] Error publishing message!\n");
+    return rc;
   }
-  return 0;
 }

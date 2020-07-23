@@ -124,7 +124,7 @@ void reconos_app_init() {
 	ros_publisher_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
 
-	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
 	// VERY; VERY UGLY
 	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
@@ -135,20 +135,9 @@ void reconos_app_init() {
 	ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
 
-	<<generate for RESOURCES(Type == "rossrvmsgreq")>>
-	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
-	// VERY; VERY UGLY
-	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
-	<<NameLower>> = &<<NameLower>>_s;
+	<<generate for RESOURCES(Type == "rosactions")>>
+	ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossrvmsgres")>>
-	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
-	// VERY; VERY UGLY
-	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
-	<<NameLower>> = &<<NameLower>>_s;
-	<<end generate>>
-
 	
 }
 
@@ -185,7 +174,7 @@ void reconos_app_cleanup() {
 	<<end generate>>
 
 
-	<<generate for RESOURCES(Type == "rosmsg")>>
+	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
 	<<end generate>>
 
@@ -193,14 +182,9 @@ void reconos_app_cleanup() {
 	ros_service_server_destroy(<<NameLower>>);
 	<<end generate>>
 	
-	<<generate for RESOURCES(Type == "rossrvmsgreq")>>
-	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
+	<<generate for RESOURCES(Type == "rosactions")>>
+	ros_action_server_destroy(<<NameLower>>);
 	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossrvmsgres")>>
-	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
-	<<end generate>>
-
 
 }
 

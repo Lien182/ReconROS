@@ -33,7 +33,8 @@ struct ros_action_server_t
 #define ROS_ACTION_SERVER_FSM_RESULT_REQ    3
 
 
-#define ROS_ACTION_SERVER_ACCEPT_GOAL       1
+#define ROS_ACTION_SERVER_GOAL_REJECT       0
+#define ROS_ACTION_SERVER_GOAL_ACCEPT       1
 
 extern int ros_action_server_init(struct ros_action_server_t *ros_action_server, struct ros_node_t * ros_node, const rosidl_action_type_support_t * action_type, char* action_name, uint32_t wait_time);
 

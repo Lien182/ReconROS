@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(my_reconros_services)
+project(sorter_msgs)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -15,26 +15,15 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/Sort.srv"
+  "msg/Feedback.msg" "action/Sort.action" 
  )
-
-ament_export_dependencies(rosidl_default_runtime)
-
-add_executable(client src/client.cpp)
-ament_target_dependencies(client rclcpp)
-
-install(TARGETS client
- DESTINATION lib/${PROJECT_NAME})
-
- rosidl_target_interfaces(client
-  ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

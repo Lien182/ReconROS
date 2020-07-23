@@ -85,7 +85,13 @@ def export_sw(args, swdir, link):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
 					print(d["Args"])
 					break
-		
+		elif r.type == "rosactions":
+			for msg in prj.resources:
+				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_goal_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
 		
 		else:
 			d["Args"] = ", ".join(r.args)
@@ -119,9 +125,9 @@ def export_sw(args, swdir, link):
 			
 		if r.type == "rosactionmsggoalreq":
 			if len(r.args) == 3: 
-				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Goal"
-				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Goal" + "__create"
-				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Goal" + "__destroy"
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_SendGoal_Request"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_SendGoal_Request" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_SendGoal_Request" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
 		if r.type == "rosactionmsggoalres":
@@ -140,16 +146,16 @@ def export_sw(args, swdir, link):
 
 		if r.type == "rosactionmsgresultres":
 			if len(r.args) == 3: 
-				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Result"
-				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Result" + "__create"
-				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Result" + "__destroy"
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_GetResult_Response"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_GetResult_Response" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_GetResult_Response" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 
 		if r.type == "rosactionmsgfeedback":
 			if len(r.args) == 3: 
-				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_Feedback"
-				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Feedback" + "__create"
-				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_Feedback" + "__destroy"
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+ "_FeedbackMessage"
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 
 		dictionary["RESOURCES"].append(d)
