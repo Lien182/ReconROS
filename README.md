@@ -28,7 +28,7 @@ Additionally, you have to install Vivado (tested with 2017.1) and ROS2 (tested w
 There are three sort demos available. The demo used in the following are based on pub/sub communication. The other two demos use ROS2 actions and services for the client server communication. Both demos require a preceding command for build the costum ROS2 message package. 
 
 ```
-$ rdk build_msg
+$ rdk export_msg && rdk build_msg
 ```
 
 ### First Step: Server Application 
