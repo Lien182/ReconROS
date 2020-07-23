@@ -25,6 +25,11 @@ $ bash tools/install.sh
 Additionally, you have to install Vivado (tested with 2017.1) and ROS2 (tested with Dashing)
 
 ## Build and run the ROS demo
+There are three sort demos available. The demo used in the following are based on pub/sub communication. The other two demos use ROS2 actions and services for the client server communication. Both demos require a preceding command for build the costum ROS2 message package. 
+
+```
+$ rdk build_msg
+```
 
 ### First Step: Server Application 
 Navigate to the server demo folder. It contains the build.cfg file which is used by ReconROS. Before you can compile the application, you have to export the project:
