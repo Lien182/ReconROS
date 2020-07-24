@@ -15,30 +15,14 @@
 #include "rmw/types.h"
 
 #include "../utils.h"
-/*
 
-int _ros_action_server_thread(void * arg)
-{
-    ros_action_server_t * action_server = (ros_action_server_t*)arg;
-
-
-    while(!(action_server->shutdown))
-    {
-        switch(action_server->fsm)
-        {
-            case 
-        }
-    }
-    return 0;
-
-}
-*/
 
 
 int ros_action_server_init(struct ros_action_server_t *ros_action_server, struct ros_node_t * ros_node, const rosidl_action_type_support_t * action_type, char* action_name, uint32_t wait_time)
 {
 
     ros_action_server->node = &ros_node->node;
+    ros_action_server->wait_time = wait_time;
 
     rcl_ret_t ret = 0;
 

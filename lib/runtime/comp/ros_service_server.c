@@ -20,9 +20,9 @@ int ros_service_server_init(struct ros_service_server_t *ros_service_server, str
 {
 
     ros_service_server->node = &ros_node->node;
+    ros_service_server->wait_time = wait_time;
 
     rcl_ret_t ret = 0;
-
     rcl_service_options_t service_ops = rcl_service_get_default_options();
 
     ret = rcl_service_init(
