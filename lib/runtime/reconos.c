@@ -1227,8 +1227,6 @@ intr:
 	return -1;
 }
 
-#warning TODO
-
 static inline int dt_ros_actions_goal_trytake(struct hwslot *slot) {
 	int handle, ret, msg_handle;
 	handle = reconos_osif_read(slot->osif);
@@ -1290,8 +1288,6 @@ static inline int dt_ros_actions_result_take(struct hwslot *slot) {
 intr:
 	return -1;
 }
-
-#warning TODO
 
 static inline int dt_ros_actions_result_trytake(struct hwslot *slot) {
 	int handle, ret;

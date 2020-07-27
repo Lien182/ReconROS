@@ -47,7 +47,7 @@ void *rt_sortdemo(void *data) {
 		printf("Wait for new data! \n");
 		ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
 		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_action_goal_req->goal.unsorted.size, resources_sort_action_goal_req->goal.unsorted.capacity);
-		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
+		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTIONSERVER_GOAL_ACCEPT);
 		
 		printf("Decision done, now waiting for the result request. \n");
 		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);

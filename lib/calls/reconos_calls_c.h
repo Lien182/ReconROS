@@ -27,6 +27,7 @@
 #include "ros_sub.h"
 #include "ros_service_server.h"
 #include "ros_action_server.h"
+#include "ros_service_client.h"
 
 #include <unistd.h>
 #include <pthread.h>
@@ -205,6 +206,14 @@
 	ros_service_server_take_request(p_handle, p_handle_msg);
 
 
+#define ROS_SERVICECLIENT_SEND_REQUEST(p_handle, p_handle_msg) \
+	ros_service_client_send_request(p_handle, p_handle_msg);
+
+#define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg) \
+	ros_service_client_try_take_response(p_handle, p_handle_msg);
+
+#define ROS_SERVICECLIENT_TAKE(p_handle, p_handle_msg ) \
+	ros_service_client_take_response(p_handle, p_handle_msg);
 
 
 #define ROS_ACTIONSERVER_GOAL_TAKE(p_handle, p_handle_msg) \
