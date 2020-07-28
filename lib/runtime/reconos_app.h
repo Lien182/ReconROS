@@ -30,6 +30,8 @@
 #include "ros_sub.h"
 #include "ros_service_server.h"
 #include "ros_action_server.h"
+#include "ros_service_client.h"
+#include "ros_action_client.h"
 
 #include <pthread.h>
 #include <semaphore.h>
@@ -90,6 +92,17 @@ extern struct ros_service_server_t *<<NameLower>>;
 extern struct ros_action_server_t <<NameLower>>_s;
 extern struct ros_action_server_t *<<NameLower>>;
 <<end generate>>
+
+<<generate for RESOURCES(Type == "rossrvc")>>
+extern struct ros_service_client_t <<NameLower>>_s;
+extern struct ros_service_client_t *<<NameLower>>;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rosactionc")>>
+extern struct ros_action_client_t <<NameLower>>_s;
+extern struct ros_action_client_t *<<NameLower>>;
+<<end generate>>
+
 
 <<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 extern <<ROSDataType>> <<NameLower>>_s;

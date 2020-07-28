@@ -206,7 +206,7 @@
 	ros_service_server_request_take(p_handle, p_handle_msg);
 
 
-#define ROS_SERVICECLIENT_SEND_REQUEST(p_handle, p_handle_msg) \
+#define ROS_SERVICECLIENT_SEND(p_handle, p_handle_msg) \
 	ros_service_client_request_send(p_handle, p_handle_msg);
 
 #define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg) \
