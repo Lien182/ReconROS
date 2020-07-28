@@ -24,6 +24,8 @@ struct ros_action_client_t
 };
 
 
+#define ROS_ACTIONCLIENT_GOAL_REJECTED       0
+#define ROS_ACTIONCLIENT_GOAL_ACCEPTED       1
 
 extern int ros_action_client_init(struct ros_action_client_t *ros_action_client, struct ros_node_t * ros_node, const rosidl_action_type_support_t * action_type, char* action_name, uint32_t wait_time);
 

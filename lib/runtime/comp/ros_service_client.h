@@ -26,11 +26,11 @@ extern int ros_service_client_init(struct ros_service_client_t *ros_service_clie
 
 extern int ros_service_client_destroy(struct ros_service_client_t *ros_service_client);
 
-extern int ros_service_client_send_request(struct ros_service_client_t *ros_service_client, void * req);
+extern int ros_service_client_request_send(struct ros_service_client_t *ros_service_client, void * req);
 
-extern int ros_service_client_try_take_response(struct ros_service_client_t *ros_service_client, void * res);
+extern int ros_service_client_response_try_take(struct ros_service_client_t *ros_service_client, void * res);
 
-extern int ros_service_client_take_response(struct ros_service_client_t *ros_service_client, void * res);
+extern int ros_service_client_response_take(struct ros_service_client_t *ros_service_client, void * res);
 
 
 #endif /* ROSSERVICEclient_H */

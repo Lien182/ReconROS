@@ -25,9 +25,9 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 	unsigned int i, k, stage;
 	uint32 tmp;
 
-	for(stage = 1; stage <= size; stage++){
+	for(stage = 1; stage <= BLOCK_SIZE; stage++){
 		
-		for(i = 0; i < size - 1; i += 2){
+		for(i = 0; i < BLOCK_SIZE - 1; i += 2){
 			if (ram[i] > ram[i + 1]) {
 				tmp = ram[i];
 				ram[i] = ram[i + 1];
@@ -35,7 +35,7 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 			}
 		}
 
-		for(i = 1; i < size - 1; i += 2){
+		for(i = 1; i < BLOCK_SIZE - 1; i += 2){
 			if (ram[i] > ram[i + 1]) {
 				tmp = ram[i];
 				ram[i] = ram[i + 1];

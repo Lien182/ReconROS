@@ -26,10 +26,10 @@ extern int ros_service_server_init(struct ros_service_server_t *ros_service_serv
 
 extern int ros_service_server_destroy(struct ros_service_server_t *ros_service_server);
 
-extern int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req);
+extern int ros_service_server_request_try_take(struct ros_service_server_t *ros_service_server, void * req);
 
-extern int ros_service_server_take_request(struct ros_service_server_t *ros_service_server, void * req);
+extern int ros_service_server_request_take(struct ros_service_server_t *ros_service_server, void * req);
 
-extern int ros_service_server_send_response(struct ros_service_server_t *ros_service_server, void * res);
+extern int ros_service_server_response_send(struct ros_service_server_t *ros_service_server, void * res);
 
 #endif /* ROSSERVICESERVER_H */

@@ -30,6 +30,8 @@
 #include "comp/ros_sub.h"
 #include "comp/ros_service_server.h"
 #include "comp/ros_action_server.h"
+#include "comp/ros_service_client.h"
+#include "comp/ros_action_client.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -1149,7 +1151,7 @@ static inline int dt_ros_services_response(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
 
 	debug("[reconos-dt-%d] (ros service response on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_service_server_send_response(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	SYSCALL_NONBLOCK(ret = ros_service_server_response_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (uint32_t)ret);
@@ -1170,7 +1172,7 @@ static inline int dt_ros_services_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
 
 	debug("[reconos-dt-%d] (ros service take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_service_server_take_request(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	SYSCALL_NONBLOCK(ros_service_server_request_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
 	debug("[reconos-dt-%d] (ros service take %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
@@ -1190,7 +1192,7 @@ static inline int dt_ros_services_trytake(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
 
 	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_service_server_try_take_request(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	SYSCALL_NONBLOCK(ret = ros_service_server_request_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
 	
@@ -1351,6 +1353,237 @@ intr:
 	return -1;
 }
 
+
+static inline int dt_ros_servicec_request(struct hwslot *slot) {
+	int handle, ret;
+	int msg_handle;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSRVC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
+
+	debug("[reconos-dt-%d] (ros service request on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_service_client_request_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (ros service request on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_servicec_take(struct hwslot *slot) {
+	int handle;
+	int msg_handle;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSRVC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
+
+	debug("[reconos-dt-%d] (ros service take response on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ros_service_client_response_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	debug("[reconos-dt-%d] (ros service take response %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_servicec_trytake(struct hwslot *slot) {
+	int handle, ret, msg_handle;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSRVC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
+
+	debug("[reconos-dt-%d] (ros service try take response on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_service_client_response_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (ros service try take response on %d) done\n", slot->id, handle);
+
+	
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+
+
+static inline int dt_ros_actionc_goal_send(struct hwslot *slot) {
+	int handle, msg_handle;
+	int ret;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGGOALREQ);
+
+	debug("[reconos-dt-%d] (ros action goal send on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_goal_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	debug("[reconos-dt-%d] (ros action goal send %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+
+static inline int dt_ros_actionc_goal_take(struct hwslot *slot) {
+	int handle, ret;
+	unsigned int accept = 0;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	
+	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_goal_take(slot->rt->resources[handle].ptr, &accept));
+	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, accept);
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_goal_trytake(struct hwslot *slot) {
+	int handle, ret;
+	unsigned int accept = 0;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	
+	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_goal_try_take(slot->rt->resources[handle].ptr, &accept));
+	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, accept);
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_result_take(struct hwslot *slot) {
+	int handle, ret, msg_handle;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGRESULTRES);
+	
+	debug("[reconos-dt-%d] (dt_ros_actionc_result_take on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_result_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (dt_ros_actionc_result_take on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_result_trytake(struct hwslot *slot) {
+	int handle, msg_handle;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGRESULTRES);
+
+	debug("[reconos-dt-%d] (ros_action_client_result_try_take on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(msg_handle = ros_action_client_result_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (ros_action_client_result_try_take on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)msg_handle);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_result_request(struct hwslot *slot) {
+	int handle, ret;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+
+	debug("[reconos-dt-%d] (ros action result request on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_result_request(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (ros action result request on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+
+static inline int dt_ros_actionc_feedback_take(struct hwslot *slot) {
+	int handle, ret;
+	int msg_handle;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGFEEDBACK);
+
+	debug("[reconos-dt-%d] (ros action take feedback on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_feedback_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (ros action take feedback on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_feedback_trytake(struct hwslot *slot) {
+	int handle, ret;
+	int msg_handle;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGFEEDBACK);
+
+	debug("[reconos-dt-%d] (ros action take feedback on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_feedback_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	debug("[reconos-dt-%d] (ros action take feedback on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
 /*
  * @see header
  */
@@ -1474,7 +1707,52 @@ void *dt_delegate(void *arg) {
 			case OSIF_CMD_ROS_ACTIONS_FEEDBACK:
 				dt_ros_actions_feedback(slot);
 				break;
+			
+			//ROS Service Client
 
+			case OSIF_CMD_ROS_SERVICEC_REQUEST:
+				dt_ros_servicec_request(slot);
+				break;
+
+			case OSIF_CMD_ROS_SERVICEC_TAKE:
+				dt_ros_servicec_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_SERVICEC_TRYTAKE:
+				dt_ros_servicec_trytake(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_GOAL_SEND:
+				dt_ros_actionc_goal_send(slot);
+				break;
+			
+			case OSIF_CMD_ROS_ACTIONC_GOAL_TAKE:
+				dt_ros_actionc_goal_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE:
+				dt_ros_actionc_goal_trytake(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_RESULT_SEND:
+				dt_ros_actionc_result_request(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_RESULT_TAKE:
+				dt_ros_actionc_result_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE:
+				dt_ros_actionc_result_trytake(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE:
+				dt_ros_actionc_feedback_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE:
+				dt_ros_actionc_feedback_trytake(slot);
+				break;	
 
 			case OSIF_CMD_THREAD_GET_INIT_DATA:
 				dt_get_init_data(slot);

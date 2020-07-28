@@ -47,7 +47,7 @@ int ros_service_client_destroy(struct ros_service_client_t *ros_service_client)
 }
 
 
-int ros_service_client_send_request(struct ros_service_client_t *ros_service_client, void * req)
+int ros_service_client_request_send(struct ros_service_client_t *ros_service_client, void * req)
 {
     rcl_ret_t rc;
 
@@ -65,7 +65,7 @@ int ros_service_client_send_request(struct ros_service_client_t *ros_service_cli
     return rc;
 }
 
-int ros_service_client_try_take_response(struct ros_service_client_t *ros_service_client, void * res)
+int ros_service_client_response_try_take(struct ros_service_client_t *ros_service_client, void * res)
 {
     rcl_ret_t rc;
     
@@ -93,9 +93,9 @@ int ros_service_client_try_take_response(struct ros_service_client_t *ros_servic
 }
 
 
-int ros_service_client_take_response(struct ros_service_client_t *ros_service_client, void * res)
+int ros_service_client_response_take(struct ros_service_client_t *ros_service_client, void * res)
 {
-    while(ros_service_client_try_take_response(ros_service_client, res) != 0)
+    while(ros_service_client_response_try_take(ros_service_client, res) != 0)
         usleep(ros_service_client->wait_time);
 
     return 0;
