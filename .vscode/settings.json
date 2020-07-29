@@ -22,6 +22,8 @@
         "vector": "c",
         "*.tcc": "cpp",
         "*.idl": "c",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "*.ipp": "cpp",
+        "tuple": "cpp"
     }
 }

@@ -289,6 +289,17 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 
 
 
+#define MEMORY_MALLOC(ptr_dest,length)(\
+	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_MALLOC),\
+	stream_write(osif_hw2sw, ptr_dest),\
+	stream_write(osif_hw2sw, length),\
+	stream_read(osif_sw2hw))
+
+#define MEMORY_FREE(ptr)(\
+	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_FREE),\
+	stream_write(osif_hw2sw, ptr))
+
+//ROS Communication function
 
 
 #define ROS_PUBLISH(p_handle,p_handle_msg)(\
@@ -297,33 +308,17 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-/*
- * Tries to put a single word into the mbox specified by handle but does not
- * blocks until the mbox gets populated.
- *
- *   @see mbox_tryget
- */
 #define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-/*
- * Tries to read a single word from the mbox specified by handle but does not
- * blocks until the mbox gets free.
- *
- *   @see mbox_tryput
- */
 #define ROS_SUBSCRIBE_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
-
-
-
-
 
 #define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_RESPONSE),\
@@ -331,24 +326,12 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-/*
- * Tries to put a single word into the mbox specified by handle but does not
- * blocks until the mbox gets populated.
- *
- *   @see mbox_tryget
- */
 #define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-/*
- * Tries to read a single word from the mbox specified by handle but does not
- * blocks until the mbox gets free.
- *
- *   @see mbox_tryput
- */
 #define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\

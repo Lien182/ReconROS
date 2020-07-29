@@ -1584,6 +1584,34 @@ intr:
 	return -1;
 }
 
+static inline int dt_memory_malloc(struct hwslot *slot) {
+	unsigned int ret, length = 0;
+	void ** ptr_dest;
+
+	ptr_dest = (void **)reconos_osif_read(slot->osif);
+	length 	= reconos_osif_read(slot->osif);
+
+	debug("[reconos-dt-%d] (memory malloc on %d) ...\n", slot->id, handle);
+	*ptr_dest = malloc(4 * length);
+	debug("[reconos-dt-%d] (memory malloc on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)*ptr_dest);
+
+	return 0;
+}
+
+static inline int dt_memory_free(struct hwslot *slot) {
+	unsigned int ret;
+	void * ptr;
+
+	ptr = (void *)reconos_osif_read(slot->osif);
+	
+	debug("[reconos-dt-%d] (memory free on %d) ...\n", slot->id, handle);
+	free(ptr);
+	debug("[reconos-dt-%d] (memory free on %d) done\n", slot->id, handle);
+	return 0;
+}
+
 /*
  * @see header
  */
@@ -1654,6 +1682,14 @@ void *dt_delegate(void *arg) {
 
 			case OSIF_CMD_COND_WAIT:
 				dt_cond_wait(slot);
+				break;
+
+			case OSIF_CMD_MEMORY_MALLOC:
+				dt_memory_malloc(slot);
+				break;
+			
+			case OSIF_CMD_MEMORY_FREE:
+				dt_memory_free(slot);
 				break;
 
 			case OSIF_CMD_ROS_PUBLISH:

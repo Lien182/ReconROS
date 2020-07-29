@@ -197,6 +197,9 @@ void hwslot_jointhread(struct hwslot *slot);
 #define OSIF_CMD_MASK                 			0x000000FF
 #define OSIF_CMD_YIELD_MASK            			0x80000000
 
+#define OSIF_CMD_MEMORY_MALLOC					0x000000F4
+#define OSIF_CMD_MEMORY_FREE					0x000000F5
+
 #define OSIF_SIGNAL_THREAD_START       			0x01000000
 #define OSIF_SIGNAL_THREAD_RESUME      			0x01000001
 
