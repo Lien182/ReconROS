@@ -1584,11 +1584,57 @@ intr:
 	return -1;
 }
 
-static inline int dt_memory_malloc(struct hwslot *slot) {
-	unsigned int ret, length = 0;
-	void ** ptr_dest;
 
-	ptr_dest = (void **)reconos_osif_read(slot->osif);
+typedef struct __dummy_dyn_ros_msg
+{
+  void * data;
+  /// The number of valid items in data
+  size_t size;
+  /// The number of allocated items in data
+  size_t capacity;
+} __dummy_dyn_ros_msg;
+
+
+static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
+	unsigned int length = 0, offset = 0;
+	int msg_handle;
+
+	msg_handle = reconos_osif_read(slot->osif);
+
+	offset = reconos_osif_read(slot->osif);
+	length 	= reconos_osif_read(slot->osif);
+
+	debug("[reconos-dt-%d] (ros_message_set_message_size on %d) ...\n", slot->id, handle);
+	__dummy_dyn_ros_msg * ros_msg = slot->rt->resources[msg_handle].ptr + offset;
+
+	if(length != 0)
+	{
+		ros_msg->data = malloc(length); 
+		ros_msg->capacity = length;
+		ros_msg->size = length;
+	}
+	else
+	{
+		if(ros_msg->data != NULL)
+			free(ros_msg->data); 
+		ros_msg->capacity = 0;
+		ros_msg->size = 0;
+	}
+	
+
+
+	debug("[reconos-dt-%d] (ros_message_set_message_size on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (uint32_t)ros_msg->data);
+
+	return 0;
+}
+
+
+static inline int dt_memory_malloc(struct hwslot *slot) {
+	unsigned int length = 0;
+
+	void ** ptr_dest = (void **)reconos_osif_read(slot->osif);
 	length 	= reconos_osif_read(slot->osif);
 
 	debug("[reconos-dt-%d] (memory malloc on %d) ...\n", slot->id, handle);
@@ -1601,10 +1647,7 @@ static inline int dt_memory_malloc(struct hwslot *slot) {
 }
 
 static inline int dt_memory_free(struct hwslot *slot) {
-	unsigned int ret;
-	void * ptr;
-
-	ptr = (void *)reconos_osif_read(slot->osif);
+	void * ptr = (void *)reconos_osif_read(slot->osif);
 	
 	debug("[reconos-dt-%d] (memory free on %d) ...\n", slot->id, handle);
 	free(ptr);
@@ -1690,6 +1733,10 @@ void *dt_delegate(void *arg) {
 			
 			case OSIF_CMD_MEMORY_FREE:
 				dt_memory_free(slot);
+				break;
+
+			case OSIF_CMD_ROS_MESSAGE_SET_SIZE:
+				dt_ros_message_set_message_size(slot);
 				break;
 
 			case OSIF_CMD_ROS_PUBLISH:

@@ -46,30 +46,32 @@
  *   self-describing
  *
  */
-#define OSIF_CMD_THREAD_GET_INIT_DATA  	0x000000A0
-#define OSIF_CMD_THREAD_GET_STATE_ADDR 	0x000000A1
-#define OSIF_CMD_THREAD_EXIT           	0x000000A2
-#define OSIF_CMD_THREAD_YIELD          	0x000000A3
-#define OSIF_CMD_THREAD_CLEAR_SIGNAL   	0x000000A4
-#define OSIF_CMD_SEM_POST              	0x000000B0
-#define OSIF_CMD_SEM_WAIT              	0x000000B1
-#define OSIF_CMD_MUTEX_LOCK            	0x000000C0
-#define OSIF_CMD_MUTEX_UNLOCK          	0x000000C1
-#define OSIF_CMD_MUTEX_TRYLOCK         	0x000000C2
-#define OSIF_CMD_COND_WAIT             	0x000000D0
-#define OSIF_CMD_COND_SIGNAL           	0x000000D1
-#define OSIF_CMD_COND_BROADCAST        	0x000000D2
-#define OSIF_CMD_MBOX_GET              	0x000000F0
-#define OSIF_CMD_MBOX_PUT              	0x000000F1
-#define OSIF_CMD_MBOX_TRYGET           	0x000000F2
-#define OSIF_CMD_MBOX_TRYPUT           	0x000000F3
-#define OSIF_CMD_MASK                  	0x000000FF
-#define OSIF_CMD_YIELD_MASK            	0x80000000
+#define OSIF_CMD_THREAD_GET_INIT_DATA  			0x000000A0
+#define OSIF_CMD_THREAD_GET_STATE_ADDR 			0x000000A1
+#define OSIF_CMD_THREAD_EXIT           			0x000000A2
+#define OSIF_CMD_THREAD_YIELD          			0x000000A3
+#define OSIF_CMD_THREAD_CLEAR_SIGNAL   			0x000000A4
+#define OSIF_CMD_SEM_POST              			0x000000B0
+#define OSIF_CMD_SEM_WAIT              			0x000000B1
+#define OSIF_CMD_MUTEX_LOCK            			0x000000C0
+#define OSIF_CMD_MUTEX_UNLOCK          			0x000000C1
+#define OSIF_CMD_MUTEX_TRYLOCK         			0x000000C2
+#define OSIF_CMD_COND_WAIT             			0x000000D0
+#define OSIF_CMD_COND_SIGNAL           			0x000000D1
+#define OSIF_CMD_COND_BROADCAST        			0x000000D2
+#define OSIF_CMD_MBOX_GET              			0x000000F0
+#define OSIF_CMD_MBOX_PUT              			0x000000F1
+#define OSIF_CMD_MBOX_TRYGET           			0x000000F2
+#define OSIF_CMD_MBOX_TRYPUT           			0x000000F3
+#define OSIF_CMD_MASK                  			0x000000FF
+#define OSIF_CMD_YIELD_MASK            			0x80000000
 
-#define OSIF_SIGNAL_THREAD_START       	0x01000000
-#define OSIF_SIGNAL_THREAD_RESUME      	0x01000001
+#define OSIF_SIGNAL_THREAD_START       			0x01000000
+#define OSIF_SIGNAL_THREAD_RESUME      			0x01000001
 
-#define OSIF_INTERRUPTED               	0x000000FF
+#define OSIF_INTERRUPTED               			0x000000FF
+
+#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			0x00000950
 
 #define OSIF_CMD_ROS_PUBLISH		   			0x00000900
 #define OSIF_CMD_ROS_TAKE			   			0x00000901
@@ -299,6 +301,21 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_FREE),\
 	stream_write(osif_hw2sw, ptr))
 
+/************************************************************************************
+ * 
+ * ROS Extensions 
+ * 
+ * *********************************************************************************/
+
+
+#define ROS_MESSAGE_ARRAY_SET_SIZE(p_handle, offset, size)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_MESSAGE_SET_SIZE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, offset),\
+	stream_write(osif_hw2sw, size),\
+	stream_read(osif_sw2hw))
+
+
 //ROS Communication function
 
 
@@ -320,6 +337,9 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
+
+// ROS Services
+
 #define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_RESPONSE),\
 	stream_write(osif_hw2sw, p_handle),\
@@ -337,6 +357,29 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
+
+
+
+#define ROS_SERVICECLIENT_SEND_REQUEST(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_REQUEST),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_SERVICECLIENT_TAKE(p_handle, p_handle_msg )(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+
+
 
 //ROS Actions
 
@@ -380,6 +423,58 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 
 #define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_FEEDBACK),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+
+#define ROS_ACTION_CLIENT_GOAL_REJECTED       0
+#define ROS_ACTION_CLIENT_GOAL_ACCEPTED       1
+
+
+#define ROS_ACTIONCLIENT_GOAL_SEND(p_handle, p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_GOAL_TRYTAKE(p_handle,accept)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	accept = stream_read(osif_hw2sw),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_GOAL_TAKE(p_handle,accept)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	accept = stream_read(osif_hw2sw),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_RESULT_SEND(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_RESULT_TRYTAKE(p_handle, p_handle_msg)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_RESULT_TAKE(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_write(osif_hw2sw, p_handle_msg),\
+	stream_read(osif_sw2hw))
+
+#define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg )( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))

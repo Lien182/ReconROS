@@ -205,6 +205,8 @@ void hwslot_jointhread(struct hwslot *slot);
 
 #define OSIF_INTERRUPTED               			0x000000FF
 
+#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			0x00000950
+
 #define OSIF_CMD_ROS_PUBLISH		   			0x00000900
 #define OSIF_CMD_ROS_TAKE			   			0x00000901
 #define OSIF_CMD_ROS_TRYTAKE		   			0x00000902
