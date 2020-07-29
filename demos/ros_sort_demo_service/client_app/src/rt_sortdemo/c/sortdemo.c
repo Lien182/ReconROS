@@ -45,9 +45,12 @@ void *rt_sortdemo(void *data) {
 		resources_sort_srv_req->unsorted.data = sortdata;
 		resources_sort_srv_req->unsorted.size = BLOCK_SIZE;
 		resources_sort_srv_req->unsorted.capacity = BLOCK_SIZE;
+		
+		printf("Send request \n");
 		//Send random data to the service server and wait
 		ROS_SERVICECLIENT_SEND(resources_srv, resources_sort_srv_req);
 		
+		printf("Wait for response \n");		
 		ROS_SERVICECLIENT_TAKE(resources_srv, resources_sort_srv_res);
 
 		//check whether data is sorted or not

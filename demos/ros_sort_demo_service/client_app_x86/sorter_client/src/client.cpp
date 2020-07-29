@@ -1,5 +1,5 @@
 #include "rclcpp/rclcpp.hpp"
-#include "my_reconros_services/srv/sort.hpp"
+#include "sorter_msgs/srv/sort.hpp"
 
 #include <chrono>
 #include <cstdlib>
@@ -12,10 +12,10 @@ int main(int argc, char **argv)
   rclcpp::init(argc, argv);
 
   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("srvclient");
-  rclcpp::Client<my_reconros_services::srv::Sort>::SharedPtr client =
-    node->create_client<my_reconros_services::srv::Sort>("sorter");
+  rclcpp::Client<sorter_msgs::srv::Sort>::SharedPtr client =
+    node->create_client<sorter_msgs::srv::Sort>("sorter");
 
-  auto request = std::make_shared<my_reconros_services::srv::Sort::Request>();
+  auto request = std::make_shared<sorter_msgs::srv::Sort::Request>();
   request->unsorted.resize(2048);
   std::generate(request->unsorted.begin(), request->unsorted.end(), std::rand);
   
