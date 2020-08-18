@@ -78,13 +78,13 @@ int ros_service_client_request_send(struct ros_service_client_t *ros_service_cli
 {
     rcl_ret_t rc;
 
-    printf("[ROS Service Client] Send request; sequence number before: %lld \n", ros_service_client->request_id.sequence_number);
+    debug("[ROS Service Client] Send request; sequence number before: %lld \n", ros_service_client->request_id.sequence_number);
 
 
 
     if(wait_for_server_to_be_available( ros_service_client->node, &ros_service_client->service, 100, 1000) == false)
     {
-         printf("[ROS Service Client] Server NOT available! \n");
+         debug("[ROS Service Client] Server NOT available! \n");
          return -1;
     }
 
@@ -96,12 +96,12 @@ int ros_service_client_request_send(struct ros_service_client_t *ros_service_cli
 
     if(rc != RCL_RET_OK)
     {
-        printf("[ROS Service Client] Error sending response: %d\n", rc);
+        debug("[ROS Service Client] Error sending response: %d\n", rc);
         return -1;
     }
     else
     {
-        printf("[ROS Service Client] Everthing ok, sending response: %d, sequence number %lld \n", rc, ros_service_client->request_id.sequence_number);
+        debug("[ROS Service Client] Everthing ok, sending response: %d, sequence number %lld \n", rc, ros_service_client->request_id.sequence_number);
     }
     
     return rc;

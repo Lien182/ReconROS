@@ -473,7 +473,7 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-#define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg )( \
+#define ROS_ACTIONCLIENT_FEEDBACK_TRYTAKE(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\

@@ -194,7 +194,7 @@ void hwslot_jointhread(struct hwslot *slot);
 #define OSIF_CMD_MBOX_PUT              			0x000000F1
 #define OSIF_CMD_MBOX_TRYGET           			0x000000F2
 #define OSIF_CMD_MBOX_TRYPUT           			0x000000F3
-#define OSIF_CMD_MASK                 			0x000000FF
+#define OSIF_CMD_MASK                 			0x00000FFF
 #define OSIF_CMD_YIELD_MASK            			0x80000000
 
 #define OSIF_CMD_MEMORY_MALLOC					0x000000F4

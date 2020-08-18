@@ -31,14 +31,19 @@ THREAD_ENTRY() {
 
 
 		//Wait for response
-		pMessage = ROS_SERVICESERVER_TAKE(resources_srv,resources_sort_srv_res);
+		pMessage = ROS_SERVICECLIENT_TAKE(resources_srv,resources_sort_srv_res);
 		pMessage += OFFSETOF(sorter_msgs__srv__Sort_Request, unsorted.data);
 
 		MEM_READ(pMessage, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
 
-		
-		
+		uint32 sorted = 1;
+
+		for(int i = 1; i < BLOCK_SIZE; i++)
+			if(ram[i] < ram[i-1])
+				sorted = 0;
+
+		MBOX_PUT(resources_result, sorted);	
 		
 		
 	}

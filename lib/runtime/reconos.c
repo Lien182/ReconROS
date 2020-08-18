@@ -1401,7 +1401,7 @@ static inline int dt_ros_servicec_trytake(struct hwslot *slot) {
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSRVC);
 	msg_handle = reconos_osif_read(slot->osif);
-	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
 
 	debug("[reconos-dt-%d] (ros service try take response on %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = ros_service_client_response_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
@@ -1632,6 +1632,7 @@ static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
 
 
 static inline int dt_memory_malloc(struct hwslot *slot) {
+	volatile uint32_t dummy = 0;
 	unsigned int length = 0;
 
 	void ** ptr_dest = (void **)reconos_osif_read(slot->osif);
@@ -1639,6 +1640,7 @@ static inline int dt_memory_malloc(struct hwslot *slot) {
 
 	debug("[reconos-dt-%d] (memory malloc on %d) ...\n", slot->id, handle);
 	*ptr_dest = malloc(4 * length);
+	((uint32_t*)(*ptr_dest))[0] = dummy;
 	debug("[reconos-dt-%d] (memory malloc on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (uint32_t)*ptr_dest);
