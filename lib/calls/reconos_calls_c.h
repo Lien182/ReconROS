@@ -28,6 +28,7 @@
 #include "ros_service_server.h"
 #include "ros_action_server.h"
 #include "ros_service_client.h"
+#include "ros_action_client.h"
 
 #include <unistd.h>
 #include <pthread.h>

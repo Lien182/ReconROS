@@ -16,8 +16,8 @@
 struct ros_service_client_t 
 {
     rcl_node_t*             node;
-    rcl_client_t           service;
-    rmw_request_id_t        request_id;   
+    rcl_client_t            service;
+    rmw_request_id_t        request_id;
     uint32_t                wait_time;    
 };
 
