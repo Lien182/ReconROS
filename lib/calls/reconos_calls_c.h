@@ -249,7 +249,7 @@
 	ros_action_client_goal_try_take(p_handle, (void*)p_handle_msg);
 
 #define ROS_ACTIONCLIENT_RESULT_SEND(p_handle ) \
-	ros_action_client_result_send(p_handle);
+	ros_action_client_result_request(p_handle);
 
 #define ROS_ACTIONCLIENT_RESULT_TAKE(p_handle,p_handle_msg) \
 	ros_action_client_result_take(p_handle,(void*)p_handle_msg);

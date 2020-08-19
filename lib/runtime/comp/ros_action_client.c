@@ -16,6 +16,28 @@
 
 #include "../utils.h"
 
+static bool
+wait_for_server_to_be_available(
+  rcl_node_t * node,
+  rcl_action_client_t * client,
+  size_t max_tries,
+  int64_t period_ms)
+{
+  size_t iteration = 0;
+  while (iteration < max_tries) {
+    ++iteration;
+    bool is_ready;
+    rcl_ret_t ret = rcl_action_server_is_available(node, client, &is_ready);
+    if (ret != RCL_RET_OK) {
+      return false;
+    }
+    if (is_ready) {
+      return true;
+    }
+    usleep(period_ms*1000);
+  }
+  return false;
+}
 
 
 int ros_action_client_init(struct ros_action_client_t *ros_action_client, struct ros_node_t * ros_node, const rosidl_action_type_support_t * action_type, char* action_name, uint32_t wait_time)
@@ -117,6 +139,14 @@ int ros_action_client_goal_send(struct ros_action_client_t *ros_action_client, v
     rcl_ret_t rc = 0;
   
 
+
+    if(wait_for_server_to_be_available( ros_action_client->node, &ros_action_client->action, 100, 1000) == false)
+    {
+         debug("[ROS Action client] Server NOT available! \n");
+         return -1;
+    }
+
+
     rc = rcl_action_send_goal_request(
         &ros_action_client->action,
         req,
@@ -201,7 +231,7 @@ int ros_action_client_result_try_take(struct ros_action_client_t *ros_action_cli
     rc = rcl_action_take_result_response(
         &ros_action_client->action,
         &ros_action_client->request_id,
-        &res_result);
+        res_result );
 
     if(rc != RCL_RET_OK)
     {

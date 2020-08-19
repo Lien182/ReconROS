@@ -17,8 +17,7 @@
 #include "../utils.h"
 
 
-bool
-wait_for_server_to_be_available(
+static bool wait_for_server_to_be_available(
   rcl_node_t * node,
   rcl_client_t * client,
   size_t max_tries,
