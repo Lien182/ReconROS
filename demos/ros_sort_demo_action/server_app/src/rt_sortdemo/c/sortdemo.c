@@ -51,6 +51,7 @@ void *rt_sortdemo(void *data) {
 		
 		printf("Decision done, now waiting for the result request. \n");
 		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
+		memcpy(&resources_sort_action_result_res->result.sorted, &resources_sort_action_goal_req->goal.unsorted, sizeof(resources_sort_action_goal_req->goal.unsorted));
 		sort_net(resources_sort_action_goal_req->goal.unsorted.data, resources_sort_action_goal_req->goal.unsorted.size);
 		printf("Publish new data! \n");
 		
