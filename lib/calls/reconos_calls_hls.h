@@ -63,7 +63,7 @@
 #define OSIF_CMD_MBOX_PUT              			0x000000F1
 #define OSIF_CMD_MBOX_TRYGET           			0x000000F2
 #define OSIF_CMD_MBOX_TRYPUT           			0x000000F3
-#define OSIF_CMD_MASK                  			0x000000FF
+#define OSIF_CMD_MASK                  			0x00000FFF
 #define OSIF_CMD_YIELD_MASK            			0x80000000
 
 #define OSIF_SIGNAL_THREAD_START       			0x01000000
@@ -441,14 +441,14 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 #define ROS_ACTIONCLIENT_GOAL_TRYTAKE(p_handle,accept)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	accept = stream_read(osif_hw2sw),\
+	accept = stream_read(osif_sw2hw),\
 	stream_read(osif_sw2hw))
 
 #define ROS_ACTIONCLIENT_GOAL_TAKE(p_handle,accept)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	accept = stream_read(osif_hw2sw),\
-	stream_read(osif_sw2hw))
+	accept = stream_read(osif_sw2hw),\
+	stream_read(osif_sw2hw)) 
 
 #define ROS_ACTIONCLIENT_RESULT_SEND(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_SEND),\

@@ -92,7 +92,7 @@ int ros_action_client_goal_try_take(struct ros_action_client_t *ros_action_clien
     
     if(rc != RCL_RET_OK)
     {
-        if(rc != RCL_RET_SERVICE_TAKE_FAILED)
+        if(rc != RCL_RET_ACTION_CLIENT_TAKE_FAILED)
         {
             debug("[ROS Action client] Error number: %d\n", rc);
             return -1;
@@ -144,6 +144,10 @@ int ros_action_client_goal_send(struct ros_action_client_t *ros_action_client, v
     {
          debug("[ROS Action client] Server NOT available! \n");
          return -1;
+    }
+    else 
+    {
+        debug("[ROS Action client] Server available! \n");
     }
 
 

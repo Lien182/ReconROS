@@ -63,8 +63,11 @@ void *rt_sortdemo(void *data) {
 			printf("Waiting for the result! \n");			
 			ROS_ACTIONCLIENT_RESULT_TAKE(resources_actionsclient, resources_sort_action_result_res );
 
+
+			printf("Received data: size=%d , cap=%d \n", resources_sort_action_result_res->result.sorted.size, resources_sort_action_result_res->result.sorted.capacity);			
+
 			//check whether data is sorted or not
-			if(check_is_sorted(resources_sort_action_result_res->result.sorted.data, BLOCK_SIZE) && calc_hash(resources_sort_action_result_res->result.sorted.data, BLOCK_SIZE) == hash)
+			if(check_is_sorted(resources_sort_action_result_res->result.sorted.data, resources_sort_action_result_res->result.sorted.size) && calc_hash(resources_sort_action_result_res->result.sorted.data,  resources_sort_action_result_res->result.sorted.size) == hash)
 				printf("Data is correct! \n");
 			else
 				printf("Data is NOT correct! \n");

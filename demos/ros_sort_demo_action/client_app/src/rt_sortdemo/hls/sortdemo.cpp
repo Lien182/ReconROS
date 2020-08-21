@@ -47,42 +47,55 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 
 THREAD_ENTRY() {
 	RAM(uint32, BLOCK_SIZE, ram);
-	uint32 addr, initdata;	
+	uint32 addr, initdata, accept = 0;	
 	uint32 pMessage;
 	uint32 payload_addr[1];
 
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
+	
+	addr = ROS_MESSAGE_ARRAY_SET_SIZE(resources_sort_action_goal_req,  OFFSETOF(sorter_msgs__action__Sort_SendGoal_Request, goal.unsorted),  BLOCK_SIZE * 4);
 
 	while(1) {
 
-		pMessage = ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
-		addr = OFFSETOF(sorter_msgs__action__Sort_SendGoal_Request, goal.unsorted.data) + pMessage;
+		for(int i = 0; i < BLOCK_SIZE; i++)
+			ram[i] = BLOCK_SIZE - i;
 
-		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
-		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
-		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
-		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
-		sort_bubble(ram);
-		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
-		
-		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
+
+		MEM_WRITE(ram, addr, BLOCK_SIZE * 4);
+
+		ROS_ACTIONCLIENT_GOAL_SEND(resources_actionsclient, resources_sort_action_goal_req);		
+
+		ROS_ACTIONCLIENT_GOAL_TAKE(resources_actionsclient, accept);
+		if(accept)
+		{
+
+			ROS_ACTIONCLIENT_RESULT_SEND(resources_actionsclient);
+						
+
+			//Wait for response
+			pMessage = ROS_ACTIONCLIENT_RESULT_TAKE(resources_actionsclient, resources_sort_action_result_res );
+			pMessage += OFFSETOF(sorter_msgs__action__Sort_GetResult_Response, result.sorted.data);
+
+			MEM_READ(pMessage, payload_addr, 4);					//Get the address of the data
+			MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
+
+			uint32 sorted = 1;
+
+			for(int i = 1; i < BLOCK_SIZE; i++)
+				if(ram[i] < ram[i-1])
+					sorted = 0;
+
+			MBOX_PUT(resources_result, sorted);	
+		}
+		else
+		{
+			MBOX_PUT(resources_result, 0xffffffff);	
+		}
+
+
+
+
+
 	}
 }
-
-
-/*
-		printf("Wait for new data! \n");
-		ROS_ACTIONSERVER_GOAL_TAKE(resources_actionsrv, resources_sort_action_goal_req);
-		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_action_goal_req->goal.unsorted.size, resources_sort_action_goal_req->goal.unsorted.capacity);
-		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
-		
-		printf("Decision done, now waiting for the result request. \n");
-		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
-		sort_net(resources_sort_action_goal_req->goal.unsorted.data, resources_sort_action_goal_req->goal.unsorted.size);
-		printf("Publish new data! \n");
-		
-		//Sort in place, boths messages refer to the same data location
-		memcpy(&resources_sort_action_result_res->result.sorted, &resources_sort_action_goal_req->goal.unsorted, sizeof(resources_sort_action_goal_req->goal.unsorted));
-		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
-*/
