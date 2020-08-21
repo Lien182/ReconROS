@@ -64,7 +64,9 @@ THREAD_ENTRY() {
 		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
 		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
 		sort_bubble(ram);
-		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
+
+		pMessage = ROS_MESSAGE_ARRAY_SET_SIZE(resources_sort_action_result_res,  OFFSETOF(sorter_msgs__action__Sort_GetResult_Response, result.sorted.data), 4,   BLOCK_SIZE);
+		MEM_WRITE(ram, pMessage, BLOCK_SIZE * 4);
 		
 		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
 	}

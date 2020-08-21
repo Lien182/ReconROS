@@ -308,10 +308,11 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  * *********************************************************************************/
 
 
-#define ROS_MESSAGE_ARRAY_SET_SIZE(p_handle, offset, size)(\
+#define ROS_MESSAGE_ARRAY_SET_SIZE(p_handle, offset, element_size, size)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_MESSAGE_SET_SIZE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, offset),\
+	stream_write(osif_hw2sw, element_size),\
 	stream_write(osif_hw2sw, size),\
 	stream_read(osif_sw2hw))
 

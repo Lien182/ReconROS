@@ -1598,32 +1598,37 @@ typedef struct __dummy_dyn_ros_msg
 
 
 static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
-	unsigned int length = 0, offset = 0;
+	unsigned int length = 0, offset = 0, element_length = 0;
 	int msg_handle;
 
 	msg_handle = reconos_osif_read(slot->osif);
 
 	offset = reconos_osif_read(slot->osif);
+	element_length 	= reconos_osif_read(slot->osif);
 	length 	= reconos_osif_read(slot->osif);
 
 	debug("[reconos-dt-%d] (ros_message_set_message_size on %d) ...\n", slot->id, msg_handle);
 	__dummy_dyn_ros_msg * ros_msg = slot->rt->resources[msg_handle].ptr + offset;
 
-	if(length != 0)
+	if(length != ros_msg->capacity)
 	{
-		ros_msg->data = malloc(4*length); 
-		ros_msg->capacity = length;
-		ros_msg->size = length;
-	}
-	else
-	{
-		if(ros_msg->data != NULL)
-			free(ros_msg->data); 
-		ros_msg->capacity = 0;
-		ros_msg->size = 0;
-	}
-	
 
+		if(ros_msg->capacity > 0)
+		{
+			if(ros_msg->data != NULL)
+				free(ros_msg->data); 
+			ros_msg->capacity = 0;
+			ros_msg->size = 0;
+		}
+
+		if(length != 0)
+		{
+			ros_msg->data = malloc(element_length*length); 
+			ros_msg->capacity = length;
+			ros_msg->size = length;
+		}
+
+	}
 
 	debug("[reconos-dt-%d] (ros_message_set_message_size on %d) done\n", slot->id, msg_handle);
 

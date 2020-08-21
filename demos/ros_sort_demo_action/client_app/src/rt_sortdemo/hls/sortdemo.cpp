@@ -54,7 +54,7 @@ THREAD_ENTRY() {
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
 	
-	addr = ROS_MESSAGE_ARRAY_SET_SIZE(resources_sort_action_goal_req,  OFFSETOF(sorter_msgs__action__Sort_SendGoal_Request, goal.unsorted),  BLOCK_SIZE * 4);
+	addr = ROS_MESSAGE_ARRAY_SET_SIZE(resources_sort_action_goal_req,  OFFSETOF(sorter_msgs__action__Sort_SendGoal_Request, goal.unsorted), 4,   BLOCK_SIZE);
 
 	while(1) {
 
