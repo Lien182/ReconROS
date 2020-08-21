@@ -27,6 +27,8 @@
 #include "ros_sub.h"
 #include "ros_service_server.h"
 #include "ros_action_server.h"
+#include "ros_service_client.h"
+#include "ros_action_client.h"
 
 #include <unistd.h>
 #include <pthread.h>
@@ -196,15 +198,23 @@
 
 
 #define ROS_SERVICESERVER_SEND_RESPONSE(p_handle, p_handle_msg) \
-	ros_service_server_send_response(p_handle, p_handle_msg);
+	ros_service_server_response_send(p_handle, p_handle_msg);
 
 #define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg) \
-	ros_service_server_try_take_request(p_handle, p_handle_msg);
+	ros_service_server_request_try_take(p_handle, p_handle_msg);
 
 #define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg ) \
-	ros_service_server_take_request(p_handle, p_handle_msg);
+	ros_service_server_request_take(p_handle, p_handle_msg);
 
 
+#define ROS_SERVICECLIENT_SEND(p_handle, p_handle_msg) \
+	ros_service_client_request_send(p_handle, p_handle_msg);
+
+#define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg) \
+	ros_service_client_response_try_take(p_handle, p_handle_msg);
+
+#define ROS_SERVICECLIENT_TAKE(p_handle, p_handle_msg ) \
+	ros_service_client_response_take(p_handle, p_handle_msg);
 
 
 #define ROS_ACTIONSERVER_GOAL_TAKE(p_handle, p_handle_msg) \
@@ -228,4 +238,28 @@
 #define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg ) \
 	ros_action_server_feedback(p_handle, (void*)p_handle_msg);
 
+
+#define ROS_ACTIONCLIENT_GOAL_SEND(p_handle, p_handle_msg) \
+	ros_action_client_goal_send(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_GOAL_TAKE(p_handle,accept) \
+	ros_action_client_goal_take(p_handle, accept);
+
+#define ROS_ACTIONCLIENT_GOAL_TRYTAKE(p_handle,p_handle_msg) \
+	ros_action_client_goal_try_take(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_RESULT_SEND(p_handle ) \
+	ros_action_client_result_request(p_handle);
+
+#define ROS_ACTIONCLIENT_RESULT_TAKE(p_handle,p_handle_msg) \
+	ros_action_client_result_take(p_handle,(void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_RESULT_TRYTAKE(p_handle,p_handle_msg) \
+	ros_action_client_result_try_take(p_handle,(void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg ) \
+	ros_action_client_feedback_take(p_handle, (void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_FEEDBACK_TRYTAKE(p_handle, p_handle_msg ) \
+	ros_action_client_feedback_try_take(p_handle, (void*)p_handle_msg);
 #endif /* RECONOS_CALLS_H */

@@ -48,7 +48,7 @@ int ros_service_server_destroy(struct ros_service_server_t *ros_service_server)
 
 
 
-int ros_service_server_try_take_request(struct ros_service_server_t *ros_service_server, void * req)
+int ros_service_server_request_try_take(struct ros_service_server_t *ros_service_server, void * req)
 {
     rcl_ret_t rc;
     
@@ -76,15 +76,15 @@ int ros_service_server_try_take_request(struct ros_service_server_t *ros_service
 }
 
 
-int ros_service_server_take_request(struct ros_service_server_t *ros_service_server, void * req)
+int ros_service_server_request_take(struct ros_service_server_t *ros_service_server, void * req)
 {
-    while(ros_service_server_try_take_request(ros_service_server, req) != 0)
+    while(ros_service_server_request_try_take(ros_service_server, req) != 0)
         usleep(ros_service_server->wait_time);
 
     return 0;
 }
 
-int ros_service_server_send_response(struct ros_service_server_t *ros_service_server, void * res)
+int ros_service_server_response_send(struct ros_service_server_t *ros_service_server, void * res)
 {
     rcl_ret_t rc;
 

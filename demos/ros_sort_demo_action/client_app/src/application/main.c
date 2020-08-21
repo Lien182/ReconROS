@@ -112,7 +112,9 @@ int main(int argc, char **argv) {
 
 	while(1)
 	{
-		sleep(10);		
+		uint32_t result = mbox_get(resources_result);
+		log("Data is sorted: %d \n", result);
+		
 	} 
 
 	reconos_app_cleanup();

@@ -88,8 +88,6 @@ int main(int argc, char **argv) {
 	num_hwts = atoi(argv[1]);
 	num_swts = atoi(argv[2]);
 
-	printf("Start init \n");
-
 	reconos_init();
 	reconos_app_init();
 
@@ -112,7 +110,9 @@ int main(int argc, char **argv) {
 
 	while(1)
 	{
-		sleep(10);		
+		uint32_t result = mbox_get(resources_result);
+		log("Data is sorted: %d \n", result);
+		
 	} 
 
 	reconos_app_cleanup();

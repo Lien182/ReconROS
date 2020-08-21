@@ -85,6 +85,13 @@ def export_sw(args, swdir, link):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
 					print(d["Args"])
 					break
+		elif r.type == "rossrvc":
+			for msg in prj.resources:
+				print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
 		elif r.type == "rosactions":
 			for msg in prj.resources:
 				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
@@ -92,7 +99,13 @@ def export_sw(args, swdir, link):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
 					print(d["Args"])
 					break
-		
+		elif r.type == "rosactionc":
+			for msg in prj.resources:
+				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
+				if msg.name.replace('_goal_req','') == r.args[1]:
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
+					print(d["Args"])
+					break
 		else:
 			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id

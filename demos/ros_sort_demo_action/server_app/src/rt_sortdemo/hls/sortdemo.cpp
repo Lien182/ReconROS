@@ -25,9 +25,9 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 	unsigned int i, k, stage;
 	uint32 tmp;
 
-	for(stage = 1; stage <= size; stage++){
+	for(stage = 1; stage <= BLOCK_SIZE; stage++){
 		
-		for(i = 0; i < size - 1; i += 2){
+		for(i = 0; i < BLOCK_SIZE - 1; i += 2){
 			if (ram[i] > ram[i + 1]) {
 				tmp = ram[i];
 				ram[i] = ram[i + 1];
@@ -35,7 +35,7 @@ void sort_net(uint32 ram[BLOCK_SIZE]) {
 			}
 		}
 
-		for(i = 1; i < size - 1; i += 2){
+		for(i = 1; i < BLOCK_SIZE - 1; i += 2){
 			if (ram[i] > ram[i + 1]) {
 				tmp = ram[i];
 				ram[i] = ram[i + 1];
@@ -64,7 +64,9 @@ THREAD_ENTRY() {
 		ROS_ACTIONSERVER_GOAL_DECIDE(resources_actionsrv, ROS_ACTION_SERVER_GOAL_ACCEPT);
 		ROS_ACTIONSERVER_RESULT_TAKE(resources_actionsrv);
 		sort_bubble(ram);
-		MEM_WRITE(ram, payload_addr[0], BLOCK_SIZE * 4);
+
+		pMessage = ROS_MESSAGE_ARRAY_SET_SIZE(resources_sort_action_result_res,  OFFSETOF(sorter_msgs__action__Sort_GetResult_Response, result.sorted.data), 4,   BLOCK_SIZE);
+		MEM_WRITE(ram, pMessage, BLOCK_SIZE * 4);
 		
 		ROS_ACTIONSERVER_RESULT_SEND(resources_actionsrv, resources_sort_action_result_res  );
 	}

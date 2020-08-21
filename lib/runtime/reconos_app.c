@@ -78,6 +78,16 @@ struct ros_action_server_t <<NameLower>>_s;
 struct ros_action_server_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "rossrvc")>>
+struct ros_service_client_t <<NameLower>>_s;
+struct ros_service_client_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rosactionc")>>
+struct ros_action_client_t <<NameLower>>_s;
+struct ros_action_client_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
 <<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
 <<ROSDataType>> <<NameLower>>_s;
 <<ROSDataType>> *<<NameLower>> = &<<NameLower>>_s;
@@ -139,6 +149,13 @@ void reconos_app_init() {
 	ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);
 	<<end generate>>
 	
+	<<generate for RESOURCES(Type == "rossrvc")>>
+	ros_service_client_init(<<NameLower>>, <<Group>>_<<Args>>);
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rosactionc")>>
+	ros_action_client_init(<<NameLower>>, <<Group>>_<<Args>>);
+	<<end generate>>
 }
 
 /*
@@ -161,10 +178,6 @@ void reconos_app_cleanup() {
 	pthread_cond_destroy(<<NameLower>>);
 	<<end generate>>
 
-	<<generate for RESOURCES(Type == "rosnode")>>
-	ros_node_destroy(<<NameLower>>);
-	<<end generate>>
-
 	<<generate for RESOURCES(Type == "rossub")>>
 	ros_subscriber_destroy(<<NameLower>>);
 	<<end generate>>
@@ -184,6 +197,19 @@ void reconos_app_cleanup() {
 	
 	<<generate for RESOURCES(Type == "rosactions")>>
 	ros_action_server_destroy(<<NameLower>>);
+	<<end generate>>
+
+
+	<<generate for RESOURCES(Type == "rossrvc")>>
+	ros_service_client_destroy(<<NameLower>>);
+	<<end generate>>
+	
+	<<generate for RESOURCES(Type == "rosactionc")>>
+	ros_action_client_destroy(<<NameLower>>);
+	<<end generate>>
+
+	<<generate for RESOURCES(Type == "rosnode")>>
+	ros_node_destroy(<<NameLower>>);
 	<<end generate>>
 
 }

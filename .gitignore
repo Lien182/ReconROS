@@ -18,10 +18,15 @@ demos/*/server_app/build.hw/
 demos/*/server_app/build.msg/
 demos/*/client_app/client_app
 
-demos/*/client_app/build
-demos/*/client_app/install
-demos/*/client_app/include
-demos/*/client_app/log
+demos/*/client_app_x86/*/build
+demos/*/client_app_x86/*/install
+demos/*/client_app_x86/*/include
+demos/*/client_app_x86/*/log
+demos/*/client_app/build.sw/
+demos/*/client_app/build.hw/
+demos/*/client_app/build.msg/
+
+
 
 demos/*/client_app/sorter_msgs/build
 demos/*/client_app/sorter_msgs/install

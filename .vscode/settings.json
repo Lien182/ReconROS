@@ -21,6 +21,10 @@
         "string": "c",
         "vector": "c",
         "*.tcc": "cpp",
-        "*.idl": "c"
+        "*.idl": "c",
+        "valarray": "cpp",
+        "*.ipp": "cpp",
+        "tuple": "cpp",
+        "*.tpp": "c"
     }
 }
