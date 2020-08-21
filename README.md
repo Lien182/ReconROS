@@ -10,22 +10,23 @@ You have to install ROS2 and ReconOS on your FPGA board. For getting started fas
 
 
 ## Installing
+ReconROS uses an emulated docker container for the compilation of the application and building costum ROS message packages. 
 
-First, set the environment variables
-Install the environment and build the docker container for cross compiling
+The first step for building ReconROS application is sourcing the environment by using the following command:
+
 ```
 $ source tools/settings.sh
 ```
+This step is not only necessary for the installation process but also before compiling an application.
 
-
-After that install the needed packages and build the docker container for cross compiling.
+At the first time using ReconROS, the following command installs needed packages and builds the docker container for cross compiling.
 ```
 $ bash tools/install.sh
 ```
 Additionally, you have to install Vivado (tested with 2017.1) and ROS2 (tested with Dashing)
 
 ## Build and run the ROS demo
-There are three sort demos available. The demo used in the following are based on pub/sub communication. The other two demos use ROS2 actions and services for the client server communication. Both demos require a preceding command for build the costum ROS2 message package. 
+There are three sort demos available. The demo used in the following are based on pub/sub communication. The other two demos use ROS2 actions and services for the client server communication. Both demos require a preceding command for building the costum ROS2 message package. 
 
 ```
 $ rdk export_msg && rdk build_msg
