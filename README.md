@@ -55,6 +55,8 @@ $ rdk build_hw
 Copy the output files (software binary and bitstream) to your FPGA board and run the server application there. 
 
 ### Second Step: Client Application
-The client application is just compiled by use make in the client demo folder. Please note that ROS2 has to be installed on your machine.
+The x86 client application can be compiled by using the make command in the client demo folder. Please note that ROS2 has to be installed on your machine.
 
-After that you can run the client application on your machine which sends unsorted numbers to the server application and gets sorted data back.
+After that, you can run the client application on your machine which sends unsorted numbers to the server application and gets sorted data back.
+
+For the ARM-based client application, the same procedure described for the server application have to be used. 
