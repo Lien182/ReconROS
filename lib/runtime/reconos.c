@@ -1638,6 +1638,18 @@ static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
 }
 
 
+static inline int dt_memory_getaddr(struct hwslot *slot) {
+
+	int handle = reconos_osif_read(slot->osif);
+	//RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+
+	debug("[reconos-dt-%d] (memory getaddr on handle %d) ...\n", slot->id, handle);
+	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[handle].ptr);
+
+	return 0;
+}
+
+
 static inline int dt_memory_malloc(struct hwslot *slot) {
 	volatile uint32_t dummy = 0;
 	unsigned int length = 0;
@@ -1734,6 +1746,10 @@ void *dt_delegate(void *arg) {
 
 			case OSIF_CMD_COND_WAIT:
 				dt_cond_wait(slot);
+				break;
+
+			case OSIF_CMD_MEMORY_GETOBJADDR:
+				dt_memory_getaddr(slot);
 				break;
 
 			case OSIF_CMD_MEMORY_MALLOC:
