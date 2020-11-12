@@ -21,5 +21,9 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-cd $RECONOS/tools/arm-docker-build
+reconostoolsdir=`dirname "$(readlink -f "$0")"`
+
+source $reconostoolsdir/settings.sh
+
+cd $reconostoolsdir/arm-docker-build
 bash install.sh
