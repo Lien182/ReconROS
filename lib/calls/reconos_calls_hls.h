@@ -73,6 +73,10 @@
 
 #define OSIF_CMD_ROS_MESSAGE_SET_SIZE			0x00000950
 
+#define OSIF_CMD_MEMORY_MALLOC					0x000000F4
+#define OSIF_CMD_MEMORY_FREE					0x000000F5
+#define OSIF_CMD_MEMORY_GETOBJADDR				0x000000F6
+
 #define OSIF_CMD_ROS_PUBLISH		   			0x00000900
 #define OSIF_CMD_ROS_TAKE			   			0x00000901
 #define OSIF_CMD_ROS_TRYTAKE		   			0x00000902
@@ -289,6 +293,14 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, data),\
 	stream_read(osif_sw2hw))
 
+/*
+ *	Memory functions
+ */
+
+#define MEMORY_GETOBJECTADDR(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_GETOBJADDR),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw))
 
 
 #define MEMORY_MALLOC(ptr_dest,length)(\

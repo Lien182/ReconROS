@@ -36,4 +36,5 @@ demos/*/client_app/sorter_msgs/log
 
 tools/arm-docker-build/Docker/qemu-arm-static
 
+lib/pcores/hdl
 
