@@ -26,5 +26,9 @@
         "*.ipp": "cpp",
         "tuple": "cpp",
         "*.tpp": "c"
-    }
+    },
+    "ros.distro": "dashing",
+    "python.autoComplete.extraPaths": [
+        "/opt/ros/dashing/lib/python3.6/site-packages"
+    ]
 }

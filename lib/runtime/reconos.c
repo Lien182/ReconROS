@@ -281,7 +281,7 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			}
 		}
 		if (i == rt->allowed_hwslot_count) {
-			whine("[reconos_core] WARNING: no free slot for thread found");
+			whine("[reconos_core] WARNING: no free slot for thread %s found \n", rt->name);
 			return;
 		}
 
@@ -462,6 +462,7 @@ void reconos_init() {
 	}
 
 	RECONOS_NUM_HWTS = reconos_proc_control_get_num_hwts(_proc_control);
+	debug("RECONOS_NUM_HWTS=%d \n", RECONOS_NUM_HWTS);
 
 	_hwslots = (struct hwslot *)malloc(RECONOS_NUM_HWTS * sizeof(struct hwslot));
 	if (!_hwslots) {
