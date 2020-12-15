@@ -61,3 +61,9 @@ The x86 client application can be compiled by using the make command in the clie
 After that, you can run the client application on your machine which sends unsorted numbers to the server application and gets sorted data back.
 
 For the ARM-based client application, the same procedure described for the server application have to be used. 
+
+### Publications
+
+- [1] - Christian Lienen, Marco Platzner, Bernhard Rinner "ReconROS: Flexible Hardware Acceleration for ROS2 Applications", International Conference on Field Programmable Technology (ICFPT), 2020. 
+
+
