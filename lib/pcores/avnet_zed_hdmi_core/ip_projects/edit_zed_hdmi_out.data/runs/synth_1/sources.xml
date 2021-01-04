@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DARoots Version="1" Minor="30">
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PPRDIR/../zed_hdmi_out_v2/hdl/vhdl/zed_hdmi_out.vhd">
+      <FileInfo>
+        <Attr Name="UsedInSynthesis" Val="1"/>
+        <Attr Name="UsedInSimulation" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../zed_hdmi_out_v2/component.xml">
+      <FileInfo SFType="IPXACT"/>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="zed_hdmi_out"/>
+      <Option Name="TopRTLFile" Val="$PPRDIR/../zed_hdmi_out_v2/hdl/vhdl/fmc_imageon_hdmi_out.vhd"/>
+    </Config>
+  </FileSet>
+</DARoots>

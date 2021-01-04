@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.1 (64-bit)
+# SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+# IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+# Start of session at: Mon Sep 21 09:06:12 2020
+# Process ID: 9983
+# Current directory: /home/christian/git/ReconROS/lib/pcores/hdl/library/util_pack/util_upack2
+# Command line: vivado -mode batch -source util_upack2_ip.tcl
+# Log file: /home/christian/git/ReconROS/lib/pcores/hdl/library/util_pack/util_upack2/vivado.log
+# Journal file: /home/christian/git/ReconROS/lib/pcores/hdl/library/util_pack/util_upack2/vivado.jou
+#-----------------------------------------------------------
+source util_upack2_ip.tcl

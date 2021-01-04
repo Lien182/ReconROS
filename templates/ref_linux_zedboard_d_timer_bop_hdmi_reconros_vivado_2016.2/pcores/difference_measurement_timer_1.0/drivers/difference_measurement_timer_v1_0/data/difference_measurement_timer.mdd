@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER difference_measurement_timer
+	OPTION supported_peripherals = (difference_measurement_timer);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = difference_measurement_timer;
+END DRIVER

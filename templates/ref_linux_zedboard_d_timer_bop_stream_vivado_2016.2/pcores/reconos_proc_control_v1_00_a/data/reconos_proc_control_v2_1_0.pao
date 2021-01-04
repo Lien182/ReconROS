@@ -1,0 +1,10 @@
+##############################################################################
+## Filename:          /home/christoph/Documents/reconos_zynq/exp/axi_fifo/pcores/reconos_proc_control_v1_00_a/data/reconos_proc_control_v2_1_0.pao
+## Description:       Peripheral Analysis Order
+## Date:              Tue Apr  9 19:48:46 2013 (by Create and Import Peripheral Wizard)
+##############################################################################
+
+lib proc_common_v3_00_a  all 
+lib axi_lite_ipif_v1_01_a  all 
+lib reconos_proc_control_v1_00_a user_logic vhdl
+lib reconos_proc_control_v1_00_a reconos_proc_control vhdl

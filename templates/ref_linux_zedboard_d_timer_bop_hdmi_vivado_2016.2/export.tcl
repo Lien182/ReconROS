@@ -227,6 +227,8 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_bd_cell -type ip -vlnv cs.upb.de:reconos:timer:1.0 timer_0
 
 
+
+
     #bop_0
 
     create_bd_cell -type ip -vlnv cs.upb.de:bop:servo:1.0 servo_0

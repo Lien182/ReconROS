@@ -1,0 +1,4 @@
+lib axi_lite_ipif_v1_01_a all 
+lib proc_common_v3_00_a ipif_pkg vhdl
+lib reconos_osif_v1_00_a user_logic vhdl
+lib reconos_osif_v1_00_a reconos_osif vhdl
