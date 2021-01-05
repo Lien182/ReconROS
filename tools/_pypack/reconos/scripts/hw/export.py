@@ -237,7 +237,11 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 			dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
 
 			log.info("Generating export files ...")
-			prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
+			if thread.videoout == 0 :
+				prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
+			else:
+				print("Found Video Out! \n")
+				prj.apply_template("thread_hls_pcore_video_vhdl", dictionary, hwdir)
 
 		shutil2.rmtree("/tmp/test")
 		shutil2.mkdir("/tmp/test")

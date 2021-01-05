@@ -63,6 +63,17 @@
 #
 # ----------------------------------------------------------------------------
 
+set_property PACKAGE_PIN AA18 [get_ports {zed_hdmi_iic_scl_io}]
+set_property IOSTANDARD LVCMOS25 [get_ports {zed_hdmi_iic_scl_io}]
+set_property SLEW SLOW [get_ports {zed_hdmi_iic_scl_io}]
+set_property DRIVE 8 [get_ports {zed_hdmi_iic_scl_io}]
+
+set_property PACKAGE_PIN Y16 [get_ports {zed_hdmi_iic_sda_io}]
+set_property IOSTANDARD LVCMOS25 [get_ports {zed_hdmi_iic_sda_io}]
+set_property SLEW SLOW [get_ports {zed_hdmi_iic_sda_io}]
+set_property DRIVE 8 [get_ports {zed_hdmi_iic_sda_io}]
+
+
 # ----------------------------------------------------------------------------
 # Audio Codec - Bank 13
 # ---------------------------------------------------------------------------- 

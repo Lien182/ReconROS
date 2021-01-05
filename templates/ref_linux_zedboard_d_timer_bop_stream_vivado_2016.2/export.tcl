@@ -265,9 +265,150 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_ports JB4] [get_bd_pins touch_0/TC_SSn]
 
 
+     # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier "zed_hdmi"]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+  create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 IIC
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S00_AXI
+  create_bd_intf_pin -mode Master -vlnv avnet.com:interface:avnet_hdmi_rtl:1.0 hdmi_io
+  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:axis_rtl:1.0 video_in
+
+  # Create pins
+  create_bd_pin -dir I -type clk CLK_100MHz
+  create_bd_pin -dir I CLK_AXIL
+  create_bd_pin -dir I -type clk CLK_STREAM
+  create_bd_pin -dir I -from 0 -to 0 nRST_AXIL
+
+  # Create instance: c_rsample_0, and set properties
+  create_bd_cell -type ip -vlnv user.org:user:c_rsample:1.0 c_rsample_0
+  
+  # Create instance: clk_wiz_0, and set properties
+  set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:5.4 clk_wiz_0 ]
+  set_property -dict [ list \
+  CONFIG.CLKOUT1_JITTER {137.143} \
+  CONFIG.CLKOUT1_PHASE_ERROR {98.575} \
+  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {80} \
+  CONFIG.MMCM_CLKFBOUT_MULT_F {10.000} \
+  CONFIG.MMCM_CLKIN1_PERIOD {10.000} \
+  CONFIG.MMCM_CLKIN2_PERIOD {10.000} \
+  CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.500} \
+  CONFIG.MMCM_DIVCLK_DIVIDE {1} \
+  CONFIG.USE_LOCKED {false} \
+  CONFIG.USE_RESET {false} \
+ ] $clk_wiz_0
+
+  # Create instance: gnd, and set properties
+  set gnd [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 gnd ]
+  set_property -dict [ list \
+  CONFIG.CONST_VAL {0} \
+ ] $gnd
+
+  # Create instance: processing_system7_0_axi_periph, and set properties
+  set processing_system7_0_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 processing_system7_0_axi_periph ]
+  set_property -dict [ list \
+  CONFIG.NUM_MI {2} \
+ ] $processing_system7_0_axi_periph
+
+  # Create instance: v_axi4s_vid_out_0, and set properties
+  set v_axi4s_vid_out_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_axi4s_vid_out:4.0 v_axi4s_vid_out_0 ]
+  set_property -dict [ list \
+  CONFIG.C_HAS_ASYNC_CLK {1} \
+  CONFIG.C_S_AXIS_VIDEO_FORMAT {0} \
+  CONFIG.C_VTG_MASTER_SLAVE {1} \
+ ] $v_axi4s_vid_out_0
+
+  # Create instance: v_rgb2ycrcb_0, and set properties
+  set v_rgb2ycrcb_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_rgb2ycrcb:7.1 v_rgb2ycrcb_0 ]
+  set_property -dict [ list \
+  CONFIG.ACTIVE_COLS {800} \
+  CONFIG.ACTIVE_ROWS {600} \
+ ] $v_rgb2ycrcb_0
+
+  # Create instance: v_tc_0, and set properties
+  set v_tc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_tc:6.1 v_tc_0 ]
+  set_property -dict [ list \
+  CONFIG.GEN_F0_VBLANK_HEND {800} \
+  CONFIG.GEN_F0_VBLANK_HSTART {800} \
+  CONFIG.GEN_F0_VFRAME_SIZE {628} \
+  CONFIG.GEN_F0_VSYNC_HEND {800} \
+  CONFIG.GEN_F0_VSYNC_HSTART {800} \
+  CONFIG.GEN_F0_VSYNC_VEND {604} \
+  CONFIG.GEN_F0_VSYNC_VSTART {600} \
+  CONFIG.GEN_F1_VBLANK_HEND {800} \
+  CONFIG.GEN_F1_VBLANK_HSTART {800} \
+  CONFIG.GEN_F1_VFRAME_SIZE {628} \
+  CONFIG.GEN_F1_VSYNC_HEND {800} \
+  CONFIG.GEN_F1_VSYNC_HSTART {800} \
+  CONFIG.GEN_F1_VSYNC_VEND {604} \
+  CONFIG.GEN_F1_VSYNC_VSTART {600} \
+  CONFIG.GEN_HACTIVE_SIZE {800} \
+  CONFIG.GEN_HFRAME_SIZE {1056} \
+  CONFIG.GEN_HSYNC_END {968} \
+  CONFIG.GEN_HSYNC_START {840} \
+  CONFIG.GEN_VACTIVE_SIZE {600} \
+  CONFIG.VIDEO_MODE {800x600p} \
+  CONFIG.enable_detection {false} \
+ ] $v_tc_0
+
+  # Create instance: vcc, and set properties
+  set vcc [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 vcc ]
+
+  # Create instance: zed_hdmi_iic_0, and set properties
+  set zed_hdmi_iic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_iic:2.0 zed_hdmi_iic_0 ]
+
+  # Create instance: zed_hdmi_out_1, and set properties
+  set zed_hdmi_out_1 [ create_bd_cell -type ip -vlnv avnet:zedboard:zed_hdmi_out:2.0 zed_hdmi_out_1 ]
+
+  # Create interface connections
+  connect_bd_intf_net -intf_net Conn1 [get_bd_intf_pins S00_AXI] [get_bd_intf_pins processing_system7_0_axi_periph/S00_AXI]
+  connect_bd_intf_net -intf_net Conn2 [get_bd_intf_pins video_in] [get_bd_intf_pins v_rgb2ycrcb_0/video_in]
+  connect_bd_intf_net -intf_net Conn3 [get_bd_intf_pins IIC] [get_bd_intf_pins zed_hdmi_iic_0/IIC]
+  connect_bd_intf_net -intf_net c_rsample_0_m_axis_video [get_bd_intf_pins c_rsample_0/m_axis_video] [get_bd_intf_pins v_axi4s_vid_out_0/video_in]
+  connect_bd_intf_net -intf_net processing_system7_0_axi_periph_M00_AXI [get_bd_intf_pins processing_system7_0_axi_periph/M00_AXI] [get_bd_intf_pins zed_hdmi_iic_0/S_AXI]
+  connect_bd_intf_net -intf_net processing_system7_0_axi_periph_M01_AXI [get_bd_intf_pins processing_system7_0_axi_periph/M01_AXI] [get_bd_intf_pins v_tc_0/ctrl]
+  connect_bd_intf_net -intf_net v_axi4s_vid_out_0_vid_io_out [get_bd_intf_pins v_axi4s_vid_out_0/vid_io_out] [get_bd_intf_pins zed_hdmi_out_1/VID_IO_IN]
+  connect_bd_intf_net -intf_net v_rgb2ycrcb_0_video_out [get_bd_intf_pins c_rsample_0/s_axis_video] [get_bd_intf_pins v_rgb2ycrcb_0/video_out]
+  connect_bd_intf_net -intf_net v_tc_0_vtiming_out [get_bd_intf_pins v_axi4s_vid_out_0/vtiming_in] [get_bd_intf_pins v_tc_0/vtiming_out]
+  connect_bd_intf_net -intf_net zed_hdmi_out_1_IO_HDMIO [get_bd_intf_pins hdmi_io] [get_bd_intf_pins zed_hdmi_out_1/IO_HDMIO]
+
+  # Create port connections
+  connect_bd_net -net clk_1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_clk] [get_bd_pins v_tc_0/clk] [get_bd_pins zed_hdmi_out_1/clk]
+  connect_bd_net -net clk_in1_1 [get_bd_pins CLK_100MHz] [get_bd_pins clk_wiz_0/clk_in1]
+  connect_bd_net -net gnd_const [get_bd_pins gnd/dout] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_reset] [get_bd_pins zed_hdmi_out_1/audio_spdif] [get_bd_pins zed_hdmi_out_1/reset]
+  connect_bd_net -net processing_system7_0_fclk_clk1 [get_bd_pins CLK_STREAM] [get_bd_pins c_rsample_0/aclk] [get_bd_pins v_axi4s_vid_out_0/aclk] [get_bd_pins v_rgb2ycrcb_0/aclk]
+  connect_bd_net -net s_axi_aclk_1 [get_bd_pins CLK_AXIL] [get_bd_pins processing_system7_0_axi_periph/ACLK] [get_bd_pins processing_system7_0_axi_periph/M00_ACLK] [get_bd_pins processing_system7_0_axi_periph/M01_ACLK] [get_bd_pins processing_system7_0_axi_periph/S00_ACLK] [get_bd_pins v_tc_0/s_axi_aclk] [get_bd_pins zed_hdmi_iic_0/s_axi_aclk]
+  connect_bd_net -net s_axi_aresetn_1 [get_bd_pins nRST_AXIL] [get_bd_pins processing_system7_0_axi_periph/ARESETN] [get_bd_pins processing_system7_0_axi_periph/M00_ARESETN] [get_bd_pins processing_system7_0_axi_periph/M01_ARESETN] [get_bd_pins processing_system7_0_axi_periph/S00_ARESETN] [get_bd_pins v_tc_0/s_axi_aresetn] [get_bd_pins zed_hdmi_iic_0/s_axi_aresetn]
+  connect_bd_net -net v_axi4s_vid_out_0_vtg_ce [get_bd_pins v_axi4s_vid_out_0/vtg_ce] [get_bd_pins v_tc_0/gen_clken]
+  connect_bd_net -net vcc_const [get_bd_pins c_rsample_0/aresetn] [get_bd_pins v_axi4s_vid_out_0/aclken] [get_bd_pins v_axi4s_vid_out_0/aresetn] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_ce] [get_bd_pins v_rgb2ycrcb_0/aclken] [get_bd_pins v_rgb2ycrcb_0/aresetn] [get_bd_pins v_tc_0/clken] [get_bd_pins v_tc_0/resetn] [get_bd_pins v_tc_0/s_axi_aclken] [get_bd_pins vcc/dout]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+
+  connect_bd_intf_net -intf_net axi_hwt_M07_AXI [get_bd_intf_pins axi_hwt/M07_AXI] [get_bd_intf_pins zed_hdmi/S00_AXI]
+
+  set_property -dict [list CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ {100}] [get_bd_cells processing_system7_0]
+
+  connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK2] [get_bd_pins zed_hdmi/CLK_100MHz]
+  set_property -dict [list CONFIG.PCW_FPGA2_PERIPHERAL_FREQMHZ {100}] [get_bd_cells processing_system7_0]
+
+  make_bd_intf_pins_external  [get_bd_intf_pins zed_hdmi/hdmi_io]
+  set_property name hdmio_io [get_bd_intf_ports hdmi_io]
+  make_bd_intf_pins_external  [get_bd_intf_pins zed_hdmi/IIC]
+  set_property name zed_hdmi_iic [get_bd_intf_ports IIC]
+    
+
 	<<generate for SLOTS>>
 	create_bd_cell -type ip -vlnv cs.upb.de:reconos:<<HwtCoreName>>:[str range <<HwtCoreVersion>> 0 2] "slot_<<Id>>"
-	
+
+  #set local_port 
+  if {[get_bd_intf_pins /slot_<<Id>>/m_axis_video ] != "" } {connect_bd_intf_net [ get_bd_intf_pins /slot_<<Id>>/m_axis_video ] [ get_bd_intf_pins /zed_hdmi/video_in ]}
+      
+
 	<<end generate>>
         #"rt_sortdemo" { create_bd_cell -type ip -vlnv cs.upb.de:reconos:rt_sortdemo:1.0 "rt_sortdemo_$i" }
         
@@ -374,6 +515,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     # Connect clocks - most clock inputs come from the reconos_clock module
     #
 
+    connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins reconos_clock_0/CLK_Ref]
 
     connect_bd_net [get_bd_pins reconos_clock_0/CLK<<SYSCLK>>_Out] \
                             [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] \
@@ -401,7 +543,9 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
                             [get_bd_pins reset_0/slowest_sync_clk] \
                             [get_bd_pins timer_0/S_AXI_ACLK] \
                             [get_bd_pins servo_0/s00_axi_aclk] \
-                            [get_bd_pins touch_0/s00_axi_aclk]
+                            [get_bd_pins touch_0/s00_axi_aclk] \
+                            [get_bd_pins zed_hdmi/CLK_AXIL] \
+                            [get_bd_pins zed_hdmi/CLK_STREAM]
                             
     #
     # Connect Resets
@@ -423,6 +567,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
                             [get_bd_pins axi_hwt/M06_ARESETN] \
                             [get_bd_pins axi_hwt/M07_ARESETN] \
                             [get_bd_pins axi_hwt/S00_ARESETN] \
+                            [get_bd_pins zed_hdmi/nRST_AXIL] 
                             
     # Proc_control resets
     connect_bd_net [get_bd_pins reconos_proc_control_0/PROC_Sys_Rst] [get_bd_pins reconos_memif_arbiter_0/SYS_Rst]
@@ -468,157 +613,6 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_pins xlconcat_0/dout] [get_bd_pins processing_system7_0/IRQ_F2P]
 
 
-
-
-
-
-
-
-
-   # Save current instance; Restore later
-  set oldCurInst [current_bd_instance .]
-
-  # Create cell and set as current instance
-  set hier_obj [create_bd_cell -type hier "zed_hdmi"]
-  current_bd_instance $hier_obj
-
-  # Create interface pins
-  create_bd_intf_pin -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 IIC
-  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S00_AXI
-  create_bd_intf_pin -mode Master -vlnv avnet.com:interface:avnet_hdmi_rtl:1.0 hdmi_io
-  create_bd_intf_pin -mode Slave -vlnv xilinx.com:interface:axis_rtl:1.0 video_in
-
-  # Create pins
-  create_bd_pin -dir I -type clk CLK_100MHz
-  create_bd_pin -dir I CLK_AXIL
-  create_bd_pin -dir I -type clk CLK_STREAM
-  create_bd_pin -dir I -from 0 -to 0 nRST_AXIL
-
-  # Create instance: c_rsample_0, and set properties
-  create_bd_cell -type ip -vlnv user.org:user:c_rsample:1.0 c_rsample_0
-  
-  # Create instance: clk_wiz_0, and set properties
-  set clk_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:5.4 clk_wiz_0 ]
-  set_property -dict [ list \
-CONFIG.CLKOUT1_JITTER {137.143} \
-CONFIG.CLKOUT1_PHASE_ERROR {98.575} \
-CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {80} \
-CONFIG.MMCM_CLKFBOUT_MULT_F {10.000} \
-CONFIG.MMCM_CLKIN1_PERIOD {10.000} \
-CONFIG.MMCM_CLKIN2_PERIOD {10.000} \
-CONFIG.MMCM_CLKOUT0_DIVIDE_F {12.500} \
-CONFIG.MMCM_DIVCLK_DIVIDE {1} \
-CONFIG.USE_LOCKED {false} \
-CONFIG.USE_RESET {false} \
- ] $clk_wiz_0
-
-  # Create instance: gnd, and set properties
-  set gnd [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 gnd ]
-  set_property -dict [ list \
-CONFIG.CONST_VAL {0} \
- ] $gnd
-
-  # Create instance: processing_system7_0_axi_periph, and set properties
-  set processing_system7_0_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 processing_system7_0_axi_periph ]
-  set_property -dict [ list \
-CONFIG.NUM_MI {2} \
- ] $processing_system7_0_axi_periph
-
-  # Create instance: v_axi4s_vid_out_0, and set properties
-  set v_axi4s_vid_out_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_axi4s_vid_out:4.0 v_axi4s_vid_out_0 ]
-  set_property -dict [ list \
-CONFIG.C_HAS_ASYNC_CLK {1} \
-CONFIG.C_S_AXIS_VIDEO_FORMAT {0} \
-CONFIG.C_VTG_MASTER_SLAVE {1} \
- ] $v_axi4s_vid_out_0
-
-  # Create instance: v_rgb2ycrcb_0, and set properties
-  set v_rgb2ycrcb_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_rgb2ycrcb:7.1 v_rgb2ycrcb_0 ]
-  set_property -dict [ list \
-CONFIG.ACTIVE_COLS {800} \
-CONFIG.ACTIVE_ROWS {600} \
- ] $v_rgb2ycrcb_0
-
-  # Create instance: v_tc_0, and set properties
-  set v_tc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:v_tc:6.1 v_tc_0 ]
-  set_property -dict [ list \
-CONFIG.GEN_F0_VBLANK_HEND {800} \
-CONFIG.GEN_F0_VBLANK_HSTART {800} \
-CONFIG.GEN_F0_VFRAME_SIZE {628} \
-CONFIG.GEN_F0_VSYNC_HEND {800} \
-CONFIG.GEN_F0_VSYNC_HSTART {800} \
-CONFIG.GEN_F0_VSYNC_VEND {604} \
-CONFIG.GEN_F0_VSYNC_VSTART {600} \
-CONFIG.GEN_F1_VBLANK_HEND {800} \
-CONFIG.GEN_F1_VBLANK_HSTART {800} \
-CONFIG.GEN_F1_VFRAME_SIZE {628} \
-CONFIG.GEN_F1_VSYNC_HEND {800} \
-CONFIG.GEN_F1_VSYNC_HSTART {800} \
-CONFIG.GEN_F1_VSYNC_VEND {604} \
-CONFIG.GEN_F1_VSYNC_VSTART {600} \
-CONFIG.GEN_HACTIVE_SIZE {800} \
-CONFIG.GEN_HFRAME_SIZE {1056} \
-CONFIG.GEN_HSYNC_END {968} \
-CONFIG.GEN_HSYNC_START {840} \
-CONFIG.GEN_VACTIVE_SIZE {600} \
-CONFIG.VIDEO_MODE {800x600p} \
-CONFIG.enable_detection {false} \
- ] $v_tc_0
-
-  # Create instance: vcc, and set properties
-  set vcc [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 vcc ]
-
-  # Create instance: zed_hdmi_iic_0, and set properties
-  set zed_hdmi_iic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_iic:2.0 zed_hdmi_iic_0 ]
-
-  # Create instance: zed_hdmi_out_1, and set properties
-  set zed_hdmi_out_1 [ create_bd_cell -type ip -vlnv avnet:zedboard:zed_hdmi_out:2.0 zed_hdmi_out_1 ]
-
-  # Create interface connections
-  connect_bd_intf_net -intf_net Conn1 [get_bd_intf_pins S00_AXI] [get_bd_intf_pins processing_system7_0_axi_periph/S00_AXI]
-  connect_bd_intf_net -intf_net Conn2 [get_bd_intf_pins video_in] [get_bd_intf_pins v_rgb2ycrcb_0/video_in]
-  connect_bd_intf_net -intf_net Conn3 [get_bd_intf_pins IIC] [get_bd_intf_pins zed_hdmi_iic_0/IIC]
-  connect_bd_intf_net -intf_net c_rsample_0_m_axis_video [get_bd_intf_pins c_rsample_0/m_axis_video] [get_bd_intf_pins v_axi4s_vid_out_0/video_in]
-  connect_bd_intf_net -intf_net processing_system7_0_axi_periph_M00_AXI [get_bd_intf_pins processing_system7_0_axi_periph/M00_AXI] [get_bd_intf_pins zed_hdmi_iic_0/S_AXI]
-  connect_bd_intf_net -intf_net processing_system7_0_axi_periph_M01_AXI [get_bd_intf_pins processing_system7_0_axi_periph/M01_AXI] [get_bd_intf_pins v_tc_0/ctrl]
-  connect_bd_intf_net -intf_net v_axi4s_vid_out_0_vid_io_out [get_bd_intf_pins v_axi4s_vid_out_0/vid_io_out] [get_bd_intf_pins zed_hdmi_out_1/VID_IO_IN]
-  connect_bd_intf_net -intf_net v_rgb2ycrcb_0_video_out [get_bd_intf_pins c_rsample_0/s_axis_video] [get_bd_intf_pins v_rgb2ycrcb_0/video_out]
-  connect_bd_intf_net -intf_net v_tc_0_vtiming_out [get_bd_intf_pins v_axi4s_vid_out_0/vtiming_in] [get_bd_intf_pins v_tc_0/vtiming_out]
-  connect_bd_intf_net -intf_net zed_hdmi_out_1_IO_HDMIO [get_bd_intf_pins hdmi_io] [get_bd_intf_pins zed_hdmi_out_1/IO_HDMIO]
-
-  # Create port connections
-  connect_bd_net -net clk_1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_clk] [get_bd_pins v_tc_0/clk] [get_bd_pins zed_hdmi_out_1/clk]
-  connect_bd_net -net clk_in1_1 [get_bd_pins CLK_100MHz] [get_bd_pins clk_wiz_0/clk_in1]
-  connect_bd_net -net gnd_const [get_bd_pins gnd/dout] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_reset] [get_bd_pins zed_hdmi_out_1/audio_spdif] [get_bd_pins zed_hdmi_out_1/reset]
-  connect_bd_net -net processing_system7_0_fclk_clk1 [get_bd_pins CLK_STREAM] [get_bd_pins c_rsample_0/aclk] [get_bd_pins v_axi4s_vid_out_0/aclk] [get_bd_pins v_rgb2ycrcb_0/aclk]
-  connect_bd_net -net s_axi_aclk_1 [get_bd_pins CLK_AXIL] [get_bd_pins processing_system7_0_axi_periph/ACLK] [get_bd_pins processing_system7_0_axi_periph/M00_ACLK] [get_bd_pins processing_system7_0_axi_periph/M01_ACLK] [get_bd_pins processing_system7_0_axi_periph/S00_ACLK] [get_bd_pins v_tc_0/s_axi_aclk] [get_bd_pins zed_hdmi_iic_0/s_axi_aclk]
-  connect_bd_net -net s_axi_aresetn_1 [get_bd_pins nRST_AXIL] [get_bd_pins processing_system7_0_axi_periph/ARESETN] [get_bd_pins processing_system7_0_axi_periph/M00_ARESETN] [get_bd_pins processing_system7_0_axi_periph/M01_ARESETN] [get_bd_pins processing_system7_0_axi_periph/S00_ARESETN] [get_bd_pins v_tc_0/s_axi_aresetn] [get_bd_pins zed_hdmi_iic_0/s_axi_aresetn]
-  connect_bd_net -net v_axi4s_vid_out_0_vtg_ce [get_bd_pins v_axi4s_vid_out_0/vtg_ce] [get_bd_pins v_tc_0/gen_clken]
-  connect_bd_net -net vcc_const [get_bd_pins c_rsample_0/aresetn] [get_bd_pins v_axi4s_vid_out_0/aclken] [get_bd_pins v_axi4s_vid_out_0/aresetn] [get_bd_pins v_axi4s_vid_out_0/vid_io_out_ce] [get_bd_pins v_rgb2ycrcb_0/aclken] [get_bd_pins v_rgb2ycrcb_0/aresetn] [get_bd_pins v_tc_0/clken] [get_bd_pins v_tc_0/resetn] [get_bd_pins v_tc_0/s_axi_aclken] [get_bd_pins vcc/dout]
-
-  # Restore current instance
-  current_bd_instance $oldCurInst
-
-
-
-
-    connect_bd_intf_net -intf_net axi_hwt_M07_AXI [get_bd_intf_pins axi_hwt/M07_AXI] [get_bd_intf_pins zed_hdmi/S00_AXI]
-
-    connect_bd_net [get_bd_pins axi_hwt/M06_ACLK] [get_bd_pins zed_hdmi/CLK_AXIL]
-    connect_bd_net [get_bd_pins reset_0/Interconnect_aresetn] [get_bd_pins zed_hdmi/nRST_AXIL]
-
-
-    connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK1] [get_bd_pins zed_hdmi/CLK_STREAM]
-    set_property -dict [list CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ {150}] [get_bd_cells processing_system7_0]
-
-    connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK2] [get_bd_pins zed_hdmi/CLK_100MHz]
-    set_property -dict [list CONFIG.PCW_FPGA2_PERIPHERAL_FREQMHZ {150}] [get_bd_cells processing_system7_0]
-
-    make_bd_intf_pins_external  [get_bd_intf_pins zed_hdmi/hdmi_io]
-    set_property name hdmio_io [get_bd_intf_ports hdmi_io]
-    make_bd_intf_pins_external  [get_bd_intf_pins zed_hdmi/IIC]
-    set_property name zed_hdmi_iic [get_bd_intf_ports IIC]
-    
     #
     # Memory Map of peripheperals
     #
