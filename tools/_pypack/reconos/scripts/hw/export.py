@@ -232,8 +232,13 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 			dictionary["MEM"] = thread.mem
 			dictionary["MEM_N"] = not thread.mem
 			srcs = shutil2.join(tmp.name, "hls", "sol", "syn", "vhdl")
-			dictionary["SOURCES"] = [srcs]
+				#HLS instantiates subcores (e.g. floating point units) in VHDL form during the export step
+			#The path above contains only .tcl instantiations, which our IP Packager flow doesn't understand
+			#So we add extract the convenient .vhd definitions from the following path:
+			srcs2 = shutil2.join(tmp.name, "hls", "sol", "impl", "ip", "hdl", "ip")
+			dictionary["SOURCES"] = [srcs, srcs2]
 			incls = shutil2.listfiles(srcs, True)
+			incls += shutil2.listfiles(srcs2, True)
 			dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
 
 			log.info("Generating export files ...")
@@ -243,9 +248,13 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 				print("Found Video Out! \n")
 				prj.apply_template("thread_hls_pcore_video_vhdl", dictionary, hwdir)
 
-		shutil2.rmtree("/tmp/test")
+		#Save temporary HLS project directory for analysis:
 		shutil2.mkdir("/tmp/test")
+		save_dir_hls_prj = shutil2.join(hwdir, "..", "tmp_hls_prj_" + thread.name.lower())
 		shutil2.copytree(tmp.name, "/tmp/test")
+		shutil2.rmtree(save_dir_hls_prj)
+		shutil2.mkdir(save_dir_hls_prj)
+		shutil2.copytree(tmp.name, save_dir_hls_prj)
 		
 def _export_hw_vivado(prj, hwdir, link):
 	''' 
