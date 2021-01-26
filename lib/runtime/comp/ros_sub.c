@@ -67,10 +67,6 @@ int ros_subscriber_message_try_take(struct ros_subscriber_t *ros_sub, void * msg
     rcl_ret_t rc;
     rmw_message_info_t messageInfo;
 
-
-
-
-    
     rc = rcl_take(&ros_sub->sub, msg,  &messageInfo,NULL );
     
     if(rc != RCL_RET_OK)

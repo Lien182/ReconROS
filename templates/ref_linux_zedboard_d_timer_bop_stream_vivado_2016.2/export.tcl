@@ -402,6 +402,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
   set_property name zed_hdmi_iic [get_bd_intf_ports IIC]
     
 
+ 
 	<<generate for SLOTS>>
 	create_bd_cell -type ip -vlnv cs.upb.de:reconos:<<HwtCoreName>>:[str range <<HwtCoreVersion>> 0 2] "slot_<<Id>>"
 
@@ -611,6 +612,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_pins reconos_osif_intc_0/OSIF_INTC_Out] [get_bd_pins xlconcat_0/In14]
     connect_bd_net [get_bd_pins reconos_proc_control_0/PROC_Pgf_Int] [get_bd_pins xlconcat_0/In15]
     connect_bd_net [get_bd_pins xlconcat_0/dout] [get_bd_pins processing_system7_0/IRQ_F2P]
+
 
 
     #

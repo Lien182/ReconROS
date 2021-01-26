@@ -20,9 +20,11 @@ find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 
 find_package(rosidl_default_generators REQUIRED)
+find_package(sensor_msgs)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   <<interface_files>>
+  DEPENDENCIES sensor_msgs
  )
 
 if(BUILD_TESTING)

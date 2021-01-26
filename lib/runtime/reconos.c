@@ -51,6 +51,9 @@ static struct sigaction _dt_signal;
 static int _thread_id;
 
 
+//Time Measurement
+//clock_t start, end;
+
 /* == ReconOS resource ================================================= */
 
 /*
@@ -1133,7 +1136,8 @@ static inline int dt_ros_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_subscriber_message_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
-	
+	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+
 	reconos_osif_write(slot->osif, (uint32_t)ret);
 	
 
@@ -1150,6 +1154,10 @@ static inline int dt_ros_services_response(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSRVS);
 	msg_handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
+
+	//Time Measurement
+	//end = clock();		
+	//debug("[reconos-dt-%d] ros service service time %3.6f; \n",slot->id, (double)(end-start)/CLOCKS_PER_SEC);
 
 	debug("[reconos-dt-%d] (ros service response on %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = ros_service_server_response_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
@@ -1178,6 +1186,8 @@ static inline int dt_ros_services_take(struct hwslot *slot) {
 
 	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
 	
+	//Time Measurement
+	//start = clock();
 
 	return 0;
 

@@ -338,10 +338,11 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw))
 
-#define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg)(\
+#define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg, msg_ptr)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
+	msg_ptr = stream_read(osif_sw2hw),\
 	stream_read(osif_sw2hw))
 
 #define ROS_SUBSCRIBE_TAKE(p_handle, p_handle_msg )(\
