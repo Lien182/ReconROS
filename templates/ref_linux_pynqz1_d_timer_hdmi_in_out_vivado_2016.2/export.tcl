@@ -593,6 +593,7 @@ CONFIG.enable_detection {false} \
     #set_property name TMDS_Data_p [get_bd_intf_ports TMDS_data_p]
     #set_property name TMDS_Data_n [get_bd_intf_ports TMDS_data_n]
 
+    
     set_property -dict [list CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ {150}] [get_bd_cells processing_system7_0]
     set_property -dict [list CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ {100}] [get_bd_cells processing_system7_0]
     
@@ -614,6 +615,7 @@ CONFIG.enable_detection {false} \
 
     set_property -dict [list CONFIG.PCW_EN_RST1_PORT {1}] [get_bd_cells processing_system7_0]
     connect_bd_net [get_bd_pins pynq_hdmi_out/axi4s_resetn] [get_bd_pins processing_system7_0/FCLK_RESET1_N]
+    
     #
     # Memory Map of peripheperals
     #
