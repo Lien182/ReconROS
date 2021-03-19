@@ -33,6 +33,10 @@ int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_
     panic("[ROS Publisher] Error in rcl_publisher_init %s; error code: %d \n", topic_name, rc);
     return -1;
   }
+  else 
+  {
+    debug("[ROS Publisher] Created publisher: %s\n", topic_name);
+  } 
 
   return 0;
 }
