@@ -300,36 +300,76 @@ class Project:
 	#
 	def _parse_resources(self, cfg):
 		for c in [_ for _ in cfg.sections() if _.startswith("ResourceGroup")]:
-			match = re.search(r"^.*@(?P<name>.+)", c)
+
+			match = re.search(r"^.*@(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", c)
 			if match is None:
-				log.error("Resources must have a name")
+				match = re.search(r"^.*@(?P<name>.+)", c)
+				if match is None:
+					log.error("Resources must have a name")
 
 			group = match.group("name")
 
 			for r in cfg.options(c):
-				match = re.split(r"[, ]+", cfg.get(c, r))
 
-				log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
-			
-				resource = Resource(r, match[0], match[1:], group)
+				match = re.search(r"^.*@(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", c)
+				if match is not None:
+					rrange = range(int(match.group("start")), int(match.group("end")) + 1)
+					for i in rrange:
+						match = re.split(r"[, ]+", cfg.get(c, r))
+						newmatch = []
 
-				if resource.type == "rossrvmsg":
-					resource.name = resource.name + "_res"
-					resource.type = resource.type + "res"
-					self.resources.append(resource)
-					resource = Resource(r+"_req", match[0]+"req", match[1:], group)
-					self.resources.append(resource)
-				elif resource.type == "rosactionmsg":
-					resource.name = resource.name + "_goal_req"
-					resource.type = resource.type + "goalreq"
-					self.resources.append(resource)
-					resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
-					self.resources.append(resource)
-					resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
-					self.resources.append(resource)
+						for s in match:
+							news = s.replace("%", str(i)) 
+							newmatch.append(news)
 
+						match = newmatch
+
+						log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
+					
+						
+						resource = Resource(r, match[0], match[1:], group+"_"+str(i))
+
+						if resource.type == "rossrvmsg":
+							resource.name = resource.name + "_res"
+							resource.type = resource.type + "res"
+							self.resources.append(resource)
+							resource = Resource(r+"_req", match[0]+"req", match[1:], group)
+							self.resources.append(resource)
+						elif resource.type == "rosactionmsg":
+							resource.name = resource.name + "_goal_req"
+							resource.type = resource.type + "goalreq"
+							self.resources.append(resource)
+							resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
+							self.resources.append(resource)
+							resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
+							self.resources.append(resource)
+
+						else:
+							self.resources.append(resource)
+				
 				else:
-					self.resources.append(resource)
+					match = re.split(r"[, ]+", cfg.get(c, r))
+					log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
+				
+					resource = Resource(r, match[0], match[1:], group)
+
+					if resource.type == "rossrvmsg":
+						resource.name = resource.name + "_res"
+						resource.type = resource.type + "res"
+						self.resources.append(resource)
+						resource = Resource(r+"_req", match[0]+"req", match[1:], group)
+						self.resources.append(resource)
+					elif resource.type == "rosactionmsg":
+						resource.name = resource.name + "_goal_req"
+						resource.type = resource.type + "goalreq"
+						self.resources.append(resource)
+						resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
+						self.resources.append(resource)
+						resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
+						self.resources.append(resource)
+
+					else:
+						self.resources.append(resource)
 				
 
 	#
@@ -394,9 +434,25 @@ class Project:
 				sw = None
 			if cfg.has_option(t, "ResourceGroup"):
 				res = re.split(r"[, ]+", cfg.get(t, "ResourceGroup"))
+
+				resnew = []
+
+				for rres in res:
+
+					match = re.search(r"^(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", rres)
+					if match is not None:
+						r = range(int(match.group("start")), int(match.group("end")) + 1)
+						for i in r:
+							#print(match.group("name")+ "_" + str(i))
+							resnew.append(match.group("name") + "_" + str(i))
+					else:
+						resnew.append(rres)
+
+				res = resnew
+				tmp = res
 				res = [_ for _ in self.resources if _.group in res]
 				if not res:
-					log.error("ResourceGroup not found")
+					log.error("ResourceGroup " + str(tmp) + " not found")
 			else:
 				res = []
 			if cfg.has_option(t, "UseMem"):
