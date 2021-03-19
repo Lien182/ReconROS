@@ -296,11 +296,13 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			pthread_attr_t attr;
 			int ret;
 
+			
 			/* Lock memory */
+			/*
 			if(mlockall(MCL_CURRENT|MCL_FUTURE) == -1) {
 					printf("mlockall failed: %m\n");
 					exit(-2);
-			}
+			} */
 
 			/* Initialize pthread attributes (default values) */
 			ret = pthread_attr_init(&attr);
