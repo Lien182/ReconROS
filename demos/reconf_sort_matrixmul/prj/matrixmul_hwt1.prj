@@ -1,0 +1,4 @@
+vhdl rt_reconf_v1_00_a ./src/rt_matrixmul/vhdl/rt_matrixmul.vhd
+vhdl rt_reconf_v1_00_a ./src/rt_matrixmul/vhdl/matrixmultiplier.vhd
+vhdl xil_defaultLib ./build.hw/myReconOS.srcs/sources_1/bd/design_1/ip/design_1_slot_1_0/synth/design_1_slot_1_0.vhd
+vhdl reconos_v3_01_a ./build.hw/pcores/reconos_v3_01_a/hdl/vhdl/reconos_pkg.vhd
