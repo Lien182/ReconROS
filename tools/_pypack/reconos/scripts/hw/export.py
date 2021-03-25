@@ -48,7 +48,35 @@ def get_dict(prj):
 			d["Clk"] = s.clock.id
 			d["Async"] = "sync" if s.clock == prj.clock else "async"
 			d["Ports"] = s.ports
+			d["Reconfigurable"] = s.reconfigurable
+			d["Region"] = s.region
+
+			#Workaround because template tool does not support nested generate_for loops currently
+			threadnames = ""
+			for _ in s.threads:
+				#Todo: remove this condition if dummy reconf thread is automatically generated
+				if not _.name == "Reconf":
+					threadnames += " " + _.name.lower() + "_" + str(s.id)
+			d["Threadnames"] = threadnames
 			dictionary["SLOTS"].append(d)
+	#Workaround because template tool does not support nested generate_for loops currently
+	dictionary["THREADS"] = []
+	config_id = 0
+	for t in prj.threads:
+		#Todo: remove this condition if dummy reconf thread is automatically generated
+		if not t.name == "Reconf":
+			d = {}
+			if config_id == 0:
+				rm_configuration = "set rm_config(initial) \""
+			else:
+				rm_configuration = "set rm_config(reconfig_" + str(config_id) + ") \""
+
+			for _ in t.slots:
+				rm_configuration += " $rp" + str(_.id) + " $rp" + str(_.id) + "_inst " + t.name.lower() + "_" + str(_.id)
+			rm_configuration += "\""
+			d["RMConfiguration"] = rm_configuration
+			dictionary["THREADS"].append(d)
+			config_id += 1
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:
 		d = {}
@@ -138,6 +166,7 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 		dictionary["MEM"] = thread.mem
 		dictionary["MEM_N"] = not thread.mem
 		dictionary["CLKPRD"] = min([_.clock.get_periodns() for _ in thread.slots])
+		dictionary["HWSOURCE"] = thread.hwsource
 		srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
 		dictionary["SOURCES"] = [srcs]
 		incls = shutil2.listfiles(srcs, True)
@@ -154,6 +183,12 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 
 		log.info("Generating export files ...")
 		prj.apply_template("thread_vhdl_pcore", dictionary, hwdir, link)
+
+		#For each slot: Generate .prj file listing sources for PR flow
+		if thread.slots[0].reconfigurable == "true":
+			for _ in thread.slots:
+				dictionary["SLOTID"] = _.id
+				prj.apply_template("thread_prj", dictionary, hwdir, link)
 
 	elif thread.hwsource == "hls":
 		tmp = tempfile.TemporaryDirectory()
@@ -176,6 +211,7 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 		dictionary["NAME"] = thread.name.lower()
 		dictionary["MEM"] = thread.mem
 		dictionary["MEM_N"] = not thread.mem
+		dictionary["HWSOURCE"] = thread.hwsource
 		dictionary["CLKPRD"] = min([_.clock.get_periodns() for _ in thread.slots])
 		srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
 		dictionary["SOURCES"] = [srcs]
@@ -247,6 +283,12 @@ def _export_hw_thread_ise_vivado(prj, hwdir, link, thread):
 			else:
 				print("Found Video Out! \n")
 				prj.apply_template("thread_hls_pcore_video_vhdl", dictionary, hwdir)
+			
+			#For each slot: Generate .prj file listing sources for PR flow
+			if thread.slots[0].reconfigurable == "true":
+				for _ in thread.slots:
+					dictionary["SLOTID"] = _.id
+					prj.apply_template("thread_prj", dictionary, hwdir, link)
 
 		#Save temporary HLS project directory for analysis:
 		shutil2.mkdir("/tmp/test")

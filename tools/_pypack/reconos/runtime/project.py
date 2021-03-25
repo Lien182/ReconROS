@@ -78,12 +78,14 @@ class Resource:
 # Class representing a slot in the project.
 #
 class Slot:
-	def __init__(self, name, id_, clock, ports):
+	def __init__(self, name, id_, clock, ports, reconfigurable, region):
 		self.name = name
 		self.id = id_
 		self.clock = clock
 		self.threads = []
 		self.ports = ports
+		self.reconfigurable = reconfigurable
+		self.region = region
 
 	def __str__(self):
 		return "Slot '" + self.name + "' (" + str(self.id) + ")"
@@ -155,6 +157,7 @@ class ImpInfo:
 		self.design = ""
 		self.xil = ""
 		self.hls = ""
+		self.pr = ""
 
 		self.os = ""
 		self.cflags = ""
@@ -261,6 +264,11 @@ class Project:
 			self.impinfo.ldflags = cfg.get("General", "LdFlags")
 		else:
 			self.impinfo.ldflags = ""
+		if cfg.has_option("General", "PartialReconfiguration"):
+			self.impinfo.pr = cfg.get("General", "PartialReconfiguration")
+		else:
+			self.impinfo.pr = "false"
+
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
 		self._parse_clocks(cfg)
@@ -399,7 +407,22 @@ class Project:
 			for i in r:
 				log.debug("Found slot '" + str(name) + "(" + str(i) + ")" + "' (" + str(id_) + "," + str(clock[0]) + ")")
 
-				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports)
+				if cfg.has_option(s, "Reconfigurable"):
+					if cfg.get(s, "Reconfigurable") == "true":
+						reconfigurable = "true"
+						if cfg.has_option(s, "Region_" + str(i)):
+							region = cfg.get(s, "Region_" + str(i))
+						else:
+							log.error("PL region must be defined for every reconfigurable slot")
+					else:
+						reconfigurable = "false"
+						region = ""
+				else:
+					reconfigurable = "false"
+					region = ""
+
+				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports, reconfigurable, region)
+
 				self.slots.append(slot)
 
 	#

@@ -62,7 +62,7 @@ proc synthesize { module } {
    if {$ipRepo != ""} {
       puts "\tLoading IP Repositories:\n\t+ [join $ipRepo "\n\t+ "]"
       command "set_property IP_REPO_PATHS \{$ipRepo\} \[current_fileset\]" "$resultDir/temp.log"
-      command "update_ip_catalog" "$resultsDir/temp.log"
+      command "update_ip_catalog" "$resultDir/temp.log"
    }
    
    set start_time [clock seconds]
