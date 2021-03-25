@@ -49,7 +49,11 @@ def get_dict(prj):
 			d["Async"] = "sync" if s.clock == prj.clock else "async"
 			d["Ports"] = s.ports
 			d["Reconfigurable"] = s.reconfigurable
-			d["Region"] = s.region
+			d["Region"] = []
+			for reg in s.region:
+				e = {}
+				e["RegionArea"] = reg 
+				d["Region"].append(e)
 
 			#Workaround because template tool does not support nested generate_for loops currently
 			threadnames = ""

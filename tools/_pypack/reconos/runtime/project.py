@@ -411,15 +411,16 @@ class Project:
 					if cfg.get(s, "Reconfigurable") == "true":
 						reconfigurable = "true"
 						if cfg.has_option(s, "Region_" + str(i)):
-							region = cfg.get(s, "Region_" + str(i))
+							#region = cfg.get(s, "Region_" + str(i))
+							region = re.split(r"[, ]+", cfg.get(s, "Region_" + str(i)))
 						else:
 							log.error("PL region must be defined for every reconfigurable slot")
 					else:
 						reconfigurable = "false"
-						region = ""
+						region = []
 				else:
 					reconfigurable = "false"
-					region = ""
+					region = []
 
 				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports, reconfigurable, region)
 
