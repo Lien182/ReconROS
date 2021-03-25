@@ -90,7 +90,7 @@ def _build_vivado_pr(prj, hwdir):
 
 	subprocess.call("""
 					source /opt/Xilinx/Vivado/{0}/settings64.sh;
-					vivado -mode batch -source pr_flow/design.tcl -notrace;""".format(prj.impinfo.xil[1]),
+					vivado -mode batch -source pr_flow/run_pr.tcl -notrace;""".format(prj.impinfo.xil[1]),
 					shell=True, executable="/bin/bash")
 	print()
 
