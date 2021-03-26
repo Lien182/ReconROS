@@ -1,0 +1,18 @@
+#-----------------------------------------------------------
+# Vivado v2017.1 (64-bit)
+# SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+# IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+# Start of session at: Fri Mar 26 10:28:33 2021
+# Process ID: 24597
+# Current directory: /home/christian/git/ReconROS/demos/reconf_sort_matrixmul
+# Command line: vivado
+# Log file: /home/christian/git/ReconROS/demos/reconf_sort_matrixmul/vivado.log
+# Journal file: /home/christian/git/ReconROS/demos/reconf_sort_matrixmul/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/christian/git/ReconROS/demos/reconf_sort_matrixmul/build.hw/myReconOS.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/christian/git/ReconROS/demos/reconf_sort_matrixmul/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd}
+ipx::edit_ip_in_project -upgrade true -name rt_reconf_v1_0_project -directory /home/christian/git/ReconROS/demos/reconf_sort_matrixmul/build.hw/myReconOS.tmp/rt_reconf_v1_0_project /home/christian/git/ReconROS/demos/reconf_sort_matrixmul/build.hw/pcores/rt_reconf_v1_00_a/component.xml
+update_compile_order -fileset sources_1
+close_project

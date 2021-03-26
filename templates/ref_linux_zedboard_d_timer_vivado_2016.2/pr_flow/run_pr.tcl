@@ -54,17 +54,11 @@ set top "design_1_wrapper"
 ### 2. Define corresponoding top level cell (added this to work with ReconOS-generated static design)
 ### 3. Associate Reconfigurable Modules (RMs) to the RP
 ###############################################################
-#set rp1 "design_1_slot_0_0"
-#set rp1_inst "design_1_i/slot_0"
-#set rm_variants($rp1) "sortdemo_0 matrixmul_0"
-#set rp2 "design_1_slot_1_0"
-#set rp2_inst "design_1_i/slot_1"
-#set rm_variants($rp2) "sortdemo_1 matrixmul_1"
 
 <<generate for SLOTS(Reconfigurable == "true")>>
 set rp<<Id>> "design_1_slot_<<Id>>_0"
 set rp<<Id>>_inst "design_1_i/slot_<<Id>>"
-set rm_variants($rp<<Id>>) "<<Threadnames>>"
+set rm_variants($rp<<Id>>) "<<=generate for THREADS=>> <<Name>>_<<SlotId>> <<=end generate=>>"
 <<end generate>>
 
 ########################################################################
@@ -72,12 +66,6 @@ set rm_variants($rp<<Id>>) "<<Threadnames>>"
 ### 1. Define initial configuration: rm_config(initial)
 ### 2. Define additional configurations: rm_config(xyz)
 ########################################################################
-#set module1_variant1 "sortdemo_0"
-#set module2_variant1 "sortdemo_1"
-#set rm_config(initial)   "$rp1 $rp1_inst $module1_variant1 $rp2 $rp2_inst $module2_variant1"
-#set module1_variant2 "matrixmul_0"
-#set module2_variant2 "matrixmul_1"
-#set rm_config(reconfig1) "$rp1 $rp1_inst $module1_variant2 $rp2 $rp2_inst $module2_variant2"
 
 <<generate for THREADS>>
 <<RMConfiguration>>

@@ -432,6 +432,22 @@ class Project:
 	#   cfg - configparser referencing the project file
 	#
 	def _parse_threads(self, cfg):
+		# create Reconf HWT so user does not have to define it manually
+		if self.impinfo.pr == "true":
+			name = "Reconf"
+			# associate this thread with all slots, for now we only support a single dummy thread for all of them
+			slots = [_ for _ in self.slots]
+			hw = "vhdl"
+			sw = None
+			# associate with all defined resources
+			res = [_ for _ in self.resources]
+			mem = True
+			ports = []
+
+			thread = Thread(name, slots, hw, sw, res, mem, False, ports)
+			for s in slots: s.threads.append(thread)
+			self.threads.append(thread)
+
 		for t in [_ for _ in cfg.sections() if _.startswith("ReconosThread")]:
 			match = re.search(r"^.*@(?P<name>.+)", t)
 			if match is None:
