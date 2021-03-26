@@ -87,6 +87,12 @@ set rm_variants($rp<<Id>>) "<<Threadnames>>"
 ### Task / flow portion
 ########################################################################
 # Build the designs
+
+open_project $srcDir/myReconOS.xpr
+set_property synth_checkpoint_mode None [get_files  $srcDir/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+generate_target all [get_files  $srcDir/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+export_ip_user_files -of_objects [get_files  $srcDir/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+
 source ./pr_flow/advanced_settings.tcl
 source $tclDir/run.tcl
 
