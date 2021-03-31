@@ -1,0 +1,4 @@
+lib axi_master_burst_v1_00_a all
+lib reconos_v3_01_a reconos_pkg vhdl
+lib reconos_memif_memory_controller_v1_00_a user_logic vhdl
+lib reconos_memif_memory_controller_v1_00_a reconos_memif_memory_controller vhdl

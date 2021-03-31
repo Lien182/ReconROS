@@ -38,3 +38,9 @@ tools/arm-docker-build/Docker/qemu-arm-static
 
 lib/pcores/hdl
 
+COLCON_IGNORE
+logger_all.log
+latest
+latest_list
+c_cpp_properties.json
+settings.json

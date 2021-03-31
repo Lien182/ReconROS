@@ -1,0 +1,49 @@
+BEGIN reconos_memif_mmu_zynq
+
+## Peripheral Options
+OPTION IPTYPE = PERIPHERAL
+OPTION IMP_NETLIST = TRUE
+OPTION HDL = VHDL
+OPTION IP_GROUP = ReconOS
+OPTION DESC = ReconOS - MEMIF Memory Management Unit
+OPTION LONG_DESC = The MMU enables support for virtual address translation.
+#OPTION ARCH_SUPPORT_MAP = (others=DEVELOPMENT)
+
+## Bus Interfaces
+BUS_INTERFACE BUS = MEMIF_Hwt2Mem_In, BUS_STD = FIFO_S, BUS_TYPE = INITIATOR
+BUS_INTERFACE BUS = MEMIF_Mem2Hwt_In, BUS_STD = FIFO_M, BUS_TYPE = INITIATOR
+
+BUS_INTERFACE BUS = MEMIF_Hwt2Mem_Out, BUS_STD = FIFO_S, BUS_TYPE = TARGET
+BUS_INTERFACE BUS = MEMIF_Mem2Hwt_Out, BUS_STD = FIFO_M, BUS_TYPE = TARGET
+
+## Generics for VHDL or Parameters for Verilog
+PARAMETER C_TLB_SIZE = 4, DT = INTEGER
+
+PARAMETER C_MEMIF_DATA_WIDTH = 32, DT = INTEGER, ASSIGNMENT = CONSTANT
+
+## Ports
+PORT MEMIF_Hwt2Mem_In_Data = "FIFO_S_Data", DIR = I, VEC = [C_MEMIF_DATA_WIDTH - 1 : 0], BUS = MEMIF_Hwt2Mem_In
+PORT MEMIF_Hwt2Mem_In_Empty = "FIFO_S_Empty", DIR = I, BUS = MEMIF_Hwt2Mem_In
+PORT MEMIF_Hwt2Mem_In_RE = "FIFO_S_RE", DIR = O, BUS = MEMIF_Hwt2Mem_In
+
+PORT MEMIF_Mem2Hwt_In_Data = "FIFO_M_Data", DIR = O, VEC = [C_MEMIF_DATA_WIDTH - 1 : 0], BUS = MEMIF_Mem2Hwt_In
+PORT MEMIF_Mem2Hwt_In_Full = "FIFO_M_Full", DIR = I, BUS = MEMIF_Mem2Hwt_In
+PORT MEMIF_Mem2Hwt_In_WE = "FIFO_M_WE", DIR = O, BUS = MEMIF_Mem2Hwt_In
+
+PORT MEMIF_Hwt2Mem_Out_Data = "FIFO_S_Data", DIR = O, VEC = [C_MEMIF_DATA_WIDTH - 1 : 0], BUS = MEMIF_Hwt2Mem_Out
+PORT MEMIF_Hwt2Mem_Out_Empty = "FIFO_S_Empty", DIR = O, BUS = MEMIF_Hwt2Mem_Out
+PORT MEMIF_Hwt2Mem_Out_RE = "FIFO_S_RE", DIR = I, BUS = MEMIF_Hwt2Mem_Out
+
+PORT MEMIF_Mem2Hwt_Out_Data = "FIFO_M_Data", DIR = I, VEC = [C_MEMIF_DATA_WIDTH - 1 : 0], BUS = MEMIF_Mem2Hwt_Out
+PORT MEMIF_Mem2Hwt_Out_Full = "FIFO_M_Full", DIR = O, BUS = MEMIF_Mem2Hwt_Out
+PORT MEMIF_Mem2Hwt_Out_WE = "FIFO_M_WE", DIR = I, BUS = MEMIF_Mem2Hwt_Out
+
+PORT MMU_Pgf = "", DIR = O
+PORT MMU_Fault_Addr = "", DIR = O, VEC = [31:0]
+PORT MMU_Retry = "", DIR = I
+PORT MMU_Pgd = "", DIR = I, VEC = [31:0]
+
+PORT SYS_Clk = "", DIR = I, SIGIS = CLK
+PORT SYS_Rst = "", DIR = I, SIGIS = RST
+
+END

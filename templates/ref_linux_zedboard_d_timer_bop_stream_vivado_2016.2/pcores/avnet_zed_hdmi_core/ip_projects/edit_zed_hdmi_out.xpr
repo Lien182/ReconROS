@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Product Version: Vivado v2013.3 (64-bit)-->
+<Project Version="6" Minor="13" Path="C:/AVNET_ZED_HDMI/2013_3/avnet_zed_hdmi_core/ip_projects/edit_zed_hdmi_out.xpr">
+	<FileSet Dir="sources_1" File="fileset.xml"/>
+	<FileSet Dir="constrs_1" File="fileset.xml"/>
+	<FileSet Dir="sim_1" File="fileset.xml"/>
+	<RunSet Dir="runs" File="runs.xml"/>
+	<DefaultLaunch Dir="$PRUNDIR"/>
+	<Config>
+		<Option Name="Id" Val="81bc59c6e9dc48a185e41613e6c4fe4c"/>
+		<Option Name="Part" Val="xc7z020clg484-1"/>
+		<Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
+		<Option Name="Board" Val=""/>
+		<Option Name="ActiveSimSet" Val="sim_1"/>
+	</Config>
+</Project>
+

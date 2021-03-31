@@ -78,12 +78,14 @@ class Resource:
 # Class representing a slot in the project.
 #
 class Slot:
-	def __init__(self, name, id_, clock, ports):
+	def __init__(self, name, id_, clock, ports, reconfigurable, region):
 		self.name = name
 		self.id = id_
 		self.clock = clock
 		self.threads = []
 		self.ports = ports
+		self.reconfigurable = reconfigurable
+		self.region = region
 
 	def __str__(self):
 		return "Slot '" + self.name + "' (" + str(self.id) + ")"
@@ -97,7 +99,7 @@ class Slot:
 class Thread:
 	_id = 0
 
-	def __init__(self, name, slots, hw, sw, res, mem, ports):
+	def __init__(self, name, slots, hw, sw, res, mem, videoout, ports):
 		self.id = Thread._id
 		Thread._id += 1
 		self.name = name
@@ -105,6 +107,7 @@ class Thread:
 		self.resources = res
 		self.mem = mem
 		self.ports = ports
+		self.videoout = videoout
 		if hw is not None:
 			hw = hw.split(",")
 			self.hwsource = hw[0]
@@ -154,6 +157,7 @@ class ImpInfo:
 		self.design = ""
 		self.xil = ""
 		self.hls = ""
+		self.pr = ""
 
 		self.os = ""
 		self.cflags = ""
@@ -260,6 +264,11 @@ class Project:
 			self.impinfo.ldflags = cfg.get("General", "LdFlags")
 		else:
 			self.impinfo.ldflags = ""
+		if cfg.has_option("General", "PartialReconfiguration"):
+			self.impinfo.pr = cfg.get("General", "PartialReconfiguration")
+		else:
+			self.impinfo.pr = "false"
+
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
 		self._parse_clocks(cfg)
@@ -299,36 +308,76 @@ class Project:
 	#
 	def _parse_resources(self, cfg):
 		for c in [_ for _ in cfg.sections() if _.startswith("ResourceGroup")]:
-			match = re.search(r"^.*@(?P<name>.+)", c)
+
+			match = re.search(r"^.*@(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", c)
 			if match is None:
-				log.error("Resources must have a name")
+				match = re.search(r"^.*@(?P<name>.+)", c)
+				if match is None:
+					log.error("Resources must have a name")
 
 			group = match.group("name")
 
 			for r in cfg.options(c):
-				match = re.split(r"[, ]+", cfg.get(c, r))
 
-				log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
-			
-				resource = Resource(r, match[0], match[1:], group)
+				match = re.search(r"^.*@(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", c)
+				if match is not None:
+					rrange = range(int(match.group("start")), int(match.group("end")) + 1)
+					for i in rrange:
+						match = re.split(r"[, ]+", cfg.get(c, r))
+						newmatch = []
 
-				if resource.type == "rossrvmsg":
-					resource.name = resource.name + "_res"
-					resource.type = resource.type + "res"
-					self.resources.append(resource)
-					resource = Resource(r+"_req", match[0]+"req", match[1:], group)
-					self.resources.append(resource)
-				elif resource.type == "rosactionmsg":
-					resource.name = resource.name + "_goal_req"
-					resource.type = resource.type + "goalreq"
-					self.resources.append(resource)
-					resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
-					self.resources.append(resource)
-					resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
-					self.resources.append(resource)
+						for s in match:
+							news = s.replace("%", str(i)) 
+							newmatch.append(news)
 
+						match = newmatch
+
+						log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
+					
+						
+						resource = Resource(r, match[0], match[1:], group+"_"+str(i))
+
+						if resource.type == "rossrvmsg":
+							resource.name = resource.name + "_res"
+							resource.type = resource.type + "res"
+							self.resources.append(resource)
+							resource = Resource(r+"_req", match[0]+"req", match[1:], group)
+							self.resources.append(resource)
+						elif resource.type == "rosactionmsg":
+							resource.name = resource.name + "_goal_req"
+							resource.type = resource.type + "goalreq"
+							self.resources.append(resource)
+							resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
+							self.resources.append(resource)
+							resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
+							self.resources.append(resource)
+
+						else:
+							self.resources.append(resource)
+				
 				else:
-					self.resources.append(resource)
+					match = re.split(r"[, ]+", cfg.get(c, r))
+					log.debug("Found resource '" + str(r) + "' (" + str(match[0]) + "," + str(match[1:]) + "," + str(group) + ")")
+				
+					resource = Resource(r, match[0], match[1:], group)
+
+					if resource.type == "rossrvmsg":
+						resource.name = resource.name + "_res"
+						resource.type = resource.type + "res"
+						self.resources.append(resource)
+						resource = Resource(r+"_req", match[0]+"req", match[1:], group)
+						self.resources.append(resource)
+					elif resource.type == "rosactionmsg":
+						resource.name = resource.name + "_goal_req"
+						resource.type = resource.type + "goalreq"
+						self.resources.append(resource)
+						resource = Resource(r+"_result_res", match[0]+"resultres", match[1:], group)
+						self.resources.append(resource)
+						resource = Resource(r+"_feedback", match[0]+"feedback", match[1:], group)
+						self.resources.append(resource)
+
+					else:
+						self.resources.append(resource)
 				
 
 	#
@@ -358,7 +407,23 @@ class Project:
 			for i in r:
 				log.debug("Found slot '" + str(name) + "(" + str(i) + ")" + "' (" + str(id_) + "," + str(clock[0]) + ")")
 
-				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports)
+				if cfg.has_option(s, "Reconfigurable"):
+					if cfg.get(s, "Reconfigurable") == "true":
+						reconfigurable = "true"
+						if cfg.has_option(s, "Region_" + str(i)):
+							#region = cfg.get(s, "Region_" + str(i))
+							region = re.split(r"[, ]+", cfg.get(s, "Region_" + str(i)))
+						else:
+							log.error("PL region must be defined for every reconfigurable slot")
+					else:
+						reconfigurable = "false"
+						region = []
+				else:
+					reconfigurable = "false"
+					region = []
+
+				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports, reconfigurable, region)
+
 				self.slots.append(slot)
 
 	#
@@ -367,6 +432,22 @@ class Project:
 	#   cfg - configparser referencing the project file
 	#
 	def _parse_threads(self, cfg):
+		# create Reconf HWT so user does not have to define it manually
+		if self.impinfo.pr == "true":
+			name = "Reconf"
+			# associate this thread with all slots, for now we only support a single dummy thread for all of them
+			slots = [_ for _ in self.slots]
+			hw = "vhdl"
+			sw = None
+			# associate with all defined resources
+			res = [_ for _ in self.resources]
+			mem = True
+			ports = []
+
+			thread = Thread(name, slots, hw, sw, res, mem, False, ports)
+			for s in slots: s.threads.append(thread)
+			self.threads.append(thread)
+
 		for t in [_ for _ in cfg.sections() if _.startswith("ReconosThread")]:
 			match = re.search(r"^.*@(?P<name>.+)", t)
 			if match is None:
@@ -393,15 +474,40 @@ class Project:
 				sw = None
 			if cfg.has_option(t, "ResourceGroup"):
 				res = re.split(r"[, ]+", cfg.get(t, "ResourceGroup"))
+
+				resnew = []
+
+				for rres in res:
+
+					match = re.search(r"^(?P<name>.*)\((?P<start>[0-9]*):(?P<end>[0-9]*)\)", rres)
+					if match is not None:
+						r = range(int(match.group("start")), int(match.group("end")) + 1)
+						for i in r:
+							#print(match.group("name")+ "_" + str(i))
+							resnew.append(match.group("name") + "_" + str(i))
+					else:
+						resnew.append(rres)
+
+				res = resnew
+				tmp = res
 				res = [_ for _ in self.resources if _.group in res]
 				if not res:
-					log.error("ResourceGroup not found")
+					log.error("ResourceGroup " + str(tmp) + " not found")
 			else:
 				res = []
 			if cfg.has_option(t, "UseMem"):
 				mem = cfg.get(t, "UseMem") in ["True", "true"]
 			else:
 				mem = True
+
+			if cfg.has_option(t, "VideoOut"):
+				videoout = cfg.get(t, "VideoOut") in ["True", "true"]
+				
+			else:
+				videoout = False
+
+			print("Video Out = " + str(videoout) + "\n")
+
 			if cfg.has_option(t, "Ports"):
 				ports = [re.match(r"(?P<Name>.*)\((?P<Options>.*)\)", _).groupdict() for _ in re.findall("[a-zA-Z0-9_]*?\(.*?\)", cfg.get(t, "Ports"))]
 			else:
@@ -409,7 +515,7 @@ class Project:
 
 			log.debug("Found thread '" + str(name) + "' (" + str(slots) + "," + str(hw) + "," + str(sw) + "," + str(res) + ")")
 
-			thread = Thread(name, slots, hw, sw, res, mem, ports)
+			thread = Thread(name, slots, hw, sw, res, mem, videoout, ports)
 			for s in slots: s.threads.append(thread)
 			self.threads.append(thread)
 			

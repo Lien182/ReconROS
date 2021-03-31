@@ -1,0 +1,2 @@
+lib reconos_v3_01_a reconos_pkg vhdl
+lib reconos_memif_arbiter_v1_00_a reconos_memif_arbiter vhdl

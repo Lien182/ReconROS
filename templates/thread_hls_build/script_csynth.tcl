@@ -10,4 +10,5 @@ set_part {<<PART>>}
 create_clock -period <<CLKPRD>> -name default
 source directives.tcl
 csynth_design
+export_design
 exit

@@ -1,0 +1,4 @@
+lib proc_common_v3_00_a all
+lib reconos_v3_01_a reconos_pkg vhdl
+lib reconos_memif_mmu_zynq_v1_00_a tlb vhdl
+lib reconos_memif_mmu_zynq_v1_00_a reconos_memif_mmu_zynq vhdl
