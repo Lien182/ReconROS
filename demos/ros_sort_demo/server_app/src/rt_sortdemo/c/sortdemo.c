@@ -35,8 +35,8 @@ void *rt_sortdemo(void *data) {
 	while (1) {
 		printf("Wait for new data! \n");
 		ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg);
-		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_msg->data.size, resources_sort_msg->data.capacity);
-		bubblesort(resources_sort_msg->data.data, resources_sort_msg->data.size);
+		printf("Received new data (len = %d, cap = %d)! \n", resources_sort_msg->sortdata.size, resources_sort_msg->sortdata.capacity);
+		bubblesort(resources_sort_msg->sortdata.data, resources_sort_msg->sortdata.size);
 		printf("Publish new data! \n");
 		ROS_PUBLISH(resources_pubdata, resources_sort_msg  );
 	}
