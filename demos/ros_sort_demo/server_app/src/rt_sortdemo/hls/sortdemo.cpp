@@ -2,7 +2,7 @@
 #include "reconos_thread.h"
 #include "ap_cint.h"
 
-#include <std_msgs/msg/u_int32_multi_array__struct.h>
+#include <sorter_msgs/msg/sortdata.h>
 
 #define BLOCK_SIZE 2048
 
@@ -49,7 +49,7 @@ THREAD_ENTRY() {
 	while(1) {
 
 		pMessage = ROS_SUBSCRIBE_TAKE(resources_subdata, resources_sort_msg );
-		addr = OFFSETOF(std_msgs__msg__UInt32MultiArray, data.data) + pMessage;
+		addr = OFFSETOF(sorter_msgs__msg__Sortdata, sortdata.data) + pMessage;
 
 		MEM_READ(addr, payload_addr, 4);					//Get the address of the data
 		MEM_READ(payload_addr[0], ram, BLOCK_SIZE * 4);
