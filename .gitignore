@@ -33,6 +33,10 @@ demos/*/client_app/sorter_msgs/install
 demos/*/client_app/sorter_msgs/include
 demos/*/client_app/sorter_msgs/log
 
+demos/*/client_app/sorter_client/build
+demos/*/client_app/sorter_client/install
+demos/*/client_app/sorter_client/include
+demos/*/client_app/sorter_client/log
 
 tools/arm-docker-build/Docker/qemu-arm-static
 

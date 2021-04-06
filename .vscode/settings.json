@@ -25,7 +25,8 @@
         "valarray": "cpp",
         "*.ipp": "cpp",
         "tuple": "cpp",
-        "*.tpp": "c"
+        "*.tpp": "c",
+        "system_error": "cpp"
     },
     "ros.distro": "dashing",
     "python.autoComplete.extraPaths": [
