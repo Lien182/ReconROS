@@ -212,16 +212,7 @@ then navigate back and enter command
 ```
 $ python3 sort_action_client.py
 ```
-you will see the progress messages both on server and client side
-
-## Publications
-
-### Second Step: Client Application
-The x86 client application can be compiled by using the make command in the client demo folder. Please note that ROS2 has to be installed on your machine.
-
-After that, you can run the client application on your machine which sends unsorted numbers to the server application and gets sorted data back.
-
-For the ARM-based client application, the same procedure described for the server application have to be used. 
+you will see the progress messages both on server and client side.
 
 ## Publications
 
