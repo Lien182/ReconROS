@@ -339,11 +339,11 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 					return;
 			}
 			
-			pthread_create(&rt->swslot, &attr, rt->swentry, (void*)rt);
+			pthread_create(&rt->swslot, &attr, rt->swentry, (void*)rt->init_data);
 		}
 		else
 		{
-			pthread_create(&rt->swslot, NULL,  rt->swentry, (void*)rt);
+			pthread_create(&rt->swslot, NULL,  rt->swentry, (void*)rt->init_data);
 		}
 	}
 }
