@@ -12,6 +12,7 @@ demos/image_filtering/build.sw/
 
 demos/*/build.sw/
 demos/*/build.hw/
+demos/*/build.msg/
 
 demos/*/server_app/build.sw/
 demos/*/server_app/build.hw/

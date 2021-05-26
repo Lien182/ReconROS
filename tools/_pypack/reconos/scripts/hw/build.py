@@ -28,7 +28,7 @@ def build(prj, hwdir):
 	if prj.impinfo.xil[0] == "ise":
 		_build_ise(prj, hwdir)
 	elif prj.impinfo.xil[0] == "vivado":
-		if prj.impinfo.pr == "true":
+		if prj.impinfo.pr == True:
 			_build_vivado_pr(prj, hwdir)
 		else:
 			_build_vivado(prj, hwdir)
@@ -74,7 +74,7 @@ def _build_vivado(prj, hwdir):
 	subprocess.call("""
 					source /opt/Xilinx/Vivado/{0}/settings64.sh;
 					vivado -mode batch -notrace -nojournal -nolog -source build.tcl;""".format(prj.impinfo.xil[1]),
-					shell=True)
+					shell=True, executable="/bin/bash")
 	print()
 
 	shutil2.chdir(prj.dir)

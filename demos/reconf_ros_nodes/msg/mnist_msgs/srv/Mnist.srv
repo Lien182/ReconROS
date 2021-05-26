@@ -1,0 +1,3 @@
+sensor_msgs/Image rawdigit
+---
+uint32 digit

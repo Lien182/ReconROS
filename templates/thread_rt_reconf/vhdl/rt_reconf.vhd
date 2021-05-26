@@ -33,7 +33,7 @@ entity rt_reconf is
 		HWT_Rst    : in  std_logic;
 		HWT_Signal : in  std_logic;
 
-		DEBUG : out std_logic_vector(110 downto 0)
+		DEBUG : out std_logic_vector(135 downto 0)
 	);
 end entity rt_reconf;
 

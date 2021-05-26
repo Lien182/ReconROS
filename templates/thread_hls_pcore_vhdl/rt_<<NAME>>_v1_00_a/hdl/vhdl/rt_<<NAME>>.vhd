@@ -5,7 +5,13 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+<<if RECONFIGURABLE==True>>
+entity rt_reconf is
+<<end if>>
+<<if RECONFIGURABLE==False>>
 entity rt_<<NAME>> is
+<<end if>>
+
 	port (
 		-- OSIF FIFO ports
 		OSIF_Sw2Hw_Data    : in  std_logic_vector(31 downto 0);
@@ -33,9 +39,16 @@ entity rt_<<NAME>> is
 
 		debug_port : out std_logic_vector(31 downto 0)
 	);
-end entity rt_<<NAME>>;
-
-architecture implementation of rt_<<NAME>> is
+<<if RECONFIGURABLE==True>>
+	end entity rt_reconf;
+	
+	architecture implementation of rt_reconf is
+<<end if>>
+<<if RECONFIGURABLE==False>>
+	end entity rt_<<NAME>>;
+	
+	architecture implementation of rt_<<NAME>> is
+<<end if>>
 	component rt_imp is
 		port (
 			ap_clk : in std_logic;

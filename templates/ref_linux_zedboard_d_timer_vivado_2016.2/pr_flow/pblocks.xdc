@@ -1,6 +1,6 @@
 <<reconos_preproc>>
 
-<<generate for SLOTS(Reconfigurable == "true")>>
+<<generate for SLOTS(Reconfigurable == True)>>
 
 create_pblock pblock_slot_<<Id>>
 add_cells_to_pblock [get_pblocks pblock_slot_<<Id>>] [get_cells -quiet [list design_1_i/slot_<<Id>>]]
