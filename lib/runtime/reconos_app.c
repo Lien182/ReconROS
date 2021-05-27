@@ -105,113 +105,59 @@ struct reconos_resource <<NameLower>>_res = {
 /*
  * @see header
  */
+
+<<generate for RESOURCEGROUPS>>
+int <<Name>>_init(void)
+{
+	<<=generate for Items(Type == "mbox")=>>mbox_init(<<NameLower>>, <<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "sem")=>>sem_init(<<NameLower>>, <<Args>>);<<end generate=>>
+	<<=generate for Items(Type == "mutex")=>>pthread_mutex_init(<<NameLower>>, NULL);<<end generate=>>
+	<<=generate for Items(Type == "cond")=>>pthread_cond_init(<<NameLower>>, NULL);	<<=end generate=>>
+	<<=generate for Items(Type == "rosnode")=>>ros_node_init(<<NameLower>>, <<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "rossub")=>>ros_subscriber_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "rospub")=>>ros_publisher_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")=>><<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
+	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s)); <<NameLower>> = &<<NameLower>>_s;	<<=end generate=>>
+	<<=generate for Items(Type == "rossrvs")=>>ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "rosactions")=>>ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);<<end generate=>>	
+	<<=generate for Items(Type == "rossrvc")=>>ros_service_client_init(<<NameLower>>, <<Group>>_<<Args>>);<<end generate=>>
+	<<=generate for Items(Type == "rosactionc")=>>ros_action_client_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
+
+	return 0;
+}
+<<end generate>>
+
+<<generate for RESOURCEGROUPS>>
+int <<Name>>_deinit(void)
+{
+	<<=generate for Items(Type == "mbox")=>>mbox_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "sem")=>>	sem_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "mutex")=>>pthread_mutex_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "cond")=>>pthread_cond_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rossub")=>>ros_subscriber_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rospub")=>>ros_publisher_destroy(<<NameLower>>);	<<=end generate=>>
+	<<=generate for Items(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")=>><<ROSDataTypeDeInitFunc>>(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rossrvs")=>>ros_service_server_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rosactions")=>>ros_action_server_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rossrvc")=>>ros_service_client_destroy(<<NameLower>>);<<=end generate=>>	
+	<<=generate for Items(Type == "rosactionc")=>>ros_action_client_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rosnode")=>>ros_node_destroy(<<NameLower>>);<<=end generate=>>
+	return 0;
+}
+<<end generate>>
+
+
 void reconos_app_init() {
-	<<generate for RESOURCES(Type == "mbox")>>
-	mbox_init(<<NameLower>>, <<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "sem")>>
-	sem_init(<<NameLower>>, <<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "mutex")>>
-	pthread_mutex_init(<<NameLower>>, NULL);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "cond")>>
-	pthread_cond_init(<<NameLower>>, NULL);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rosnode")>>
-	ros_node_init(<<NameLower>>, <<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossub")>>
-	ros_subscriber_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rospub")>>
-	ros_publisher_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
-	<<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
-	// VERY; VERY UGLY
-	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s));
-	<<NameLower>> = &<<NameLower>>_s;
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossrvs")>>
-	ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rosactions")>>
-	ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
-	
-	<<generate for RESOURCES(Type == "rossrvc")>>
-	ros_service_client_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rosactionc")>>
-	ros_action_client_init(<<NameLower>>, <<Group>>_<<Args>>);
-	<<end generate>>
+<<generate for RESOURCEGROUPS>> <<Name>>_init();
+<<end generate>>
 }
 
 /*
  * @see header
  */
 void reconos_app_cleanup() {
-	<<generate for RESOURCES(Type == "mbox")>>
-	mbox_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "sem")>>
-	sem_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "mutex")>>
-	pthread_mutex_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "cond")>>
-	pthread_cond_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossub")>>
-	ros_subscriber_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rospub")>>
-	ros_publisher_destroy(<<NameLower>>);
-	<<end generate>>
-
-
-	<<generate for RESOURCES(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")>>
-	<<ROSDataTypeDeInitFunc>>(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rossrvs")>>
-	ros_service_server_destroy(<<NameLower>>);
-	<<end generate>>
-	
-	<<generate for RESOURCES(Type == "rosactions")>>
-	ros_action_server_destroy(<<NameLower>>);
-	<<end generate>>
-
-
-	<<generate for RESOURCES(Type == "rossrvc")>>
-	ros_service_client_destroy(<<NameLower>>);
-	<<end generate>>
-	
-	<<generate for RESOURCES(Type == "rosactionc")>>
-	ros_action_client_destroy(<<NameLower>>);
-	<<end generate>>
-
-	<<generate for RESOURCES(Type == "rosnode")>>
-	ros_node_destroy(<<NameLower>>);
-	<<end generate>>
-
+<<generate for RESOURCEGROUPS>> <<Name>>_deinit();
+<<end generate>>
 }
 
 /*

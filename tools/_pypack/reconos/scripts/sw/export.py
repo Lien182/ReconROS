@@ -57,6 +57,7 @@ def export_sw(args, swdir, link):
 		d["HasSw"] = t.swsource is not None
 		dictionary["THREADS"].append(d)
 	dictionary["RESOURCES"] = []
+	dictionary["RESOURCEGROUPS"] = []
 	for r in prj.resources:
 		d = {}
 		
@@ -80,31 +81,31 @@ def export_sw(args, swdir, link):
 
 		elif r.type == "rossrvs":
 			for msg in prj.resources:
-				print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
+				#print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
 				if msg.name.replace('_req','') == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
-					print(d["Args"])
+					#print(d["Args"])
 					break
 		elif r.type == "rossrvc":
 			for msg in prj.resources:
-				print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
+				#print(msg.name.replace('_req','') + ";" +r.args[1] + ";")
 				if msg.name.replace('_req','') == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_service_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
-					print(d["Args"])
+					#print(d["Args"])
 					break
 		elif r.type == "rosactions":
 			for msg in prj.resources:
-				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
+				#print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
 				if msg.name.replace('_goal_req','') == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
-					print(d["Args"])
+					#print(d["Args"])
 					break
 		elif r.type == "rosactionc":
 			for msg in prj.resources:
-				print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
+				#print(msg.name.replace('_goal_req','') + ";" +r.args[1] + ";")
 				if msg.name.replace('_goal_req','') == r.args[1]:
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_action_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] + ", " + r.args[3] 
-					print(d["Args"])
+					#print(d["Args"])
 					break
 		else:
 			d["Args"] = ", ".join(r.args)
@@ -172,6 +173,24 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeSequenceLength"] = " "
 
 		dictionary["RESOURCES"].append(d)
+
+
+		for idx in range(len(dictionary["RESOURCEGROUPS"])):
+			if dictionary["RESOURCEGROUPS"][idx]["Name"] == r.group.lower():
+				dictionary["RESOURCEGROUPS"][idx]["Items"].append(d)
+				print("i found it!")
+				break
+		else:
+			e = {}
+			e["Name"] = r.group.lower()
+			e["Items"]= []
+			e["Items"].append(d)
+			print(r.group.lower())
+			dictionary["RESOURCEGROUPS"].append(e)
+			
+		
+	print(dictionary["RESOURCEGROUPS"])
+
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:
 		d = {}
