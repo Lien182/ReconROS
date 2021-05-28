@@ -65,17 +65,17 @@ THREAD_ENTRY()
 
 	THREAD_INIT();
 
-	uint32 output_buffer_addr = GET_INIT_DATA();
+	uint32_t output_buffer_addr = GET_INIT_DATA();
 
 
 	while (1)
 	{
-		uint32 status = 0;
-		uint32 payload_addr[1];
+		uint32_t status = 0;
+		uint32_t payload_addr[1];
 		
-		uint32 ram[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS/4];
+		uint32_t ram[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS/4];
 
-		uint32 pMessage= ROS_SERVICESERVER_TAKE(rmnist_srv, rmnist_mnist_srv_req );
+		uint32_t pMessage= ROS_SERVICESERVER_TAKE(rmnist_srv, rmnist_mnist_srv_req );
 		MEM_READ(OFFSETOF(mnist_msgs__srv__Mnist_Request, rawdigit.data.data) + pMessage, payload_addr, 4);
 		MEM_READ( payload_addr[0], ram, INPUT_N_ROWS*INPUT_N_COLS);
 
@@ -142,7 +142,7 @@ THREAD_ENTRY()
 
 
 
-		uint32 output_digit[1];
+		uint32_t output_digit[1];
 		output_digit[0] = max_id;
 
 		MEM_WRITE( output_digit, output_buffer_addr, 4);

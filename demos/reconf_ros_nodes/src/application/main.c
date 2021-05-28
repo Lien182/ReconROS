@@ -16,10 +16,6 @@
 #include <math.h>
 #include <limits.h>
 
-#include "mmp.h"
-#include "common.h"
-#include "main.h"
-
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -117,49 +113,6 @@ int reconfigure(char* filename,unsigned int partial){
 
 /* functions for sortdemo */
 
-int cmp_uint32t(const void *a, const void *b) {
-	return *(uint32_t *)a - *(uint32_t *)b;
-}
-
-void _merge(uint32_t *data, uint32_t *tmp,
-           int l_count, int r_count) {
-	int i;
-	uint32_t *l = data, *r = data + l_count;
-	int li = 0, ri = 0;
-
-	for (i = 0; i < l_count; i++) {
-		tmp[i] = l[i];
-	}
-
-	for (i = 0; i < l_count + r_count; i++) {
-		if (ri >= r_count || (li < l_count && tmp[li] < r[ri])) {
-			data[i] = tmp[li];
-			li++;
-		} else {
-			data[i] = r[ri];
-			ri++;
-		}
-	}
-}
-
-void merge(uint32_t *data, int data_count) {
-	int bs, bi;
-	uint32_t *tmp;
-
-	tmp = (uint32_t *)malloc(data_count * sizeof(uint32_t));
-
-	for (bs = BLOCK_SIZE; bs < data_count; bs += bs) {
-		for (bi = 0; bi < data_count; bi += bs + bs) {
-			if (bi + bs + bs > data_count) {
-				_merge(data + bi, tmp, bs, data_count - bi - bs);
-			} else {
-				_merge(data + bi, tmp, bs, bs);
-			}
-		}
-	}
-
-	free(tmp);
-}
 
 int main(int argc, char **argv) {
 	int i;
@@ -177,6 +130,8 @@ int main(int argc, char **argv) {
 	num_swts = atoi(argv[2]);
 	num_blocks = atoi(argv[3]);
 	str_matrix_size = atoi(argv[4]);
+
+	/*
 
 	unsigned int t_start, t_gen, t_sort, t_merge, t_check;
 	unsigned int t_reconfiguration_full;
@@ -280,10 +235,9 @@ int main(int argc, char **argv) {
 
 
 
-	/* reconfiguration */
+	
 
 	for(i = 0; i < num_hwts; i++){
-		/*construct name of bitfile*/
 		
 		char filename[100] = "config_matrixmul_pblock_slot_";
 		char id[10];
@@ -291,7 +245,7 @@ int main(int argc, char **argv) {
 		strcat(filename,id);
 		strcat(filename,"_partial.bit");
 
-		/*suspend each thread and reconfigure */
+		
 		log("Suspending HWT %d\n",i);
 		t_suspend[i] = timer_get();
 		reconos_thread_suspend_block(reconos_hwts[i]);
@@ -304,7 +258,7 @@ int main(int argc, char **argv) {
 		t_reconfiguration[i] = timer_get() - t_reconfiguration[i];
 	}
 
-	/* terminate sortdemo software threads */
+	
 	for(i = 0; i < num_swts;i++){
 		mbox_put(resources_address,UINT_MAX);
 	}
@@ -314,7 +268,7 @@ int main(int argc, char **argv) {
 		log("SWT %d was terminated\n",i);
 	}
 
-	/* resume hardware threads */
+	
 	for(i = 0; i < num_hwts; i++){
 		log("Resume HWT %d\n",i);
 		t_resume[i] = timer_get();
@@ -322,14 +276,13 @@ int main(int argc, char **argv) {
 		t_resume[i] = timer_get() - t_resume[i];
 	}
 
-	/* create matrixmul software threads */
+	
 	for(i = 0; i< num_swts; i++){
 		log("Creating MatrixMul SWT %d\n",i);
 		reconos_swts[i] = reconos_thread_create_swt_matrixmul(0,0);
 	}
 
 
-	/* matrixmul */
 
 	unsigned generate_data_time;
 	unsigned generate_check_result_time;
@@ -455,6 +408,8 @@ int main(int argc, char **argv) {
 
 
 	timer_cleanup();
+
+	*/
 	reconos_app_cleanup();
 	reconos_cleanup();
 

@@ -22,11 +22,11 @@
 #define RECONOS_CALLS_H
 
 #include "hls_stream.h"
-#include "ap_cint.h"
+#include "stdint.h"
 
 /* == Helper definitions =============================================== */
 
-#define OFFSETOF(type, member) ((uint32)(intptr_t)&(((type *)(void*)0)->member) )
+#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
 
 /* == Constant definitions ============================================= */
 
@@ -128,7 +128,7 @@
  *   stream - reference to stream
  *   data   - data to write
  */
-inline void stream_write(hls::stream<uint32> &stream, uint32 data) {
+inline void stream_write(hls::stream<uint32_t> &stream, uint32_t data) {
 #pragma HLS inline
 	while (!stream.write_nb(data)){}
 }
@@ -142,9 +142,9 @@ inline void stream_write(hls::stream<uint32> &stream, uint32 data) {
  *
  *   @returns read data
  */
-inline uint32 stream_read(hls::stream<uint32> &stream) {
+inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #pragma HLS inline
-	uint32 data;
+	uint32_t data;
 	while (!stream.read_nb(data)){}
 	return data;
 }
@@ -513,11 +513,11 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  *   
  */
 #define MEM_READ(src,dst,len){\
-	uint32 __len, __rem;\
-	uint32 __addr = (src), __i = 0;\
+	uint32_t __len, __rem;\
+	uint32_t __addr = (src), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32 __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32 __to_rem = __rem;\
+		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		uint32_t __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -544,11 +544,11 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  *   len - number of bytes to transmit (bytes)
  */
 #define MEM_WRITE(src,dst,len){\
-	uint32 __len, __rem;\
-	uint32 __addr = (dst), __i = 0;\
+	uint32_t __len, __rem;\
+	uint32_t __addr = (dst), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32 __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32 __to_rem = __rem;\
+		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		uint32_t __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -576,7 +576,7 @@ inline uint32 stream_read(hls::stream<uint32> &stream) {
  */
 
 #define MEM_WRITE_FROM_STREAM(src,dst,len){\
-	uint32 __len = len; \
+	uint32_t __len = len; \
 	stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
 	stream_write(memif_hwt2mem, dst);\
 	for (; __len > 0; __len -= 4) {\

@@ -29,8 +29,7 @@
 #define MEM_WRITE_L( src, adr, length ) { memcpy((void*)adr, src, length); }
 
 
-const int filter_x[] = { 1,  2,  1,  0,  0,  0, -1, -2, -1};
-const int filter_y[] = { 1,  0, -1,  2,  0, -2,  1,  0, -1};
+const int filter[] ={ 1,  1,  1,  1,  8,  1,  1,  1,  1};;
 
 
 
@@ -53,10 +52,10 @@ THREAD_ENTRY()
 
 	while (1)
 	{
-		ROS_SUBSCRIBE_TAKE(video_subdata, video_image_msg);
+		ROS_SUBSCRIBE_TAKE(rsobel_subdata, rsobel_image_msg);
 		start = clock();
 		
-		uint32_t address = (uint32_t)video_image_msg->data.data;
+		uint32_t address = (uint32_t)rsobel_image_msg->data.data;
 		
 		MEM_READ_L( address, input_linebuffer, INPUT_PREFETCH_SIZE);
 		address += (INPUT_WIDTH<<3);
@@ -84,14 +83,13 @@ THREAD_ENTRY()
 						for(k = 0; k < 4; k++)
 						{
 							int16_t data = ((actindata >> 8*k) & 0x000000ff);
-							tmp_x[k] += data * filter_x[filter_pointer];
-							tmp_y[k] += data * filter_y[filter_pointer];
+							tmp_x[k] += data * filter[filter_pointer];
 							
 						}
 						filter_pointer++;
 					}	
 				}
-				output_linebuffer[(j)] = (((abs(tmp_x[0]) + abs(tmp_y[0])) >> 3)) | (((abs(tmp_x[1]) + abs(tmp_y[1])) >> 3) << 8) | (((abs(tmp_x[2]) + abs(tmp_y[2])) >> 3) << 16) | (((abs(tmp_x[3]) + abs(tmp_y[3])) >> 3) << 24);
+				output_linebuffer[(j)] = (((abs(tmp_x[0])) >> 3)) | (((abs(tmp_x[1])) >> 3) << 8) | (((abs(tmp_x[2])) >> 3) << 16) | (((abs(tmp_x[3])) >> 3) << 24);
 			}
 			
 			//uint32_t sum = 0;
@@ -100,12 +98,12 @@ THREAD_ENTRY()
 
 			//printf("sum : %d \n", sum);
 
-			MEM_WRITE_L( output_linebuffer , ((uint8_t*)video_image_msg_out->data.data + i* OUTPUT_LINE_SIZE), INPUT_LINESIZE);
+			MEM_WRITE_L( output_linebuffer , ((uint8_t*)rsobel_image_msg_out->data.data + i* OUTPUT_LINE_SIZE), INPUT_LINESIZE);
 			
 		}
 		
 		end = clock();
-		ROS_PUBLISH(video_pubdata, video_image_msg_out);
+		ROS_PUBLISH(rsobel_pubdata, rsobel_image_msg_out);
 		printf("%3.6f\n", (double)(end-start)/CLOCKS_PER_SEC);
 
 

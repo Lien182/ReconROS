@@ -53,10 +53,10 @@ THREAD_ENTRY()
 
 	while (1)
 	{
-		ROS_SUBSCRIBE_TAKE(video_subdata, video_image_msg);
+		ROS_SUBSCRIBE_TAKE(rsobel_subdata, rsobel_image_msg);
 		start = clock();
 		
-		uint32_t address = (uint32_t)video_image_msg->data.data;
+		uint32_t address = (uint32_t)rsobel_image_msg->data.data;
 		
 		MEM_READ_L( address, input_linebuffer, INPUT_PREFETCH_SIZE);
 		address += (INPUT_WIDTH<<3);
@@ -100,12 +100,12 @@ THREAD_ENTRY()
 
 			//printf("sum : %d \n", sum);
 
-			MEM_WRITE_L( output_linebuffer , ((uint8_t*)video_image_msg_out->data.data + i* OUTPUT_LINE_SIZE), INPUT_LINESIZE);
+			MEM_WRITE_L( output_linebuffer , ((uint8_t*)rsobel_image_msg_out->data.data + i* OUTPUT_LINE_SIZE), INPUT_LINESIZE);
 			
 		}
 		
 		end = clock();
-		ROS_PUBLISH(video_pubdata, video_image_msg_out);
+		ROS_PUBLISH(rsobel_pubdata, rsobel_image_msg_out);
 		printf("%3.6f\n", (double)(end-start)/CLOCKS_PER_SEC);
 
 

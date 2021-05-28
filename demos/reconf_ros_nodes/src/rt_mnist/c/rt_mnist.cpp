@@ -63,9 +63,9 @@ THREAD_ENTRY()
 		
 		uint32_t ram[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS/4];
 
-		uint32_t pMessage= ROS_SERVICESERVER_TAKE(resources_srv, resources_mnist_srv_req );
+		uint32_t pMessage= ROS_SERVICESERVER_TAKE(rmnist_srv, rmnist_mnist_srv_req );
 		
-		memcpy(ram, resources_mnist_srv_req->rawdigit.data.data, INPUT_N_ROWS*INPUT_N_COLS);
+		memcpy(ram, rmnist_mnist_srv_req->rawdigit.data.data, INPUT_N_ROWS*INPUT_N_COLS);
 
 		//memcpy(image, ram,  N_ROWS*N_COLS);
 		start = clock();
@@ -119,9 +119,9 @@ THREAD_ENTRY()
 
 
 
-		resources_mnist_srv_res->digit = max_id;
+		rmnist_mnist_srv_res->digit = max_id;
 		end = clock();
-		ROS_SERVICESERVER_SEND_RESPONSE(resources_srv, resources_mnist_srv_res);
+		ROS_SERVICESERVER_SEND_RESPONSE(rmnist_srv, rmnist_mnist_srv_res);
 				
 		printf("%3.6f; \n", (double)(end-start)/CLOCKS_PER_SEC);
 				

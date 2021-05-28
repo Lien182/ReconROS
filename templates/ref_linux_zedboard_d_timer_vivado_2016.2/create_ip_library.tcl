@@ -255,7 +255,7 @@ proc import_pcore { repo_path ip_name {libs ""} } {
 	}
 
 	puts "\[RDK\] After infer_core"
-	#set_property vendor 				cs.upb.de 				[ipx::current_core]
+	set_property vendor 				cs.upb.de 				[ipx::current_core]
 	set_property library 				reconos 				[ipx::current_core]
 	set_property company_url 			http://www.reconos.de 	[ipx::current_core]
 	set_property vendor_display_name 	{Paderborn University - Computer Engineering Group} [ipx::current_core]
