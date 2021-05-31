@@ -26,7 +26,7 @@
 #define INPUT_N_COLS 28
 
 
-void read_image(uint32 ram[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS/4], uint8_t image[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS]){
+void read_image(uint32_t ram[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS/4], uint8_t image[INPUT_BATCH_SZ*INPUT_N_ROWS*INPUT_N_COLS]){
 	// Read the input stream and put the values in the image array
 
 #pragma HLS INLINE off

@@ -84,7 +84,6 @@ void Convolution_Layer_2(const hw_fixed IBRAM[image_Batch][CONV_1_TYPE][CONV_2_I
 		for(int row_k = 0;row_k<CONV_2_WH;row_k++){
 			COL_K:
 			for(int col_k=0;col_k<CONV_2_WH;col_k++){
-				#pragma HLS pipeline 
 				ROW :
 				for (int row = 0; row < CONV_2_OUTPUT_WH; row++) {
 					COL	 :
@@ -153,7 +152,6 @@ void Convolution_Layer_3(const hw_fixed IBRAM[image_Batch][CONV_2_TYPE][CONV_3_I
 		for(int row_k=0;row_k<CONV_3_WH;row_k++){
 			COL_K:
 			for(int col_k=0;col_k<CONV_3_WH;col_k++){
-				#pragma HLS pipeline 
 				D_OUT:
 				for(int co=0;co<CONV_3_TYPE;co++){
 					#pragma HLS unroll factor=4
