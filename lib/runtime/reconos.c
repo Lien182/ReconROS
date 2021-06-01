@@ -200,6 +200,7 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
                                   char *path) {
 	FILE *file;
 	unsigned int i, size;
+	char filepath[512];
 
 	debug("[reconos-core] loading bitstreams from %s\n", path);
 
@@ -214,7 +215,11 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 	}
 
 	for (i = 0; i < RECONOS_NUM_HWTS; i++) {
-		file = fopen(path, "rb");
+		memset(filepath, 0, sizeof(filepath));
+		sprintf(filepath, "%s/pblock_slot_%d_%s_%d_partial.bit.bin", path,i, rt->name, i);
+		printf("Debug: %s \n", filepath);
+				
+		file = fopen(filepath, "rb");
 		if (!file) {
 			panic("[reconos-core] ERROR: failed to open bitstream\n");
 		}

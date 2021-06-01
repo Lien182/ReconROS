@@ -178,7 +178,6 @@ def export_sw(args, swdir, link):
 		for idx in range(len(dictionary["RESOURCEGROUPS"])):
 			if dictionary["RESOURCEGROUPS"][idx]["Name"] == r.group.lower():
 				dictionary["RESOURCEGROUPS"][idx]["Items"].append(d)
-				print("i found it!")
 				break
 		else:
 			e = {}

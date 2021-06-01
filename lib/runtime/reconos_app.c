@@ -193,7 +193,7 @@ struct reconos_thread *reconos_thread_create_hwt_<<Name>>(void * init_data) {
 }
 
 
-struct reconos_thread *reconos_pr_thread_create_hwt_<<Name>>(void * init_data, char * bitstream_path) {
+struct reconos_thread *reconos_thread_pr_create_hwt_<<Name>>(void * init_data, char * bitstream_path) {
 	struct reconos_thread *rt = (struct reconos_thread *)malloc(sizeof(struct reconos_thread));
 	if (!rt) {
 		panic("[reconos-core] ERROR: failed to allocate memory for thread\n");

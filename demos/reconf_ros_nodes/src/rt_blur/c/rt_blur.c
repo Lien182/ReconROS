@@ -37,18 +37,13 @@ const int filter[] ={ 1,  1,  1,  1,  8,  1,  1,  1,  1};;
 THREAD_ENTRY()
 {
 	clock_t start, end;
-
-	THREAD_INIT();
-
-	uint32_t bStart = 1;
-
 	uint32_t input_linebuffer[INPUT_LINEBUFFER_SIZE/4];
 	uint32_t output_linebuffer[OUTPUT_LINEBUFFER_SIZE/4];
 	int32_t i,k,j, ii, jj;
 	int16_t tmp_x[4], tmp_y[4];
 	uint8_t filter_pointer;
 
-	//uint8_t * outputdata = malloc(640*480*4);
+	THREAD_INIT();
 
 	while (1)
 	{

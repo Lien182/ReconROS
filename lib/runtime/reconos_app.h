@@ -130,7 +130,13 @@ void reconos_app_cleanup();
  *   rt   - pointer to the ReconOS thread
  */
 struct reconos_thread *reconos_thread_create_hwt_<<Name>>(void * init_data);
+
+struct reconos_thread *reconos_thread_pr_create_hwt_<<Name>>(void * init_data, char * bitstream_path);
 <<=end generate=>>
+
+
+
+
 
 <<=generate for HasSw=>>
 /*

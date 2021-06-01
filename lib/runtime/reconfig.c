@@ -66,11 +66,10 @@ int fpga_state()
 	char buf[10], *state;
     state = "operating";
 	int fd_finish_flag = open("/sys/class/fpga_manager/fpga0/state", O_RDWR);
-    if (fptr) {
+    if (fd_finish_flag) {
 		fgets(buf, 10, fd_finish_flag);
-        printf("Stream read: %s \n");
-		fclose(fptr);
-		system("rm state.txt");
+        printf("Stream read: %s \n", buf);
+		fclose(fd_finish_flag);
 		if (strcmp(buf, state) == 0)
 			return 0;
 		else
@@ -91,7 +90,6 @@ int gettime(struct timeval  t0, struct timeval t1)
 int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned int partial)
 {
     struct timeval t1, t0;
-    char command[2048];
     double time;
 
 

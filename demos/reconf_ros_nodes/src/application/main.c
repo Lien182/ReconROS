@@ -24,7 +24,17 @@
 
 int main(int argc, char **argv) {
 
-	
+	reconos_init();
+	reconos_app_init();
+
+
+	reconos_thread_pr_create_hwt_sobel(0, "bitstreams");
+
+
+	while(1)
+	{
+		sleep(10);
+	}
 
 	reconos_app_cleanup();
 	reconos_cleanup();
