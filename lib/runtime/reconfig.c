@@ -110,34 +110,24 @@ int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned 
 	close(fd_partial);
 
     gettimeofday(&t0, NULL);
-    fd_partial = open("/sys/class/fpga_manager/fpga0/firmware", O_RDWR);
+    fd_partial = open("/sys/class/fpga_manager/fpga0/firmware", O_WRONLY);
 	if(fd_partial < 0){
 		printf("Failed to open /sys/class/fpga_manager/fpga0/firmware device when configuring\n");
 		return -1;
 	}
 	printf("Opened xdevcfg. Configuring with %u bytes\n",length);
 	write(fd_partial, bitstream, length);
-	int fd_finish_flag = open("/sys/devices/soc0/amba/f8007000.devcfg/prog_done", O_RDWR);
-	char finish_flag = '0';
-
-	/* wait until reconfiguration is finished */
-	while(finish_flag != '1'){
-		read(fd_finish_flag,&finish_flag,1);
-	}
-	printf("Reconfiguration with bitfile finished\n");
-	close(fd_partial);
-	close(fd_finish_flag);
-
-
-
+	
+    close(fd_partial);
+	
     gettimeofday(&t1, NULL);
     time = gettime(t0, t1);
-    if (!fpga_state()) {
-        printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
-        printf("BIN FILE loaded through FPGA manager successfully\n\r");
-    } else {
-        printf("BIN FILE loading through FPGA manager failed\n\r");
-    }
+    //if (!fpga_state()) {
+     //   printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
+    //    printf("BIN FILE loaded through FPGA manager successfully\n\r");
+    //} else {
+    //    printf("BIN FILE loading through FPGA manager failed\n\r");
+    //}
 
 
     return 0;

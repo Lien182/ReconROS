@@ -204,7 +204,6 @@ struct reconos_thread *reconos_thread_pr_create_hwt_<<Name>>(void * init_data, c
 	reconos_thread_loadbitstream(rt, bitstream_path);
 	reconos_thread_setinitdata(rt, init_data);
 	reconos_thread_setallowedslots(rt, slots, <<SlotCount>>);
-	//TODO
 	reconos_thread_setresourcepointers(rt, resources_<<Name>>, <<ResourceCount>>);
 	reconos_thread_create_auto(rt, RECONOS_THREAD_HW);
 

@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 	reconos_app_init();
 
 
-	reconos_thread_pr_create_hwt_sobel(0, "bitstreams");
+	reconos_thread_pr_create_hwt_sortdemo(0, "bitstreams");
 
 
 	while(1)

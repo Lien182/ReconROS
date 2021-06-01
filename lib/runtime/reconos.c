@@ -234,6 +234,9 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 			panic("[reconos-core] ERROR: failed to allocate memory for bitstream\n");
 		}
 
+		printf("Debug: Lenght %d \n", size);
+
+
 		fread(rt->bitstreams[i], sizeof(char), size, file);
 
 		fclose(file);
@@ -282,7 +285,8 @@ void reconos_thread_create(struct reconos_thread *rt, int slot) {
 void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 	int i;
 
-	if (tt & RECONOS_THREAD_HW) {
+	if (tt & RECONOS_THREAD_HW) 
+	{
 		for (i = 0; i < rt->allowed_hwslot_count; i++) {
 			if (!rt->allowed_hwslots[i]->rt) {
 				break;
@@ -292,6 +296,8 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			whine("[reconos_core] WARNING: no free slot for thread %s found \n", rt->name);
 			return;
 		}
+		printf("hw slot id: %d \n", rt->allowed_hwslots[i]->id);
+		reconos_reconfigure_fpgamgr(rt->bitstreams[rt->allowed_hwslots[i]->id], rt->bitstream_lengths[rt->allowed_hwslots[i]->id], 1);
 
 		reconos_thread_create(rt, rt->allowed_hwslots[i]->id);
 	} else if (tt & RECONOS_THREAD_SW) {
@@ -301,28 +307,12 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			pthread_attr_t attr;
 			int ret;
 
-			
-			/* Lock memory */
-			/*
-			if(mlockall(MCL_CURRENT|MCL_FUTURE) == -1) {
-					printf("mlockall failed: %m\n");
-					exit(-2);
-			} */
-
 			/* Initialize pthread attributes (default values) */
 			ret = pthread_attr_init(&attr);
 			if (ret) {
 					printf("init pthread attributes failed\n");
 					return;
 			}
-
-
-			/* Set a specific stack size  */
-		//	ret = pthread_attr_setstacksize(&attr, PTHREAD_STACK_MIN);
-		//	if (ret) {
-		//		printf("pthread setstacksize failed\n");
-			//	return;
-			//}
 
 			/* Set scheduler policy and priority of pthread */
 			ret = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
