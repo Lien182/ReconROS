@@ -394,6 +394,7 @@ void reconos_thread_resume(struct reconos_thread *rt, int slot) {
 		panic("[reconos-core] ERROR: thread not allowed to run in slot\n");
 	}
 
+	//TODO: do pr here
 	hwslot_resumethread(rt->hwslot, rt);
 	rt->state = RECONOS_THREAD_STATE_RUNNING_HW;
 }
@@ -415,6 +416,14 @@ void reconos_thread_signal(struct reconos_thread *rt) {
 void reconos_thread_setpriority(struct reconos_thread * rt, int thread_priority)
 {
 	rt->thread_priority = thread_priority;
+}
+
+
+
+void reconos_thread_reconfig(struct reconos_thread * rt)
+{
+    
+    
 }
 
 

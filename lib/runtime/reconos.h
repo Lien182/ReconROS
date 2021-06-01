@@ -337,4 +337,8 @@ void reconos_cleanup();
  */
 void reconos_cache_flush();
 
+
+int reconos_reconfigure_legacy(char* filename, unsigned int partial);
+int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length);
+
 #endif /* RECONOS_H */

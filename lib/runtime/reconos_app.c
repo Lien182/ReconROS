@@ -191,6 +191,26 @@ struct reconos_thread *reconos_thread_create_hwt_<<Name>>(void * init_data) {
 
 	return rt;
 }
+
+
+struct reconos_thread *reconos_pr_thread_create_hwt_<<Name>>(void * init_data, char * bitstream_path) {
+	struct reconos_thread *rt = (struct reconos_thread *)malloc(sizeof(struct reconos_thread));
+	if (!rt) {
+		panic("[reconos-core] ERROR: failed to allocate memory for thread\n");
+	}
+
+	int slots[] = {<<Slots>>};
+	reconos_thread_init(rt, "<<Name>>", 0);
+	reconos_thread_loadbitstream(rt, bitstream_path);
+	reconos_thread_setinitdata(rt, init_data);
+	reconos_thread_setallowedslots(rt, slots, <<SlotCount>>);
+	//TODO
+	reconos_thread_setresourcepointers(rt, resources_<<Name>>, <<ResourceCount>>);
+	reconos_thread_create_auto(rt, RECONOS_THREAD_HW);
+
+	return rt;
+}
+
 <<=end generate=>>
 
 <<=generate for HasSw=>>
