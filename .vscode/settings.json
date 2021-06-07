@@ -26,7 +26,8 @@
         "*.ipp": "cpp",
         "tuple": "cpp",
         "*.tpp": "c",
-        "fstream": "c"
+        "fstream": "c",
+        "limits.h": "c"
     },
     "ros.distro": "dashing",
     "python.autoComplete.extraPaths": [

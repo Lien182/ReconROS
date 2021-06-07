@@ -1,6 +1,10 @@
 #include "reconos_calls.h"
 #include "reconos_thread.h"
 
+#include "ap_int.h"
+#include "ap_fixed.h"
+#include "hls_math.h"
+
 #include <sorter_msgs/srv/sort.h>
 
 #define BLOCK_SIZE 2048

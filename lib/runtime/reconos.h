@@ -155,6 +155,7 @@ struct reconos_thread {
 	int thread_priority;
 
 	char **bitstreams;
+	char **bitstream_name;
 	int *bitstream_lengths;
 	void *(*swentry)(void *data);
 };
@@ -339,6 +340,8 @@ void reconos_cache_flush();
 
 
 int reconos_reconfigure_legacy(char * bitstream, unsigned int length, unsigned int partial);
+int reconos_reconfigure_legacy_fs(char * bitstream_path, unsigned int partial);
 int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned int partial);
+int reconos_reconfigure_fpgamgr_fs(char * bitstream_path, unsigned int partial);
 
 #endif /* RECONOS_H */

@@ -46,3 +46,6 @@ latest_list
 c_cpp_properties.json
 settings.json
 demos/reconf_ros_nodes/remote_build.sh
+install
+build
+log

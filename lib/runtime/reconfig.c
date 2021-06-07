@@ -37,7 +37,7 @@ int reconos_reconfigure_legacy(char * bitstream, unsigned int length, unsigned i
 	write(fd_partial, partial_flag, 2);
 	close(fd_partial);
 
-	fd_partial = open("/dev/xdevcfg", O_RDWR);
+	fd_partial = open("/dev/xdevcfg", O_WRONLY);
 	if(fd_partial < 0){
 		printf("Failed to open xdevcfg device when configuring\n");
 		return -1;
@@ -45,6 +45,10 @@ int reconos_reconfigure_legacy(char * bitstream, unsigned int length, unsigned i
 	printf("Opened xdevcfg. Configuring with %u bytes\n",length);
 	write(fd_partial, bitstream, length);
 	int fd_finish_flag = open("/sys/devices/soc0/amba/f8007000.devcfg/prog_done", O_RDWR);
+	if(fd_finish_flag < 0){
+		printf("Failed to open fd_finish_flag when configuring\n");
+		return -1;
+	}
 	char finish_flag = '0';
 
 	/* wait until reconfiguration is finished */
@@ -58,18 +62,29 @@ int reconos_reconfigure_legacy(char * bitstream, unsigned int length, unsigned i
 	return 0;
 
 }
+int reconos_reconfigure_legacy_fs(char * bitstream_path, unsigned int partial)
+{
+	char command[2048];
+
+	snprintf(command, sizeof(command), "cat %s > /dev/xdevcfg", bitstream_path);
+	system(command);
+
+	return 0;
+
+}
 
 
 int fpga_state()
 {
 	FILE *fptr;
-	char buf[10], *state;
-    state = "operating";
-	int fd_finish_flag = open("/sys/class/fpga_manager/fpga0/state", O_RDWR);
-    if (fd_finish_flag) {
-		fgets(buf, 10, fd_finish_flag);
+	char buf[10];
+    const char *state = "operating";
+	fptr = fopen("/sys/class/fpga_manager/fpga0/state", "r");
+    if (fptr) 
+	{
+		fgets(buf, 10, fptr);
         printf("Stream read: %s \n", buf);
-		fclose(fd_finish_flag);
+		fclose(fptr);
 		if (strcmp(buf, state) == 0)
 			return 0;
 		else
@@ -93,7 +108,7 @@ int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned 
     double time;
 
 
-    int fd_partial = open("/sys/class/fpga_manager/fpga0/flags", O_RDWR);
+    int fd_partial = open("/sys/class/fpga_manager/fpga0/flags", O_WRONLY);
 	if(fd_partial < 0){
 		printf("Failed to open/sys/class/fpga_manager/fpga0/flags\n");
 		return -1;
@@ -104,7 +119,7 @@ int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned 
 		strcpy(partial_flag,"0");
 	}
 	else {
-		strcpy(partial_flag,"1");
+		strcpy(partial_flag,"1"); 
 	}
 	write(fd_partial, partial_flag, 2);
 	close(fd_partial);
@@ -122,14 +137,44 @@ int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned 
 	
     gettimeofday(&t1, NULL);
     time = gettime(t0, t1);
-    //if (!fpga_state()) {
-     //   printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
-    //    printf("BIN FILE loaded through FPGA manager successfully\n\r");
-    //} else {
-    //    printf("BIN FILE loading through FPGA manager failed\n\r");
-    //}
+    if (!fpga_state()) {
+       printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
+        printf("BIN FILE loaded through FPGA manager successfully\n\r");
+    } else {
+        printf("BIN FILE loading through FPGA manager failed\n\r");
+    }
 
 
     return 0;
 }
 
+int reconos_reconfigure_fpgamgr_fs(char * bitstream_path, unsigned int partial)
+{
+	char command[2048];
+	char *tmp, *tmp1, *token;
+	struct timeval t1, t0;
+    double time;
+
+	snprintf(command, sizeof(command), "echo %x > /sys/class/fpga_manager/fpga0/flags", partial);
+	system(command);
+	printf("DEBUG=%s\n", command);
+
+	tmp = strdup(bitstream_path);
+	while((token = strsep(&tmp, "/"))) {
+		tmp1 = token;
+	}
+	snprintf(command, sizeof(command), "echo %s > /sys/class/fpga_manager/fpga0/firmware", tmp1);
+	printf("DEBUG=%s\n", command);
+	gettimeofday(&t0, NULL);
+	system(command);
+	gettimeofday(&t1, NULL);
+	time = gettime(t0, t1);
+	if (!fpga_state()) {
+		printf("Time taken to load BIN is %f Milli Seconds\n\r", time);
+		printf("BIN FILE loaded through FPGA manager successfully\n\r");
+	} else {
+		printf("BIN FILE loading through FPGA manager failed\n\r");
+	}
+	//snprintf(command, sizeof(command), "rm /lib/firmware/%s", tmp1);
+	//system(command);
+}
