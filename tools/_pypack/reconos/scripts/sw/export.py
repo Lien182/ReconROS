@@ -10,6 +10,7 @@ import subprocess
 from os import listdir
 from os.path import isfile, join
 
+import re
 
 log = logging.getLogger(__name__)
 
@@ -111,12 +112,16 @@ def export_sw(args, swdir, link):
 			d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id
 		if r.type == "rosmsg":
-			if len(r.args) == 3: 
+			if len(r.args) == 3:
+				#problem of ros2 dashing
+				#naming of header files for uint are inconsistant
+				fixedheader = re.sub("uint*", "u_int", r.args[2].lower(),1, re.MULTILINE | re.VERBOSE)
+				
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create"
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
-				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2] + ".h>\n").lower()
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ fixedheader + ".h>\n").lower()
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
