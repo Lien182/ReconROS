@@ -50,7 +50,8 @@
  *   }
  }
  */
-#define THREAD_ENTRY() void rt_imp(hls::stream<uint32_t> osif_sw2hw,\
+#define THREAD_ENTRY() void rt_imp(volatile bool &hwt_signal, \
+                                   hls::stream<uint32_t> osif_sw2hw,\
                                    hls::stream<uint32_t> osif_hw2sw,\
                                    hls::stream<uint32_t> memif_hwt2mem,\
                                    hls::stream<uint32_t> memif_mem2hwt)

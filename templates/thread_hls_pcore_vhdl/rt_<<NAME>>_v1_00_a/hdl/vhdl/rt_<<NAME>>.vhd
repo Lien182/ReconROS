@@ -54,6 +54,7 @@ entity rt_<<NAME>> is
 			ap_clk : in std_logic;
 			ap_rst : in std_logic;
 
+			hwt_signal : IN STD_LOGIC;
 			osif_sw2hw_v_dout    : in std_logic_vector (31 downto 0);
 			osif_sw2hw_v_empty_n : in std_logic;
 			osif_sw2hw_v_read    : out std_logic;
@@ -121,7 +122,7 @@ begin
 		port map (
 			ap_clk => HWT_Clk,
 			ap_rst => HWT_Rst,
-
+			hwt_signal  => HWT_Signal,
 			osif_sw2hw_v_dout    => osif_sw2hw_v_dout,
 			osif_sw2hw_v_empty_n => osif_sw2hw_v_empty_n,
 			osif_sw2hw_v_read    => osif_sw2hw_v_read,
