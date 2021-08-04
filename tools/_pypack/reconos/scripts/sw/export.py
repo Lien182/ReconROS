@@ -124,6 +124,7 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2].replace('_', '') + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower()
+				print(("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower())
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
