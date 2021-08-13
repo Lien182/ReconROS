@@ -468,9 +468,11 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_pins axi_interconnect_0/S00_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
     connect_bd_net [get_bd_pins axi_interconnect_0/M00_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM }]
-    </processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM> is being mapped into </zycap_0/M_AXI_MM2S> at <0x00000000 [ 512M ]>
+    
+
     assign_bd_address [get_bd_addr_segs {zycap_0/S_AXI_LITE/Reg }]
-    </zycap_0/S_AXI_LITE/Reg> is being mapped into </processing_system7_0/Data> at <0x43C00000 [ 64K ]>
+    
+  
     connect_bd_net [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins reconos_clock_0/CLK0_Out]
     disconnect_bd_net /xlconstant_0_dout [get_bd_pins xlconcat_0/In0]
     connect_bd_net [get_bd_pins xlconcat_0/In0] [get_bd_pins zycap_0/mm2s_introut]  
