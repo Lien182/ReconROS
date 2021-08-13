@@ -226,7 +226,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_bd_cell -type ip -vlnv cs.upb.de:reconos:timer:1.0 timer_0
 
 	<<generate for SLOTS>>
-	create_bd_cell -type ip -vlnv cs.upb.de:reconos:<<HwtCoreName>>:[str range <<HwtCoreVersion>> 0 2] "slot_<<Id>>"
+	create_bd_cell -type ip -vlnv cs.upb.de:reconos:<<HwtCoreName>>:[string range <<HwtCoreVersion>> 0 2] "slot_<<Id>>"
 	
 	<<end generate>>
         #"rt_sortdemo" { create_bd_cell -type ip -vlnv cs.upb.de:reconos:rt_sortdemo:1.0 "rt_sortdemo_$i" }
