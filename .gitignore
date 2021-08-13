@@ -34,9 +34,6 @@ demos/*/client_app/sorter_msgs/install
 demos/*/client_app/sorter_msgs/include
 demos/*/client_app/sorter_msgs/log
 
-
-tools/arm-docker-build/Docker/qemu-arm-static
-
 lib/pcores/hdl
 
 COLCON_IGNORE
@@ -49,3 +46,4 @@ demos/reconf_ros_nodes/remote_build.sh
 install
 build
 log
+hw_build_remote
