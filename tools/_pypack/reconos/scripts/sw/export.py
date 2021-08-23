@@ -70,13 +70,14 @@ def export_sw(args, swdir, link):
 		d["TypeUpper"] = r.type.upper()
 		if r.type == "rossub":
 			for msg in prj.resources:
-				if msg.name == r.args[1]:
+				if (msg.name == r.args[1]) and (msg.group == r.group):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2]+ ", " + r.args[3] 
+					print(d["Args"])
 					break
 
 		elif r.type == "rospub":
 			for msg in prj.resources:
-				if msg.name == r.args[1]:
+				if msg.name == r.args[1] and (msg.group == r.group):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] 
 					break
 

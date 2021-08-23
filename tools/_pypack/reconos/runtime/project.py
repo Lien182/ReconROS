@@ -267,7 +267,7 @@ class Project:
 		if cfg.has_option("General", "PartialReconfiguration"):
 			self.impinfo.pr = cfg.get("General", "PartialReconfiguration") in ["True", "true"]
 		else:
-			elf.impinfo.pr = False
+			self.impinfo.pr = False
 
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
@@ -422,7 +422,10 @@ class Project:
 					else:
 						reconfigurable = False
 						region = []
-
+				else:
+					reconfigurable = False
+					region = []
+				
 				slot = Slot(name + "(" + str(i) + ")", id_ + i, clock[0], ports, reconfigurable, region)
 
 				self.slots.append(slot)
