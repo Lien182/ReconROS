@@ -259,9 +259,9 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 				prj.apply_template("thread_prj", dictionary, hwdir, link)
 
 		#Save temporary HLS project directory for analysis:
-		shutil2.mkdir("/tmp/test")
+		shutil2.mkdir("/tmp/ReconROS_hlsexport")
 		save_dir_hls_prj = shutil2.join(hwdir, "..", "tmp_hls_prj_" + thread.name.lower())
-		shutil2.copytree(tmp.name, "/tmp/test")
+		shutil2.copytree(tmp.name, "/tmp/ReconROS_hlsexport")
 		shutil2.rmtree(save_dir_hls_prj)
 		shutil2.mkdir(save_dir_hls_prj)
 		shutil2.copytree(tmp.name, save_dir_hls_prj)
