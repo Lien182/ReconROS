@@ -1,0 +1,16 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Thu Aug 12 18:20:11 2021
+| Host         : christian-Latitude-5591 running 64-bit Ubuntu 18.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xc7z020clg484-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'zycap_axi_dma_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of zycap_axi_dma_0_0 (xilinx.com:ip:axi_dma:7.1) from (Rev. 3) to (Rev. 19)
+

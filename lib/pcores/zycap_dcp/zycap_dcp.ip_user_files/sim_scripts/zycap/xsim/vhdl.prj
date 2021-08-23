@@ -1,0 +1,4 @@
+vhdl xil_defaultlib  \
+"../../../bd/zycap/ip/zycap_axi_dma_0_0/sim/zycap_axi_dma_0_0.vhd" \
+
+nosort

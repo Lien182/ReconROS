@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component>
+    <DashboardHolder activeDashboard="ILA">
+        <Dashboard columnResizable="1" key="ILA" rowResizable="0" title="ILA">
+            <Settings/>
+            <GadgetContainer boxAxis="1" count="2" height="751"
+                layout="JideBoxLayout" vgap="6" width="783">
+                <Gadget height="105" key="Trigger Capture Status" width="783">
+                    <Ila capture_condition="AND" capture_mode="ALWAYS"
+                        data_depth="4096" trigger_condition="AND"
+                        trigger_mode="BASIC_ONLY"
+                        trigger_position="2048" trigout_mode="DISABLED"
+                        tsm_file="" window_count="1"/>
+                </Gadget>
+                <Gadget height="456" key="Basic Trigger Setup" width="783"/>
+                <Settings/>
+            </GadgetContainer>
+        </Dashboard>
+    </DashboardHolder>
+</component>
