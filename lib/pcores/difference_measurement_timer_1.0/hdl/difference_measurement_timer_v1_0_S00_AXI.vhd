@@ -20,6 +20,8 @@ entity difference_measurement_timer_v1_0_S00_AXI is
         Capture_1 : in std_logic;
         Capture_2 : in std_logic;
         Capture_3 : in std_logic;
+        Capture_4 : in std_logic;
+        Capture_5 : in std_logic;
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -117,6 +119,10 @@ architecture arch_imp of difference_measurement_timer_v1_0_S00_AXI is
 	signal slv_reg3	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg4	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg5	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+	signal slv_reg6	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg7 :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+        
+
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
 	signal reg_data_out	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -320,7 +326,7 @@ begin
 	-- and the slave is ready to accept the read address.
 	slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
 
-	process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
+	process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
 	variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
 	begin
 	    -- Address decoding for reading registers
@@ -338,6 +344,10 @@ begin
 	        reg_data_out <= slv_reg4;
 	      when b"101" =>
 	        reg_data_out <= slv_reg5;
+	      when b"110" =>
+            reg_data_out <= slv_reg6;
+          when b"111" =>
+            reg_data_out <= slv_reg7;
 	      when others =>
 	        reg_data_out  <= (others => '0');
 	    end case;
@@ -375,6 +385,8 @@ begin
               slv_reg3 <= (others => '0');
               slv_reg4 <= (others => '0');
               slv_reg5 <= (others => '0');
+              slv_reg6 <= (others => '0');
+              slv_reg7 <= (others => '0');
               
               
             else
@@ -396,6 +408,15 @@ begin
             if Capture_3 = '1' then
                 slv_reg5 <= std_logic_vector(timer_cnt);
             end if;
+
+            if Capture_4 = '1' then
+                slv_reg6 <= std_logic_vector(timer_cnt);
+            end if;
+            
+            if Capture_5 = '1' then
+                slv_reg7 <= std_logic_vector(timer_cnt);
+            end if;
+            
             
             slv_reg1 <= std_logic_vector(timer_cnt);
             

@@ -20,6 +20,8 @@ entity difference_measurement_timer_v1_0 is
         Capture_1 : in std_logic;
         Capture_2 : in std_logic;
         Capture_3 : in std_logic;
+        Capture_4 : in std_logic;
+        Capture_5 : in std_logic;
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -62,6 +64,8 @@ architecture arch_imp of difference_measurement_timer_v1_0 is
         Capture_1 : in std_logic;
         Capture_2 : in std_logic;
         Capture_3 : in std_logic;
+        Capture_4 : in std_logic;
+        Capture_5 : in std_logic;
 		S_AXI_ACLK	: in std_logic;
 		S_AXI_ARESETN	: in std_logic;
 		S_AXI_AWADDR	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
@@ -99,6 +103,8 @@ difference_measurement_timer_v1_0_S00_AXI_inst : difference_measurement_timer_v1
         Capture_1 => Capture_1,
         Capture_2 => Capture_2,
         Capture_3 => Capture_3,
+        Capture_4 => Capture_4,
+        Capture_5 => Capture_5,
 		S_AXI_ACLK	=> s00_axi_aclk,
 		S_AXI_ARESETN	=> s00_axi_aresetn,
 		S_AXI_AWADDR	=> s00_axi_awaddr,
