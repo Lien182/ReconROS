@@ -385,7 +385,7 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal) \
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg )(\
@@ -393,8 +393,6 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
-
-
 
 #define ROS_SERVICECLIENT_SEND_REQUEST(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_REQUEST),\
@@ -406,9 +404,8 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal) \
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
-
 
 #define ROS_SERVICECLIENT_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TAKE),\
@@ -435,7 +432,7 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal) \
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 
@@ -450,10 +447,10 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
-#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle, ,msg_ptr)( \
+#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle, msg_ptr)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal) \
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg )( \
