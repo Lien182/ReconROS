@@ -44,18 +44,10 @@ zcu102 {
  set speed        "-2-e"
  set board        "xilinx.com:zcu102:3.2"
 }
-zedboard{
- set device       "xc7z020"
- set package      "clg484"
- set speed        "-1"
- set part         $device$package$speed
- check_part $part
-}
 default {
- #kcu105
- set device       "xc7z020"
- set package      "clg484"
- set speed        "-1"
+ set device       "xc7z100"
+ set package      "ffg900"
+ set speed        "-2"
  set part         $device$package$speed
 }
 }
