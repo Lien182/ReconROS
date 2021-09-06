@@ -71,14 +71,14 @@ def export_sw(args, swdir, link):
 		if r.type == "rossub":
 			for msg in prj.resources:
 				if (msg.name == r.args[1]) and (msg.group == r.group):
-					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2]+ ", " + r.args[3] 
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2].replace('_', '') +"(), " + r.args[2]+ ", " + r.args[3] 
 					print(d["Args"])
 					break
 
 		elif r.type == "rospub":
 			for msg in prj.resources:
 				if msg.name == r.args[1] and (msg.group == r.group):
-					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2] +"(), " + r.args[2] 
+					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2].replace('_', '') +"(), " + r.args[2] 
 					break
 
 		elif r.type == "rossrvs":
@@ -116,13 +116,15 @@ def export_sw(args, swdir, link):
 			if len(r.args) == 3:
 				#problem of ros2 dashing
 				#naming of header files for uint are inconsistant
-				fixedheader = re.sub("uint*", "u_int", r.args[2].lower(),1, re.MULTILINE | re.VERBOSE)
-				
-				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]
-				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__create"
-				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "__destroy"
+				fixedheader = r.args[2].lower().replace('_', '')
+				#fixedheader = re.sub("*_*", "", r.args[2].lower(),1, re.MULTILINE | re.VERBOSE)
+
+				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2].replace('_', '')
+				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2].replace('_', '') + "__create"
+				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2].replace('_', '') + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
-				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ fixedheader + ".h>\n").lower()
+				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower()
+				print(("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower())
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
