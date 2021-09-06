@@ -60,4 +60,6 @@ RUN rm -r -f src/ros-visualization src/ros2/rmw_connext src/ros2/rmw_cyclonedds 
 RUN colcon build --symlink-install --merge-install
 
 
+RUN apt update && apt install -y nano gcc g++ libopencv-dev libeigen3-dev libpython3.6-dev libglew-dev zip
+
 WORKDIR /ws
