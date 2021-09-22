@@ -217,3 +217,5 @@ you will see the progress messages both on server and client side.
 ## Publications
 
 - [1] - [Christian Lienen, Marco Platzner, Bernhard Rinner "ReconROS: Flexible Hardware Acceleration for ROS2 Applications", International Conference on Field Programmable Technology (ICFPT), 2020.](https://ieeexplore.ieee.org/document/9415549)
+
+- [2] - [Christian Lienen, Marco Platzner "Design of Distributed Reconfigurable Robotics Systems with ReconROS", ArXiv paper under review, 2021.](https://arxiv.org/abs/2107.07208)
