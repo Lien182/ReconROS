@@ -46,4 +46,4 @@ demos/reconf_ros_nodes/remote_build.sh
 install
 build
 log
-hw_build_remote
+hw_build_remote*
