@@ -28,6 +28,15 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     //rcl_allocator_t allocator = rcl_get_default_allocator();
     //rmw_init_subscription_allocation(&ros_sub->alloc, msg_type, bounds);
 
+#if 0
+    my_subscription_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_ALL;
+    my_subscription_options.qos.lifespan.sec = 100;
+    //my_subscription_options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC;
+
+
+    my_subscription_options.qos.depth = 1000;
+#endif
+
 
     rc = rcl_subscription_init(
         &ros_sub->sub,
