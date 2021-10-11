@@ -47,3 +47,4 @@ install
 build
 log
 hw_build_remote
+tools/arm-docker-build/Docker/*/qemu-arm-static
