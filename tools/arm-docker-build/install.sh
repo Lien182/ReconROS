@@ -3,11 +3,19 @@
 # $1 target architecture (arm32, arm64)
 # $2 target ROS 2 distribution (dashing, foxy)
 
-if [ "$1" == "" || "$2" == "" ]
+if [ "$1" == "" ] || [ "$2" == "" ]
 then
   echo "Usage: $0  <arm32,arm64> <dashing,foxy>"
   exit
 fi
+
+if [ "$1" == "arm64" ]
+then
+  cp Docker/qemu-aarch64-static Docker/$1_$2/
+else
+  cp Docker/qemu-arm-static Docker/$1_$2/
+fi
+
 
 cp Docker/qemu-arm-static Docker/$1_$2/
 docker image build -t reconros_$1_$2:2.0 Docker/$1_$2/

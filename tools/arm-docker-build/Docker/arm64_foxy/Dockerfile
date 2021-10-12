@@ -7,7 +7,7 @@
 #foxy only for ubuntu 20
 FROM arm64v8/ubuntu:bionic
 
-COPY qemu-arm-static /usr/bin/qemu-arm-static
+COPY qemu-aarch64-static /usr/bin/qemu-aarch64-static
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl gnupg2 lsb-release dirmngr ca-certificates 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
