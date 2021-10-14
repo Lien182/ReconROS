@@ -74,7 +74,7 @@ def _build_vivado(prj, hwdir):
 	subprocess.call("""
 					source /opt/Xilinx/Vivado/{0}/settings64.sh;
 					vivado -mode batch -notrace -nojournal -nolog -source build.tcl;""".format(prj.impinfo.xil[1]),
-					shell=True)
+					shell=True, executable="/bin/bash")
 	print()
 
 	shutil2.chdir(prj.dir)
