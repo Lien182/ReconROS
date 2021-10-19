@@ -9,7 +9,7 @@
 #include <rcl_action/action_server.h>
 #include <stdint.h>
 #include "ros.h"
-#include "rosidl_generator_c/action_type_support_struct.h"
+#include "rosidl_runtime_c/action_type_support_struct.h"
 
 /*
  * Structure representing a mbox
