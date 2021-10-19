@@ -45,8 +45,8 @@ RUN apt install --no-install-recommends -y \
   libasio-dev \
   libtinyxml2-dev
 
-RUN mkdir -p /ros2_dashing/src
-WORKDIR /ros2_dashing
+RUN mkdir -p /ros2_build/src
+WORKDIR /ros2_build
 RUN wget https://raw.githubusercontent.com/Lien182/ros2/dashing/ros2.repos
 RUN vcs import src < ros2.repos
 
@@ -55,7 +55,7 @@ RUN rosdep init
 RUN rosdep update
 RUN rosdep install --from-paths src --ignore-src --rosdistro dashing -y --skip-keys "console_bridge fastcdr fastrtps libopensplice67 libopensplice69 rti-connext-dds-5.3.1 urdfdom_headers"
 
-RUN cd /ros2_dashing/
+RUN cd /ros2_build/
 RUN rm -r -f src/ros-visualization src/ros2/rmw_connext src/ros2/rmw_cyclonedds src/ros2/rmw_opensplice src/eclipse-cyclonedds/cyclonedds src/ros-visualization/python_qt_binding src/ros-visualization/python_qt_binding src/ros-visualization/qt_gui_core src/ros-visualization/rqt* src/ros2/rosidl_typesupport_opensplice src/ros2/rviz
 RUN colcon build --symlink-install --merge-install
 
