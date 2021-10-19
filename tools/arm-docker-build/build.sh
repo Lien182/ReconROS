@@ -3,7 +3,7 @@
 # $1 target architecture (arm32, arm64)
 # $2 target ROS 2 distribution (dashing, foxy)
 
-if [ "$1" == "" || "$2" == "" ]
+if [ "$1" == "" ] || [ "$2" == "" ]
 then
   echo "Usage: $0  <arm32,arm64> <dashing,foxy>"
   exit
