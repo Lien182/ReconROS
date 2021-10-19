@@ -165,16 +165,17 @@
  *   len - number of bytes to transmit (bytes)
  */
 #define MEM_READ(src,dst,len)\
-	dst = (void *)src
+	memcpy((void*)dst,(void*)src, len );
 
 /*
  * Writes several words from the local ram into the main memory.
  *
  *   src - array to read data from
- *   dst - start address to read from the main memory
+ *   dst - start address to write to the main memory
  *   len - number of bytes to transmit (bytes)
  */
-#define MEM_WRITE(src, dst, len)
+#define MEM_WRITE(src, dst, len) \
+	memcpy((void*)dst,(void*)src, len );
 
 /*
  * Terminates the current ReconOS thread.
