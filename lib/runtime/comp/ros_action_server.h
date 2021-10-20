@@ -10,9 +10,9 @@
 #include <stdint.h>
 #include "ros.h"
 
-#if ROS2_DISTRIBUTION == 'F'
+#if ROS2_DISTRIBUTION == 'F'  // Foxy
 #include "rosidl_runtime_c/action_type_support_struct.h"
-#elif ROS_DISTRIBUTION == 'D'
+#elif ROS_DISTRIBUTION == 'D' // Dashing
 #include "rosidl_generator_c/action_type_support_struct.h"
 #endif
 
