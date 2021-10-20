@@ -268,7 +268,14 @@ class Project:
 			self.impinfo.pr = cfg.get("General", "PartialReconfiguration") in ["True", "true"]
 		else:
 			self.impinfo.pr = False
-
+		if cfg.has_option("General", "ROS2Distribution"):
+			self.impinfo.ros2distribution = cfg.get("General", "ROS2Distribution") 
+		else:
+			self.impinfo.ros2distribution = "dashing"
+		if cfg.has_option("General", "CPUArchitecture"):
+			self.impinfo.cpuarchitecture = cfg.get("General", "CPUArchitecture") 
+		else:
+			self.impinfo.cpuarchitecture = "arm32"
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
 		self._parse_clocks(cfg)

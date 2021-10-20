@@ -32,7 +32,7 @@ def build(prj, msgdir):
 	#	log.error("software directory '" + swdir + "' not found")
 	#	return
 	
-	subprocess.call("bash $RECONOS/tools/arm-docker-build/build_msg.sh", shell=True)
+	subprocess.call("""bash $RECONOS/tools/arm-docker-build/build_msg.sh {0} {1}""".format(prj.impinfo.cpuarchitecture, prj.impinfo.ros2distribution), shell=True)
 
 	print()
 	shutil2.chdir(prj.dir)
