@@ -45,6 +45,7 @@ def export_sw(args, swdir, link):
 	dictionary["NAME"] = prj.name.lower()
 	dictionary["CFLAGS"] = prj.impinfo.cflags
 	dictionary["LDFLAGS"] = prj.impinfo.ldflags
+	dictionary["ROS2_DISTRIBUTION"] = prj.impinfo.ros2distribution[:1].upper()
 	dictionary["THREADS"] = []
 	dictionary["ROSMsgHeader"] = ""
 	for t in prj.threads:

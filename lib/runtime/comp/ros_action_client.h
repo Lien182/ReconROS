@@ -9,7 +9,12 @@
 #include <rcl_action/action_client.h>
 #include <stdint.h>
 #include "ros.h"
+
+#if ROS2_DISTRIBUTION == 'F'
 #include "rosidl_runtime_c/action_type_support_struct.h"
+#elif ROS_DISTRIBUTION == 'D'
+#include "rosidl_generator_c/action_type_support_struct.h"
+#endif
 
 /*
  * Structure representing a mbox

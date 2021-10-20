@@ -3,8 +3,6 @@
  */
 
 #include <stdio.h>
-#include <std_msgs/msg/string.h>
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
