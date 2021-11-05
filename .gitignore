@@ -48,3 +48,15 @@ build
 log
 hw_build_remote*
 tools/arm-docker-build/Docker/*/qemu-arm-static
+linux/driver/mreconos.mod.c
+linux/driver/.mreconos.ko.cmd
+linux/driver/.mreconos.mod.o.cmd
+linux/driver/.mreconos.o.cmd
+linux/driver/.osif_intc.o.cmd
+linux/driver/.proc_control.o.cmd
+linux/driver/.reconos.o.cmd
+linux/driver/Module.symvers
+linux/driver/modules.order
+linux/driver/mreconos.ko
+linux/driver/.tmp_versions/mreconos.mod
+.vscode
