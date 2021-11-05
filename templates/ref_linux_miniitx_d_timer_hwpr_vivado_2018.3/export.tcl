@@ -419,7 +419,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
 #start new
 
     startgroup
-    create_bd_cell -type ip -vlnv zycap:ip:zycap:1.0 zycap_0
+    create_bd_cell -type ip -vlnv user.org:user:zycap:1.0 zycap_0
     endgroup
     set_property location {3 1028 486} [get_bd_cells zycap_0]
     startgroup
@@ -473,14 +473,22 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_bd_addr_seg -range 64K -offset 0x64a00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs {timer_0/S_AXI/reg0 }] SEG3
     create_bd_addr_seg -range 64K -offset 0x7b400000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs {reconos_osif_intc_0/S_AXI/reg0 }] SEG4
     create_bd_addr_seg -range 64K -offset 0x69e00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs {reconos_clock_0/S_AXI/reg0 }] SEG5
-    create_bd_addr_seg -range 64K -offset 0x43c00000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs {zycap_0/S_AXI_LITE/Reg }] SEG6
+    create_bd_addr_seg -range 64K -offset 0x40400000 [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs {zycap_0/S_AXI_LITE/reg0 }] SEG6
 
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_ACP/ACP_DDR_LOWOCM }]
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_ACP/ACP_M_AXI_GP0 }]
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM }]
 
 
-                            
+    ##dirty
+    #upgrade_ip -vlnv zycap:ip:zycap:1.0 [get_ips  design_1_zycap_0_0] -log ip_upgrade.log
+    #export_ip_user_files -of_objects [get_ips design_1_zycap_0_0] -no_script -sync -force -quiet
+    #generate_target all [get_files  /home/christian/git/ReconROS_Adapt/hw_build_remote_01-11-21_13-18/hw_build_ReconROS_Adapt/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+    #assign_bd_address [get_bd_addr_segs {zycap_0/S_AXI_LITE/Reg }]
+    #set_property offset  [get_bd_addr_segs {processing_system7_0/Data/SEG6}]
+    ##enddirty
+
+
     # Update layout of block design
     regenerate_bd_layout
 
