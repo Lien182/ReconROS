@@ -1,30 +1,19 @@
-/*  Author   :   Shreejith S
- *  File     :   zycap_linux.h
- *  Project  :   ZyCAP User-level driver for Linux
- *  Dcpr.    :   Management of bitstreams and buffers.
- */
-#define bitsize 151072
 
-typedef struct bit_info{
-        char name[128];
-        int  size;
-        int  addr;
-        struct bit_info *prev;
-        struct bit_info *next;
-} bs_info;
+#include <stdint.h>
 
-typedef struct buffer{
-        char bitbuffer[bitsize+1];
-} buffertype;
+typedef struct {
+        int memfd;
+        int fd;
+} t_zycap;
 
+typedef struct
+{
+        char * name;
+        char * data;
+        uint32_t size;
+} t_bitstream;
 
-typedef struct globalvars{
-   int memfd;
-   int fd;
-} globals;
-
-globals glbs;
-int init_zycap();
-int Config_PR_Bitstream(char *bs_name);
-int conf_bit (char *bs_name);
-int Prefetch_PR_Bitstream(char *bs_name);
+int Zycap_Init                  (t_zycap * zycap );
+int Zycap_Deinit                (t_zycap * zycap );      
+int Zycap_Write_Bitstream       (t_zycap * zycap, t_bitstream * bitstream);
+int Zycap_Prefetch_Bitstream    (char * bs_name, t_bitstream * bitstream);
