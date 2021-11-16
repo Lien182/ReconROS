@@ -13,6 +13,7 @@
 #include <stdint.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "zycap_linux.h"
 
 #define DevCfg_BASE_ADDRESS 0xF8007000
@@ -20,6 +21,9 @@
 #define MAP_MASK (MAP_SIZE - 1)
 #define BS_BASEADDR
 #define FIFO_LEN (20*1024*1024)
+
+
+static pthread_mutex_t __mutexPR = PTHREAD_MUTEX_INITIALIZER;;
 
 int memCpy_DMA(int fd, char *bufferIn, unsigned long elems) 
 {
@@ -89,7 +93,9 @@ int Zycap_Write_Bitstream       (t_zycap * zycap, t_bitstream * bitstream)
     
     if(bitstream->data != 0 && bitstream->size != 0)
     {
+        pthread_mutex_lock(&__mutexPR);
 	    bytesMoved = memCpy_DMA(zycap->fd, bitstream->data, bitstream->size); 
+        pthread_mutex_unlock(&__mutexPR);
     }
     else
     {
