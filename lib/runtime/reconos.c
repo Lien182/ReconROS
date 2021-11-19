@@ -14,6 +14,7 @@
  *                 Markus Happe, University of Paderborn
  *                 Sebastian Meisner, University of Paderborn
  *                 Christoph Rüthing, University of Paderborn
+ *				   Christian Lienen, University of Paderborn
  *   description:  ReconOS runtime library managing all threads and
  *                 internal data structures. It provides functions
  *                 to manipulate the state of the system.
