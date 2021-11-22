@@ -12,6 +12,7 @@
  *   project:      ReconOS
  *   author:       Andreas Agne, University of Paderborn
  *                 Christoph Rüthing, University of Paderborn
+ * 				   Christian Lienen, University of Paderborn
  *   description:  Auto-generated application specific header file
  *                 including definitions of all resources and functions
  *                 to instantiate resources and threads automatically.
@@ -204,6 +205,21 @@ struct reconos_thread *reconos_thread_pr_create_hwt_<<Name>>(void * init_data, c
 	reconos_thread_loadbitstream(rt, bitstream_path);
 	reconos_thread_setinitdata(rt, init_data);
 	reconos_thread_setallowedslots(rt, slots, <<SlotCount>>);
+	reconos_thread_setresourcepointers(rt, resources_<<Name>>, <<ResourceCount>>);
+	reconos_thread_create_auto(rt, RECONOS_THREAD_HW);
+
+	return rt;
+}
+
+struct reconos_thread *reconos_thread_create_hwt_<<Name>>_force_slot(void * init_data, int slot) {
+	struct reconos_thread *rt = (struct reconos_thread *)malloc(sizeof(struct reconos_thread));
+	if (!rt) {
+		panic("[reconos-core] ERROR: failed to allocate memory for thread\n");
+	}
+
+	reconos_thread_init(rt, "<<Name>>", 0);
+	reconos_thread_setinitdata(rt, init_data);
+	reconos_thread_setallowedslots(rt, &slot, 1);
 	reconos_thread_setresourcepointers(rt, resources_<<Name>>, <<ResourceCount>>);
 	reconos_thread_create_auto(rt, RECONOS_THREAD_HW);
 
