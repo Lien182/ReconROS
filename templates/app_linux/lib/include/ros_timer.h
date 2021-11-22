@@ -26,4 +26,5 @@ int ros_timer_destroy(struct ros_timer_t *ros_timer);
 int ros_timer_wait(struct ros_timer_t *ros_timer);
 
 
+int ros_timer_try_wait(struct ros_timer_t * ros_timer);
 #endif /* ROSSUB_H */
