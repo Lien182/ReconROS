@@ -613,7 +613,7 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
  * Terminates the current ReconOS thread.
  */
 #define THREAD_EXIT()(\
-	stream_write(osif_hw2sw, OSIF_CMD_THREAD_EXIT) \
+	stream_write(osif_hw2sw, OSIF_CMD_THREAD_EXIT);\
 	while(1);)
 
 #endif /* RECONOS_CALLS_H */
