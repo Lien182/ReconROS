@@ -123,42 +123,42 @@ int Zycap_Prefetch_Bitstream    ( char * bs_name, t_bitstream * bitstream)
 	FILE *fd,*fp;   
 	char fname[100];     
     
-    	strcpy (fname,bs_name);
-		strcat (fname,".bin");
-		
-        fp = fopen(fname,"rb");
-		
-        if(!fp)
-        {
-		    printf("Unable to open PR file\n");
-			return -1;
-		}
-        
-        //printf("Reading PR file from flash\n\r");
-		fseek(fp,0,SEEK_END);
-		size=ftell(fp);
-		fseek(fp,0,SEEK_SET);
+    strcpy (fname,bs_name);
+    strcat (fname,".bin");
+    
+    fp = fopen(fname,"rb");
+    
+    if(!fp)
+    {
+        printf("Unable to open PR file\n");
+        return -1;
+    }
+    
+    //printf("Reading PR file from flash\n\r");
+    fseek(fp,0,SEEK_END);
+    size=ftell(fp);
+    fseek(fp,0,SEEK_SET);
 
-        if (bitstream->data == 0 || bitstream->size != 0)
+    if (bitstream->data == 0 || bitstream->size != 0)
+    {
+        bitstream->data = malloc(size); 
+        if(bitstream->data == 0)
         {
-            bitstream->data = malloc(size); 
-            if(bitstream->data == 0)
-            {
-                printf("[Zycap] bitstream prefetch %s: malloc failed \n", bs_name);
-                return -1;
-            }
-
+            printf("[Zycap] bitstream prefetch %s: malloc failed \n", bs_name);
+            return -1;
         }
-        else
-        {
-            printf("[Zycap] bitstream prefetch %s: has already an address: %x \n", bs_name, (uint32_t)bs_name);
-        }
-		int bytes_read = fread(bitstream->data,1,size,fp);
-        bitstream->size = size;
-        fclose(fp); 
 
-        printf("[Zycap] bitstream prefetch %s:: %d bytes read\n", bs_name, bytes_read);
-	  	
+    }
+    else
+    {
+        printf("[Zycap] bitstream prefetch %s: has already an address: %x \n", bs_name, (uint32_t)bs_name);
+    }
+    int bytes_read = fread(bitstream->data,1,size,fp);
+    bitstream->size = size;
+    fclose(fp); 
+
+    printf("[Zycap] bitstream prefetch %s: %d bytes read\n", bs_name, bytes_read);
+    
     
 	return 1;
 }

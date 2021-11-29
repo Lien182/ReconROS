@@ -423,8 +423,14 @@ void reconos_thread_resume(struct reconos_thread *rt, int slot) {
 	}
 
 	//TODO: do pr here
-	hwslot_resumethread(rt->hwslot, rt);
+
+	rt->hwslot = &_hwslots[slot];
+
+	hwslot_resumethread(&_hwslots[slot], rt);
 	rt->state = RECONOS_THREAD_STATE_RUNNING_HW;
+
+	if(rt->hwslot->dt == 0)
+		hwslot_createdelegate(rt->hwslot);
 }
 
 /*
