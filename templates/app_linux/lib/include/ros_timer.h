@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Christian Lienen <christian.lienen@upb.de>
+ * Copyright 2021 Christian Lienen <christian.lienen@upb.de>
  */
 
 #ifndef ROSTMR_H
@@ -14,17 +14,17 @@
  */
 struct ros_timer_t {
 
+    float       fInterval;   // Interval in ms
+    uint64_t    u64Interval; // Interval in TimerTicks
+
+    uint64_t    u64NextEventTime; 
+    uint64_t    u64LastEventTime;
 };
 
 
-int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, uint32_t interval);
-
+int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, float interval);
 
 int ros_timer_destroy(struct ros_timer_t *ros_timer);
 
-
-int ros_timer_wait(struct ros_timer_t *ros_timer);
-
-
-int ros_timer_try_wait(struct ros_timer_t * ros_timer);
-#endif /* ROSSUB_H */
+int ros_timer_is_ready(struct ros_timer_t * ros_timer);
+#endif /* ROSTMR_H */

@@ -26,6 +26,7 @@
 
 #include "mbox.h"
 #include "ros.h"
+#include "ros_timer.h"
 #include "ros_pub.h"
 #include "ros_sub.h"
 #include "ros_service_server.h"
@@ -71,6 +72,11 @@ extern pthread_cond_t *<<NameLower>>;
 <<generate for RESOURCES(Type == "rosnode")>>
 extern struct ros_node_t <<NameLower>>_s;
 extern struct ros_node_t *<<NameLower>>;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rostmr")>>
+extern struct ros_timer_t <<NameLower>>_s;
+extern struct ros_timer_t *<<NameLower>>;
 <<end generate>>
 
 <<generate for RESOURCES(Type == "rossub")>>

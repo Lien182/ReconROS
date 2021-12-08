@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Christian Lienen <christian.lienen@upb.de>
+ * Copyright 2021 Christian Lienen <christian.lienen@upb.de>
  */
 
 #include <stdio.h>
@@ -11,10 +11,16 @@
 
 #include "ros_timer.h"
 
+#include "../arch/a9_timer.h"
 
-int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, uint32_t interval)
+
+int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, float interval) // intervall in ms
 {
-    
+    ros_timer->fInterval = interval;
+    ros_timer->u64Interval = a9timer_msto(interval);
+    ros_timer->u64LastEventTime = a9timer_get();
+    ros_timer->u64NextEventTime = ros_timer->u64LastEventTime + ros_timer->u64Interval; 
+    printf("[ROS TIMR] fInterval=%f, u64Interval= %lld, u64NextInterval= %lld \n", interval, ros_timer->u64Interval, ros_timer->u64NextEventTime);
     return 0;
 }
 
@@ -23,9 +29,18 @@ int ros_timer_destroy(struct ros_timer_t *ros_timer)
     return 0;
 }
 
-int ros_timer_wait(struct ros_timer_t *ros_timer)
+
+int ros_timer_is_ready(struct ros_timer_t * ros_timer)
 {
+    uint64_t u64TimeNow = a9timer_get();
+    //  printf("Timer Value: %lld \n", u64TimeNow);
+    if(u64TimeNow >= ros_timer->u64NextEventTime)
+    {
+        ros_timer->u64NextEventTime += ros_timer->u64Interval; 
+        ros_timer->u64LastEventTime = u64TimeNow;
+        return 0;
+    }
 
-
-    return 0;
+    return 1;
+    
 }

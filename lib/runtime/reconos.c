@@ -27,12 +27,15 @@
 #include "arch/arch.h"
 #include "comp/mbox.h"
 #include "comp/ros.h"
+#include "comp/ros_timer.h"
 #include "comp/ros_pub.h"
 #include "comp/ros_sub.h"
 #include "comp/ros_service_server.h"
 #include "comp/ros_action_server.h"
 #include "comp/ros_service_client.h"
 #include "comp/ros_action_client.h"
+
+#include "arch/a9_timer.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -535,6 +538,9 @@ void reconos_init() {
 #ifdef RECONOS_OS_linux
 	pthread_create(&_pgf_handler, NULL, proc_pgfhandler, NULL);
 #endif
+
+	//added for timing measurements and for the ros timer instances
+	a9timer_init();
 }
 
 /*

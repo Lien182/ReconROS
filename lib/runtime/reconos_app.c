@@ -59,6 +59,11 @@ struct ros_node_t <<NameLower>>_s;
 struct ros_node_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "rostmr")>>
+struct ros_timer_t <<NameLower>>_s;
+struct ros_timer_t *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
 <<generate for RESOURCES(Type == "rossub")>>
 struct ros_subscriber_t <<NameLower>>_s;
 struct ros_subscriber_t *<<NameLower>> = &<<NameLower>>_s;
@@ -115,6 +120,7 @@ int <<Name>>_init(void)
 	<<=generate for Items(Type == "mutex")=>>pthread_mutex_init(<<NameLower>>, NULL);<<end generate=>>
 	<<=generate for Items(Type == "cond")=>>pthread_cond_init(<<NameLower>>, NULL);	<<=end generate=>>
 	<<=generate for Items(Type == "rosnode")=>>ros_node_init(<<NameLower>>, <<Args>>);<<=end generate=>>
+	<<=generate for Items(Type == "rostmr")=>>ros_timer_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rossub")=>>ros_subscriber_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rospub")=>>ros_publisher_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")=>><<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
@@ -135,6 +141,7 @@ int <<Name>>_deinit(void)
 	<<=generate for Items(Type == "sem")=>>	sem_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "mutex")=>>pthread_mutex_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "cond")=>>pthread_cond_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "rostmr")=>>ros_timer_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "rossub")=>>ros_subscriber_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "rospub")=>>ros_publisher_destroy(<<NameLower>>);	<<=end generate=>>
 	<<=generate for Items(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")=>><<ROSDataTypeDeInitFunc>>(<<NameLower>>);<<=end generate=>>
