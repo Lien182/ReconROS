@@ -551,7 +551,8 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, __addr);\
 		\
 		for (; __len > 0; __len -= 4) {\
-			(dst)[__i++] = stream_read_memif(memif_mem2hwt);\
+		_Pragma ("HLS pipeline")  \
+			(dst)[__i++] = memif_mem2hwt.read();\
 			__addr += 4;\
 			__rem -= 4;\
 		}\
@@ -582,7 +583,8 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, __addr);\
 		\
 		for (; __len > 0; __len -= 4) {\
-			stream_write(memif_hwt2mem, (src)[__i++]);\
+		_Pragma ("HLS pipeline")  \
+			memif_hwt2mem.write((src)[__i++]);\
 			__addr += 4;\
 			__rem -= 4;\
 		}\
