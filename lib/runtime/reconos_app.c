@@ -54,6 +54,11 @@ pthread_cond_t <<NameLower>>_s;
 pthread_cond_t *<<NameLower>> = &<<NameLower>>_s;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "mem")>>
+struct mem <<NameLower>>_s;
+struct mem *<<NameLower>> = &<<NameLower>>_s;
+<<end generate>>
+
 <<generate for RESOURCES(Type == "rosnode")>>
 struct ros_node_t <<NameLower>>_s;
 struct ros_node_t *<<NameLower>> = &<<NameLower>>_s;
@@ -119,6 +124,7 @@ int <<Name>>_init(void)
 	<<=generate for Items(Type == "sem")=>>sem_init(<<NameLower>>, <<Args>>);<<end generate=>>
 	<<=generate for Items(Type == "mutex")=>>pthread_mutex_init(<<NameLower>>, NULL);<<end generate=>>
 	<<=generate for Items(Type == "cond")=>>pthread_cond_init(<<NameLower>>, NULL);	<<=end generate=>>
+	<<=generate for Items(Type == "mem")=>>mem_init(<<NameLower>>, <<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rosnode")=>>ros_node_init(<<NameLower>>, <<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rostmr")=>>ros_timer_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rossub")=>>ros_subscriber_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
@@ -141,6 +147,7 @@ int <<Name>>_deinit(void)
 	<<=generate for Items(Type == "sem")=>>	sem_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "mutex")=>>pthread_mutex_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "cond")=>>pthread_cond_destroy(<<NameLower>>);<<=end generate=>>
+	<<=generate for Items(Type == "mem")=>>mem_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "rostmr")=>>ros_timer_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "rossub")=>>ros_subscriber_destroy(<<NameLower>>);<<=end generate=>>
 	<<=generate for Items(Type == "rospub")=>>ros_publisher_destroy(<<NameLower>>);	<<=end generate=>>

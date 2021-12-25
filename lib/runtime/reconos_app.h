@@ -25,6 +25,7 @@
 #define RECONOS_APP_H
 
 #include "mbox.h"
+#include "mem.h"
 #include "ros.h"
 #include "ros_timer.h"
 #include "ros_pub.h"
