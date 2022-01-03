@@ -9,3 +9,9 @@ for i in Bitstreams/*.bit; do
     bootgen -image "$TMP_BIF_PATH" -arch zynq -process_bitstream bin
 done
 
+
+rm Bitstreams/boot.bin -f
+rm bin_creation/download.bit -f
+cp Bitstreams/Config_reconf_0_reconf_1_implement_full.bit bin_creation/download.bit
+bootgen -image bin_creation/bootimage.bif -o Bitstreams/boot.bin
+
