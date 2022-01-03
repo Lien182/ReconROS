@@ -30,7 +30,7 @@ int ros_timer_destroy(struct ros_timer_t *ros_timer)
 }
 
 
-int ros_timer_is_ready(struct ros_timer_t * ros_timer)
+int ros_timer_is_ready(struct ros_timer_t * ros_timer, uint32_t * timer_value)
 {
     uint64_t u64TimeNow = a9timer_get();
     //  printf("Timer Value: %lld \n", u64TimeNow);
@@ -38,9 +38,9 @@ int ros_timer_is_ready(struct ros_timer_t * ros_timer)
     {
         ros_timer->u64NextEventTime += ros_timer->u64Interval; 
         ros_timer->u64LastEventTime = u64TimeNow;
+        *timer_value = (uint32_t)u64TimeNow;
         return 0;
     }
 
     return 1;
-    
 }
