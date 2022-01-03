@@ -59,35 +59,35 @@ int a9timer_init()
 
     __a9tmr = (t_a9timer*)((void*)__a9tmr + (MAP_BASEADR & MAP_MASK));
 
-
 	close(fd);
 	return 0;
 }
 
-/*
- * @see header
- */
-uint64_t a9timer_get(void) {
-	
-	if (__a9tmr) {
+uint64_t a9timer_get(void) 
+{
+	if (__a9tmr) 
+	{
 		return (uint64_t)__a9tmr->TMR_CNT_REG_L + ((uint64_t)__a9tmr->TMR_CNT_REG_H << 32);
-	} else {
+	} 
+	else 
+	{
 		return 0;
 	}
 }
 
-/*
- * @see header
- */
-void a9timer_cleanup(void) {
-	munmap((void *)__a9tmr, 0x10000);
+void a9timer_cleanup(void) 
+{	
+	if(__a9tmr)
+		munmap((void *)__a9tmr, 0x10000);
 	__a9tmr = 0;
 }
 
-float a9timer_toms(uint64_t t) {
+float a9timer_toms(uint64_t t) 
+{
 	return t / (CLK_FREQ / 1000.0);
 }
 
-uint64_t a9timer_msto(float t) {
+uint64_t a9timer_msto(float t) 
+{
 	return (uint64_t)(t * (CLK_FREQ / 1000.0));
 }
