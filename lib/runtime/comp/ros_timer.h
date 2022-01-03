@@ -26,5 +26,5 @@ int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, 
 
 int ros_timer_destroy(struct ros_timer_t *ros_timer);
 
-int ros_timer_is_ready(struct ros_timer_t * ros_timer);
+int ros_timer_is_ready(struct ros_timer_t * ros_timer, uint32_t * timer_value);
 #endif /* ROSTMR_H */
