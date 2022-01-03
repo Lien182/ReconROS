@@ -14,4 +14,6 @@ extern int mem_init(struct mem *mem, uint32_t size);
 
 extern int mem_destroy(struct mem *mem);
 
+extern void * mem_getdataptr(struct mem * mem);
+
 #endif

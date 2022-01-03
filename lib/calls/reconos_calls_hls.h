@@ -77,6 +77,7 @@
 #define OSIF_CMD_MEMORY_MALLOC					0x000000F4
 #define OSIF_CMD_MEMORY_FREE					0x000000F5
 #define OSIF_CMD_MEMORY_GETOBJADDR				0x000000F6
+#define OSIF_CMD_MEMORY_GETMEMADDR				0x000000F7
 
 #define OSIF_CMD_ROS_PUBLISH		   			0x00000900
 #define OSIF_CMD_ROS_TAKE			   			0x00000901
@@ -323,6 +324,10 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
+#define MEMORY_GETMEMORYADDR(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_GETMEMADDR),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define MEMORY_MALLOC(ptr_dest,length)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_MALLOC),\
@@ -601,15 +606,54 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
  *   len - number of bytes to transmit (bytes)
  */
 
-#define MEM_WRITE_FROM_STREAM(src,dst,len){\
-	uint32_t __len = len; \
-	stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
-	stream_write(memif_hwt2mem, dst);\
-	for (; __len > 0; __len -= 4) {\
-		stream_write(memif_hwt2mem, src.read());\
-	}\
-	}
 
+#define MEM_READ_TO_STREAM( src, dst, len){ \
+	uint32_t __len, __rem; \
+	uint32_t __addr = (src), __i = 0; \
+	for (__rem = (len); __rem > 0;) {\
+		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		uint32_t __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= 4) {\
+		_Pragma ("HLS pipeline")  \
+			dst.write(memif_mem2hwt.read());\
+			__addr += 4;\
+			__rem -= 4;\
+		}\
+	}\
+}
+
+#define MEM_WRITE_FROM_STREAM( src, dst, len)\
+{\
+	uint32_t __len, __rem;\
+	uint32_t __addr = (dst), __i = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		uint32_t __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= 4) {\
+		_Pragma ("HLS pipeline")  \
+			uint32_t tmp = src.read();\
+			memif_hwt2mem.write(tmp);\
+			__addr += 4;\
+			__rem -= 4;\
+		}\
+	}\
+}
 
 /*
  * Terminates the current ReconOS thread.

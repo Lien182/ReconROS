@@ -26,6 +26,7 @@
 #include "private.h"
 #include "arch/arch.h"
 #include "comp/mbox.h"
+#include "comp/mem.h"
 #include "comp/ros.h"
 #include "comp/ros_timer.h"
 #include "comp/ros_pub.h"
@@ -1156,7 +1157,7 @@ static inline int dt_ros_publish(struct hwslot *slot) {
 
 	
 	
-	printf("[reconos-dt-%d] hw thread calctime is %3.6f; \n",slot->id, (double)(t_res.tv_nsec)/1000000000);
+	//printf("[reconos-dt-%d] hw thread calctime is %3.6f; \n",slot->id, (double)(t_res.tv_nsec)/1000000000);
 
 	return 0;
 
@@ -1592,7 +1593,7 @@ static inline int dt_ros_actionc_result_trytake(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (ros_action_client_result_try_take on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
-	
+	reconos_osif_write(slot->osif, (uint32_t)ret);	
 
 	return 0;
 
@@ -1709,8 +1710,22 @@ static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
 	return 0;
 }
 
+static inline int dt_memory_getmemaddr(struct hwslot *slot) {
 
-static inline int dt_memory_getaddr(struct hwslot *slot) {
+	unsigned int ret = 0;
+	int handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MEM);
+
+	debug("[reconos-dt-%d] (memory getaddr on handle %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = (uint32_t)mem_getdataptr(slot->rt->resources[handle].ptr));
+	reconos_osif_write(slot->osif, ret);
+
+	return 0;
+intr:
+	return -1;
+}
+
+static inline int dt_memory_getobjaddr(struct hwslot *slot) {
 
 	int handle = reconos_osif_read(slot->osif);
 	//RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
@@ -1820,8 +1835,12 @@ void *dt_delegate(void *arg) {
 				dt_cond_wait(slot);
 				break;
 
+			case OSIF_CMD_MEMORY_GETMEMADDR:
+				dt_memory_getmemaddr(slot);
+				break;
+
 			case OSIF_CMD_MEMORY_GETOBJADDR:
-				dt_memory_getaddr(slot);
+				dt_memory_getobjaddr(slot);
 				break;
 
 			case OSIF_CMD_MEMORY_MALLOC:

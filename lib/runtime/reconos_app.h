@@ -70,6 +70,11 @@ extern pthread_cond_t <<NameLower>>_s;
 extern pthread_cond_t *<<NameLower>>;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "mem")>>
+extern struct mem <<NameLower>>_s;
+extern struct mem *<<NameLower>>;
+<<end generate>>
+
 <<generate for RESOURCES(Type == "rosnode")>>
 extern struct ros_node_t <<NameLower>>_s;
 extern struct ros_node_t *<<NameLower>>;

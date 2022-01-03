@@ -24,3 +24,9 @@ int mem_destroy(struct mem *mem)
     }
     return 0;
 }
+
+
+void * mem_getdataptr(struct mem * mem)
+{
+    return (void*)mem->data;
+}
