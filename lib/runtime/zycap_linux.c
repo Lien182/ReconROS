@@ -123,7 +123,7 @@ int Zycap_Prefetch_Bitstream    ( char * bs_name, t_bitstream * bitstream)
 	FILE *fd,*fp;   
 	char fname[100];     
     
-    strcpy (fname,bs_name);
+    strcpy (fname, bs_name);
     strcat (fname,".bin");
     
     fp = fopen(fname,"rb");
