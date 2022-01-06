@@ -20,7 +20,7 @@ int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, 
     ros_timer->u64Interval = a9timer_msto(interval);
     ros_timer->u64LastEventTime = a9timer_get();
     ros_timer->u64NextEventTime = ros_timer->u64LastEventTime + ros_timer->u64Interval; 
-    printf("[ROS TIMR] fInterval=%f, u64Interval= %lld, u64NextInterval= %lld \n", interval, ros_timer->u64Interval, ros_timer->u64NextEventTime);
+    printf("[ROS TMR] fInterval=%f, u64Interval= %lld, u64NextInterval= %lld \n", interval, ros_timer->u64Interval, ros_timer->u64NextEventTime);
     return 0;
 }
 

@@ -455,6 +455,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
 ##end new
 
 
+    set_property -dict [list CONFIG.M00_HAS_REGSLICE {4} CONFIG.M01_HAS_REGSLICE {4} CONFIG.M02_HAS_REGSLICE {4} CONFIG.M03_HAS_REGSLICE {4} CONFIG.M04_HAS_REGSLICE {4} CONFIG.M05_HAS_REGSLICE {4} CONFIG.S00_HAS_REGSLICE {4}] [get_bd_cells axi_hwt]
 
     #
     # Memory Map of peripheperals
