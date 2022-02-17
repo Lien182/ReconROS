@@ -24,8 +24,12 @@
 #ifndef RECONOS_APP_H
 #define RECONOS_APP_H
 
+#include "cpuarch.h"
+
 #include "mbox.h"
+#include "mem.h"
 #include "ros.h"
+#include "ros_timer.h"
 #include "ros_pub.h"
 #include "ros_sub.h"
 #include "ros_service_server.h"
@@ -68,9 +72,19 @@ extern pthread_cond_t <<NameLower>>_s;
 extern pthread_cond_t *<<NameLower>>;
 <<end generate>>
 
+<<generate for RESOURCES(Type == "mem")>>
+extern struct mem <<NameLower>>_s;
+extern struct mem *<<NameLower>>;
+<<end generate>>
+
 <<generate for RESOURCES(Type == "rosnode")>>
 extern struct ros_node_t <<NameLower>>_s;
 extern struct ros_node_t *<<NameLower>>;
+<<end generate>>
+
+<<generate for RESOURCES(Type == "rostmr")>>
+extern struct ros_timer_t <<NameLower>>_s;
+extern struct ros_timer_t *<<NameLower>>;
 <<end generate>>
 
 <<generate for RESOURCES(Type == "rossub")>>
@@ -130,7 +144,13 @@ void reconos_app_cleanup();
  *   rt   - pointer to the ReconOS thread
  */
 struct reconos_thread *reconos_thread_create_hwt_<<Name>>(void * init_data);
+
+struct reconos_thread *reconos_thread_pr_create_hwt_<<Name>>(void * init_data, char * bitstream_path);
 <<=end generate=>>
+
+
+
+
 
 <<=generate for HasSw=>>
 /*

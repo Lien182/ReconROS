@@ -58,6 +58,10 @@ extern int RECONOS_NUM_HWTS;
 #define RECONOS_RESOURCE_TYPE_ROSACTIONMSGRESULTREQ	0x00010000
 #define RECONOS_RESOURCE_TYPE_ROSACTIONMSGRESULTRES	0x00020000
 #define RECONOS_RESOURCE_TYPE_ROSACTIONMSGFEEDBACK	0x00040000
+
+#define RECONOS_RESOURCE_TYPE_ROSTMR				0x00080000
+
+#define RECONOS_RESOURCE_TYPE_MEM					0x00100000
 /*
  * Object representing a single resource.
  *
@@ -155,6 +159,7 @@ struct reconos_thread {
 	int thread_priority;
 
 	char **bitstreams;
+	char **bitstream_name;
 	int *bitstream_lengths;
 	void *(*swentry)(void *data);
 };
@@ -336,5 +341,11 @@ void reconos_cleanup();
  * Flushes the cache if needed.
  */
 void reconos_cache_flush();
+
+
+int reconos_reconfigure_legacy(char * bitstream, unsigned int length, unsigned int partial);
+int reconos_reconfigure_legacy_fs(char * bitstream_path, unsigned int partial);
+int reconos_reconfigure_fpgamgr(char * bitstream, unsigned int length, unsigned int partial);
+int reconos_reconfigure_fpgamgr_fs(char * bitstream_path, unsigned int partial);
 
 #endif /* RECONOS_H */

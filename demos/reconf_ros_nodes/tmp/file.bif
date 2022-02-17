@@ -1,0 +1,4 @@
+all:
+{
+	build.hw/Bitstreams/pblock_slot_1_sobel_1_partial.bit
+}

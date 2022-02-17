@@ -48,7 +48,7 @@ def get_dict(prj):
 			d["Clk"] = s.clock.id
 			d["Async"] = "sync" if s.clock == prj.clock else "async"
 			d["Ports"] = s.ports
-			d["Reconfigurable"] = s.reconfigurable
+			d["Reconfigurable"] = prj.impinfo.pr
 			d["Region"] = []
 			for reg in s.region:
 				e = {}
@@ -61,7 +61,6 @@ def get_dict(prj):
 				d2 = {}
 				d2["Name"] = t.name.lower()
 				d["THREADS"].append(d2)
-
 			dictionary["SLOTS"].append(d)
 	# Prepare strings to define RM configurations because it is difficult to handle purely with template functionality
 	dictionary["THREADS"] = []
@@ -110,14 +109,14 @@ def export_hw(prj, hwdir, link):
 		log.error("Tool not supported")
 
 def export_hw_thread(prj, hwdir, link, thread):
-	if (prj.impinfo.xil[0] == "ise") or (prj.impinfo.xil[0] == "vivado"):
+	if prj.impinfo.xil[0] == "vivado":
 		_export_hw_thread_vivado(prj, hwdir, link, thread)
 	else:
 		log.error("Tool not supported")
 
 def _export_hw_thread_vivado(prj, hwdir, link, thread):
 	''' 
-	Generates sources for one hardware thread for ReconOS in an ISE/XPS or Vivado project.
+	Generates sources for one hardware thread for ReconOS in a Vivado project.
 	
 	It checks whether vhdl or hls sources shall be used and generates the hardware thread
 	from the source templates. 
@@ -148,13 +147,11 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["MEM_N"] = not thread.mem
 		dictionary["CLKPRD"] = min([_.clock.get_periodns() for _ in thread.slots])
 		dictionary["HWSOURCE"] = thread.hwsource
-		
 		# "reconf" thread for partial reconfiguration is taken from template directory
-		if prj.impinfo.pr == "true" and thread.name.lower() == "reconf":
+		if prj.impinfo.pr and thread.name.lower() == "reconf":
 			srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
 		else:
 			srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
-
 		dictionary["SOURCES"] = [srcs]
 		incls = shutil2.listfiles(srcs, True)
 		dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
@@ -172,7 +169,7 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		prj.apply_template("thread_vhdl_pcore", dictionary, hwdir, link)
 
 		#For each slot: Generate .prj file listing sources for PR flow
-		if thread.slots[0].reconfigurable == "true":
+		if prj.impinfo.pr:
 			for _ in thread.slots:
 				dictionary["SLOTID"] = _.id
 				prj.apply_template("thread_prj", dictionary, hwdir, link)
@@ -184,24 +181,39 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 		#Added
 		dictionary["MSGINCLUDEDIR"] = ""
-
 		msg_install_path = prj.dir + "/build.msg/install/"
 		if shutil2.exists(msg_install_path):
 			msg_packages = [f for f in listdir(msg_install_path) if isdir(join(msg_install_path, f))]
 			#print(msg_packages)
 			for msg_pack in msg_packages:
 				dictionary["MSGINCLUDEDIR"] += "-I"+msg_install_path + msg_pack + "/include/ "
-
 		#End Added
 
 		dictionary["PART"] = prj.impinfo.part
 		dictionary["NAME"] = thread.name.lower()
 		dictionary["MEM"] = thread.mem
 		dictionary["MEM_N"] = not thread.mem
-		dictionary["HWSOURCE"] = thread.hwsource
 		dictionary["CLKPRD"] = min([_.clock.get_periodns() for _ in thread.slots])
+		
+		if prj.impinfo.cpuarchitecture == "arm64":
+			dictionary["CPUARCHITECTURESIZE"] = "64"
+		else:
+			dictionary["CPUARCHITECTURESIZE"] = "32"
+
+		if prj.impinfo.cpuarchitecture == "arm64":
+			dictionary["RRBASETYPE"] 		= "int64_t"
+			dictionary["RRUBASETYPE"] 		= "uint64_t"
+			dictionary["RRBASETYPEBYTES"] 	= "8"
+		else:
+			dictionary["RRBASETYPE"] 		= "int32_t"
+			dictionary["RRUBASETYPE"] 		= "uint32_t"
+			dictionary["RRBASETYPEBYTES"] 	= "4"
+
+
+		dictionary["ROSDISTRIBUTION"] = prj.impinfo.ros2distribution
+		
 		# "reconf" thread for partial reconfiguration is taken from template directory
-		if prj.impinfo.pr == "true" and thread.name.lower() == "reconf":
+		if prj.impinfo.pr and thread.name.lower() == "reconf":
 			srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
 		else:
 			srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
@@ -223,71 +235,55 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		prj.apply_template("thread_hls_build", dictionary, tmp.name)
 
 		log.info("Starting Vivado HLS ...")
-		if "bbd" in thread.hwoptions:
-			if "vivado" in thread.hwoptions:
-				subprocess.call("""
-				  source /opt/Xilinx/Vivado/{1}/settings64.sh;
-				  cd {0};
-				  vivado_hls -f script_csynth.tcl;
-				  vivado -mode batch -notrace -nojournal -nolog -source script_vivado_edn.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
-				  shell=True, executable="/bin/bash")
 
-				dictionary = {}
-				dictionary["NAME"] = thread.name.lower()
-				dictionary["MEM"] = thread.mem
-				dictionary["MEM_N"] = not thread.mem
-				srcs = shutil2.join(tmp.name, "rt_imp.edn")
-				dictionary["SOURCES"] = [srcs]
-				incls = ["rt_imp.edn"]
-				dictionary["INCLUDES"] = [{"File": _} for _ in incls]
-			else:
-				log.error("No bbd tool found")
-				return
+		subprocess.call("""
+			source /opt/Xilinx/Vivado/{1}/settings64.sh;
+			cd {0};
+			vivado_hls -f script_csynth.tcl;
+			vivado -mode batch -notrace -nojournal -nolog -source script_vivado_edn.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
+			shell=True, executable="/bin/bash")
 
-			log.info("Generating export files ...")
-			prj.apply_template("thread_hls_pcore_bbd", dictionary, hwdir)
 
+		dictionary = {}
+		dictionary["NAME"] = thread.name.lower()
+		dictionary["MEM"] = thread.mem
+		dictionary["MEM_N"] = not thread.mem
+		dictionary["HWSOURCE"] = thread.hwsource
+		srcs = shutil2.join(tmp.name, "hls", "sol", "syn", "vhdl")
+		#HLS instantiates subcores (e.g. floating point units) in VHDL form during the export step
+		#The path above contains only .tcl instantiations, which our IP Packager flow doesn't understand
+		#So we add extract the convenient .vhd definitions from the following path:
+		srcs2 = shutil2.join(tmp.name, "hls", "sol", "impl", "ip", "hdl", "ip")
+		dictionary["SOURCES"] = [srcs, srcs2]
+		incls = shutil2.listfiles(srcs, True)
+		incls += shutil2.listfiles(srcs2, True)
+		dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
+		#Template will change top module entity name to "rt_reconf" if PR flow is used for this HWT
+		dictionary["RECONFIGURABLE"] = prj.impinfo.pr
+
+		log.info("Generating export files ...")
+		if prj.impinfo.cpuarchitecture == "arm64":
+			prj.apply_template("thread_hls_pcore_vhdl_64", dictionary, hwdir)
 		else:
-			subprocess.call("""
-			  source /opt/Xilinx/Vivado/{1}/settings64.sh;
-			  cd {0};
-			  vivado_hls -f script_csynth.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
-			  shell=True, executable="/bin/bash")
+			prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
+		
 
-			dictionary = {}
-			dictionary["NAME"] = thread.name.lower()
-			dictionary["MEM"] = thread.mem
-			dictionary["MEM_N"] = not thread.mem
-			srcs = shutil2.join(tmp.name, "hls", "sol", "syn", "vhdl")
-				#HLS instantiates subcores (e.g. floating point units) in VHDL form during the export step
-			#The path above contains only .tcl instantiations, which our IP Packager flow doesn't understand
-			#So we add extract the convenient .vhd definitions from the following path:
-			srcs2 = shutil2.join(tmp.name, "hls", "sol", "impl", "ip", "hdl", "ip")
-			dictionary["SOURCES"] = [srcs, srcs2]
-			incls = shutil2.listfiles(srcs, True)
-			incls += shutil2.listfiles(srcs2, True)
-			dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
-
-			log.info("Generating export files ...")
-			if thread.videoout == 0 :
-				prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
-			else:
-				print("Found Video Out! \n")
-				prj.apply_template("thread_hls_pcore_video_vhdl", dictionary, hwdir)
-			
-			#For each slot: Generate .prj file listing sources for PR flow
-			if thread.slots[0].reconfigurable == "true":
-				for _ in thread.slots:
-					dictionary["SLOTID"] = _.id
-					prj.apply_template("thread_prj", dictionary, hwdir, link)
+		#For each slot: Generate .prj file listing sources for PR flow
+		if prj.impinfo.pr:
+			for _ in thread.slots:
+				dictionary["SLOTID"] = _.id
+				prj.apply_template("thread_prj", dictionary, hwdir, link)
 
 		#Save temporary HLS project directory for analysis:
-		shutil2.mkdir("/tmp/test")
+		shutil2.mkdir("/tmp/ReconROS_hlsexport")
 		save_dir_hls_prj = shutil2.join(hwdir, "..", "tmp_hls_prj_" + thread.name.lower())
-		shutil2.copytree(tmp.name, "/tmp/test")
+		shutil2.copytree(tmp.name, "/tmp/ReconROS_hlsexport")
 		shutil2.rmtree(save_dir_hls_prj)
 		shutil2.mkdir(save_dir_hls_prj)
 		shutil2.copytree(tmp.name, save_dir_hls_prj)
+	else:
+		log.error("No source type defined")
+		return
 		
 def _export_hw_vivado(prj, hwdir, link):
 	''' 
@@ -312,7 +308,9 @@ def _export_hw_vivado(prj, hwdir, link):
 	
 	tmpl = "ref_" + prj.impinfo.os + "_" + "_".join(prj.impinfo.board) + "_" + prj.impinfo.design + "_" + prj.impinfo.xil[0] + "_" + prj.impinfo.xil[1]
 	print("Using template directory " + tmpl)
-	# TODO: No error message when template directory is not found!
+	if not shutil2.exists(prj.get_template(tmpl)):
+		log.error("Template directory not found in project or ReconOS repository")
+		return
 	prj.apply_template(tmpl, dictionary, hwdir, link)
 
 	log.info("Generating threads ...")
@@ -324,7 +322,7 @@ def _export_hw_vivado(prj, hwdir, link):
 					source /opt/Xilinx/Vivado/{1}/settings64.sh;
 					cd {0};
 					vivado -mode batch -notrace -nojournal -nolog -source create_ip_library.tcl;""".format(hwdir, prj.impinfo.xil[1]),
-					shell=True, executable="/bin/bash")
+					shell=True,executable="/bin/bash")
 	if result != 0 :
 		print("[RDK] Generation of Vivado IP repository failed. Maybe you specified unknown components in build.cfg?")
 		exit(1)
@@ -334,5 +332,5 @@ def _export_hw_vivado(prj, hwdir, link):
 					source /opt/Xilinx/Vivado/{1}/settings64.sh;
 					cd {0};
 					vivado -mode batch -notrace -nojournal -nolog -source export.tcl -tclargs -proj_name myReconOS -proj_path . ;""".format(hwdir, prj.impinfo.xil[1]),
-					shell=True, executable="/bin/bash")
+					shell=True,  executable="/bin/bash")
 

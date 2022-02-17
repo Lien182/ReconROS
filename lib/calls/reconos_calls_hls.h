@@ -18,16 +18,22 @@
  * ======================================================================
  */
 
+<<reconos_preproc>>
+
 #ifndef RECONOS_CALLS_H
 #define RECONOS_CALLS_H
 
 #include "hls_stream.h"
-#include <stdint.h>
-//#include "ap_cint.h"
+#include "stdint.h"
+#include "ap_int.h"
 
 /* == Helper definitions =============================================== */
 
-#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
+#define RRBASETYPE 			<<RRBASETYPE>>
+#define RRUBASETYPE			<<RRUBASETYPE>>
+#define RRBASETYPEBYTES		<<RRBASETYPEBYTES>>
+
+#define OFFSETOF(type, member) ((RRUBASETYPE)(intptr_t)&(((type *)(void*)0)->member) )
 
 /* == Constant definitions ============================================= */
 
@@ -37,77 +43,92 @@
  *   MEMIF_CHUNK_WORDS - size of one memory request in words
  *                       (a request might be split up to meet this)
  */
-#define MEMIF_CHUNK_WORDS 64
-#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 4)
-#define MEMIF_CHUNK_MASK  0x000000FF
 
+#if RRBASETYPEBYTES == 4 
+
+	#define MEMIF_CHUNK_WORDS 64
+	#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 4)
+	#define MEMIF_CHUNK_MASK  0x000000FF
+
+	#define MEMIF_CMD_READ 0x00000000
+	#define MEMIF_CMD_WRITE 0xF0000000
+
+#elif RRBASETYPEBYTES == 8 
+	#define MEMIF_CHUNK_WORDS 32
+	#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 8)
+	#define MEMIF_CHUNK_MASK  0x00000000000000FF
+
+	#define MEMIF_CMD_READ 0x0000000000000000
+	#define MEMIF_CMD_WRITE 0xF000000000000000
+#endif
 /*
  * Definition of the osif commands
  *
  *   self-describing
  *
  */
-#define OSIF_CMD_THREAD_GET_INIT_DATA  			0x000000A0
-#define OSIF_CMD_THREAD_GET_STATE_ADDR 			0x000000A1
-#define OSIF_CMD_THREAD_EXIT           			0x000000A2
-#define OSIF_CMD_THREAD_YIELD          			0x000000A3
-#define OSIF_CMD_THREAD_CLEAR_SIGNAL   			0x000000A4
-#define OSIF_CMD_SEM_POST              			0x000000B0
-#define OSIF_CMD_SEM_WAIT              			0x000000B1
-#define OSIF_CMD_MUTEX_LOCK            			0x000000C0
-#define OSIF_CMD_MUTEX_UNLOCK          			0x000000C1
-#define OSIF_CMD_MUTEX_TRYLOCK         			0x000000C2
-#define OSIF_CMD_COND_WAIT             			0x000000D0
-#define OSIF_CMD_COND_SIGNAL           			0x000000D1
-#define OSIF_CMD_COND_BROADCAST        			0x000000D2
-#define OSIF_CMD_MBOX_GET              			0x000000F0
-#define OSIF_CMD_MBOX_PUT              			0x000000F1
-#define OSIF_CMD_MBOX_TRYGET           			0x000000F2
-#define OSIF_CMD_MBOX_TRYPUT           			0x000000F3
-#define OSIF_CMD_MASK                  			0x00000FFF
-#define OSIF_CMD_YIELD_MASK            			0x80000000
+#define OSIF_CMD_THREAD_GET_INIT_DATA  			(RRUBASETYPE)0x000000A0
+#define OSIF_CMD_THREAD_GET_STATE_ADDR 			(RRUBASETYPE)0x000000A1
+#define OSIF_CMD_THREAD_EXIT           			(RRUBASETYPE)0x000000A2
+#define OSIF_CMD_THREAD_YIELD          			(RRUBASETYPE)0x000000A3
+#define OSIF_CMD_THREAD_CLEAR_SIGNAL   			(RRUBASETYPE)0x000000A4
+#define OSIF_CMD_SEM_POST              			(RRUBASETYPE)0x000000B0
+#define OSIF_CMD_SEM_WAIT              			(RRUBASETYPE)0x000000B1
+#define OSIF_CMD_MUTEX_LOCK            			(RRUBASETYPE)0x000000C0
+#define OSIF_CMD_MUTEX_UNLOCK          			(RRUBASETYPE)0x000000C1
+#define OSIF_CMD_MUTEX_TRYLOCK         			(RRUBASETYPE)0x000000C2
+#define OSIF_CMD_COND_WAIT             			(RRUBASETYPE)0x000000D0
+#define OSIF_CMD_COND_SIGNAL           			(RRUBASETYPE)0x000000D1
+#define OSIF_CMD_COND_BROADCAST        			(RRUBASETYPE)0x000000D2
+#define OSIF_CMD_MBOX_GET              			(RRUBASETYPE)0x000000F0
+#define OSIF_CMD_MBOX_PUT              			(RRUBASETYPE)0x000000F1
+#define OSIF_CMD_MBOX_TRYGET           			(RRUBASETYPE)0x000000F2
+#define OSIF_CMD_MBOX_TRYPUT           			(RRUBASETYPE)0x000000F3
+#define OSIF_CMD_MASK                  			(RRUBASETYPE)0x00000FFF
+#define OSIF_CMD_YIELD_MASK            			(RRUBASETYPE)0x80000000
 
-#define OSIF_SIGNAL_THREAD_START       			0x01000000
-#define OSIF_SIGNAL_THREAD_RESUME      			0x01000001
+#define OSIF_SIGNAL_THREAD_START       			(RRUBASETYPE)0x01000000
+#define OSIF_SIGNAL_THREAD_RESUME      			(RRUBASETYPE)0x01000001
 
-#define OSIF_INTERRUPTED               			0x000000FF
+#define OSIF_INTERRUPTED               			(RRUBASETYPE)0x000000FF
 
-#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			0x00000950
+#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			(RRUBASETYPE)0x00000950
 
-#define OSIF_CMD_MEMORY_MALLOC					0x000000F4
-#define OSIF_CMD_MEMORY_FREE					0x000000F5
-#define OSIF_CMD_MEMORY_GETOBJADDR				0x000000F6
+#define OSIF_CMD_MEMORY_MALLOC					(RRUBASETYPE)0x000000F4
+#define OSIF_CMD_MEMORY_FREE					(RRUBASETYPE)0x000000F5
+#define OSIF_CMD_MEMORY_GETOBJADDR				(RRUBASETYPE)0x000000F6
+#define OSIF_CMD_MEMORY_GETMEMADDR				(RRUBASETYPE)0x000000F7
 
-#define OSIF_CMD_ROS_PUBLISH		   			0x00000900
-#define OSIF_CMD_ROS_TAKE			   			0x00000901
-#define OSIF_CMD_ROS_TRYTAKE		   			0x00000902
+#define OSIF_CMD_ROS_PUBLISH		   			(RRUBASETYPE)0x00000900
+#define OSIF_CMD_ROS_TAKE			   			(RRUBASETYPE)0x00000901
+#define OSIF_CMD_ROS_TRYTAKE		   			(RRUBASETYPE)0x00000902
 
-#define OSIF_CMD_ROS_SERVICES_RESPONSE 			0x00000910
-#define OSIF_CMD_ROS_SERVICES_TRYTAKE  			0x00000911	
-#define OSIF_CMD_ROS_SERVICES_TAKE 	   			0x00000912
+#define OSIF_CMD_ROS_SERVICES_RESPONSE 			(RRUBASETYPE)0x00000910
+#define OSIF_CMD_ROS_SERVICES_TRYTAKE  			(RRUBASETYPE)0x00000911	
+#define OSIF_CMD_ROS_SERVICES_TAKE 	   			(RRUBASETYPE)0x00000912
 
-#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE			0x00000920
-#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE		0x00000921
-#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE		0x00000922
-#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE		0x00000923
-#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE		0x00000924
-#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND		0x00000925
-#define OSIF_CMD_ROS_ACTIONS_FEEDBACK			0x00000926
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE			(RRUBASETYPE)0x00000920
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE		(RRUBASETYPE)0x00000921
+#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE		(RRUBASETYPE)0x00000922
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE		(RRUBASETYPE)0x00000923
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE		(RRUBASETYPE)0x00000924
+#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND		(RRUBASETYPE)0x00000925
+#define OSIF_CMD_ROS_ACTIONS_FEEDBACK			(RRUBASETYPE)0x00000926
 
 //Clients
-#define OSIF_CMD_ROS_SERVICEC_REQUEST 			0x00000930
-#define OSIF_CMD_ROS_SERVICEC_TRYTAKE  			0x00000931	
-#define OSIF_CMD_ROS_SERVICEC_TAKE 	   			0x00000932
+#define OSIF_CMD_ROS_SERVICEC_REQUEST 			(RRUBASETYPE)0x00000930
+#define OSIF_CMD_ROS_SERVICEC_TRYTAKE  			(RRUBASETYPE)0x00000931	
+#define OSIF_CMD_ROS_SERVICEC_TAKE 	   			(RRUBASETYPE)0x00000932
 
-#define OSIF_CMD_ROS_ACTIONC_GOAL_SEND			0x00000940
-#define OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE		0x00000941
-#define OSIF_CMD_ROS_ACTIONC_GOAL_TAKE			0x00000942
-#define OSIF_CMD_ROS_ACTIONC_RESULT_SEND		0x00000943
-#define OSIF_CMD_ROS_ACTIONC_RESULT_TAKE		0x00000944
-#define OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE		0x00000945
+#define OSIF_CMD_ROS_ACTIONC_GOAL_SEND			(RRUBASETYPE)0x00000940
+#define OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE		(RRUBASETYPE)0x00000941
+#define OSIF_CMD_ROS_ACTIONC_GOAL_TAKE			(RRUBASETYPE)0x00000942
+#define OSIF_CMD_ROS_ACTIONC_RESULT_SEND		(RRUBASETYPE)0x00000943
+#define OSIF_CMD_ROS_ACTIONC_RESULT_TAKE		(RRUBASETYPE)0x00000944
+#define OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE		(RRUBASETYPE)0x00000945
 
-#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE		0x00000946
-#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE	0x00000947
+#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE		(RRUBASETYPE)0x00000946
+#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE	(RRUBASETYPE)0x00000947
 
 
 /*
@@ -115,8 +136,7 @@
  *
  *   self-describing
  */
-#define MEMIF_CMD_READ 0x00000000
-#define MEMIF_CMD_WRITE 0xF0000000
+
 
 
 /* == Internal functions =============================================== */
@@ -129,7 +149,7 @@
  *   stream - reference to stream
  *   data   - data to write
  */
-inline void stream_write(hls::stream<uint32_t> &stream, uint32_t data) {
+inline void stream_write(hls::stream<RRUBASETYPE> &stream, RRUBASETYPE data) {
 #pragma HLS inline
 	while (!stream.write_nb(data)){}
 }
@@ -143,12 +163,32 @@ inline void stream_write(hls::stream<uint32_t> &stream, uint32_t data) {
  *
  *   @returns read data
  */
-inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
+inline RRUBASETYPE stream_read(hls::stream<RRUBASETYPE> &stream, hls::stream<RRUBASETYPE> &outputstream, volatile bool &hwt_signal) {
 #pragma HLS inline
-	uint32_t data;
+	RRUBASETYPE data;
+	while (!stream.read_nb(data)){ if(hwt_signal){ stream_write(outputstream, OSIF_CMD_THREAD_EXIT);while(1);}}
+	return data;
+}
+
+/*
+ * Reads blocking from a stream using the non-blocking method. Since the
+ * non-blocking read is called in a loop, vivado hls enforces sequential
+ * order, which is necessary for osif and memif calls.
+ *
+ *   stream - reference to stream
+ *
+ *   @returns read data
+ */
+inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
+#pragma HLS inline
+	RRUBASETYPE data;
 	while (!stream.read_nb(data)){}
 	return data;
 }
+
+
+
+
 
 /* == Call functions =================================================== */
 
@@ -167,7 +207,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
  * Initializes the thread and reads from the osif the resume status.
  */
 #define THREAD_INIT()\
- 	stream_read(osif_sw2hw)
+ 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal);
 
 /*
  * Posts the semaphore specified by handle.
@@ -177,7 +217,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define SEM_POST(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_SEM_POST),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Waits for the semaphore specified by handle.
@@ -187,7 +227,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define SEM_WAIT(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_SEM_WAIT),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Locks the mutex specified by handle.
@@ -197,7 +237,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MUTEX_LOCK(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MUTEX_LOCK),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Unlocks the mutex specified by handle.
@@ -207,7 +247,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MUTEX_UNLOCK(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MUTEX_UNLOCK),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Tries to lock the mutex specified by handle and returns if successful or not.
@@ -217,7 +257,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MUTEX_TRYLOCK(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MUTEX_TRYLOCK),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Waits for the condition variable specified by handle.
@@ -227,7 +267,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define COND_WAIT(p_handle,p_handle2)(\
 	stream_write(osif_hw2sw, OSIF_CMD_COND_WAIT),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Signals a single thread waiting on the condition variable specified by handle.
@@ -237,7 +277,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define COND_SIGNAL(p_handle,p_handle2)(\
 	stream_write(osif_hw2sw, OSIF_CMD_COND_SIGNAL),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Signals all threads waiting on the condition variable specified by handle.
@@ -247,7 +287,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define COND_BROADCAST(p_handle,p_handle2)(\
 	stream_write(osif_hw2sw, OSIF_CMD_COND_BROADCAST),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Puts a single word into the mbox specified by handle.
@@ -257,7 +297,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MBOX_GET(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MBOX_GET),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Reads a single word from the mbox specified by handle.
@@ -268,7 +308,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_MBOX_PUT),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, data),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Tries to put a single word into the mbox specified by handle but does not
@@ -279,8 +319,8 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MBOX_TRYGET(p_handle,data)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MBOX_TRYGET),\
 	stream_write(osif_hw2sw, p_handle),\
-	data = stream_read(osif_sw2hw),\
-	stream_read(osif_sw2hw))
+	data = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal)
 
 /*
  * Tries to read a single word from the mbox specified by handle but does not
@@ -292,7 +332,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_MBOX_TRYPUT),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, data),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  *	Memory functions
@@ -301,14 +341,18 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 #define MEMORY_GETOBJECTADDR(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_GETOBJADDR),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
+#define MEMORY_GETMEMORYADDR(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_GETMEMADDR),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define MEMORY_MALLOC(ptr_dest,length)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_MALLOC),\
 	stream_write(osif_hw2sw, ptr_dest),\
 	stream_write(osif_hw2sw, length),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define MEMORY_FREE(ptr)(\
 	stream_write(osif_hw2sw, OSIF_CMD_MEMORY_FREE),\
@@ -327,7 +371,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, offset),\
 	stream_write(osif_hw2sw, element_size),\
 	stream_write(osif_hw2sw, size),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 
 //ROS Communication function
@@ -337,20 +381,20 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_PUBLISH),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SUBSCRIBE_TRYTAKE(p_handle,p_handle_msg, msg_ptr)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	msg_ptr = stream_read(osif_sw2hw),\
-	stream_read(osif_sw2hw))
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SUBSCRIBE_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw, osif_hw2sw, hwt_signal))
 
 
 // ROS Services
@@ -359,39 +403,39 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_RESPONSE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
-#define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg)(\
+#define ROS_SERVICESERVER_TRYTAKE(p_handle,p_handle_msg, msg_ptr)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SERVICESERVER_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICES_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
-
-
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SERVICECLIENT_SEND_REQUEST(p_handle,p_handle_msg)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_REQUEST),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
-#define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg)(\
+#define ROS_SERVICECLIENT_TRYTAKE(p_handle,p_handle_msg ,msg_ptr)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_SERVICECLIENT_TAKE(p_handle, p_handle_msg )(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_SERVICEC_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 
 
@@ -406,41 +450,44 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
-#define ROS_ACTIONSERVER_GOAL_TRYTAKE(p_handle,p_handle_msg)( \
+#define ROS_ACTIONSERVER_GOAL_TRYTAKE(p_handle,p_handle_msg, msg_ptr)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
 
 #define ROS_ACTIONSERVER_GOAL_DECIDE(p_handle,accept)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, accept),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONSERVER_RESULT_TAKE(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
-#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle)( \
+#define ROS_ACTIONSERVER_RESULT_TRYTAKE(p_handle, msg_ptr)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	msg_ptr = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal), \
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_RESULT_SEND),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_FEEDBACK),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 
 #define ROS_ACTION_CLIENT_GOAL_REJECTED       0
@@ -451,48 +498,48 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_SEND),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_GOAL_TRYTAKE(p_handle,accept)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	accept = stream_read(osif_sw2hw),\
-	stream_read(osif_sw2hw))
+	accept = stream_read(osif_sw2hw, osif_hw2sw, hwt_signal),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_GOAL_TAKE(p_handle,accept)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_GOAL_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
-	accept = stream_read(osif_sw2hw),\
-	stream_read(osif_sw2hw)) 
+	accept = stream_read(osif_sw2hw,osif_hw2sw, hwt_signal),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal)) 
 
 #define ROS_ACTIONCLIENT_RESULT_SEND(p_handle)(\
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_SEND),\
 	stream_write(osif_hw2sw, p_handle),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_RESULT_TRYTAKE(p_handle, p_handle_msg)( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_RESULT_TAKE(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_RESULT_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTIONCLIENT_FEEDBACK_TRYTAKE(p_handle, p_handle_msg )( \
 	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE),\
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Gets the pointer to the initialization data of the ReconOS thread
@@ -500,7 +547,7 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
  */
 #define GET_INIT_DATA()(\
 	stream_write(osif_hw2sw, OSIF_CMD_THREAD_GET_INIT_DATA),\
-	stream_read(osif_sw2hw))
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 /*
  * Reads several words from the main memory into the local ram. Therefore,
@@ -514,11 +561,11 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
  *   
  */
 #define MEM_READ(src,dst,len){\
-	uint32_t __len, __rem;\
-	uint32_t __addr = (src), __i = 0;\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (src), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -527,10 +574,11 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
-			(dst)[__i++] = stream_read(memif_mem2hwt);\
-			__addr += 4;\
-			__rem -= 4;\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		_Pragma ("HLS pipeline")  \
+			(dst)[__i++] = memif_mem2hwt.read();\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}}
 
@@ -545,11 +593,11 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
  *   len - number of bytes to transmit (bytes)
  */
 #define MEM_WRITE(src,dst,len){\
-	uint32_t __len, __rem;\
-	uint32_t __addr = (dst), __i = 0;\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -558,10 +606,11 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
-			stream_write(memif_hwt2mem, (src)[__i++]);\
-			__addr += 4;\
-			__rem -= 4;\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		_Pragma ("HLS pipeline")  \
+			memif_hwt2mem.write((src)[__i++]);\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}}
 
@@ -576,20 +625,60 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream) {
  *   len - number of bytes to transmit (bytes)
  */
 
-#define MEM_WRITE_FROM_STREAM(src,dst,len){\
-	uint32_t __len = len; \
-	stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
-	stream_write(memif_hwt2mem, dst);\
-	for (; __len > 0; __len -= 4) {\
-		stream_write(memif_hwt2mem, src.read());\
-	}\
-	}
 
+#define MEM_READ_TO_STREAM( src, dst, len){ \
+	RRUBASETYPE __len, __rem; \
+	RRUBASETYPE __addr = (src), __i = 0; \
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		_Pragma ("HLS pipeline")  \
+			dst.write(memif_mem2hwt.read());\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+		}\
+	}\
+}
+
+#define MEM_WRITE_FROM_STREAM( src, dst, len)\
+{\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		_Pragma ("HLS pipeline")  \
+			RRUBASETYPE tmp = src.read();\
+			memif_hwt2mem.write(tmp);\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+		}\
+	}\
+}
 
 /*
  * Terminates the current ReconOS thread.
  */
-#define THREAD_EXIT()(\
-	pthread_exit(0))
+#define THREAD_EXIT(){\
+	stream_write(osif_hw2sw, OSIF_CMD_THREAD_EXIT);\
+	while(1);}
 
 #endif /* RECONOS_CALLS_H */

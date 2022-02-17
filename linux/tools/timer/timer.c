@@ -99,3 +99,9 @@ void timer_cleanup() {
 float timer_toms(unsigned int t) {
 	return t / (CLK_FREQ / 1000.0);
 }
+
+
+unsigned int timer_msto(float t)
+{
+	return (unsigned int) (t * (CLK_FREQ / 1000.0));
+}

@@ -34,7 +34,7 @@ int main(int argc, char **argv)
   {
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sorted: %d", (std::is_sorted(result.get()->sorted.begin(), result.get()->sorted.end())));
   } else {
-    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
+    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service");
   }
 
   rclcpp::shutdown();

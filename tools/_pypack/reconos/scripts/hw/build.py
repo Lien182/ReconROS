@@ -28,7 +28,7 @@ def build(prj, hwdir):
 	if prj.impinfo.xil[0] == "ise":
 		_build_ise(prj, hwdir)
 	elif prj.impinfo.xil[0] == "vivado":
-		if prj.impinfo.pr == "true":
+		if prj.impinfo.pr == True:
 			_build_vivado_pr(prj, hwdir)
 		else:
 			_build_vivado(prj, hwdir)
@@ -88,9 +88,18 @@ def _build_vivado_pr(prj, hwdir):
 		log.error("hardware directory '" + hwdir + "' not found")
 		return
 
+	
 	subprocess.call("""
 					source /opt/Xilinx/Vivado/{0}/settings64.sh;
 					vivado -mode batch -source pr_flow/run_pr.tcl -notrace;""".format(prj.impinfo.xil[1]),
+					shell=True, executable="/bin/bash")
+	print()
+
+	#preprocessing for generating bin files
+	subprocess.call("""
+					source /opt/Xilinx/Vivado/{0}/settings64.sh;
+					rm Bitstreams/*.bit.bin;
+					bash postproc.sh""".format(prj.impinfo.xil[1]),
 					shell=True, executable="/bin/bash")
 	print()
 

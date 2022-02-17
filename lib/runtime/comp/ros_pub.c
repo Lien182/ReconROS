@@ -3,8 +3,6 @@
  */
 
 #include <stdio.h>
-#include <std_msgs/msg/string.h>
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -20,6 +18,14 @@ int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_
 
   ros_pub->rcl_pub= rcl_get_zero_initialized_publisher();
   rcl_publisher_options_t pub_options = rcl_publisher_get_default_options();
+
+    pub_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_ALL;
+    pub_options.qos.lifespan.sec = 100;
+
+    //my_subscription_options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC;
+
+
+    pub_options.qos.depth = 1000;
 
   rc = rcl_publisher_init(
       &ros_pub->rcl_pub,

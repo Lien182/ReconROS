@@ -35,7 +35,7 @@ int mbox_init(struct mbox *mb, size_t size)
 	if (ret)
 		goto out_err;
 
-	mb->messages = malloc(mb->size * sizeof(uint32_t));
+	mb->messages = malloc(mb->size * sizeof(RRUBASETYPE));
 	if (!mb->messages)
 		goto out_err;
 
@@ -55,7 +55,7 @@ void mbox_destroy(struct mbox *mb)
 	pthread_mutex_destroy(&mb->mutex_write);
 }
 
-int mbox_put(struct mbox *mb, uint32_t msg)
+int mbox_put(struct mbox *mb, RRUBASETYPE msg)
 {
 	pthread_mutex_lock(&mb->mutex_write);
 	sem_wait(&mb->sem_write);
@@ -69,7 +69,7 @@ int mbox_put(struct mbox *mb, uint32_t msg)
 	return 0;
 }
 
-int mbox_put_interruptible(struct mbox *mb, uint32_t msg)
+int mbox_put_interruptible(struct mbox *mb, RRUBASETYPE msg)
 {
 	if (pthread_mutex_lock(&mb->mutex_write) < 0) {
 		return -1;
@@ -88,9 +88,9 @@ int mbox_put_interruptible(struct mbox *mb, uint32_t msg)
 	return 0;
 }
 
-uint32_t mbox_get(struct mbox *mb)
+RRUBASETYPE mbox_get(struct mbox *mb)
 {
-	uint32_t msg;
+	RRUBASETYPE msg;
 	
 	pthread_mutex_lock(&mb->mutex_read);
 	sem_wait(&mb->sem_read);
@@ -104,7 +104,7 @@ uint32_t mbox_get(struct mbox *mb)
 	return msg;
 }
 
-int mbox_get_interruptible(struct mbox *mb, uint32_t *msg)
+int mbox_get_interruptible(struct mbox *mb, RRUBASETYPE *msg)
 {
 	if (pthread_mutex_lock(&mb->mutex_read) < 0) {
 		return -1;
@@ -123,7 +123,7 @@ int mbox_get_interruptible(struct mbox *mb, uint32_t *msg)
 	return 0;
 }
 
-int mbox_tryget(struct mbox *mb, uint32_t *msg)
+int mbox_tryget(struct mbox *mb, RRUBASETYPE *msg)
 {
 	int success, fill;
 
@@ -148,7 +148,7 @@ int mbox_tryget(struct mbox *mb, uint32_t *msg)
 	return success;
 }
 
-int mbox_tryput(struct mbox * mb, uint32_t msg)
+int mbox_tryput(struct mbox * mb, RRUBASETYPE msg)
 {
 	int success, rem;
 

@@ -14,6 +14,7 @@
  *                 Markus Happe, University of Paderborn
  *                 Sebastian Meisner, University of Paderborn
  *                 Christoph Rüthing, University of Paderborn
+ *		   Christian Lienen, University of Paderborn
  *   description:  ReconOS runtime library managing all threads and
  *                 internal data structures. It provides functions
  *                 to manipulate the state of the system.
@@ -21,17 +22,28 @@
  * ======================================================================
  */
 
+#include "cpuarch.h"
+
 #include "reconos.h"
 #include "private.h"
+
+#ifdef RECONOS_OS_linux
 #include "arch/arch.h"
+#elif RECONOS_OS_linux64
+#include "arch/arch64.h"
+#endif
 #include "comp/mbox.h"
+#include "comp/mem.h"
 #include "comp/ros.h"
+#include "comp/ros_timer.h"
 #include "comp/ros_pub.h"
 #include "comp/ros_sub.h"
 #include "comp/ros_service_server.h"
 #include "comp/ros_action_server.h"
 #include "comp/ros_service_client.h"
 #include "comp/ros_action_client.h"
+
+#include "arch/a9_timer.h"
 
 #include <unistd.h>
 #include <signal.h>
@@ -52,7 +64,21 @@ static int _thread_id;
 
 
 //Time Measurement
-//clock_t start, end;
+struct timespec t_start, t_end, t_res;
+
+static void timespec_diff(struct timespec *start, struct timespec *stop,
+                   struct timespec *result)
+{
+    if ((stop->tv_nsec - start->tv_nsec) < 0) {
+        result->tv_sec = stop->tv_sec - start->tv_sec - 1;
+        result->tv_nsec = stop->tv_nsec - start->tv_nsec + 1000000000;
+    } else {
+        result->tv_sec = stop->tv_sec - start->tv_sec;
+        result->tv_nsec = stop->tv_nsec - start->tv_nsec;
+    }
+
+    return;
+}
 
 /* == ReconOS resource ================================================= */
 
@@ -200,11 +226,18 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
                                   char *path) {
 	FILE *file;
 	unsigned int i, size;
+	char filepath[512];
+	char command[1024];
 
 	debug("[reconos-core] loading bitstreams from %s\n", path);
 
 	rt->bitstream_lengths = (int *)malloc(RECONOS_NUM_HWTS * sizeof(int));
 	if (!rt->bitstream_lengths) {
+		panic("[reconos-core] ERROR: failed to allocate memory for bitstream");
+	}
+
+	rt->bitstream_name = (int *)malloc(RECONOS_NUM_HWTS * sizeof(char*));
+	if (!rt->bitstream_name) {
 		panic("[reconos-core] ERROR: failed to allocate memory for bitstream");
 	}
 
@@ -214,7 +247,11 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 	}
 
 	for (i = 0; i < RECONOS_NUM_HWTS; i++) {
-		file = fopen(path, "rb");
+		memset(filepath, 0, sizeof(filepath));
+		sprintf(filepath, "%s/pblock_slot_%d_%s_%d_partial.bit", path,i, rt->name, i);
+		printf("Debug: %s \n", filepath);
+				
+		file = fopen(filepath, "rb");
 		if (!file) {
 			panic("[reconos-core] ERROR: failed to open bitstream\n");
 		}
@@ -225,9 +262,24 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 
 		rt->bitstream_lengths[i] = size;
 		rt->bitstreams[i] = (char *)malloc(size * sizeof(char));
+		
 		if (!rt->bitstreams[i]) {
 			panic("[reconos-core] ERROR: failed to allocate memory for bitstream\n");
 		}
+
+
+		rt->bitstream_name[i] = (char *)malloc(strlen(filepath) * sizeof(char));
+		if (!rt->bitstream_name[i]) {
+			panic("[reconos-core] ERROR: failed to allocate memory for bitstream\n");
+		}		
+
+		memcpy(rt->bitstream_name[i], filepath, strlen(filepath));
+		printf("Debug: Lenght %d \n", size);
+
+		//snprintf(command, 1024, "cp %s /lib/firmware", filepath);
+		//printf("DEBUG: command=%s \n", command);
+		//system(command);
+
 
 		fread(rt->bitstreams[i], sizeof(char), size, file);
 
@@ -277,7 +329,8 @@ void reconos_thread_create(struct reconos_thread *rt, int slot) {
 void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 	int i;
 
-	if (tt & RECONOS_THREAD_HW) {
+	if (tt & RECONOS_THREAD_HW) 
+	{
 		for (i = 0; i < rt->allowed_hwslot_count; i++) {
 			if (!rt->allowed_hwslots[i]->rt) {
 				break;
@@ -287,7 +340,9 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			whine("[reconos_core] WARNING: no free slot for thread %s found \n", rt->name);
 			return;
 		}
-
+		printf("hw slot id: %d \n", rt->allowed_hwslots[i]->id);
+		//reconos_reconfigure_legacy(rt->bitstreams[rt->allowed_hwslots[i]->id], rt->bitstream_lengths[rt->allowed_hwslots[i]->id],  1);
+		
 		reconos_thread_create(rt, rt->allowed_hwslots[i]->id);
 	} else if (tt & RECONOS_THREAD_SW) {
 		if(rt->thread_priority != 0)
@@ -296,28 +351,12 @@ void reconos_thread_create_auto(struct reconos_thread *rt, int tt) {
 			pthread_attr_t attr;
 			int ret;
 
-			
-			/* Lock memory */
-			/*
-			if(mlockall(MCL_CURRENT|MCL_FUTURE) == -1) {
-					printf("mlockall failed: %m\n");
-					exit(-2);
-			} */
-
 			/* Initialize pthread attributes (default values) */
 			ret = pthread_attr_init(&attr);
 			if (ret) {
 					printf("init pthread attributes failed\n");
 					return;
 			}
-
-
-			/* Set a specific stack size  */
-		//	ret = pthread_attr_setstacksize(&attr, PTHREAD_STACK_MIN);
-		//	if (ret) {
-		//		printf("pthread setstacksize failed\n");
-			//	return;
-			//}
 
 			/* Set scheduler policy and priority of pthread */
 			ret = pthread_attr_setschedpolicy(&attr, SCHED_FIFO);
@@ -366,7 +405,7 @@ void reconos_thread_suspend(struct reconos_thread *rt) {
  */
 void reconos_thread_suspend_block(struct reconos_thread *rt) {
 	if (rt->state != RECONOS_THREAD_STATE_RUNNING_HW) {
-		panic("[reconos-core] ERROR: cannot suspend not running thread\n");
+		panic("[reconos-core] ERROR: cannot suspend not running thread, state: %d\n", rt->state);
 	}
 
 	rt->state = RECONOS_THREAD_STATE_SUSPENDING;
@@ -394,8 +433,15 @@ void reconos_thread_resume(struct reconos_thread *rt, int slot) {
 		panic("[reconos-core] ERROR: thread not allowed to run in slot\n");
 	}
 
-	hwslot_resumethread(rt->hwslot, rt);
+	//TODO: do pr here
+
+	rt->hwslot = &_hwslots[slot];
+
+	hwslot_resumethread(&_hwslots[slot], rt);
 	rt->state = RECONOS_THREAD_STATE_RUNNING_HW;
+
+	if(rt->hwslot->dt == 0)
+		hwslot_createdelegate(rt->hwslot);
 }
 
 /*
@@ -415,6 +461,14 @@ void reconos_thread_signal(struct reconos_thread *rt) {
 void reconos_thread_setpriority(struct reconos_thread * rt, int thread_priority)
 {
 	rt->thread_priority = thread_priority;
+}
+
+
+
+void reconos_thread_reconfig(struct reconos_thread * rt)
+{
+    
+    
 }
 
 
@@ -456,6 +510,8 @@ void reconos_init() {
 
 	reconos_drv_init();
 
+	
+
 	_proc_control = reconos_proc_control_open();
 	if (_proc_control < 0) {
 		panic("[reconos-core] ERROR: unable to open proc control\n");
@@ -468,6 +524,7 @@ void reconos_init() {
 
 	RECONOS_NUM_HWTS = reconos_proc_control_get_num_hwts(_proc_control);
 	debug("RECONOS_NUM_HWTS=%d \n", RECONOS_NUM_HWTS);
+
 
 	_hwslots = (struct hwslot *)malloc(RECONOS_NUM_HWTS * sizeof(struct hwslot));
 	if (!_hwslots) {
@@ -485,13 +542,20 @@ void reconos_init() {
 	_dt_signal.sa_handler = delegate_signal;
 	sigaction(SIGUSR1, &_dt_signal, NULL);
 
+
 	reconos_proc_control_sys_reset(_proc_control);
 
 	reconos_proc_control_set_pgd(_proc_control);
-
-#ifdef RECONOS_OS_linux
+	
+#if defined(RECONOS_OS_linux) || defined(RECONOS_OS_linux64)
 	pthread_create(&_pgf_handler, NULL, proc_pgfhandler, NULL);
 #endif
+
+#if defined(RECONOS_OS_linux) 
+	//added for timing measurements and for the ros timer instances
+	a9timer_init();
+#endif
+
 }
 
 /*
@@ -516,14 +580,17 @@ void reconos_cache_flush() {
  */
 void *proc_pgfhandler(void *arg) {
 	while (1) {
-		uint32_t *addr;
+		RRUBASETYPE *addr;
 
-		addr = (uint32_t *)reconos_proc_control_get_fault_addr(_proc_control);
+		addr = (RRUBASETYPE *)reconos_proc_control_get_fault_addr(_proc_control);
 
-		printf("[reconos_core] "
-		       "page fault occured at address %x\n", (unsigned int)addr);
+		printf("[reconos_core] page fault occured at address %#.16lx\n", (uint64_t)addr);
+        fflush(stdout);
 
 		*addr = 0;
+		
+		printf("[reconos_core] page fault address reset\n");
+		fflush(stdout);
 
 		reconos_proc_control_clear_page_fault(_proc_control);
 	}
@@ -575,7 +642,9 @@ void hwslot_setsignal(struct hwslot *slot, int sig) {
  */
 void hwslot_createdelegate(struct hwslot *slot) {
 	if (slot->dt) {
-		panic("[reconos-core] ERROR: delegate thread already running\n");
+		//panic("[reconos-core] ERROR: delegate thread already running\n");
+		debug("[reconos-core] ERROR: delegate thread already running\n");
+		return;
 	}
 
 	
@@ -639,7 +708,7 @@ void hwslot_createthread(struct hwslot *slot,
 	reconos_proc_control_hwt_signal(_proc_control, slot->id, 0);
 	reconos_proc_control_hwt_reset(_proc_control, slot->id, 0);
 
-	reconos_osif_write(slot->osif, (uint32_t)OSIF_SIGNAL_THREAD_START);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)OSIF_SIGNAL_THREAD_START);
 
 	rt->thread_priority = 80;
 	hwslot_createdelegate(slot);
@@ -688,7 +757,7 @@ void hwslot_resumethread(struct hwslot *slot,
 	
 	slot->dt_flags &= ~DELEGATE_FLAG_PAUSE_SYSCALLS;
 	slot->dt_flags &= ~DELEGATE_FLAG_SUSPEND;
-	reconos_osif_write(slot->osif, (uint32_t)OSIF_SIGNAL_THREAD_RESUME);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)OSIF_SIGNAL_THREAD_RESUME);
 
 }
 
@@ -750,7 +819,7 @@ void hwslot_jointhread(struct hwslot *slot) {
  *   slot - pointer to the hardware slot
  */
 static inline int dt_get_init_data(struct hwslot *slot) {
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->init_data);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->init_data);
 
 	return 0;
 }
@@ -772,7 +841,7 @@ static inline int dt_sem_post(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = sem_post(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (sem_post on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -797,7 +866,7 @@ static inline int dt_sem_wait(struct hwslot *slot) {
 	SYSCALL_BLOCK(ret = sem_wait(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (sem_wait on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -822,7 +891,7 @@ static inline int dt_mutex_lock(struct hwslot *slot) {
 	SYSCALL_BLOCK(ret = pthread_mutex_lock(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (mutex_lock on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -847,7 +916,7 @@ static inline int dt_mutex_unlock(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = pthread_mutex_unlock(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (mutex_unlock on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -862,7 +931,7 @@ intr:
  *
  *   slot - pointer to the hardware slot
  */
-static inline uint32_t dt_mutex_trylock(struct hwslot *slot) {
+static inline RRUBASETYPE dt_mutex_trylock(struct hwslot *slot) {
 	int handle, ret;
 
 	handle = reconos_osif_read(slot->osif);
@@ -872,7 +941,7 @@ static inline uint32_t dt_mutex_trylock(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = pthread_mutex_trylock(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (mutex_trylock on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -901,7 +970,7 @@ static inline int dt_cond_wait(struct hwslot *slot) {
 	                                      slot->rt->resources[handle2].ptr));
 	debug("[reconos-dt-%d] (cond_wait on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 #else
@@ -932,7 +1001,7 @@ static inline int dt_cond_signal(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = pthread_cond_signal(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (cond_signal on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 #else
@@ -952,7 +1021,7 @@ intr:
  *
  *   slot - pointer to the hardware slot
  */
-static inline uint32_t dt_cond_broadcast(struct hwslot *slot) {
+static inline RRUBASETYPE dt_cond_broadcast(struct hwslot *slot) {
 #ifndef RECONOS_MINIMAL
 	int handle, ret;
 
@@ -963,7 +1032,7 @@ static inline uint32_t dt_cond_broadcast(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = pthread_cond_broadcast(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (cond_broadcast on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 #else
@@ -985,7 +1054,7 @@ intr:
  */
 static inline int dt_mbox_get(struct hwslot *slot) {
 	int handle, ret;
-	uint32_t msg;
+	RRUBASETYPE msg;
 
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MBOX);
@@ -1011,7 +1080,7 @@ intr:
  */
 static inline int dt_mbox_put(struct hwslot *slot) {
 	int handle, ret;
-	uint32_t arg0;
+	RRUBASETYPE arg0;
 
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MBOX);
@@ -1022,7 +1091,7 @@ static inline int dt_mbox_put(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = mbox_put(slot->rt->resources[handle].ptr, arg0));
 	debug("[reconos-dt-%d] (mbox_put on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1039,7 +1108,7 @@ intr:
  */
 static inline int dt_mbox_tryget(struct hwslot *slot) {
 	int handle, ret;
-	uint32_t data;
+	RRUBASETYPE data;
 
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MBOX);
@@ -1049,7 +1118,7 @@ static inline int dt_mbox_tryget(struct hwslot *slot) {
 	reconos_osif_write(slot->osif, data);
 	debug("[reconos-dt-%d] (mbox_tryget on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1066,7 +1135,7 @@ intr:
  */
 static inline int dt_mbox_tryput(struct hwslot *slot) {
 	int handle, ret;
-	uint32_t arg0;
+	RRUBASETYPE arg0;
 
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MBOX);
@@ -1077,7 +1146,7 @@ static inline int dt_mbox_tryput(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = mbox_tryput(slot->rt->resources[handle].ptr, arg0));
 	debug("[reconos-dt-%d] (mbox_tryput on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1088,16 +1157,23 @@ intr:
 static inline int dt_ros_publish(struct hwslot *slot) {
 	int handle, ret;
 	int msg_handle;
+	timespec_diff(&t_start, &t_end, &t_res);
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSPUB);
 	msg_handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSMSG);
 
 	debug("[reconos-dt-%d] (ros publish on %d) ...\n", slot->id, handle);
+	
 	SYSCALL_NONBLOCK(ret = ros_publisher_publish(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+
+
+	
+	
+	//printf("[reconos-dt-%d] hw thread calctime is %3.6f; \n",slot->id, (double)(t_res.tv_nsec)/1000000000);
 
 	return 0;
 
@@ -1115,10 +1191,12 @@ static inline int dt_ros_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSMSG);
 
 	debug("[reconos-dt-%d] (ros_take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_subscriber_message_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	SYSCALL_BLOCK(ros_subscriber_message_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	clock_gettime(CLOCK_MONOTONIC, &t_start);
+
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
 
 	return 0;
@@ -1137,10 +1215,8 @@ static inline int dt_ros_trytake(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = ros_subscriber_message_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
-
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
-
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1165,7 +1241,7 @@ static inline int dt_ros_services_response(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_service_server_response_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1183,10 +1259,10 @@ static inline int dt_ros_services_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
 
 	debug("[reconos-dt-%d] (ros service take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_service_server_request_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	SYSCALL_BLOCK(ros_service_server_request_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service take %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
 	//Time Measurement
 	//start = clock();
@@ -1204,12 +1280,12 @@ static inline int dt_ros_services_trytake(struct hwslot *slot) {
 	msg_handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGREQ);
 
-	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
+	debug("[reconos-dt-%d] (ros_service_server_request_try_take on %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = ros_service_server_request_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
-	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
+	debug("[reconos-dt-%d] (ros_service_server_request_try_take on %d) done\n", slot->id, handle);
 
-	
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1230,10 +1306,10 @@ static inline int dt_ros_actions_goal_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGGOALREQ);
 
 	debug("[reconos-dt-%d] (ros service take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_action_server_goal_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	SYSCALL_BLOCK(ros_action_server_goal_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service take %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
 
 	return 0;
@@ -1253,8 +1329,8 @@ static inline int dt_ros_actions_goal_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_server_goal_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
-	
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1275,7 +1351,7 @@ static inline int dt_ros_actions_goal_decide(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
 	
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1292,10 +1368,10 @@ static inline int dt_ros_actions_result_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONS);
 
 	debug("[reconos-dt-%d] (ros service take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_action_server_result_take(slot->rt->resources[handle].ptr));
+	SYSCALL_BLOCK(ret = ros_action_server_result_take(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (ros service take %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1314,8 +1390,8 @@ static inline int dt_ros_actions_result_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_server_result_try_take(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
 
-	
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1337,7 +1413,7 @@ static inline int dt_ros_actions_result_send(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_server_result_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1358,7 +1434,7 @@ static inline int dt_ros_actions_feedback(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_server_feedback(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1379,7 +1455,7 @@ static inline int dt_ros_servicec_request(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_service_client_request_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service request on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1397,10 +1473,10 @@ static inline int dt_ros_servicec_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
 
 	debug("[reconos-dt-%d] (ros service take response on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ros_service_client_response_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
+	SYSCALL_BLOCK(ros_service_client_response_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service take response %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
 
 	return 0;
@@ -1420,8 +1496,8 @@ static inline int dt_ros_servicec_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_service_client_response_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service try take response on %d) done\n", slot->id, handle);
 
-	
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1445,7 +1521,7 @@ static inline int dt_ros_actionc_goal_send(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_client_goal_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr););
 	debug("[reconos-dt-%d] (ros action goal send %d, msghandle %d) done\n", slot->id, handle,msg_handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1463,11 +1539,11 @@ static inline int dt_ros_actionc_goal_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
 	
 	debug("[reconos-dt-%d] (dt_ros_actionc_goal_take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_action_client_goal_take(slot->rt->resources[handle].ptr, &accept));
+	SYSCALL_BLOCK(ret = ros_action_client_goal_take(slot->rt->resources[handle].ptr, &accept));
 	debug("[reconos-dt-%d] (dt_ros_actionc_goal_take on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, accept);
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1488,7 +1564,7 @@ static inline int dt_ros_actionc_goal_trytake(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (dt_ros_actionc_goal_trytake on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, accept);
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 	
 
 	return 0;
@@ -1508,10 +1584,10 @@ static inline int dt_ros_actionc_result_take(struct hwslot *slot) {
 	
 	
 	debug("[reconos-dt-%d] (dt_ros_actionc_result_take on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_action_client_result_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	SYSCALL_BLOCK(ret = ros_action_client_result_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (dt_ros_actionc_result_take on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
 
 	return 0;
@@ -1532,8 +1608,8 @@ static inline int dt_ros_actionc_result_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_client_result_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_action_client_result_try_take on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[msg_handle].ptr);
-	
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);	
 
 	return 0;
 
@@ -1550,7 +1626,7 @@ static inline int dt_ros_actionc_result_request(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_client_result_request(slot->rt->resources[handle].ptr));
 	debug("[reconos-dt-%d] (ros action result request on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1568,10 +1644,10 @@ static inline int dt_ros_actionc_feedback_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGFEEDBACK);
 
 	debug("[reconos-dt-%d] (ros action take feedback on %d) ...\n", slot->id, handle);
-	SYSCALL_NONBLOCK(ret = ros_action_client_feedback_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
+	SYSCALL_BLOCK(ret = ros_action_client_feedback_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros action take feedback on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1591,7 +1667,7 @@ static inline int dt_ros_actionc_feedback_trytake(struct hwslot *slot) {
 	SYSCALL_NONBLOCK(ret = ros_action_client_feedback_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros action take feedback on %d) done\n", slot->id, handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 	return 0;
 
@@ -1645,26 +1721,40 @@ static inline int dt_ros_message_set_message_size(struct hwslot *slot) {
 
 	debug("[reconos-dt-%d] (ros_message_set_message_size on %d) done\n", slot->id, msg_handle);
 
-	reconos_osif_write(slot->osif, (uint32_t)ros_msg->data);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ros_msg->data);
 
 	return 0;
 }
 
+static inline int dt_memory_getmemaddr(struct hwslot *slot) {
 
-static inline int dt_memory_getaddr(struct hwslot *slot) {
+	unsigned int ret = 0;
+	int handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MEM);
+
+	debug("[reconos-dt-%d] (memory getaddr on handle %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = (RRUBASETYPE)mem_getdataptr(slot->rt->resources[handle].ptr));
+	reconos_osif_write(slot->osif, ret);
+
+	return 0;
+intr:
+	return -1;
+}
+
+static inline int dt_memory_getobjaddr(struct hwslot *slot) {
 
 	int handle = reconos_osif_read(slot->osif);
 	//RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
 
 	debug("[reconos-dt-%d] (memory getaddr on handle %d) ...\n", slot->id, handle);
-	reconos_osif_write(slot->osif, (uint32_t)slot->rt->resources[handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[handle].ptr);
 
 	return 0;
 }
 
 
 static inline int dt_memory_malloc(struct hwslot *slot) {
-	volatile uint32_t dummy = 0;
+	volatile RRUBASETYPE dummy = 0;
 	unsigned int length = 0;
 
 	void ** ptr_dest = (void **)reconos_osif_read(slot->osif);
@@ -1672,10 +1762,10 @@ static inline int dt_memory_malloc(struct hwslot *slot) {
 
 	debug("[reconos-dt-%d] (memory malloc with length=%d) ...\n", slot->id, length);
 	*ptr_dest = malloc(length);
-	((uint32_t*)(*ptr_dest))[0] = dummy;
+	((RRUBASETYPE*)(*ptr_dest))[0] = dummy;
 	debug("[reconos-dt-%d] (memory malloc with length=%d) done\n", slot->id, length);
 
-	reconos_osif_write(slot->osif, (uint32_t)*ptr_dest);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)*ptr_dest);
 
 	return 0;
 }
@@ -1694,7 +1784,7 @@ static inline int dt_memory_free(struct hwslot *slot) {
  */
 void *dt_delegate(void *arg) {
 	struct hwslot *slot;
-	uint32_t cmd;
+	RRUBASETYPE cmd;
 
 	slot = (struct hwslot *)arg;
 
@@ -1761,8 +1851,12 @@ void *dt_delegate(void *arg) {
 				dt_cond_wait(slot);
 				break;
 
+			case OSIF_CMD_MEMORY_GETMEMADDR:
+				dt_memory_getmemaddr(slot);
+				break;
+
 			case OSIF_CMD_MEMORY_GETOBJADDR:
-				dt_memory_getaddr(slot);
+				dt_memory_getobjaddr(slot);
 				break;
 
 			case OSIF_CMD_MEMORY_MALLOC:
@@ -1888,7 +1982,7 @@ void *dt_delegate(void *arg) {
 
 			case OSIF_CMD_THREAD_GET_STATE_ADDR:
 				slot->dt_flags &= ~DELEGATE_FLAG_PAUSE_SYSCALLS;
-				reconos_osif_write(slot->osif, (uint32_t)slot->rt->state_data);
+				reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->state_data);
 				break;
 
 			case OSIF_CMD_THREAD_CLEAR_SIGNAL:
@@ -1899,7 +1993,7 @@ void *dt_delegate(void *arg) {
 				break;
 
 			default:
-				panic("[reconos-dt-%d] ERROR received unknown command 0x%08x\n", slot->id, cmd);
+				//panic("[reconos-dt-%d] ERROR received unknown command 0x%08x\n", slot->id, cmd);
 				break;
 		}
 

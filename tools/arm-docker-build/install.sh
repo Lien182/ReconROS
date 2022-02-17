@@ -1,7 +1,22 @@
 #!/bin/bash
 
-sudo apt install qemu-user-static
+# $1 target architecture (arm32, arm64)
+# $2 target ROS 2 distribution (dashing, foxy)
 
-cp /usr/bin/qemu-arm-static Docker/ 
-sudo docker image build -t ros_arm:1.0 Docker/
-sudo docker run -it --rm  --name ros_arm_inst -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static -v $(pwd)/Docker/workspace:/mnt/workspace:rw ros_arm:1.0 bash /mnt/workspace/workspace.sh
+if [ "$1" == "" ] || [ "$2" == "" ]
+then
+  echo "Usage: $0  <arm32,arm64> <dashing,foxy>"
+  exit
+fi
+
+if [ "$1" == "arm64" ]
+then
+  cp Docker/qemu-aarch64-static Docker/$1_$2/
+else
+  cp Docker/qemu-arm-static Docker/$1_$2/
+fi
+
+
+cp Docker/qemu-arm-static Docker/$1_$2/
+docker image build -t reconros_$1_$2:2.0 Docker/$1_$2/ --no-cache
+docker run -it --rm  --name reconros_$1_$2_inst_2_0 -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static -v $(pwd)/Docker/workspace:/mnt/workspace:rw reconros_$1_$2:2.0 bash /mnt/workspace/workspace.sh

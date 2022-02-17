@@ -13,6 +13,7 @@
 
 #include "ros_service_client.h"
 #include "rmw/types.h"
+#include "rcl/graph.h"
 
 #include "../utils.h"
 

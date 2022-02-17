@@ -24,7 +24,6 @@
 #define RECONOS_THREAD_H
 
 #include "hls_stream.h"
-//#include "ap_cint.h"
 #include "ap_int.h"
 #include "ap_fixed.h"
 
@@ -51,9 +50,10 @@
  *   }
  }
  */
-#define THREAD_ENTRY() void rt_imp(hls::stream<uint32_t> osif_sw2hw,\
-                                   hls::stream<uint32_t> osif_hw2sw,\
-                                   hls::stream<uint32_t> memif_hwt2mem,\
-                                   hls::stream<uint32_t> memif_mem2hwt)
+#define THREAD_ENTRY() void rt_imp(volatile bool &hwt_signal, \
+                                   hls::stream<RRUBASETYPE> osif_sw2hw,\
+                                   hls::stream<RRUBASETYPE> osif_hw2sw,\
+                                   hls::stream<RRUBASETYPE> memif_hwt2mem,\
+                                   hls::stream<RRUBASETYPE> memif_mem2hwt)
 
 #endif /* RECONOS_THREAD_H */
