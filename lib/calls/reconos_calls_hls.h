@@ -18,6 +18,8 @@
  * ======================================================================
  */
 
+<<reconos_preproc>>
+
 #ifndef RECONOS_CALLS_H
 #define RECONOS_CALLS_H
 
@@ -27,7 +29,11 @@
 
 /* == Helper definitions =============================================== */
 
-#define OFFSETOF(type, member) ((uint32_t)(intptr_t)&(((type *)(void*)0)->member) )
+#define RRBASETYPE 			<<RRBASETYPE>>
+#define RRUBASETYPE			<<RRUBASETYPE>>
+#define RRBASETYPEBYTES		<<RRBASETYPEBYTES>>
+
+#define OFFSETOF(type, member) ((RRUBASETYPE)(intptr_t)&(((type *)(void*)0)->member) )
 
 /* == Constant definitions ============================================= */
 
@@ -37,78 +43,92 @@
  *   MEMIF_CHUNK_WORDS - size of one memory request in words
  *                       (a request might be split up to meet this)
  */
-#define MEMIF_CHUNK_WORDS 64
-#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 4)
-#define MEMIF_CHUNK_MASK  0x000000FF
 
+#if RRBASETYPEBYTES == 4 
+
+	#define MEMIF_CHUNK_WORDS 64
+	#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 4)
+	#define MEMIF_CHUNK_MASK  0x000000FF
+
+	#define MEMIF_CMD_READ 0x00000000
+	#define MEMIF_CMD_WRITE 0xF0000000
+
+#elif RRBASETYPEBYTES == 8 
+	#define MEMIF_CHUNK_WORDS 32
+	#define MEMIF_CHUNK_BYTES (MEMIF_CHUNK_WORDS * 8)
+	#define MEMIF_CHUNK_MASK  0x00000000000000FF
+
+	#define MEMIF_CMD_READ 0x0000000000000000
+	#define MEMIF_CMD_WRITE 0xF000000000000000
+#endif
 /*
  * Definition of the osif commands
  *
  *   self-describing
  *
  */
-#define OSIF_CMD_THREAD_GET_INIT_DATA  			0x000000A0
-#define OSIF_CMD_THREAD_GET_STATE_ADDR 			0x000000A1
-#define OSIF_CMD_THREAD_EXIT           			0x000000A2
-#define OSIF_CMD_THREAD_YIELD          			0x000000A3
-#define OSIF_CMD_THREAD_CLEAR_SIGNAL   			0x000000A4
-#define OSIF_CMD_SEM_POST              			0x000000B0
-#define OSIF_CMD_SEM_WAIT              			0x000000B1
-#define OSIF_CMD_MUTEX_LOCK            			0x000000C0
-#define OSIF_CMD_MUTEX_UNLOCK          			0x000000C1
-#define OSIF_CMD_MUTEX_TRYLOCK         			0x000000C2
-#define OSIF_CMD_COND_WAIT             			0x000000D0
-#define OSIF_CMD_COND_SIGNAL           			0x000000D1
-#define OSIF_CMD_COND_BROADCAST        			0x000000D2
-#define OSIF_CMD_MBOX_GET              			0x000000F0
-#define OSIF_CMD_MBOX_PUT              			0x000000F1
-#define OSIF_CMD_MBOX_TRYGET           			0x000000F2
-#define OSIF_CMD_MBOX_TRYPUT           			0x000000F3
-#define OSIF_CMD_MASK                  			0x00000FFF
-#define OSIF_CMD_YIELD_MASK            			0x80000000
+#define OSIF_CMD_THREAD_GET_INIT_DATA  			(RRUBASETYPE)0x000000A0
+#define OSIF_CMD_THREAD_GET_STATE_ADDR 			(RRUBASETYPE)0x000000A1
+#define OSIF_CMD_THREAD_EXIT           			(RRUBASETYPE)0x000000A2
+#define OSIF_CMD_THREAD_YIELD          			(RRUBASETYPE)0x000000A3
+#define OSIF_CMD_THREAD_CLEAR_SIGNAL   			(RRUBASETYPE)0x000000A4
+#define OSIF_CMD_SEM_POST              			(RRUBASETYPE)0x000000B0
+#define OSIF_CMD_SEM_WAIT              			(RRUBASETYPE)0x000000B1
+#define OSIF_CMD_MUTEX_LOCK            			(RRUBASETYPE)0x000000C0
+#define OSIF_CMD_MUTEX_UNLOCK          			(RRUBASETYPE)0x000000C1
+#define OSIF_CMD_MUTEX_TRYLOCK         			(RRUBASETYPE)0x000000C2
+#define OSIF_CMD_COND_WAIT             			(RRUBASETYPE)0x000000D0
+#define OSIF_CMD_COND_SIGNAL           			(RRUBASETYPE)0x000000D1
+#define OSIF_CMD_COND_BROADCAST        			(RRUBASETYPE)0x000000D2
+#define OSIF_CMD_MBOX_GET              			(RRUBASETYPE)0x000000F0
+#define OSIF_CMD_MBOX_PUT              			(RRUBASETYPE)0x000000F1
+#define OSIF_CMD_MBOX_TRYGET           			(RRUBASETYPE)0x000000F2
+#define OSIF_CMD_MBOX_TRYPUT           			(RRUBASETYPE)0x000000F3
+#define OSIF_CMD_MASK                  			(RRUBASETYPE)0x00000FFF
+#define OSIF_CMD_YIELD_MASK            			(RRUBASETYPE)0x80000000
 
-#define OSIF_SIGNAL_THREAD_START       			0x01000000
-#define OSIF_SIGNAL_THREAD_RESUME      			0x01000001
+#define OSIF_SIGNAL_THREAD_START       			(RRUBASETYPE)0x01000000
+#define OSIF_SIGNAL_THREAD_RESUME      			(RRUBASETYPE)0x01000001
 
-#define OSIF_INTERRUPTED               			0x000000FF
+#define OSIF_INTERRUPTED               			(RRUBASETYPE)0x000000FF
 
-#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			0x00000950
+#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			(RRUBASETYPE)0x00000950
 
-#define OSIF_CMD_MEMORY_MALLOC					0x000000F4
-#define OSIF_CMD_MEMORY_FREE					0x000000F5
-#define OSIF_CMD_MEMORY_GETOBJADDR				0x000000F6
-#define OSIF_CMD_MEMORY_GETMEMADDR				0x000000F7
+#define OSIF_CMD_MEMORY_MALLOC					(RRUBASETYPE)0x000000F4
+#define OSIF_CMD_MEMORY_FREE					(RRUBASETYPE)0x000000F5
+#define OSIF_CMD_MEMORY_GETOBJADDR				(RRUBASETYPE)0x000000F6
+#define OSIF_CMD_MEMORY_GETMEMADDR				(RRUBASETYPE)0x000000F7
 
-#define OSIF_CMD_ROS_PUBLISH		   			0x00000900
-#define OSIF_CMD_ROS_TAKE			   			0x00000901
-#define OSIF_CMD_ROS_TRYTAKE		   			0x00000902
+#define OSIF_CMD_ROS_PUBLISH		   			(RRUBASETYPE)0x00000900
+#define OSIF_CMD_ROS_TAKE			   			(RRUBASETYPE)0x00000901
+#define OSIF_CMD_ROS_TRYTAKE		   			(RRUBASETYPE)0x00000902
 
-#define OSIF_CMD_ROS_SERVICES_RESPONSE 			0x00000910
-#define OSIF_CMD_ROS_SERVICES_TRYTAKE  			0x00000911	
-#define OSIF_CMD_ROS_SERVICES_TAKE 	   			0x00000912
+#define OSIF_CMD_ROS_SERVICES_RESPONSE 			(RRUBASETYPE)0x00000910
+#define OSIF_CMD_ROS_SERVICES_TRYTAKE  			(RRUBASETYPE)0x00000911	
+#define OSIF_CMD_ROS_SERVICES_TAKE 	   			(RRUBASETYPE)0x00000912
 
-#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE			0x00000920
-#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE		0x00000921
-#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE		0x00000922
-#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE		0x00000923
-#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE		0x00000924
-#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND		0x00000925
-#define OSIF_CMD_ROS_ACTIONS_FEEDBACK			0x00000926
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TAKE			(RRUBASETYPE)0x00000920
+#define OSIF_CMD_ROS_ACTIONS_GOAL_TRYTAKE		(RRUBASETYPE)0x00000921
+#define OSIF_CMD_ROS_ACTIONS_GOAL_DECIDE		(RRUBASETYPE)0x00000922
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TAKE		(RRUBASETYPE)0x00000923
+#define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE		(RRUBASETYPE)0x00000924
+#define OSIF_CMD_ROS_ACTIONS_RESULT_SEND		(RRUBASETYPE)0x00000925
+#define OSIF_CMD_ROS_ACTIONS_FEEDBACK			(RRUBASETYPE)0x00000926
 
 //Clients
-#define OSIF_CMD_ROS_SERVICEC_REQUEST 			0x00000930
-#define OSIF_CMD_ROS_SERVICEC_TRYTAKE  			0x00000931	
-#define OSIF_CMD_ROS_SERVICEC_TAKE 	   			0x00000932
+#define OSIF_CMD_ROS_SERVICEC_REQUEST 			(RRUBASETYPE)0x00000930
+#define OSIF_CMD_ROS_SERVICEC_TRYTAKE  			(RRUBASETYPE)0x00000931	
+#define OSIF_CMD_ROS_SERVICEC_TAKE 	   			(RRUBASETYPE)0x00000932
 
-#define OSIF_CMD_ROS_ACTIONC_GOAL_SEND			0x00000940
-#define OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE		0x00000941
-#define OSIF_CMD_ROS_ACTIONC_GOAL_TAKE			0x00000942
-#define OSIF_CMD_ROS_ACTIONC_RESULT_SEND		0x00000943
-#define OSIF_CMD_ROS_ACTIONC_RESULT_TAKE		0x00000944
-#define OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE		0x00000945
+#define OSIF_CMD_ROS_ACTIONC_GOAL_SEND			(RRUBASETYPE)0x00000940
+#define OSIF_CMD_ROS_ACTIONC_GOAL_TRYTAKE		(RRUBASETYPE)0x00000941
+#define OSIF_CMD_ROS_ACTIONC_GOAL_TAKE			(RRUBASETYPE)0x00000942
+#define OSIF_CMD_ROS_ACTIONC_RESULT_SEND		(RRUBASETYPE)0x00000943
+#define OSIF_CMD_ROS_ACTIONC_RESULT_TAKE		(RRUBASETYPE)0x00000944
+#define OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE		(RRUBASETYPE)0x00000945
 
-#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE		0x00000946
-#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE	0x00000947
+#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE		(RRUBASETYPE)0x00000946
+#define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE	(RRUBASETYPE)0x00000947
 
 
 /*
@@ -116,8 +136,7 @@
  *
  *   self-describing
  */
-#define MEMIF_CMD_READ 0x00000000
-#define MEMIF_CMD_WRITE 0xF0000000
+
 
 
 /* == Internal functions =============================================== */
@@ -130,7 +149,7 @@
  *   stream - reference to stream
  *   data   - data to write
  */
-inline void stream_write(hls::stream<uint32_t> &stream, uint32_t data) {
+inline void stream_write(hls::stream<RRUBASETYPE> &stream, RRUBASETYPE data) {
 #pragma HLS inline
 	while (!stream.write_nb(data)){}
 }
@@ -144,9 +163,9 @@ inline void stream_write(hls::stream<uint32_t> &stream, uint32_t data) {
  *
  *   @returns read data
  */
-inline uint32_t stream_read(hls::stream<uint32_t> &stream, hls::stream<uint32_t> &outputstream, volatile bool &hwt_signal) {
+inline RRUBASETYPE stream_read(hls::stream<RRUBASETYPE> &stream, hls::stream<RRUBASETYPE> &outputstream, volatile bool &hwt_signal) {
 #pragma HLS inline
-	uint32_t data;
+	RRUBASETYPE data;
 	while (!stream.read_nb(data)){ if(hwt_signal){ stream_write(outputstream, OSIF_CMD_THREAD_EXIT);while(1);}}
 	return data;
 }
@@ -160,9 +179,9 @@ inline uint32_t stream_read(hls::stream<uint32_t> &stream, hls::stream<uint32_t>
  *
  *   @returns read data
  */
-inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
+inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
 #pragma HLS inline
-	uint32_t data;
+	RRUBASETYPE data;
 	while (!stream.read_nb(data)){}
 	return data;
 }
@@ -542,11 +561,11 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
  *   
  */
 #define MEM_READ(src,dst,len){\
-	uint32_t __len, __rem;\
-	uint32_t __addr = (src), __i = 0;\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (src), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -555,11 +574,11 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		_Pragma ("HLS pipeline")  \
 			(dst)[__i++] = memif_mem2hwt.read();\
-			__addr += 4;\
-			__rem -= 4;\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}}
 
@@ -574,11 +593,11 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
  *   len - number of bytes to transmit (bytes)
  */
 #define MEM_WRITE(src,dst,len){\
-	uint32_t __len, __rem;\
-	uint32_t __addr = (dst), __i = 0;\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -587,11 +606,11 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		_Pragma ("HLS pipeline")  \
 			memif_hwt2mem.write((src)[__i++]);\
-			__addr += 4;\
-			__rem -= 4;\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}}
 
@@ -608,11 +627,11 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 
 
 #define MEM_READ_TO_STREAM( src, dst, len){ \
-	uint32_t __len, __rem; \
-	uint32_t __addr = (src), __i = 0; \
+	RRUBASETYPE __len, __rem; \
+	RRUBASETYPE __addr = (src), __i = 0; \
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -621,22 +640,22 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		_Pragma ("HLS pipeline")  \
 			dst.write(memif_mem2hwt.read());\
-			__addr += 4;\
-			__rem -= 4;\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}\
 }
 
 #define MEM_WRITE_FROM_STREAM( src, dst, len)\
 {\
-	uint32_t __len, __rem;\
-	uint32_t __addr = (dst), __i = 0;\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
 	for (__rem = (len); __rem > 0;) {\
-		uint32_t __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
-		uint32_t __to_rem = __rem;\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
 		if (__to_rem < __to_border)\
 			__len = __to_rem;\
 		else\
@@ -645,12 +664,12 @@ inline uint32_t stream_read_memif(hls::stream<uint32_t> &stream) {
 		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
 		stream_write(memif_hwt2mem, __addr);\
 		\
-		for (; __len > 0; __len -= 4) {\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		_Pragma ("HLS pipeline")  \
-			uint32_t tmp = src.read();\
+			RRUBASETYPE tmp = src.read();\
 			memif_hwt2mem.write(tmp);\
-			__addr += 4;\
-			__rem -= 4;\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
 		}\
 	}\
 }

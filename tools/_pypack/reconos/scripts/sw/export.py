@@ -48,6 +48,17 @@ def export_sw(args, swdir, link):
 	dictionary["ROS2_DISTRIBUTION"] = prj.impinfo.ros2distribution[:1].upper()
 	dictionary["THREADS"] = []
 	dictionary["ROSMsgHeader"] = ""
+
+	if prj.impinfo.cpuarchitecture == "arm64":
+		dictionary["RRBASETYPE"] 		= "int64_t"
+		dictionary["RRUBASETYPE"] 		= "uint64_t"
+		dictionary["RRBASETYPEBYTES"] 	= "8"
+	else:
+		dictionary["RRBASETYPE"] 		= "int32_t"
+		dictionary["RRUBASETYPE"] 		= "uint32_t"
+		dictionary["RRBASETYPEBYTES"] 	= "4"
+
+
 	for t in prj.threads:
 		d = {}
 		d["Name"] = t.name.lower()

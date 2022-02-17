@@ -7,8 +7,6 @@
 #include "timer.h"
 
 #include "utils.h"
-//#include "lib/runtime/arch/arch.h"
-//#include "lib/runtime/private.h"
 
 #include <stdio.h>
 #include <stdlib.h>

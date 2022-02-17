@@ -24,6 +24,8 @@
 #ifndef RECONOS_APP_H
 #define RECONOS_APP_H
 
+#include "cpuarch.h"
+
 #include "mbox.h"
 #include "mem.h"
 #include "ros.h"

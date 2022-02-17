@@ -194,6 +194,24 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["MEM"] = thread.mem
 		dictionary["MEM_N"] = not thread.mem
 		dictionary["CLKPRD"] = min([_.clock.get_periodns() for _ in thread.slots])
+		
+		if prj.impinfo.cpuarchitecture == "arm64":
+			dictionary["CPUARCHITECTURESIZE"] = "64"
+		else:
+			dictionary["CPUARCHITECTURESIZE"] = "32"
+
+		if prj.impinfo.cpuarchitecture == "arm64":
+			dictionary["RRBASETYPE"] 		= "int64_t"
+			dictionary["RRUBASETYPE"] 		= "uint64_t"
+			dictionary["RRBASETYPEBYTES"] 	= "8"
+		else:
+			dictionary["RRBASETYPE"] 		= "int32_t"
+			dictionary["RRUBASETYPE"] 		= "uint32_t"
+			dictionary["RRBASETYPEBYTES"] 	= "4"
+
+
+		dictionary["ROSDISTRIBUTION"] = prj.impinfo.ros2distribution
+		
 		# "reconf" thread for partial reconfiguration is taken from template directory
 		if prj.impinfo.pr and thread.name.lower() == "reconf":
 			srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
@@ -244,7 +262,11 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["RECONFIGURABLE"] = prj.impinfo.pr
 
 		log.info("Generating export files ...")
-		prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
+		if prj.impinfo.cpuarchitecture == "arm64":
+			prj.apply_template("thread_hls_pcore_vhdl_64", dictionary, hwdir)
+		else:
+			prj.apply_template("thread_hls_pcore_vhdl", dictionary, hwdir)
+		
 
 		#For each slot: Generate .prj file listing sources for PR flow
 		if prj.impinfo.pr:

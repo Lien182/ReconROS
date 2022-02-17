@@ -6,9 +6,13 @@
 #ifndef MBOX_H
 #define MBOX_H
 
+#include "cpuarch.h"
+
 #include <semaphore.h>
 #include <pthread.h>
 #include <stdint.h>
+
+
 
 /*
  * Structure representing a mbox
@@ -18,7 +22,7 @@ struct mbox {
 	sem_t sem_write;
 	pthread_mutex_t mutex_read;
 	pthread_mutex_t mutex_write;	
-	uint32_t *messages;
+	RRUBASETYPE *messages;
 	off_t read_idx;
 	off_t write_idx;
 	size_t size;
@@ -46,7 +50,7 @@ extern void mbox_destroy(struct mbox *mb);
  *   mb  - pointer to the mbox
  *   msg - message to put into the mbox
  */
-extern int mbox_put(struct mbox *mb, uint32_t msg);
+extern int mbox_put(struct mbox *mb, RRUBASETYPE msg);
 
 
 /*
@@ -57,7 +61,7 @@ extern int mbox_put(struct mbox *mb, uint32_t msg);
  *
  *   @returns -1 if interrupted, otherwise 0
  */
-extern int mbox_put_interruptible(struct mbox *mb, uint32_t msg);
+extern int mbox_put_interruptible(struct mbox *mb, RRUBASETYPE msg);
 
 /*
  * Gets a single word out of the mbox and blocks if it is full.
@@ -66,7 +70,7 @@ extern int mbox_put_interruptible(struct mbox *mb, uint32_t msg);
  *
  *   @returns the message out of the mbox
  */
-extern uint32_t mbox_get(struct mbox *mb);
+extern RRUBASETYPE mbox_get(struct mbox *mb);
 
 /*
  * Gets a single word out the mbox and blocks if it is full.
@@ -77,7 +81,7 @@ extern uint32_t mbox_get(struct mbox *mb);
  *   @returns -1 if interrupted, otherwise 0
  *
  */
- extern int mbox_get_interruptible(struct mbox *mb, uint32_t *msg);
+ extern int mbox_get_interruptible(struct mbox *mb, RRUBASETYPE *msg);
 
 /*
  * Tries to get a single word out of the mbox but does not block.
@@ -88,7 +92,7 @@ extern uint32_t mbox_get(struct mbox *mb);
  *
  *   returns if a word was read or not
  */
-extern int mbox_tryget(struct mbox *mb, uint32_t *msg);
+extern int mbox_tryget(struct mbox *mb, RRUBASETYPE *msg);
 
 /*
  * Tries to put a single word into the mbox but does not block.
@@ -99,6 +103,6 @@ extern int mbox_tryget(struct mbox *mb, uint32_t *msg);
  *
  *   returns if the word could be stored in the mbox
  */
-extern int mbox_tryput(struct mbox *mb, uint32_t msg);
+extern int mbox_tryput(struct mbox *mb, RRUBASETYPE msg);
 
 #endif /* MBOX_H */

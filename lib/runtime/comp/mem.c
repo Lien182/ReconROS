@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 
-int mem_init(struct mem *mem, uint32_t size)
+int mem_init(struct mem *mem, RRUBASETYPE size)
 {
-    mem->data = malloc(size * 4);
+    mem->data = malloc(size * sizeof(RRUBASETYPE));
     if(mem->data == 0)
     {
         return -1;
