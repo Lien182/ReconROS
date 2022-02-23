@@ -6,8 +6,10 @@ based on [ReconOS](http://reconos.de)
 
 You have to install ROS2 and ReconOS on your FPGA board. For getting started faster, there are preinstalled images:
 
-[Pynq-Board](https://drive.google.com/open?id=1jpM5JdEsSBhS2G0khN9klwKmpMt_bnnn)
-
+[ZCU104-Board](https://drive.google.com/file/d/10EXK26Y01IQgqEiWPuRP_cYXYaDIIJi_/view?usp=sharing)
+[Pynq-Board](https://drive.google.com/file/d/1G6iO94-idCMBUSmTTj9PgqBndlUflEkA/view?usp=sharing)
+[MiniITX-Board non-rt kernel](https://drive.google.com/file/d/1uirLoE6S40tYLmCq46onk52O0twOiKoM/view?usp=sharing)
+[MiniITX-Board rt kernel](https://drive.google.com/file/d/1NirKRYFq3de5PIiNKcTJ3Rz_45ag4qjy/view?usp=sharing)
 The easiest way to burn the image on the sd card would be to use [balena etcher](https://www.balena.io/etcher/). You can also use linux dd tool eg e.g. 
 
 ```
