@@ -52,6 +52,8 @@ Additionaly you might have to source
 $ source /opt/ros/dashing/setup.bash
 
 $ source /opt/Xilinx/Vivado/2017.1/settings64.sh
+
+$ source <<ReconROSdir>>/tools/settings.sh
 ```
 
 also, there might be some packages missing, you might have to enter the following command
