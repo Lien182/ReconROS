@@ -6,7 +6,7 @@ based on [ReconOS](http://reconos.de)
 
 You have to install ROS2 and ReconOS on your FPGA board. For getting started faster, there are preinstalled images:
 
-[ZCU104-Board](https://drive.google.com/file/d/10EXK26Y01IQgqEiWPuRP_cYXYaDIIJi_/view?usp=sharing)
+[ZCU104-Board](https://drive.google.com/file/d/1J5sYrLeTVw2-tHswCqYmAT6klZJZGAKW/view?usp=sharing)
 
 [Pynq-Board](https://drive.google.com/file/d/1G6iO94-idCMBUSmTTj9PgqBndlUflEkA/view?usp=sharing)
 
