@@ -26,13 +26,18 @@ def build_cmd(args):
 def build(prj, msgdir):
 	msgdir = prj.basedir + ".msg"
 
-	#try:
-	#	shutil2.chdir(swdir)
-	#except:
-	#	log.error("software directory '" + swdir + "' not found")
-	#	return
-	
-	subprocess.call("""bash $RECONOS/tools/arm-docker-build/build_msg.sh {0} {1}""".format(prj.impinfo.cpuarchitecture, prj.impinfo.ros2distribution), shell=True)
+	if not(prj.impinfo.cpuarchitecture == "x86" or prj.impinfo.cpuarchitecture == "x86_64"):
+		subprocess.call("""bash $RECONOS/tools/arm-docker-build/build_msg.sh {0} {1}""".format(prj.impinfo.cpuarchitecture, prj.impinfo.ros2distribution), shell=True)
+	else:
+		try:
+			shutil2.chdir(msgdir)
+		except:
+			log.error("software directory '" + msgdir + "' not found")
+			return
+
+		subprocess.call("source /opt/ros/dashing/setup.bash; colcon build; rm build -r -f", shell=True, executable="/bin/bash")
+
+
 
 	print()
 	shutil2.chdir(prj.dir)

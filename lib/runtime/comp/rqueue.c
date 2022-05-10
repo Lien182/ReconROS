@@ -22,25 +22,25 @@ void rq_close(rqueue *rq)
 	mbox_destroy((struct mbox *) rq);
 }
 
-void rq_send(rqueue *rq, uint32_t *msg, size_t size)
+void rq_send(rqueue *rq, RRUBASETYPE *msg, size_t size)
 {
 	/* XXX: Can we also avoid allocation + copy?! ---DB */
-	uint32_t *clone = malloc((size + 1) * sizeof(uint32_t));
+	RRUBASETYPE *clone = malloc((size + 1) * sizeof(RRUBASETYPE));
 	if (!clone)
 		panic("rq_send malloc failed\n");
 
-	clone[0] = (uint32_t) size;
+	clone[0] = (RRUBASETYPE) size;
 	__builtin_memcpy(&clone[1], msg, size);
 
-	mbox_put((struct mbox *) rq, (uint32_t) clone);
+	mbox_put((struct mbox *) rq, (RRUBASETYPE) clone);
 }
 
-ssize_t rq_receive(rqueue *rq, uint32_t *msg, size_t size)
+ssize_t rq_receive(rqueue *rq, RRUBASETYPE *msg, size_t size)
 {
-	uint32_t *clone;
+	RRUBASETYPE *clone;
 	ssize_t __size;
 
-	clone = (uint32_t *) mbox_get((struct mbox *) rq);
+	clone = (RRUBASETYPE *) mbox_get((struct mbox *) rq);
 	__size = clone[0];
 
 	if (__size == 0 || __size > size)

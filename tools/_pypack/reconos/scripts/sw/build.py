@@ -32,7 +32,16 @@ def build(args):
 	#	log.error("software directory '" + swdir + "' not found")
 	#	return
 	
-	subprocess.call("""bash $RECONOS/tools/arm-docker-build/build.sh {0} {1}""".format(prj.impinfo.cpuarchitecture, prj.impinfo.ros2distribution), shell=True)
+	if not(prj.impinfo.cpuarchitecture == "x86" or prj.impinfo.cpuarchitecture == "x86_64"):
+		subprocess.call("""bash $RECONOS/tools/arm-docker-build/build.sh {0} {1}""".format(prj.impinfo.cpuarchitecture, prj.impinfo.ros2distribution), shell=True)
+	else:
+		try:
+			shutil2.chdir(swdir)
+		except:
+			log.error("software directory '" + swdir + "' not found")
+			return
+
+		subprocess.call("make -j$(nproc)", shell=True)
 
 	print()
 	shutil2.chdir(prj.dir)

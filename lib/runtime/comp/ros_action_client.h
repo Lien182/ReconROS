@@ -42,6 +42,12 @@ extern int ros_action_client_goal_take(struct ros_action_client_t *ros_action_cl
 
 extern int ros_action_client_goal_try_take(struct ros_action_client_t *ros_action_client,  uint32_t * accept);
 
+extern int ros_action_client_cancel_send(struct ros_action_client_t *ros_action_client);
+
+extern int ros_action_client_cancel_take(struct ros_action_client_t *ros_action_client);
+
+extern int ros_action_client_cancel_try_take(struct ros_action_client_t *ros_action_client);
+
 extern int ros_action_client_feedback_take(struct ros_action_client_t *ros_action_client, void*  feedback_msg);
 
 extern int ros_action_client_feedback_try_take(struct ros_action_client_t *ros_action_client, void*  feedback_msg);

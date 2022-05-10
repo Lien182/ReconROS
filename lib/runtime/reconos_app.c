@@ -132,8 +132,8 @@ int <<Name>>_init(void)
 	<<=generate for Items(Type == "rosmsg" or Type == "rossrvmsgreq" or Type == "rossrvmsgres" or Type == "rosactionmsggoalreq" or Type == "rosactionmsgresultres" or Type == "rosactionmsgfeedback")=>><<NameLower>> = <<ROSDataTypeInitFunc>>(<<ROSDataTypeSequenceLength>>);
 	memcpy(&<<NameLower>>_s, <<NameLower>>, sizeof(<<NameLower>>_s)); <<NameLower>> = &<<NameLower>>_s;	<<=end generate=>>
 	<<=generate for Items(Type == "rossrvs")=>>ros_service_server_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
-	<<=generate for Items(Type == "rosactions")=>>ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);<<end generate=>>	
-	<<=generate for Items(Type == "rossrvc")=>>ros_service_client_init(<<NameLower>>, <<Group>>_<<Args>>);<<end generate=>>
+	<<=generate for Items(Type == "rosactions")=>>ros_action_server_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>	
+	<<=generate for Items(Type == "rossrvc")=>>ros_service_client_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "rosactionc")=>>ros_action_client_init(<<NameLower>>, <<Group>>_<<Args>>);<<=end generate=>>
 
 	return 0;

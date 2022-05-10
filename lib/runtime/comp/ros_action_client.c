@@ -137,8 +137,6 @@ int ros_action_client_goal_take(struct ros_action_client_t *ros_action_client, u
 int ros_action_client_goal_send(struct ros_action_client_t *ros_action_client, void * req)
 {
     rcl_ret_t rc = 0;
-  
-
 
     if(wait_for_server_to_be_available( ros_action_client->node, &ros_action_client->action, 100, 1000) == false)
     {
@@ -149,7 +147,6 @@ int ros_action_client_goal_send(struct ros_action_client_t *ros_action_client, v
     {
         debug("[ROS Action client] Server available! \n");
     }
-
 
     rc = rcl_action_send_goal_request(
         &ros_action_client->action,
@@ -167,7 +164,86 @@ int ros_action_client_goal_send(struct ros_action_client_t *ros_action_client, v
     
 }
 
+//Action cancel service
 
+int ros_action_client_cancel_try_take(struct ros_action_client_t *ros_action_client)
+{
+    rcl_ret_t rc;
+
+    action_msgs__srv__CancelGoal_Response cancel_resp;
+    
+    rc = rcl_action_take_cancel_response(
+        &ros_action_client->action,
+        &ros_action_client->request_id,
+        &cancel_resp);
+
+    //cancel_resp->goals_canceling->
+    
+    if(rc != RCL_RET_OK)
+    {
+        if(rc != RCL_RET_ACTION_CLIENT_TAKE_FAILED)
+        {
+            debug("[ROS Action client] Error number: %d\n", rc);
+            return -1;
+        }
+        else
+        {
+            //debug("[ROS Service client] Return code : %d\n", rc);
+            return -2;
+        }        
+    }
+    else
+    {
+        ;
+    }
+    
+
+    return 0;
+}
+
+
+int ros_action_client_cancel_take(struct ros_action_client_t *ros_action_client)
+{
+    while(ros_action_client_cancel_try_take(ros_action_client) != 0)
+        usleep(ros_action_client->wait_time);
+
+    return 0;
+}
+
+
+
+
+int ros_action_client_cancel_send(struct ros_action_client_t *ros_action_client)
+{
+    rcl_ret_t rc = 0;
+
+    action_msgs__srv__CancelGoal_Request req;
+
+    if(wait_for_server_to_be_available( ros_action_client->node, &ros_action_client->action, 100, 1000) == false)
+    {
+         debug("[ROS Action client] Server NOT available! \n");
+         return -1;
+    }
+    else 
+    {
+        debug("[ROS Action client] Server available! \n");
+    }
+
+    rc = rcl_action_send_cancel_request(
+        &ros_action_client->action,
+        &req,
+        &ros_action_client->seq_num);
+
+    if (RCL_RET_OK != rc) 
+    {
+        panic("[ROS Action client]  Error in rcl_action_send_goal_request: error code: %d \n", rc);
+        return -1;
+    }
+
+
+    return rc;
+    
+}
 
 
 

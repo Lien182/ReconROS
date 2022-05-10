@@ -50,6 +50,9 @@ int ros_action_server_init(struct ros_action_server_t *ros_action_server, struct
         panic("[ROS Action Server]  Error in rcl_action_server_init %s; error code: %d \n", action_name, ret);
         return -1;
     }
+
+    ros_action_server->cancel_request = action_msgs__srv__CancelGoal_Request__create();
+
     return ret;
 }
 
@@ -146,6 +149,70 @@ int ros_action_server_goal_decide(struct ros_action_server_t *ros_action_server,
     return ret;
     
 }
+
+
+int ros_action_server_cancel_try_take(struct ros_action_server_t *ros_action_server)
+{
+    rcl_ret_t rc;
+
+    
+    
+    rc = rcl_action_take_cancel_request(
+        &ros_action_server->action,
+        &ros_action_server->request_id,
+        ros_action_server->cancel_request);
+
+    
+    if(rc != RCL_RET_OK)
+    {
+        if(rc != RCL_RET_SERVICE_TAKE_FAILED)
+        {
+            debug("[ROS Action Server] Error number: %d\n", rc);
+            return -1;
+        }
+        else
+        {
+            //debug("[ROS Service Server] Return code : %d\n", rc);
+            return 1;
+        }        
+    }
+
+    return 0;
+}
+
+
+int ros_action_server_cancel_take(struct ros_action_server_t *ros_action_server)
+{
+    while(ros_action_server_cancel_try_take(ros_action_server) != 0)
+        usleep(ros_action_server->wait_time);
+
+    return 0;
+}
+
+
+
+
+int ros_action_server_cancel(struct ros_action_server_t *ros_action_server)
+{
+    rcl_ret_t ret = 0;
+
+    rcl_action_cancel_response_t cancelresp =  rcl_action_get_zero_initialized_cancel_response();
+
+    ret = rcl_action_process_cancel_request(
+    &ros_action_server->action,
+    ros_action_server->cancel_request,
+    &cancelresp);
+
+    ret = rcl_action_send_cancel_response(
+            &ros_action_server->action,
+            &ros_action_server->request_id,
+            &cancelresp.msg);
+
+
+    return ret;
+    
+}
+
 
 int ros_action_server_feedback(struct ros_action_server_t *ros_action_server, void*  feedback_msg)
 {

@@ -236,6 +236,15 @@
 #define ROS_ACTIONSERVER_RESULT_SEND(p_handle, p_handle_msg ) \
 	ros_action_server_result_send(p_handle, (void*)p_handle_msg);
 
+#define ROS_ACTIONSERVER_CANCEL_SEND(p_handle) \
+	ros_action_server_cancel_send(p_handle);
+
+#define ROS_ACTIONSERVER_CANCEL_TAKE(p_handle) \
+	ros_action_server_cancel_take(p_handle);
+
+#define ROS_ACTIONSERVER_CANCEL_TRYTAKE(p_handle) \
+	ros_action_server_cancel_try_take(p_handle)
+
 #define ROS_ACTIONSERVER_FEEDBACK(p_handle, p_handle_msg ) \
 	ros_action_server_feedback(p_handle, (void*)p_handle_msg);
 
@@ -257,6 +266,15 @@
 
 #define ROS_ACTIONCLIENT_RESULT_TRYTAKE(p_handle,p_handle_msg) \
 	ros_action_client_result_try_take(p_handle,(void*)p_handle_msg);
+
+#define ROS_ACTIONCLIENT_CANCEL_SEND(p_handle) \
+	ros_action_client_cancel_send(p_handle);
+
+#define ROS_ACTIONCLIENT_CANCEL_TAKE(p_handle) \
+	ros_action_client_cancel_take(p_handle);
+
+#define ROS_ACTIONCLIENT_CANCEL_TRYTAKE(p_handle) \
+	ros_action_client_cancel_trytake(p_handle);
 
 #define ROS_ACTIONCLIENT_FEEDBACK_TAKE(p_handle, p_handle_msg ) \
 	ros_action_client_feedback_take(p_handle, (void*)p_handle_msg);

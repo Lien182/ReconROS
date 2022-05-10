@@ -236,7 +236,7 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 		panic("[reconos-core] ERROR: failed to allocate memory for bitstream");
 	}
 
-	rt->bitstream_name = (int *)malloc(RECONOS_NUM_HWTS * sizeof(char*));
+	rt->bitstream_name = (char **)malloc(RECONOS_NUM_HWTS * sizeof(char*));
 	if (!rt->bitstream_name) {
 		panic("[reconos-core] ERROR: failed to allocate memory for bitstream");
 	}

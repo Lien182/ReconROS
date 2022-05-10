@@ -29,13 +29,22 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     //rmw_init_subscription_allocation(&ros_sub->alloc, msg_type, bounds);
 
 #if 1
-    my_subscription_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_ALL;
-    my_subscription_options.qos.lifespan.sec = 100;
-    //my_subscription_options.qos.durability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
-    //my_subscription_options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC;
 
-
-    my_subscription_options.qos.depth = 1000;
+    //QOS Signal
+    my_subscription_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
+    my_subscription_options.qos.depth = 5;
+    my_subscription_options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
+    my_subscription_options.qos.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
+    //my_subscription_options.qos.deadline = RMW_QOS_DEADLINE_DEFAULT;
+    my_subscription_options.qos.deadline.sec = 0;
+    my_subscription_options.qos.deadline.nsec = 0;
+    //my_subscription_options.qos.lifespan = RMW_QOS_LIFESPAN_DEFAULT;  
+    my_subscription_options.qos.lifespan.sec = 0;
+    my_subscription_options.qos.lifespan.nsec = 0;  
+    my_subscription_options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT;
+    my_subscription_options.qos.liveliness_lease_duration.sec = 0;
+    my_subscription_options.qos.liveliness_lease_duration.nsec = 0;
+    my_subscription_options.qos.avoid_ros_namespace_conventions = false;
 #endif
 
 

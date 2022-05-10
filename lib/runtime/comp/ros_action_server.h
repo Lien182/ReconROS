@@ -30,6 +30,8 @@ struct ros_action_server_t
 
     uint32_t                shutdown;  
     uint32_t                fsm;  
+
+    rcl_action_cancel_request_t * cancel_request;
 };
 
 
@@ -45,6 +47,12 @@ extern int ros_action_server_goal_try_take(struct ros_action_server_t *ros_actio
 extern int ros_action_server_goal_take(struct ros_action_server_t *ros_action_server, void * req);
 
 extern int ros_action_server_goal_decide(struct ros_action_server_t *ros_action_server,  uint32_t accept);
+
+extern int ros_action_server_cancel_try_take(struct ros_action_server_t *ros_action_server);
+
+extern int ros_action_server_cancel_take(struct ros_action_server_t *ros_action_server);
+
+extern int ros_action_server_cancel(struct ros_action_server_t *ros_action_server);
 
 extern int ros_action_server_feedback(struct ros_action_server_t *ros_action_server, void*  feedback_msg);
 
