@@ -56,6 +56,10 @@ def export_sw(args, swdir, link):
 		dictionary["RRBASETYPE"] 		= "int64_t"
 		dictionary["RRUBASETYPE"] 		= "uint64_t"
 		dictionary["RRBASETYPEBYTES"] 	= "8"
+	elif prj.impinfo.cpuarchitecture == "x86_64":
+		dictionary["RRBASETYPE"] 		= "int64_t"
+		dictionary["RRUBASETYPE"] 		= "uint64_t"
+		dictionary["RRBASETYPEBYTES"] 	= "8"
 	else:
 		dictionary["RRBASETYPE"] 		= "int32_t"
 		dictionary["RRUBASETYPE"] 		= "uint32_t"
