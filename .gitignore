@@ -67,3 +67,4 @@ linux/driver/modules.order
 linux/driver/mreconos.ko
 linux/driver/.tmp_versions/mreconos.mod
 .vscode
+demos/ros_sort_demo_r64/server_app/petalinux/
