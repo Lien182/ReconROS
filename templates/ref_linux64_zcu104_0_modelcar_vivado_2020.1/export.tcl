@@ -413,9 +413,25 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_pins xlconcat_0/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq0]
 
 
+
+
+    set_property -dict [list CONFIG.NUM_MI {6}] [get_bd_cells axi_hwt]
+    create_bd_cell -type ip -vlnv user.org:user:modelcar_pwm_module:1.0 modelcar_pwm_module_0
+    connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_hwt/M05_AXI] [get_bd_intf_pins modelcar_pwm_module_0/S00_AXI]
+    connect_bd_net [get_bd_pins modelcar_pwm_module_0/s00_axi_aclk] [get_bd_pins reconos_clock_0/CLK0_Out]
+    connect_bd_net [get_bd_pins modelcar_pwm_module_0/s00_axi_aresetn] [get_bd_pins reset_0/interconnect_aresetn]
+    connect_bd_net [get_bd_pins axi_hwt/M05_ACLK] [get_bd_pins reconos_clock_0/CLK0_Out]
+    connect_bd_net [get_bd_pins axi_hwt/M05_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
+
+    #--> servo_0_0
+    make_bd_pins_external  [get_bd_pins modelcar_pwm_module_0/servo_0] 
+    #--> servo_1_0
+    make_bd_pins_external  [get_bd_pins modelcar_pwm_module_0/servo_1]
+
     #
     # Memory Map of peripherals
     #
+    set_property -dict [list CONFIG.C_BASEADDR {0xA0000000} CONFIG.C_HIGHADDR {0xA000FFFF}] [get_bd_cells modelcar_pwm_module_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0130000} CONFIG.C_HIGHADDR {0xA013FFFF}] [get_bd_cells timer_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0110000} CONFIG.C_HIGHADDR {0xA011FFFF}] [get_bd_cells reconos_osif_intc_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0040000} CONFIG.C_HIGHADDR {0xA004FFFF}] [get_bd_cells reconos_clock_0]
@@ -430,6 +446,8 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_bd_addr_seg -range 0x00010000 -offset 0xA0100000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs reconos_osif_0/s00_axi/reg0] SEG_reconos_osif_0_reg0
     create_bd_addr_seg -range 0x00010000 -offset 0xA0110000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs reconos_osif_intc_0/S_AXI/reg0] SEG_reconos_osif_intc_0_reg0
     create_bd_addr_seg -range 0x00010000 -offset 0xA0130000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs timer_0/S_AXI/reg0] SEG_timer_0_reg0
+
+    create_bd_addr_seg -range 0x00010000 -offset 0xA0000000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs modelcar_pwm_module_0/S00_AXI/S00_AXI_reg] SEG_modelcarpwm_0_reg0
 
     # Update layout of block design
     regenerate_bd_layout
