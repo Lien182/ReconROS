@@ -453,17 +453,21 @@ class Project:
 		if self.impinfo.pr:
 			name = "Reconf"
 			# associate this thread with all slots, for now we only support a single dummy thread for all of them
-			slots = [_ for _ in self.slots]
-			hw = "vhdl"
-			sw = None
-			# associate with all defined resources
-			res = [_ for _ in self.resources]
-			mem = True
-			ports = []
+			slots = [_ for _ in self.slots if _.reconfigurable == True]
+			
+			if slots:
+				hw = "vhdl"
+				sw = None
+				# associate with all defined resources
+				res = [_ for _ in self.resources]
+				mem = True
+				ports = []
 
-			thread = Thread(name, slots, hw, sw, res, mem, False, ports)
-			for s in slots: s.threads.append(thread)
-			self.threads.append(thread)
+				thread = Thread(name, slots, hw, sw, res, mem, False, ports)
+				for s in slots: s.threads.append(thread)
+				self.threads.append(thread)
+			else:
+				self.impinfo.pr = False #Reset pr flag since no slot has pr enabled
 
 		for t in [_ for _ in cfg.sections() if _.startswith("ReconosThread")]:
 			match = re.search(r"^.*@(?P<name>.+)", t)
@@ -522,8 +526,6 @@ class Project:
 				
 			else:
 				videoout = False
-
-			print("Video Out = " + str(videoout) + "\n")
 
 			if cfg.has_option(t, "Ports"):
 				ports = [re.match(r"(?P<Name>.*)\((?P<Options>.*)\)", _).groupdict() for _ in re.findall("[a-zA-Z0-9_]*?\(.*?\)", cfg.get(t, "Ports"))]

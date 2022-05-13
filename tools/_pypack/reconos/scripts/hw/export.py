@@ -216,9 +216,21 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 
 		dictionary["ROSDISTRIBUTION"] = prj.impinfo.ros2distribution
+
+		reconf_of_slots_or = False
+		reconf_of_slots_and = True
+
+		for e in thread.slots:
+			reconf_of_slots_and = reconf_of_slots_and and e.reconfigurable
+			reconf_of_slots_or = reconf_of_slots_or or e.reconfigurable
+
+		if reconf_of_slots_or != reconf_of_slots_and:
+			log.error("Slots of thread {} have to be either reconfigurable or not".format_map(thread.name))
+			return
+
 		
 		# "reconf" thread for partial reconfiguration is taken from template directory
-		if prj.impinfo.pr and thread.name.lower() == "reconf":
+		if reconf_of_slots_or and thread.name.lower() == "reconf":
 			srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
 		else:
 			srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
@@ -264,7 +276,7 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		incls += shutil2.listfiles(srcs2, True)
 		dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
 		#Template will change top module entity name to "rt_reconf" if PR flow is used for this HWT
-		dictionary["RECONFIGURABLE"] = prj.impinfo.pr
+		dictionary["RECONFIGURABLE"] = reconf_of_slots_or#  prj.impinfo.pr
 
 		log.info("Generating export files ...")
 		if prj.impinfo.cpuarchitecture == "arm64":
