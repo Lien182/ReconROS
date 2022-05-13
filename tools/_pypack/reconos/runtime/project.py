@@ -276,6 +276,12 @@ class Project:
 			self.impinfo.cpuarchitecture = cfg.get("General", "CPUArchitecture") 
 		else:
 			self.impinfo.cpuarchitecture = "arm32"
+
+		if cfg.has_option("General", "Hls_CFlags"):
+			self.impinfo.hls_cflags = cfg.get("General", "Hls_CFlags")
+		else:
+			self.impinfo.hls_cflags = ""
+
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
 		self._parse_clocks(cfg)

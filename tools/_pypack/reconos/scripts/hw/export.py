@@ -189,6 +189,11 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 				dictionary["MSGINCLUDEDIR"] += "-I"+msg_install_path + msg_pack + "/include/ "
 		#End Added
 
+		if shutil2.exists(prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include"):
+			dictionary["MSGINCLUDEDIR"] += "-I"+prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include "
+
+		dictionary["MSGINCLUDEDIR"] += prj.impinfo.hls_cflags
+
 		dictionary["PART"] = prj.impinfo.part
 		dictionary["NAME"] = thread.name.lower()
 		dictionary["MEM"] = thread.mem
