@@ -149,7 +149,10 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["HWSOURCE"] = thread.hwsource
 		# "reconf" thread for partial reconfiguration is taken from template directory
 		if prj.impinfo.pr and thread.name.lower() == "reconf":
-			srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
+			if prj.impinfo.cpuarchitecture == "arm64":
+				srcs = shutil2.join(prj.get_template("thread_rt_reconf64"), thread.hwsource)
+			else:
+				srcs = shutil2.join(prj.get_template("thread_rt_reconf"), thread.hwsource)
 		else:
 			srcs = shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.hwsource)
 		dictionary["SOURCES"] = [srcs]
@@ -189,8 +192,8 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 				dictionary["MSGINCLUDEDIR"] += "-I"+msg_install_path + msg_pack + "/include/ "
 		#End Added
 
-		if shutil2.exists(prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include"):
-			dictionary["MSGINCLUDEDIR"] += "-I"+prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include "
+		#if shutil2.exists(prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include"):
+		#	dictionary["MSGINCLUDEDIR"] += "-I"+prj.dir + "/hls_include/Vitis_Libraries/vision/L1/include "
 
 		dictionary["MSGINCLUDEDIR"] += prj.impinfo.hls_cflags
 
