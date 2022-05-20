@@ -48,11 +48,12 @@ def get_dict(prj):
 			d["Clk"] = s.clock.id
 			d["Async"] = "sync" if s.clock == prj.clock else "async"
 			d["Ports"] = s.ports
-			d["Reconfigurable"] = prj.impinfo.pr
+			d["Reconfigurable"] = s.reconfigurable
 			d["Region"] = []
 			for reg in s.region:
 				e = {}
 				e["RegionArea"] = reg 
+				print(reg)
 				d["Region"].append(e)
 
 			# Dict for nested generate statement
@@ -65,7 +66,9 @@ def get_dict(prj):
 	# Prepare strings to define RM configurations because it is difficult to handle purely with template functionality
 	dictionary["THREADS"] = []
 	config_id = 0
-	for t in prj.threads:
+
+	for t in [_ for _ in prj.threads if _.has_reconfig_slots == True]:
+		
 		d = {}
 		if config_id == 0:
 			rm_configuration = "set rm_config(initial) \""
@@ -73,7 +76,7 @@ def get_dict(prj):
 			rm_configuration = "set rm_config(reconfig_" + str(config_id) + ") \""
 
 		# Configuration uses default thread in slots which are not associated with the current thread, since we need to specify a module for every partition
-		for s in prj.slots:
+		for s in [_ for _ in prj.slots if _.reconfigurable == True]:
 			if s in t.slots:
 				rm_configuration += " $rp" + str(s.id) + " $rp" + str(s.id) + "_inst " + t.name.lower() + "_" + str(s.id)
 			else:

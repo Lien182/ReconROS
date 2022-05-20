@@ -99,7 +99,7 @@ class Slot:
 class Thread:
 	_id = 0
 
-	def __init__(self, name, slots, hw, sw, res, mem, videoout, ports):
+	def __init__(self, name, slots, hw, sw, res, mem, videoout, ports, has_reconfig_slots ):
 		self.id = Thread._id
 		Thread._id += 1
 		self.name = name
@@ -108,6 +108,7 @@ class Thread:
 		self.mem = mem
 		self.ports = ports
 		self.videoout = videoout
+		self.has_reconfig_slots = has_reconfig_slots
 		if hw is not None:
 			hw = hw.split(",")
 			self.hwsource = hw[0]
@@ -463,7 +464,7 @@ class Project:
 				mem = True
 				ports = []
 
-				thread = Thread(name, slots, hw, sw, res, mem, False, ports)
+				thread = Thread(name, slots, hw, sw, res, mem, False, ports, True)
 				for s in slots: s.threads.append(thread)
 				self.threads.append(thread)
 			else:
@@ -484,6 +485,12 @@ class Project:
 				slots = [_ for _ in self.slots if re.match(slots, _.name) is not None]
 			else:
 				slots = []
+
+			has_reconfig_slots = False
+			for s in slots:
+				if s.reconfigurable == True :
+					has_reconfig_slots = True
+
 			if cfg.has_option(t, "HwSource"):
 				hw = cfg.get(t, "HwSource")
 			else:
@@ -534,7 +541,7 @@ class Project:
 
 			log.debug("Found thread '" + str(name) + "' (" + str(slots) + "," + str(hw) + "," + str(sw) + "," + str(res) + ")")
 
-			thread = Thread(name, slots, hw, sw, res, mem, videoout, ports)
+			thread = Thread(name, slots, hw, sw, res, mem, videoout, ports, has_reconfig_slots)
 			for s in slots: s.threads.append(thread)
 			self.threads.append(thread)
 			
