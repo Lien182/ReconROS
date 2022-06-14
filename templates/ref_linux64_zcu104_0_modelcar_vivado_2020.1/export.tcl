@@ -123,6 +123,8 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_fileset -simset sim_1
     }
 
+    add_files -fileset constrs_1 constr_file.xdc
+
 
     # Set 'sim_1' fileset properties
     set obj [get_filesets sim_1]
