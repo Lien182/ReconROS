@@ -283,6 +283,21 @@ class Project:
 		else:
 			self.impinfo.hls_cflags = ""
 
+		if cfg.has_option("General", "TargetBoardAddress"):
+			self.impinfo.targetboardaddress = cfg.get("General", "TargetBoardAddress")
+		else:
+			self.impinfo.targetboardaddress = ""
+
+		if cfg.has_option("General", "TargetBoardUser"):
+			self.impinfo.targetboarduser = cfg.get("General", "TargetBoardUser")
+		else:
+			self.impinfo.targetboarduser = ""
+
+		if cfg.has_option("General", "TargetBoardPassword"):
+			self.impinfo.targetboardpassword = cfg.get("General", "TargetBoardPassword")
+		else:
+			self.impinfo.targetboardpassword = ""
+
 		log.debug("Found project '" + str(self.name) + "' (" + str(self.impinfo.board) + "," + str(self.impinfo.os) + ")")
 
 		self._parse_clocks(cfg)
