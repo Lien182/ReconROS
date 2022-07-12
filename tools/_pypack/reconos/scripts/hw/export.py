@@ -259,13 +259,20 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 		log.info("Starting Vivado HLS ...")
 
-		subprocess.call("""
-			source /opt/Xilinx/Vivado/{1}/settings64.sh;
-			cd {0};
-			vivado_hls -f script_csynth.tcl;
-			vivado -mode batch -notrace -nojournal -nolog -source script_vivado_edn.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
-			shell=True, executable="/bin/bash")
-
+		if  prj.impinfo.hls[1] != "2021.2":
+			subprocess.call("""
+				source /opt/Xilinx/Vivado/{1}/settings64.sh;
+				cd {0};
+				vivado_hls -f script_csynth.tcl;
+				vivado -mode batch -notrace -nojournal -nolog -source script_vivado_edn.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
+				shell=True, executable="/bin/bash")
+		else:
+				subprocess.call("""
+				source /opt/Xilinx/Vivado/2021.2/settings64.sh;
+				cd {0};
+				vitis_hls -f script_csynth.tcl;
+				vivado -mode batch -notrace -nojournal -nolog -source script_vivado_edn.tcl;""".format(tmp.name, prj.impinfo.hls[1]),
+				shell=True, executable="/bin/bash")
 
 		dictionary = {}
 		dictionary["NAME"] = thread.name.lower()
@@ -283,6 +290,10 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["INCLUDES"] = [{"File": shutil2.trimext(_)} for _ in incls]
 		#Template will change top module entity name to "rt_reconf" if PR flow is used for this HWT
 		dictionary["RECONFIGURABLE"] = reconf_of_slots_or#  prj.impinfo.pr
+		if prj.impinfo.hls[1] != "2021.2":
+			dictionary["VIVADO2021"] = False
+		else:
+			dictionary["VIVADO2021"] = True	
 
 		log.info("Generating export files ...")
 		if prj.impinfo.cpuarchitecture == "arm64":
