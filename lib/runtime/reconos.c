@@ -1193,6 +1193,7 @@ static inline int dt_ros_take(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (ros_take on %d) ...\n", slot->id, handle);
 	SYSCALL_BLOCK(ros_subscriber_message_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
+	printf("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
 
 	clock_gettime(CLOCK_MONOTONIC, &t_start);
 
@@ -1422,6 +1423,69 @@ intr:
 }
 
 
+static inline int dt_ros_actions_cancel_take(struct hwslot *slot) {
+	int handle, ret;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONS);
+
+	debug("[reconos-dt-%d] (ros action cancel take on %d) ...\n", slot->id, handle);
+	SYSCALL_BLOCK(ret = ros_action_server_cancel_take(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (ros action cancel take %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actions_cancel_trytake(struct hwslot *slot) {
+	int handle, ret;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONS);
+
+
+	debug("[reconos-dt-%d] (ros_trytake on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_server_cancel_try_take(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (ros_trytake on %d) done\n", slot->id, handle);
+	printf("[reconos-dt-%d] (ros_trytake on %d) done; ret = %d \n", slot->id, handle,ret);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+
+static inline int dt_ros_actions_cancel_send(struct hwslot *slot) {
+	int handle, ret;
+	int msg_handle;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONS);
+
+	debug("[reconos-dt-%d] (ros service response on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_server_cancel_send(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+
+
+
+
+
+
 static inline int dt_ros_actions_feedback(struct hwslot *slot) {
 	int handle, ret;
 	int msg_handle;
@@ -1609,6 +1673,63 @@ static inline int dt_ros_actionc_result_trytake(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (ros_action_client_result_try_take on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_cancel_request(struct hwslot *slot) {
+	int handle, ret;
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+
+	debug("[reconos-dt-%d] (ros action cancel request on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_cancel_send(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (ros action cancel request on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_cancel_take(struct hwslot *slot) {
+	int handle, ret, msg_handle;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+
+	
+	debug("[reconos-dt-%d] (dt_ros_actionc_cancel_take on %d) ...\n", slot->id, handle);
+	SYSCALL_BLOCK(ret = ros_action_client_cancel_take(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (dt_ros_actionc_cancel_take on %d) done\n", slot->id, handle);
+
+	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+	
+
+	return 0;
+
+intr:
+	return -1;
+}
+
+static inline int dt_ros_actionc_cancel_trytake(struct hwslot *slot) {
+	int handle, msg_handle,ret;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSACTIONMSGRESULTRES);
+
+	debug("[reconos-dt-%d] (dt_ros_actionc_cancel_trytake on %d) ...\n", slot->id, handle);
+	SYSCALL_NONBLOCK(ret = ros_action_client_cancel_try_take(slot->rt->resources[handle].ptr));
+	debug("[reconos-dt-%d] (dt_ros_actionc_cancel_trytake on %d) done\n", slot->id, handle);
+
 	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);	
 
 	return 0;
@@ -1919,6 +2040,19 @@ void *dt_delegate(void *arg) {
 				dt_ros_actions_result_send(slot);
 				break;
 
+			case OSIF_CMD_ROS_ACTIONS_CANCEL_TAKE:
+				dt_ros_actions_cancel_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONS_CANCEL_TRYTAKE:
+				dt_ros_actions_cancel_trytake(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONS_CANCEL_SEND:
+				dt_ros_actions_cancel_send(slot);
+				break;
+
+
 			case OSIF_CMD_ROS_ACTIONS_FEEDBACK:
 				dt_ros_actions_feedback(slot);
 				break;
@@ -1959,6 +2093,18 @@ void *dt_delegate(void *arg) {
 
 			case OSIF_CMD_ROS_ACTIONC_RESULT_TRYTAKE:
 				dt_ros_actionc_result_trytake(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_CANCEL_SEND:
+				dt_ros_actionc_cancel_request(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_CANCEL_TAKE:
+				dt_ros_actionc_cancel_take(slot);
+				break;
+
+			case OSIF_CMD_ROS_ACTIONC_CANCEL_TRYTAKE:
+				dt_ros_actionc_cancel_trytake(slot);
 				break;
 
 			case OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE:

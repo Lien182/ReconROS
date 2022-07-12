@@ -92,7 +92,7 @@
 
 #define OSIF_INTERRUPTED               			(RRUBASETYPE)0x000000FF
 
-#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			(RRUBASETYPE)0x00000950
+#define OSIF_CMD_ROS_MESSAGE_SET_SIZE			(RRUBASETYPE)0x000009F0
 
 #define OSIF_CMD_MEMORY_MALLOC					(RRUBASETYPE)0x000000F4
 #define OSIF_CMD_MEMORY_FREE					(RRUBASETYPE)0x000000F5
@@ -114,6 +114,9 @@
 #define OSIF_CMD_ROS_ACTIONS_RESULT_TRYTAKE		(RRUBASETYPE)0x00000924
 #define OSIF_CMD_ROS_ACTIONS_RESULT_SEND		(RRUBASETYPE)0x00000925
 #define OSIF_CMD_ROS_ACTIONS_FEEDBACK			(RRUBASETYPE)0x00000926
+#define OSIF_CMD_ROS_ACTIONS_CANCEL_TAKE		(RRUBASETYPE)0x00000927
+#define OSIF_CMD_ROS_ACTIONS_CANCEL_TRYTAKE		(RRUBASETYPE)0x00000928
+#define OSIF_CMD_ROS_ACTIONS_CANCEL_SEND		(RRUBASETYPE)0x00000929
 
 //Clients
 #define OSIF_CMD_ROS_SERVICEC_REQUEST 			(RRUBASETYPE)0x00000930
@@ -129,6 +132,10 @@
 
 #define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TAKE		(RRUBASETYPE)0x00000946
 #define OSIF_CMD_ROS_ACTIONC_FEEDBACK_TRYTAKE	(RRUBASETYPE)0x00000947
+
+#define OSIF_CMD_ROS_ACTIONC_CANCEL_SEND		(RRUBASETYPE)0x00000948
+#define OSIF_CMD_ROS_ACTIONC_CANCEL_TAKE		(RRUBASETYPE)0x00000949
+#define OSIF_CMD_ROS_ACTIONC_CANCEL_TRYTAKE		(RRUBASETYPE)0x00000950
 
 
 /*
@@ -489,6 +496,20 @@ inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
+#define ROS_ACTIONSERVER_CANCEL_TAKE(p_handle)(\
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_CANCEL_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
+#define ROS_ACTIONSERVER_CANCEL_TRYTAKE(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_CANCEL_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
+#define ROS_ACTIONSERVER_CANCEL_SEND(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONS_CANCEL_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
 
 #define ROS_ACTION_CLIENT_GOAL_REJECTED       0
 #define ROS_ACTION_CLIENT_GOAL_ACCEPTED       1
@@ -540,6 +561,22 @@ inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
 	stream_write(osif_hw2sw, p_handle),\
 	stream_write(osif_hw2sw, p_handle_msg),\
 	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
+
+#define ROS_ACTIONCLIENT_CANCEL_SEND(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_CANCEL_SEND),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
+#define ROS_ACTIONCLIENT_CANCEL_TRYTAKE(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_CANCEL_TRYTAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal))
+
+#define ROS_ACTIONCLIENT_CANCEL_TAKE(p_handle)( \
+	stream_write(osif_hw2sw, OSIF_CMD_ROS_ACTIONC_CANCEL_TAKE),\
+	stream_write(osif_hw2sw, p_handle),\
+	stream_read(osif_sw2hw,osif_hw2sw, hwt_signal)) 
 
 /*
  * Gets the pointer to the initialization data of the ReconOS thread
