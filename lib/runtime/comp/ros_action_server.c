@@ -192,7 +192,7 @@ int ros_action_server_cancel_take(struct ros_action_server_t *ros_action_server)
 
 
 
-int ros_action_server_cancel(struct ros_action_server_t *ros_action_server)
+int ros_action_server_cancel_send(struct ros_action_server_t *ros_action_server)
 {
     rcl_ret_t ret = 0;
 

@@ -51,9 +51,9 @@
  }
  */
 #define THREAD_ENTRY() void rt_imp(volatile bool &hwt_signal, \
-                                   hls::stream<RRUBASETYPE> osif_sw2hw,\
-                                   hls::stream<RRUBASETYPE> osif_hw2sw,\
-                                   hls::stream<RRUBASETYPE> memif_hwt2mem,\
-                                   hls::stream<RRUBASETYPE> memif_mem2hwt)
+                                   hls::stream<RRUBASETYPE> & osif_sw2hw,\
+                                   hls::stream<RRUBASETYPE> & osif_hw2sw,\
+                                   hls::stream<RRUBASETYPE> & memif_hwt2mem,\
+                                   hls::stream<RRUBASETYPE> & memif_mem2hwt)
 
 #endif /* RECONOS_THREAD_H */
