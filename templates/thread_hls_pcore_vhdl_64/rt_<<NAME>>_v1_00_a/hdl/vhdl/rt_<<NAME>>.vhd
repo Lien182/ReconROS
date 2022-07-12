@@ -72,6 +72,7 @@ architecture implementation of rt_<<NAME>> is
 	ATTRIBUTE X_INTERFACE_INFO of MEMIF64_Mem2Hwt_Empty: SIGNAL is "cs.upb.de:reconos:FIFO64_S:1.0 MEMIF64_Mem2Hwt FIFO64_S_Empty";
 	ATTRIBUTE X_INTERFACE_INFO of MEMIF64_Mem2Hwt_RE:    SIGNAL is "cs.upb.de:reconos:FIFO64_S:1.0 MEMIF64_Mem2Hwt FIFO64_S_RE";
 
+<<if VIVADO2021==False>>
 	component rt_imp is
 		port (
 			ap_clk : in std_logic;
@@ -94,6 +95,31 @@ architecture implementation of rt_<<NAME>> is
 			memif_mem2hwt_v_read    : out std_logic
 		);
   	end component;
+<<end if>>
+
+<<if VIVADO2021==True>>
+	component rt_imp is
+		port (
+		    ap_local_block : OUT STD_LOGIC;
+		    ap_local_deadlock : OUT STD_LOGIC;
+		    ap_clk : IN STD_LOGIC;
+		    ap_rst : IN STD_LOGIC;
+		    hwt_signal : IN STD_LOGIC;
+		    osif_sw2hw_dout : IN STD_LOGIC_VECTOR (63 downto 0);
+		    osif_sw2hw_empty_n : IN STD_LOGIC;
+		    osif_sw2hw_read : OUT STD_LOGIC;
+		    osif_hw2sw_din : OUT STD_LOGIC_VECTOR (63 downto 0);
+		    osif_hw2sw_full_n : IN STD_LOGIC;
+		    osif_hw2sw_write : OUT STD_LOGIC;
+		    memif_hwt2mem_din : OUT STD_LOGIC_VECTOR (63 downto 0);
+		    memif_hwt2mem_full_n : IN STD_LOGIC;
+		    memif_hwt2mem_write : OUT STD_LOGIC;
+		    memif_mem2hwt_dout : IN STD_LOGIC_VECTOR (63 downto 0);
+		    memif_mem2hwt_empty_n : IN STD_LOGIC;
+		    memif_mem2hwt_read : OUT STD_LOGIC
+		);
+  	end component;
+<<end if>>
 
 	signal osif_sw2hw_v_dout    : std_logic_vector(63 downto 0);
 	signal osif_sw2hw_v_empty_n : std_logic;
@@ -140,6 +166,7 @@ begin
 	-- DEBUG(1) <= not memif_mem2hwt_v_empty_n;
 	-- DEBUG(0) <= memif_mem2hwt_v_read;
 
+<<if VIVADO2021==False>>
 	rt_imp_inst : rt_imp
 		port map (
 			ap_clk => HWT_Clk,
@@ -160,5 +187,30 @@ begin
 			memif_mem2hwt_v_dout    => memif_mem2hwt_v_dout,
 			memif_mem2hwt_v_empty_n => memif_mem2hwt_v_empty_n,
 			memif_mem2hwt_v_read    => memif_mem2hwt_v_read
-	);	
+	);
+<<end if>>
+
+<<if VIVADO2021==True>>
+	rt_imp_inst : rt_imp
+		port map (
+			ap_clk => HWT_Clk,
+			ap_rst => HWT_Rst,
+			hwt_signal => HWT_Signal,
+			osif_sw2hw_dout    => osif_sw2hw_v_dout,
+			osif_sw2hw_empty_n => osif_sw2hw_v_empty_n,
+			osif_sw2hw_read    => osif_sw2hw_v_read,
+
+			osif_hw2sw_din     => osif_hw2sw_v_din,
+			osif_hw2sw_full_n  => osif_hw2sw_v_full_n,
+			osif_hw2sw_write   => osif_hw2sw_v_write,
+
+			memif_hwt2mem_din     => memif_hwt2mem_v_din,
+			memif_hwt2mem_full_n  => memif_hwt2mem_v_full_n,
+			memif_hwt2mem_write   => memif_hwt2mem_v_write,
+
+			memif_mem2hwt_dout    => memif_mem2hwt_v_dout,
+			memif_mem2hwt_empty_n => memif_mem2hwt_v_empty_n,
+			memif_mem2hwt_read    => memif_mem2hwt_v_read
+	);
+<<end if>>	
 end architecture;
