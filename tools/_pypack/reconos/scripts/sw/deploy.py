@@ -36,6 +36,6 @@ def deploy(prj, targetboard, targetboarduser, targetboardpassword):
 	if prj.impinfo.targetboardpassword != None:
 		targetboardpassword = prj.impinfo.targetboardpassword
 
-	subprocess.call('sshpass -p "{}" scp build.sw/{} {}@{}:/home/xilinx/'.format(targetboardpassword, prj.name.lower(), targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+	subprocess.call('sshpass -p "{}" scp build.sw/{} {}@{}:/mnt/'.format(targetboardpassword, prj.name.lower(), targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
 
 
