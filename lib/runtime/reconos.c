@@ -29,9 +29,12 @@
 
 #ifdef RECONOS_OS_linux
 #include "arch/arch.h"
+#include "arch/a9_timer.h"
 #elif RECONOS_OS_linux64
 #include "arch/arch64.h"
+#include "arch/reconos_timer.h"
 #endif
+
 #include "comp/mbox.h"
 #include "comp/mem.h"
 #include "comp/ros.h"
@@ -43,7 +46,7 @@
 #include "comp/ros_service_client.h"
 #include "comp/ros_action_client.h"
 
-#include "arch/a9_timer.h"
+
 
 #include <unistd.h>
 #include <signal.h>
@@ -281,7 +284,7 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 		//system(command);
 
 
-		fread(rt->bitstreams[i], sizeof(char), size, file);
+		unsigned int bytes_read = fread(rt->bitstreams[i], sizeof(char), size, file);
 
 		fclose(file);
 	}
@@ -554,6 +557,10 @@ void reconos_init() {
 #if defined(RECONOS_OS_linux) 
 	//added for timing measurements and for the ros timer instances
 	a9timer_init();
+#endif
+
+#if defined(RECONOS_OS_linux64)
+	reconostimer_init();
 #endif
 
 }
@@ -1167,6 +1174,7 @@ static inline int dt_ros_publish(struct hwslot *slot) {
 	
 	SYSCALL_NONBLOCK(ret = ros_publisher_publish(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
+	printf("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
@@ -1853,8 +1861,8 @@ static inline int dt_memory_getmemaddr(struct hwslot *slot) {
 	int handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MEM);
 
-	debug("[reconos-dt-%d] (memory getaddr on handle %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = (RRUBASETYPE)mem_getdataptr(slot->rt->resources[handle].ptr));
+	printf("[reconos-dt-%d] (memory getaddr on handle %d); write = %p ...\n", slot->id, handle, slot->rt->resources[handle].ptr);
 	reconos_osif_write(slot->osif, ret);
 
 	return 0;
@@ -1894,9 +1902,9 @@ static inline int dt_memory_malloc(struct hwslot *slot) {
 static inline int dt_memory_free(struct hwslot *slot) {
 	void * ptr = (void *)reconos_osif_read(slot->osif);
 	
-	debug("[reconos-dt-%d] (memory free on %x) ...\n", slot->id, ptr);
+	debug("[reconos-dt-%d] (memory free on %p) ...\n", slot->id, ptr);
 	free(ptr);
-	debug("[reconos-dt-%d] (memory free on %x) done\n", slot->id, ptr);
+	debug("[reconos-dt-%d] (memory free on %p) done\n", slot->id, ptr);
 	return 0;
 }
 
@@ -1921,7 +1929,7 @@ void *dt_delegate(void *arg) {
 		slot->dt_state = DELEGATE_STATE_BLOCKED_OSIF;
 		cmd = reconos_osif_read(slot->osif);
 		slot->dt_state = DELEGATE_STATE_PROCESSING;
-		debug("[reconos-dt-%d] received command 0x%x\n", slot->id, cmd);
+		debug("[reconos-dt-%d] received command 0x%x\n", slot->id, (unsigned int)cmd);
 
 		switch (cmd & OSIF_CMD_MASK) {
 			case OSIF_CMD_MBOX_PUT:
@@ -2143,7 +2151,7 @@ void *dt_delegate(void *arg) {
 				break;
 		}
 
-		debug("[reconos-dt-%d] executed command 0x%x\n", slot->id, cmd);
+		debug("[reconos-dt-%d] executed command 0x%x\n", slot->id, (unsigned int)cmd);
 	}
 
 return NULL;

@@ -52,7 +52,7 @@ extern int ros_action_server_cancel_try_take(struct ros_action_server_t *ros_act
 
 extern int ros_action_server_cancel_take(struct ros_action_server_t *ros_action_server);
 
-extern int ros_action_server_cancel(struct ros_action_server_t *ros_action_server);
+extern int ros_action_server_cancel_send(struct ros_action_server_t *ros_action_server);
 
 extern int ros_action_server_feedback(struct ros_action_server_t *ros_action_server, void*  feedback_msg);
 

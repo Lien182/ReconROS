@@ -151,7 +151,7 @@ int Zycap_Prefetch_Bitstream    ( char * bs_name, t_bitstream * bitstream)
     }
     else
     {
-        printf("[Zycap] bitstream prefetch %s: has already an address: %x \n", bs_name, bs_name);
+        printf("[Zycap] bitstream prefetch %s: has already an address: %p, size: %x \n", bs_name, (void*)bitstream->data, bitstream->size);
     }
     int bytes_read = fread(bitstream->data,1,size,fp);
     bitstream->size = size;

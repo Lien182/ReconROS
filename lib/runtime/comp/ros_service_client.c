@@ -78,7 +78,7 @@ int ros_service_client_request_send(struct ros_service_client_t *ros_service_cli
 {
     rcl_ret_t rc;
 
-    debug("[ROS Service Client] Send request; sequence number before: %lld \n", ros_service_client->request_id.sequence_number);
+    debug("[ROS Service Client] Send request; sequence number before: %ld \n", ros_service_client->request_id.sequence_number);
 
 
 
@@ -101,7 +101,7 @@ int ros_service_client_request_send(struct ros_service_client_t *ros_service_cli
     }
     else
     {
-        debug("[ROS Service Client] Everthing ok, sending response: %d, sequence number %lld \n", rc, ros_service_client->request_id.sequence_number);
+        debug("[ROS Service Client] Everthing ok, sending response: %d, sequence number %ld \n", rc, ros_service_client->request_id.sequence_number);
     }
     
     return rc;

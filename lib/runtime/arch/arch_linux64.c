@@ -194,7 +194,7 @@ uint64_t reconos_proc_control_get_fault_addr(int fd) {
 
 	ioctl(fd, RECONOS_PROC_CONTROL_GET_FAULT_ADDR, &data);
 
-	debug("reconos_proc_control_get_fault_addr = %d", data);
+	debug("reconos_proc_control_get_fault_addr = %ld", data);
 
 	return data;
 }

@@ -11,14 +11,14 @@
 
 #include "ros_timer.h"
 
-#include "../arch/a9_timer.h"
+#include "../arch/reconos_timer.h"
 
 
 int ros_timer_init(struct ros_timer_t *ros_timer, struct ros_node_t * ros_node, float interval) // intervall in ms
 {
     ros_timer->fInterval = interval;
-    ros_timer->u64Interval = a9timer_msto(interval);
-    ros_timer->u64LastEventTime = a9timer_get();
+    ros_timer->u64Interval = reconostimer_msto(interval);
+    ros_timer->u64LastEventTime = reconostimer_get();
     ros_timer->u64NextEventTime = ros_timer->u64LastEventTime + ros_timer->u64Interval; 
     printf("[ROS TMR] fInterval=%f, u64Interval= %ld, u64NextInterval= %ld \n", interval, ros_timer->u64Interval, ros_timer->u64NextEventTime);
     return 0;
@@ -32,7 +32,7 @@ int ros_timer_destroy(struct ros_timer_t *ros_timer)
 
 int ros_timer_is_ready(struct ros_timer_t * ros_timer, uint32_t * timer_value)
 {
-    uint64_t u64TimeNow = a9timer_get();
+    uint64_t u64TimeNow = reconostimer_get();
     //  printf("Timer Value: %lld \n", u64TimeNow);
     if(u64TimeNow >= ros_timer->u64NextEventTime)
     {
