@@ -36,6 +36,12 @@ def deploy(prj, targetboard, targetboarduser, targetboardpassword):
 	if prj.impinfo.targetboardpassword != None:
 		targetboardpassword = prj.impinfo.targetboardpassword
 
-	subprocess.call('sshpass -p "{}" scp build.hw/myReconOS.runs/impl_1/design_1_wrapper.bin {}@{}:/home/xilinx/'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+	if prj.impinfo.pr:
+		subprocess.call('sshpass -p "{}" scp build.hw/Bitstreams/Config_reconf_1_*.bin {}@{}:/mnt/design_1_wrapper.bin'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+		subprocess.call('sshpass -p "{}" ssh {}@{} "rm -f -r /mnt/bitstreams/*"'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+		subprocess.call('sshpass -p "{}" scp build.hw/Bitstreams/pblock_* {}@{}:/mnt/bitstreams/'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+
+	else:
+		subprocess.call('sshpass -p "{}" scp build.hw/myReconOS.runs/impl_1/design_1_wrapper.bin {}@{}:/mnt/'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
 
 
