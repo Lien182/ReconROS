@@ -17,16 +17,19 @@ def get_parser(prj):
 	parser = argparse.ArgumentParser("deploy_hw", description="""
 		Deploys the hardware bitstream on the target hardware""")
 
+	parser.add_argument("foldername", help="alternative name", nargs="?")
 	parser.add_argument("targetboardaddress",  help="alternative board address", nargs="?")    
 	parser.add_argument("targetboarduser", help="alternative user name", nargs="?")
 	parser.add_argument("targetboardpassword", help="alternative password", nargs="?")
+	
+	
 
 	return parser
 
 def deploy_cmd(args):
-	deploy(args.prj, args.targetboardaddress, args.targetboarduser, args.targetboardpassword)
+	deploy(args.prj, args.targetboardaddress, args.targetboarduser, args.targetboardpassword, args.foldername)
 
-def deploy(prj, targetboard, targetboarduser, targetboardpassword):
+def deploy(prj, targetboard, targetboarduser, targetboardpassword, foldername):
 	if prj.impinfo.targetboardaddress != None:
 		targetboardaddress = prj.impinfo.targetboardaddress
 
@@ -36,12 +39,23 @@ def deploy(prj, targetboard, targetboarduser, targetboardpassword):
 	if prj.impinfo.targetboardpassword != None:
 		targetboardpassword = prj.impinfo.targetboardpassword
 
+	
+	
+	
+	if 	foldername != None:
+		
+		path = "build.hw_{}".format(foldername)
+	else:
+		path = "build.hw"		
+
+	print("Copy bitstream from {}".format(path))
+
 	if prj.impinfo.pr:
-		subprocess.call('sshpass -p "{}" scp build.hw/Bitstreams/Config_reconf_1_*.bin {}@{}:/mnt/design_1_wrapper.bin'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+		subprocess.call('sshpass -p "{}" scp {}/Bitstreams/Config_reconf_*.bin {}@{}:/mnt/design_1_wrapper.bin'.format(targetboardpassword, path, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
 		subprocess.call('sshpass -p "{}" ssh {}@{} "rm -f -r /mnt/bitstreams/*"'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
-		subprocess.call('sshpass -p "{}" scp build.hw/Bitstreams/pblock_* {}@{}:/mnt/bitstreams/'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+		subprocess.call('sshpass -p "{}" scp {}/Bitstreams/pblock_* {}@{}:/mnt/bitstreams/'.format(targetboardpassword, path, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
 
 	else:
-		subprocess.call('sshpass -p "{}" scp build.hw/myReconOS.runs/impl_1/design_1_wrapper.bin {}@{}:/mnt/'.format(targetboardpassword, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
+		subprocess.call('sshpass -p "{}" scp {}/myReconOS.runs/impl_1/design_1_wrapper.bin {}@{}:/mnt/'.format(targetboardpassword,path, targetboarduser, targetboardaddress), shell=True,  executable="/bin/bash")
 
 
