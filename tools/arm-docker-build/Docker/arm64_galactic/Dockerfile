@@ -11,10 +11,13 @@ COPY qemu-aarch64-static /usr/bin/qemu-aarch64-static
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl gnupg2 lsb-release dirmngr ca-certificates 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu focal main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
+
+RUN apt update && apt install -y software-properties-common
+RUN add-apt-repository universe
 
 RUN apt update && apt install -y ca-certificates-java
 #RUN dpkg --force-depends --configure ca-certificates-java
@@ -45,7 +48,9 @@ RUN python3 -m pip install -U \
   flake8-quotes \
   pytest-repeat \
   pytest-rerunfailures \
-  pytest
+  pytest \
+  setuptools
+
 # install Fast-RTPS dependencies
 RUN apt install --no-install-recommends -y \
   libasio-dev \
@@ -56,14 +61,14 @@ RUN apt install --no-install-recommends -y \
 
 RUN mkdir -p /ros2_build/src
 WORKDIR /ros2_build
-RUN wget https://raw.githubusercontent.com/Lien182/ros2/galactic/ros2.repos --no-check-certificate
+RUN wget https://raw.githubusercontent.com/ros2/ros2/galactic/ros2.repos
 RUN vcs import src < ros2.repos
 
 RUN c_rehash /etc/ssl/certs
 
 RUN rosdep init
 RUN rosdep update
-RUN rosdep install --from-paths src --ignore-src --rosdistro foxy -y --skip-keys "console_bridge fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers cyclonedds"
+RUN rosdep install --from-paths src --ignore-src --rosdistro galactic -y --skip-keys "fastcdr rti-connext-dds-5.3.1 urdfdom_headers"
 
 
 RUN cd /ros2_build/
@@ -71,7 +76,7 @@ RUN cd /ros2_build/
 RUN colcon build --symlink-install --merge-install
 
 
-RUN apt update && apt install -y nano gcc g++ libopencv-dev libeigen3-dev libpython3.6-dev libglew-dev zip
+RUN apt update && apt install -y nano gcc g++ libopencv-dev libeigen3-dev libglew-dev zip
 
 WORKDIR /ws
 
