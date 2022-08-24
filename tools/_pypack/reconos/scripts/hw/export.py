@@ -1,5 +1,6 @@
 import reconos.utils.shutil2 as shutil2
 import reconos.utils.template as template
+import reconos.utils.msg_parsing as mp
 
 import logging
 import argparse
