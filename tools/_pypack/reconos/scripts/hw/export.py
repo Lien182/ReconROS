@@ -64,6 +64,52 @@ def get_dict(prj):
 				d["THREADS"].append(d2)
 			dictionary["SLOTS"].append(d)
 	# Prepare strings to define RM configurations because it is difficult to handle purely with template functionality
+
+
+	dictionary["HWTOPICS"] = []
+
+	for i, topic in enumerate([_ for _ in prj.resources if (_.group == "__global_ressource_group___") and (_.type == "hwtopic")]):
+		d = {}
+		print("-----topic------")
+		print(topic)
+		d["Name"] = topic.name
+		d["MsgType"] = topic.args[1]
+		d["SUBSCRIBERS"] = []
+		d["PUBLISHERS"] = []
+		num_hw_subs = 0
+		num_hw_pubs = 0
+
+		for s in prj.slots:
+			if s.threads:
+				print(s.threads)
+				for t in s.threads:
+					print("thread resources:")
+					print(str(t.resources))
+					print("-------")	
+				
+				for i, sub in enumerate([_ for _ in t.resources if (_.type == "hwtopicsub") and (_.name==topic.name)]):
+					dd = {}
+					
+					dd["SlotId"] =  s.id
+					dd["SubNr"] = num_hw_subs
+					d["SUBSCRIBERS"].append(dd)
+					num_hw_subs = num_hw_subs + 1
+
+				
+				for i, pub in enumerate([_ for _ in t.resources if (_.type == "hwtopicpub") and (_.name==topic.name)]):
+					print(pub,i)
+					dd = {}
+					print("found publisher {}".format(t.name))
+					dd["SlotId"] =  s.id
+					dd["PubNr"] = num_hw_pubs
+					d["PUBLISHERS"].append(dd)
+					num_hw_pubs = num_hw_pubs + 1
+
+		d["NUM_SUBS"] = num_hw_subs
+		d["NUM_PUBS"] = num_hw_pubs
+		dictionary["HWTOPICS"].append(d)
+
+
 	dictionary["THREADS"] = []
 	config_id = 0
 
@@ -244,7 +290,7 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		files = shutil2.listfiles(srcs, True)
 		dictionary["FILES"] = [{"File": _} for _ in files]
 		dictionary["RESOURCES"] = []
-		for i, r in enumerate(thread.resources):
+		for i, r in enumerate([_ for _ in thread.resources if (_.type != "hwtopicsub") or (_.type != "hwtopicpub")]):
 			d = {}
 			d["NameUpper"] = (r.group + "_" + r.name).upper()
 			d["NameLower"] = (r.group + "_" + r.name).lower()
@@ -253,6 +299,54 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 			d["Type"] = r.type
 			d["TypeUpper"] = r.type.upper()
 			dictionary["RESOURCES"].append(d)
+
+
+		# parsing ROS message definitions
+		paths = ["/home/student/hwtopics/reconros/lib/ros_msgs/common_interfaces", "/home/student/hwtopics/reconros/lib/ros_msgs/rcl_interfaces"]
+		msg_lib = mp.parse_msg_lib(paths)
+		if(len(msg_lib) > 0):
+			print("-------------------------------Found msgs------------------------------")
+			print(msg_lib.keys())
+		else:
+			print("Did not find any ROS-message definitions in the following paths:")
+			for p in paths:
+				print(p)
+
+		# build msg dictionary for subscriber of hwtopic
+		dictionary["HWTOPICSSUB"] = []
+		for r in [_ for _ in thread.resources if _.type == "hwtopicsub"]:
+			d = {}
+			d["Name"] = r.name
+			my_msg = msg_lib[r.args]
+			temp = mp.build_msg_dict(my_msg, msg_lib, mp.primitive_lib)
+			if(type(temp == dict)):
+				print("----- Sucessfully build msg dict for subscriber -----")
+				print("-----------------------------------------------------")
+				print(temp)
+				d.update(temp)
+			else:
+				print("Could not build msg dict for subscriber of hwtopic")
+
+			dictionary["HWTOPICSSUB"].append(d)
+
+		# build msg dict for publisher of hwtopic
+		dictionary["HWTOPICSPUB"] = []
+		for r in [_ for _ in thread.resources if _.type == "hwtopicpub"]:
+			d = {}
+			d["Name"] = r.name
+			my_msg = msg_lib[r.args]
+			temp = mp.build_msg_dict(my_msg, msg_lib, mp.primitive_lib)
+			if(type(temp == dict)):
+				print("----- sucessfully build msg dict for publisher ------")
+				print("-----------------------------------------------------")
+				print(temp)
+				d.update(temp)
+			else:
+				print("Could not build msg dict for publisher of hwtopic")
+			
+			dictionary["HWTOPICSPUB"].append(d)
+
+
 
 		log.info("Generating temporary HLS project in " + tmp.name + " ...")
 		prj.apply_template("thread_hls_build", dictionary, tmp.name)
@@ -279,6 +373,19 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 		dictionary["MEM"] = thread.mem
 		dictionary["MEM_N"] = not thread.mem
 		dictionary["HWSOURCE"] = thread.hwsource
+
+		dictionary["HWTOPICSSUB"] = []
+		for r in [_ for _ in thread.resources if _.type == "hwtopicsub"]:
+			d = {}
+			d["Name"] = r.name
+			dictionary["HWTOPICSSUB"].append(d)
+
+		dictionary["HWTOPICSPUB"] = []
+		for r in [_ for _ in thread.resources if _.type == "hwtopicpub"]:
+			d = {}
+			d["Name"] = r.name
+			dictionary["HWTOPICSPUB"].append(d)
+
 		srcs = shutil2.join(tmp.name, "hls", "sol", "syn", "vhdl")
 		#HLS instantiates subcores (e.g. floating point units) in VHDL form during the export step
 		#The path above contains only .tcl instantiations, which our IP Packager flow doesn't understand
