@@ -27,6 +27,9 @@
 #include "stdint.h"
 #include "ap_int.h"
 
+#include "ap_axi_sdata.h"
+#include <sensor_msgs/msg/image.h>
+
 /* == Helper definitions =============================================== */
 
 #define RRBASETYPE 			<<RRBASETYPE>>

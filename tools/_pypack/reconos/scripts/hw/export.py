@@ -303,7 +303,7 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 
 		# parsing ROS message definitions
-		paths = ["/home/student/hwtopics/reconros/lib/ros_msgs/common_interfaces", "/home/student/hwtopics/reconros/lib/ros_msgs/rcl_interfaces"]
+		paths = ["/home/student/Desktop/forked_ReconROS/ReconROS/lib/ros_msgs/common_interfaces", "/home/student/Desktop/forked_ReconROS/ReconROS/lib/ros_msgs/rcl_interfaces"]
 		msg_lib = mp.parse_msg_lib(paths)
 		if(len(msg_lib) > 0):
 			print("-------------------------------Found msgs------------------------------")
@@ -329,7 +329,7 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 				print("Could not build msg dict for subscriber of hwtopic")
 
 			dictionary["HWTOPICSSUB"].append(d)
-
+		print("test")
 		# build msg dict for publisher of hwtopic
 		dictionary["HWTOPICSPUB"] = []
 		for r in [_ for _ in thread.resources if _.type == "hwtopicpub"]:
@@ -386,6 +386,13 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 			d = {}
 			d["Name"] = r.name
 			dictionary["HWTOPICSPUB"].append(d)
+
+		if(len(dictionary["HWTOPICSPUB"]) != 0 or  len(dictionary["HWTOPICSSUB"]) != 0):
+			dictionary["RTIMPRESETDECLARATION"] = "ap_rst_n : in std_logic"
+			dictionary["RTIMPRESETMAPPING"] = "ap_rst_n => not HWT_Rst"
+		else:
+			dictionary["RTIMPRESETDECLARATION"] = "ap_rst : in std_logic"
+			dictionary["RTIMPRESETMAPPING"] = "ap_rst => HWT_Rst"
 
 		srcs = shutil2.join(tmp.name, "hls", "sol", "syn", "vhdl")
 		#HLS instantiates subcores (e.g. floating point units) in VHDL form during the export step

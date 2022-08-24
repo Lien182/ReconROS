@@ -1,0 +1,69 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:35 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Wed Aug 24 14:54:28 2022
+# Process ID: 18876
+# Current directory: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app
+# Command line: vivado
+# Log file: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.log
+# Journal file: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd}
+startgroup
+create_bd_cell -type ip -vlnv cs.upb.de:reconos:rt_athreadb:1.0 rt_athreadb_0
+endgroup
+startgroup
+create_bd_cell -type ip -vlnv cs.upb.de:reconos:regslice_both_w1:1.0 regslice_both_w1_0
+endgroup
+ipx::edit_ip_in_project -upgrade true -name regslice_both_w1_v1_0_project -directory /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.tmp/regslice_both_w1_v1_0_project /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/rt_athreada_v1_00_a/component.xml
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top rt_athreada [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+ipx::merge_project_changes files [ipx::current_core]
+ipx::merge_project_changes hdl_parameters [ipx::current_core]
+ipx::remove_bus_interface ap_rst [ipx::current_core]
+ipx::remove_bus_interface ap_clk [ipx::current_core]
+set_property core_revision 2 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project -delete
+update_ip_catalog -rebuild -repo_path /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores
+report_ip_status -name ip_status 
+upgrade_ip [get_ips  design_1_regslice_both_w1_0_0] -log ip_upgrade.log
+export_ip_user_files -of_objects [get_ips design_1_regslice_both_w1_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+report_ip_status -name ip_status 
+update_ip_catalog -rebuild -scan_changes
+report_ip_status -name ip_status
+delete_bd_objs [get_bd_cells rt_athreadb_0]
+startgroup
+make_bd_pins_external  [get_bd_cells regslice_both_w1_0]
+make_bd_intf_pins_external  [get_bd_cells regslice_both_w1_0]
+endgroup
+save_bd_design
+make_wrapper -files [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -top
+add_files -norecurse /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+report_ip_status -name ip_status 
+upgrade_ip -vlnv cs.upb.de:reconos:regslice_both_w1:1.0 [get_ips  design_1_regslice_both_w1_0_0] -log ip_upgrade.log
+export_ip_user_files -of_objects [get_ips design_1_regslice_both_w1_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+catch { config_ip_cache -export [get_ips -all design_1_regslice_both_w1_0_0] }
+export_ip_user_files -of_objects [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+launch_runs design_1_regslice_both_w1_0_0_synth_1 -jobs 4
+wait_on_run design_1_regslice_both_w1_0_0_synth_1
+export_simulation -of_objects [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files/sim_scripts -ip_user_files_dir /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files -ipstatic_source_dir /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/modelsim} {questa=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/questa} {ies=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/ies} {xcelium=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/xcelium} {vcs=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/vcs} {riviera=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+report_ip_status -name ip_status 
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1

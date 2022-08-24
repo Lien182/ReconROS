@@ -1,0 +1,196 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:35 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Wed Aug 24 14:54:28 2022
+# Process ID: 18876
+# Current directory: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app
+# Command line: vivado
+# Log file: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.log
+# Journal file: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2020.1/data/ip'.
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+open_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:06 . Memory (MB): peak = 7087.426 ; gain = 22.238 ; free physical = 1785 ; free virtual = 10319
+update_compile_order -fileset sources_1
+open_bd_design {/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd}
+Successfully read diagram <design_1> from BD file </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd>
+startgroup
+create_bd_cell -type ip -vlnv cs.upb.de:reconos:rt_athreadb:1.0 rt_athreadb_0
+endgroup
+startgroup
+create_bd_cell -type ip -vlnv cs.upb.de:reconos:regslice_both_w1:1.0 regslice_both_w1_0
+endgroup
+ipx::edit_ip_in_project -upgrade true -name regslice_both_w1_v1_0_project -directory /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.tmp/regslice_both_w1_v1_0_project /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/rt_athreada_v1_00_a/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2020.1/data/ip'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+update_compile_order -fileset sources_1
+set_property top rt_athreada [current_fileset]
+update_compile_order -fileset sources_1
+ipx::merge_project_changes files [ipx::current_core]
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+WARNING: [IP_Flow 19-3833] Unreferenced file from the top module is not packaged: '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/reconos_v3_01_a/hdl/vhdl/reconos_pkg.vhd'.
+WARNING: [IP_Flow 19-5226] Project source file '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/rt_athreada_v1_00_a/component.xml' ignored by IP packager.
+ipx::merge_project_changes hdl_parameters [ipx::current_core]
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+WARNING: [IP_Flow 19-3833] Unreferenced file from the top module is not packaged: '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/reconos_v3_01_a/hdl/vhdl/reconos_pkg.vhd'.
+WARNING: [IP_Flow 19-5226] Project source file '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/rt_athreada_v1_00_a/component.xml' ignored by IP packager.
+INFO: [IP_Flow 7-560]  
+INFO: [IP_Flow 7-560]  
+CRITICAL WARNING: [IP_Flow 19-4834] IP port (ap_rst) was removed from the interface 'ap_rst'. Please review the IP interface 'ap_rst'.
+CRITICAL WARNING: [IP_Flow 19-4834] IP port (ap_clk) was removed from the interface 'ap_clk'. Please review the IP interface 'ap_clk'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Sw2Hw' of definition 'cs.upb.de:reconos:FIFO64_S:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Sw2Hw' of definition 'cs.upb.de:reconos:FIFO64_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Hw2Sw' of definition 'cs.upb.de:reconos:FIFO64_M:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Hw2Sw' of definition 'cs.upb.de:reconos:FIFO64_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF64_Hwt2Mem' of definition 'cs.upb.de:reconos:FIFO64_M:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF64_Hwt2Mem' of definition 'cs.upb.de:reconos:FIFO64_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF64_Mem2Hwt' of definition 'cs.upb.de:reconos:FIFO64_S:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF64_Mem2Hwt' of definition 'cs.upb.de:reconos:FIFO64_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Clk' of definition 'xilinx.com:signal:clock:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Clk' of definition 'xilinx.com:signal:clock:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Rst' of definition 'xilinx.com:signal:reset:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Rst' of definition 'xilinx.com:signal:reset:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'nicehwtopic' of definition 'xilinx.com:interface:axis:1.0' (from X_INTERFACE_INFO parameter from HDL file).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'nicehwtopic' of definition 'xilinx.com:interface:axis:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'HWT_Rst'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'OSIF_Sw2Hw'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Rst': Added interface parameter 'POLARITY' with value 'ACTIVE_HIGH'.
+ERROR: [Common 17-39] 'ipx::merge_project_changes' failed due to earlier errors.
+ipx::remove_bus_interface ap_rst [ipx::current_core]
+ipx::remove_bus_interface ap_clk [ipx::current_core]
+set_property core_revision 2 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project -delete
+update_ip_catalog -rebuild -repo_path /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores'
+report_ip_status -name ip_status 
+upgrade_ip [get_ips  design_1_regslice_both_w1_0_0] -log ip_upgrade.log
+Upgrading '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd'
+WARNING: [IP_Flow 19-4316] Parameter 'DataWidth' is no longer present on the upgraded IP 'design_1_regslice_both_w1_0_0', and cannot be set to '1'
+INFO: [IP_Flow 19-3422] Upgraded design_1_regslice_both_w1_0_0 (regslice_both_w1_v1_0 1.0) from revision 1 to revision 2
+WARNING: [IP_Flow 19-4699] Upgrade has removed interface 'ap_clk'
+WARNING: [IP_Flow 19-4699] Upgrade has removed interface 'ap_rst'
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'HWT_Clk' (xilinx.com:signal:clock:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'HWT_Rst' (xilinx.com:signal:reset:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'MEMIF64_Hwt2Mem' (cs.upb.de:reconos:FIFO64_M:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'MEMIF64_Mem2Hwt' (cs.upb.de:reconos:FIFO64_S:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'OSIF_Hw2Sw' (cs.upb.de:reconos:FIFO64_M:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'OSIF_Sw2Hw' (cs.upb.de:reconos:FIFO64_S:1.0)
+WARNING: [IP_Flow 19-4697] Upgrade has added interface 'nicehwtopic' (xilinx.com:interface:axis:1.0)
+WARNING: [IP_Flow 19-3670] Detected external interface differences while upgrading 'design_1_regslice_both_w1_0_0'.
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'ack_in'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'ack_out'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'ap_clk'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'ap_rst'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'apdone_blk'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'data_in'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'data_out'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'vld_in'
+WARNING: [IP_Flow 19-4700] Upgrade has removed port 'vld_out'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'DEBUG'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'HWT_Clk'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'HWT_Rst'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'HWT_Signal'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Hwt2Mem_Data'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Hwt2Mem_Full'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Hwt2Mem_WE'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Mem2Hwt_Data'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Mem2Hwt_Empty'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'MEMIF64_Mem2Hwt_RE'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Hw2Sw_Data'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Hw2Sw_Full'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Hw2Sw_WE'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Sw2Hw_Data'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Sw2Hw_Empty'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'OSIF_Sw2Hw_RE'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TDATA'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TDEST'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TID'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TKEEP'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TLAST'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TREADY'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TSTRB'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TUSER'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'nicehwtopic_TVALID'
+WARNING: [IP_Flow 19-3298] Detected external port differences while upgrading 'design_1_regslice_both_w1_0_0'. These changes may impact your design.
+WARNING: [IP_Flow 19-5891] Detected address segment differences while upgrading 'design_1_regslice_both_w1_0_0'. These changes may impact your design.
+CRITICAL WARNING: [Coretcl 2-1279] The upgrade of 'design_1_regslice_both_w1_0_0' has identified issues that may require user intervention. Please review the upgrade log '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/ip_upgrade.log', and verify that the upgraded IP is correctly configured.
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/ui/bd_1f5defd0.ui> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_regslice_both_w1_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+ERROR: [BD 41-758] The following clock pins are not connected to a valid clock source: 
+/rt_athreadb_0/HWT_Clk
+/regslice_both_w1_0/HWT_Clk
+
+ERROR: [BD 41-1031] Hdl Generation failed for the IP Integrator design /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd 
+ERROR: [Common 17-39] 'generate_target' failed due to earlier errors.
+report_ip_status -name ip_status 
+update_ip_catalog -rebuild -scan_changes
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+report_ip_status -name ip_status
+delete_bd_objs [get_bd_cells rt_athreadb_0]
+startgroup
+make_bd_pins_external  [get_bd_cells regslice_both_w1_0]
+make_bd_intf_pins_external  [get_bd_cells regslice_both_w1_0]
+endgroup
+save_bd_design
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/ui/bd_1f5defd0.ui> 
+make_wrapper -files [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -top
+CRITICAL WARNING: [BD 41-1178] The design is using an old version of the following IPs. It is recommended that you upgrade these cells to their latest version: 
+/regslice_both_w1_0
+
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/synth/design_1.vhd
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/sim/design_1.vhd
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+add_files -norecurse /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+report_ip_status -name ip_status 
+upgrade_ip -vlnv cs.upb.de:reconos:regslice_both_w1:1.0 [get_ips  design_1_regslice_both_w1_0_0] -log ip_upgrade.log
+Upgrading '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-1972] Upgraded design_1_regslice_both_w1_0_0 from regslice_both_w1_v1_0 1.0 to regslice_both_w1_v1_0 1.0
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_regslice_both_w1_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/synth/design_1.vhd
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/sim/design_1.vhd
+VHDL Output written to : /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+INFO: [BD 41-1029] Generation completed for the IP Integrator block regslice_both_w1_0 .
+Exporting to file /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+catch { config_ip_cache -export [get_ips -all design_1_regslice_both_w1_0_0] }
+export_ip_user_files -of_objects [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd]
+launch_runs design_1_regslice_both_w1_0_0_synth_1 -jobs 4
+[Wed Aug 24 15:00:27 2022] Launched design_1_regslice_both_w1_0_0_synth_1...
+Run output will be captured here: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.runs/design_1_regslice_both_w1_0_0_synth_1/runme.log
+export_simulation -of_objects [get_files /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files/sim_scripts -ip_user_files_dir /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files -ipstatic_source_dir /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/modelsim} {questa=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/questa} {ies=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/ies} {xcelium=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/xcelium} {vcs=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/vcs} {riviera=/home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+report_ip_status -name ip_status 
+launch_runs synth_1 -jobs 4
+[Wed Aug 24 15:00:39 2022] Launched design_1_regslice_both_w1_0_0_synth_1...
+Run output will be captured here: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.runs/design_1_regslice_both_w1_0_0_synth_1/runme.log
+[Wed Aug 24 15:00:39 2022] Launched synth_1...
+Run output will be captured here: /home/student/Desktop/forked_ReconROS/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.runs/synth_1/runme.log
+exit
+INFO: [Common 17-206] Exiting Vivado at Wed Aug 24 15:04:09 2022...

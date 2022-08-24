@@ -406,7 +406,52 @@ class Project:
 						self.resources.append(resource)
 
 					else:
-						self.resources.append(resource)
+						if(not ((resource.type == "rossub" and resource.args[len(resource.args)-1] == "hw") or (resource.type == "rospub" and resource.args[len(resource.args)-1] == "hw"))):
+							self.resources.append(resource)
+
+					if (resource.type == "rossub" and resource.args[len(resource.args)-1] == "hw") or (resource.type == "rospub" and resource.args[len(resource.args)-1] == "hw"):
+						#we found a hw topic.
+						#is it already in the resources?
+						#def __init__(self, name, type_, args, group):
+						#resource = Resource(r, match[0], match[1:], group)
+						if resource.type == "rossub":
+							localtype = "hwtopicsub"
+							print("Found a subscriber!")
+							pubsub_incr = [1, 0]
+
+						elif (resource.type == "rospub") :
+							localtype = "hwtopicpub"
+							print("Found a publisher!")
+							pubsub_incr = [0, 1]
+
+
+						###Global resource group
+						hwtopicisnotyetinthelist = 1
+
+						for r in self.resources:
+							if r.name == match[3].replace('"', '') and r.group == "__global_ressource_group___":
+								hwtopicisnotyetinthelist = 0
+								r.args[0][0] += pubsub_incr[0]
+								r.args[0][1] += pubsub_incr[1]
+								print("global topic already defined, set arg to" + str(r.args))
+					
+
+						if(hwtopicisnotyetinthelist == 1):
+							self.resources.append(Resource(match[3].replace('"', ''), "hwtopic", [pubsub_incr ,resource.args[1]],"__global_ressource_group___")) # 1 = first 
+							print("Added hwtopic {} to global resource group {} ".format(match[3], "__global_ressource_group___") )
+
+
+						###Local resource group
+						hwtopicisnotyetinthelist = 1
+
+						for r in self.resources:
+							if r.name == match[3].replace('"', '') and r.group == resource.group and r.type == localtype:
+								hwtopicisnotyetinthelist = 0
+
+						if(hwtopicisnotyetinthelist == 1):
+							self.resources.append(Resource(match[3].replace('"', ''), localtype, resource.args[1], group))
+							print("Added hwtopic {} to local resource group {}; localtype {} ".format(match[3], group, localtype) )
+				
 				
 
 	#

@@ -71,6 +71,9 @@ end entity rt_<<NAME>>;
 architecture implementation of rt_<<NAME>> is
 <<end if>>
 	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_CORE_INFO : STRING;
+	ATTRIBUTE X_CORE_INFO OF implementation: ARCHITECTURE IS "rt_<<NAME>>,Vivado 2020.1";
+
 	ATTRIBUTE X_INTERFACE_INFO : STRING;
 	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
 
@@ -148,8 +151,7 @@ architecture implementation of rt_<<NAME>> is
 <<end generate>>
 
 			ap_clk : in std_logic;
-			ap_rst : in std_logic;
-
+			hwt_signal : IN STD_LOGIC;
 			osif_sw2hw_v_dout    : in std_logic_vector (63 downto 0);
 			osif_sw2hw_v_empty_n : in std_logic;
 			osif_sw2hw_v_read    : out std_logic;
@@ -164,10 +166,14 @@ architecture implementation of rt_<<NAME>> is
 
 			memif_mem2hwt_v_dout    : in std_logic_vector (63 downto 0);
 			memif_mem2hwt_v_empty_n : in std_logic;
-			memif_mem2hwt_v_read    : out std_logic
+			memif_mem2hwt_v_read    : out std_logic;
+		
+			<<RTIMPRESETDECLARATION>>
+			
 		);
   	end component;
 <<end if>>
+
 
 <<if VIVADO2021==True>>
 	component rt_imp is
@@ -268,7 +274,7 @@ begin
 	rt_imp_inst : rt_imp
 		port map (
 			ap_clk => HWT_Clk,
-			ap_rst => HWT_Rst,
+			hwt_signal => HWT_Signal,
 
 			osif_sw2hw_v_dout    => osif_sw2hw_v_dout,
 			osif_sw2hw_v_empty_n => osif_sw2hw_v_empty_n,
@@ -308,9 +314,9 @@ begin
 
 			memif_mem2hwt_v_dout    => memif_mem2hwt_v_dout,
 			memif_mem2hwt_v_empty_n => memif_mem2hwt_v_empty_n,
-			memif_mem2hwt_v_read    => memif_mem2hwt_v_read
+			memif_mem2hwt_v_read    => memif_mem2hwt_v_read,
 
-
+			<<RTIMPRESETMAPPING>>
 	);
 <<end if>>
 
@@ -318,7 +324,7 @@ begin
 	rt_imp_inst : rt_imp
 		port map (
 			ap_clk => HWT_Clk,
-			ap_rst => HWT_Rst,
+
 			hwt_signal => HWT_Signal,
 			osif_sw2hw_dout    => osif_sw2hw_v_dout,
 			osif_sw2hw_empty_n => osif_sw2hw_v_empty_n,
@@ -358,9 +364,9 @@ begin
 
 			memif_mem2hwt_dout    => memif_mem2hwt_v_dout,
 			memif_mem2hwt_empty_n => memif_mem2hwt_v_empty_n,
-			memif_mem2hwt_read    => memif_mem2hwt_v_read
+			memif_mem2hwt_read    => memif_mem2hwt_v_read,
 
-
+			<<RTIMPRESETMAPPING>>
 	);
 <<end if>>	
 end architecture;

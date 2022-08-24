@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2017.1 (64-bit)
+# SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+# IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+# Start of session at: Thu Jul 21 14:41:59 2022
+# Process ID: 6264
+# Current directory: /home/student/hwtopics/reconros/demos/ros_hwtopic_demo/server_app
+# Command line: vivado
+# Log file: /home/student/hwtopics/reconros/demos/ros_hwtopic_demo/server_app/vivado.log
+# Journal file: /home/student/hwtopics/reconros/demos/ros_hwtopic_demo/server_app/vivado.jou
+#-----------------------------------------------------------
+start_gui
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Jul 21 14:42:13 2022...
