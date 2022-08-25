@@ -11,6 +11,7 @@ import subprocess
 import os
 from os import listdir
 from os.path import isfile, join, isdir
+from pathlib import Path
 
 log = logging.getLogger(__name__)
 
@@ -303,7 +304,9 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 
 		# parsing ROS message definitions
-		paths = ["/home/student/Desktop/forked_ReconROS/ReconROS/lib/ros_msgs/common_interfaces", "/home/student/Desktop/forked_ReconROS/ReconROS/lib/ros_msgs/rcl_interfaces"]
+		msglib_base_path = Path(os.getcwd()).parent.parent.parent.absolute()
+		msglib_base_path = str(msglib_base_path) + "/lib/ros_msgs"
+		paths = [msglib_base_path + "/common_interfaces", msglib_base_path + "/rcl_interfaces"]
 		msg_lib = mp.parse_msg_lib(paths)
 		if(len(msg_lib) > 0):
 			print("-------------------------------Found msgs------------------------------")
