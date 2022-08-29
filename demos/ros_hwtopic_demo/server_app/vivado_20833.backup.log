@@ -2,8 +2,8 @@
 # Vivado v2018.2 (64-bit)
 # SW Build 2258646 on Thu Jun 14 20:02:38 MDT 2018
 # IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
-# Start of session at: Mon Aug 29 14:18:45 2022
-# Process ID: 4072
+# Start of session at: Mon Aug 29 10:39:55 2022
+# Process ID: 20833
 # Current directory: /home/christian/Schreibtisch/Sorel/ReconROS/demos/ros_hwtopic_demo/server_app
 # Command line: vivado
 # Log file: /home/christian/Schreibtisch/Sorel/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.log
@@ -21,7 +21,7 @@ WARNING: [IP_Flow 19-3664] IP 'design_1_slot_1_0' generated file not found '/hom
 WARNING: [IP_Flow 19-3664] IP 'design_1_slot_1_0' generated file not found '/home/christian/Schreibtisch/Sorel/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/ip/design_1_slot_1_0/design_1_slot_1_0_stub.vhdl'. Please regenerate to continue.
 WARNING: [IP_Flow 19-3664] IP 'design_1_slot_1_0' generated file not found '/home/christian/Schreibtisch/Sorel/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/ip/design_1_slot_1_0/design_1_slot_1_0_sim_netlist.v'. Please regenerate to continue.
 WARNING: [IP_Flow 19-3664] IP 'design_1_slot_1_0' generated file not found '/home/christian/Schreibtisch/Sorel/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/ip/design_1_slot_1_0/design_1_slot_1_0_sim_netlist.vhdl'. Please regenerate to continue.
-open_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:11 . Memory (MB): peak = 6512.488 ; gain = 501.289 ; free physical = 10427 ; free virtual = 26680
+open_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:11 . Memory (MB): peak = 6510.609 ; gain = 488.145 ; free physical = 9554 ; free virtual = 27341
 update_compile_order -fileset sources_1
 exit
-INFO: [Common 17-206] Exiting Vivado at Mon Aug 29 14:20:50 2022...
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 29 10:48:17 2022...
