@@ -51,8 +51,8 @@ typedef ap_axis<32,1,1,1> t_stream;
  }
  */
 #define THREAD_ENTRY() void rt_imp(volatile bool &hwt_signal, \
-        <<generate for HWTOPICSSUB>>hls::stream<t_stream> <<Name>>,<<end generate>> \
-        <<generate for HWTOPICSPUB>>hls::stream<t_stream> <<Name>>,<<end generate>> \
+        <<generate for HWTOPICSSUB>>hls::stream<t_stream> &<<Name>>,<<end generate>> \
+        <<generate for HWTOPICSPUB>>hls::stream<t_stream> &<<Name>>,<<end generate>> \
                                    hls::stream<RRUBASETYPE> & osif_sw2hw,\
                                    hls::stream<RRUBASETYPE> & osif_hw2sw,\
                                    hls::stream<RRUBASETYPE> & memif_hwt2mem,\
