@@ -34,7 +34,7 @@ THREAD_ENTRY() {
 
 	uint8_t image_data[200];
 
-	//sensor_msgs__msg__Image image_msg;
+	sensor_msgs__msg__Image image_msg;
 
 	//image_msg.data.size = 200;
 	//image_msg.data.capacity = 200;
@@ -50,14 +50,21 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		//ROS_READ_HWTOPIC_nicehwtopic(&nicehwtopic, image_msg);
-	
-		tmp_frame = nicehwtopic.read();
+		ROS_READ_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
+		tmp_frame.data = image_msg.height;
+
+		/*
+		for(uint16_t i = 0; i < 10; ++i)
+		{	
+			tmp_frame = nicehwtopic.read();
+		}
+		*/
+		
 
 
 		// copy message into external memory for publishing
 		uint64_t output_buffer_addr = MEMORY_GETOBJECTADDR(rthreada_img_output);
-		MEM_READ(output_buffer_addr,payload_addr, 8 );
+		MEM_READ(output_buffer_addr,payload_addr, 8 ); // wofür ist das MEM_READ hier? Wird doch sowieso überschrieben
 		payload_addr[0] = tmp_frame.data;
 		MEM_WRITE(payload_addr, output_buffer_addr, 8);
 /*

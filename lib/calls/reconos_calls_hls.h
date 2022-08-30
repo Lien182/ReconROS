@@ -412,6 +412,7 @@ typedef ap_axis<32,1,1,1> t_stream;
 
 <<generate for HWTOPICSPUB>>void ROS_PUBLISH_HWTOPIC_<<Name>>(hls::stream<t_stream>* <<Name>>, <<datatype>> msg)
 {
+	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<32,1,1,1> tmp_frame;
 	<<=generate for Primitives=>>
 		tmp_frame.data = msg.<<name>>; 
@@ -434,27 +435,19 @@ typedef ap_axis<32,1,1,1> t_stream;
 <<end generate>>
 
 
-<<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_<<Name>>(hls::stream<t_stream>* <<Name>>, <<datatype>> msg)
+<<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
 {
+	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<32,1,1,1> tmp_frame;
 
 	<<=generate for Primitives=>>
-		<<Name>>->read(tmp_frame);
-		msg.<<name>> = tmp_frame.data;
+		<<Name>>.read(tmp_frame);
+		msg-><<name>> = tmp_frame.data;
 	<<=end generate=>>
 
-	<<=generate for Arrays=>>
-		// <<name>>-array
-		<<Name>>->read(tmp_frame);
-		msg.<<name>>.size = tmp_frame.data;
-		<<Name>>->read(tmp_frame);
-		msg.<<name>>.capacity = tmp_frame.data;
-		for (uint16_t i = 0; i < <<num_elems>>; i++)
-		{
-			<<Name>>->read(tmp_frame);
-			msg.<<name>>.data[i] = tmp_frame.data;
-		}
-	<<=end generate=>>
+
+
+
 }
 <<end generate>>
 

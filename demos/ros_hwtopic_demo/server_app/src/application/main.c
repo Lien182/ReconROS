@@ -21,14 +21,8 @@ void print_help() {
 	       "ReconOS v4 hwtopic demo application\n"
 	       "--------------------------------\n"
 	       "\n"
-	       "Sorts a buffer full of data with a variable number of sw and hw threads.\n"
+	       "Subscribes to a topic, sends it via a hwtopic and publishes to a normal ROS topic .\n"
 	       "\n"
-	       "Usage:\n"
-	       "    sort_demo <num_hw_threads> <num_sw_threads>\n"
-	       "\n"
-	       "    <num_hw_threads> - Number of hardware threads to create. The maximum number is\n"
-	       "                       limited by the hardware design.\n"
-	       "    <num_sw_threads> - Number of software threads to create.\n"
 	       "\n"
 	);
 }
@@ -155,7 +149,7 @@ int main(int argc, char **argv) {
 	*/
 	reconos_thread_create_hwt_athreada(0);
 	reconos_thread_create_hwt_athreadb(0);
-	reconos_thread_create_hwt_athreadc(0);
+	//reconos_thread_create_hwt_athreadc(0);
 
 	/*
 	log("creating %d sw-thread:", num_swts);
