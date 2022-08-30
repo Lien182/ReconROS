@@ -71,8 +71,8 @@ def export_sw(args, swdir, link):
 		d["Name"] = t.name.lower()
 		d["Slots"] = ",".join([str(_.id) for _ in t.slots])
 		d["SlotCount"] = len(t.slots)
-		d["Resources"] = ",".join(["&" + (_.group + "_" + _.name).lower() + "_res" for _ in t.resources])
-		d["ResourceCount"] = len(t.resources)
+		d["Resources"] = ",".join(["&" + (_.group + "_" + _.name).lower() + "_res" for _ in t.resources if not (_.type=="hwtopic" or _.type=="hwtopicpub" or _.type=="hwtopicsub")])
+		d["ResourceCount"] = len([t.resources for _ in t.resources if not (_.type=="hwtopic" or _.type=="hwtopicpub" or _.type=="hwtopicsub")])
 		d["HasHw"] = t.hwsource is not None
 		d["HasSw"] = t.swsource is not None
 		dictionary["THREADS"].append(d)
@@ -129,7 +129,10 @@ def export_sw(args, swdir, link):
 					#print(d["Args"])
 					break
 		else:
-			d["Args"] = ", ".join(r.args)
+			if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+				print(r.type +";" +  str(r.args))
+				d["Args"] = ", ".join(r.args)
+			#d["Args"] = ", ".join(r.args)
 		d["Id"] = r.id
 		if r.type == "rosmsg":
 			if len(r.args) == 3:
@@ -199,7 +202,10 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 
-		dictionary["RESOURCES"].append(d)
+		if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+			dictionary["RESOURCES"].append(d)
+		
+		#dictionary["RESOURCES"].append(d)
 
 
 		for idx in range(len(dictionary["RESOURCEGROUPS"])):
@@ -279,7 +285,9 @@ def export_sw_thread(args, swdir, link, thread):
 		d["HexLocalId"] = "%08x" % i
 		d["Type"] = r.type
 		d["TypeUpper"] = r.type.upper()
-		dictionary["RESOURCES"].append(d)
+		#dictionary["RESOURCES"].append(d)
+		if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+			dictionary["RESOURCES"].append(d)
 	dictionary["SOURCES"] = [shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.swsource)]
 
 	log.info("Generating export files ...")
