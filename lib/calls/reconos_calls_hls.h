@@ -445,7 +445,19 @@ typedef ap_axis<32,1,1,1> t_stream;
 		msg-><<name>> = tmp_frame.data;
 	<<=end generate=>>
 
-
+	<<=generate for Arrays=>>
+		// <<name>>-array
+		<<Name>>.read(tmp_frame);
+		msg-><<name>>.size = tmp_frame.data;
+		<<Name>>.read(tmp_frame);
+		msg-><<name>>.capacity = tmp_frame.data;
+		
+		for (uint16_t i = 0; i < <<num_elems>>; i++)
+		{
+			<<Name>>.read(tmp_frame);
+			msg-><<name>>.data[i] = tmp_frame.data;
+		}
+	<<=end generate=>>
 
 
 }

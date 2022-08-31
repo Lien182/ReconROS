@@ -33,12 +33,17 @@ THREAD_ENTRY() {
 	uint64_t payload_addr[1];
 
 	uint8_t image_data[200];
+	char encoding[5];
+	char frame_id[10];
+	//char 
 
 	sensor_msgs__msg__Image image_msg;
 
 	//image_msg.data.size = 200;
 	//image_msg.data.capacity = 200;
-	//image_msg.data.data = image_data;
+	image_msg.data.data = image_data;
+	image_msg.encoding.data = encoding;
+	image_msg.header.frame_id.data = frame_id;
 	
 
 	THREAD_INIT();
@@ -59,7 +64,6 @@ THREAD_ENTRY() {
 			tmp_frame = nicehwtopic.read();
 		}
 		*/
-		
 
 
 		// copy message into external memory for publishing
