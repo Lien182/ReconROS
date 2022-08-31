@@ -11,7 +11,7 @@
 #define FRAME_ID_SIZE 5
 #define ENCODING_SIZE 5
 #define DATA_SIZE 640 * 480 * 3 
-#define MEM_STEP 8
+#define MEM_STEP 8 // in bytes
 
 //extern rosidl_typesupport_introspection_c__MessageMembers_ Image__rosidl_typesupport_introspection_c__Image_message_members_;
 
@@ -30,7 +30,8 @@ THREAD_ENTRY() {
 	//RAM(uint32_t, BLOCK_SIZE, ram);
 	uint32_t addr, initdata;	
 	uint32_t pMessage;
-	uint64_t payload_addr[1];
+	uint64_t payload[1];
+	uint64_t payload_address[1];
 
 	uint8_t image_data[200];
 	char encoding[5];
@@ -51,65 +52,89 @@ THREAD_ENTRY() {
 
 	ap_axis<32,1,1,1> tmp_frame;
 
-	uint32_t address_offset = 0;
+	uint64_t address_offset = 0;
 
 	while(1) {
 
 		ROS_READ_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
-		tmp_frame.data = image_msg.height;
-
-		/*
-		for(uint16_t i = 0; i < 10; ++i)
-		{	
-			tmp_frame = nicehwtopic.read();
-		}
-		*/
-
+		
 
 		// copy message into external memory for publishing
 		uint64_t output_buffer_addr = MEMORY_GETOBJECTADDR(rthreada_img_output);
-		MEM_READ(output_buffer_addr,payload_addr, 8 ); // wofür ist das MEM_READ hier? Wird doch sowieso überschrieben
-		payload_addr[0] = tmp_frame.data;
-		MEM_WRITE(payload_addr, output_buffer_addr, 8);
-/*
-		//MEM_WRITE(&image_msg.header.stamp.sec, output_buffer_addr, MEM_STEP);
-		MEM_WRITE(&image_msg.header.stamp.sec, output_buffer_addr, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.header.stamp.nanosec, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
 		
-		MEM_WRITE(&image_msg.header.frame_id.size, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.header.frame_id.capacity, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(image_msg.header.frame_id.data, output_buffer_addr + address_offset, MEM_STEP*FRAME_ID_SIZE);
-		address_offset += FRAME_ID_SIZE * MEM_STEP;
+		//MEM_READ(output_buffer_addr,payload_addr, 8 ); // img_msg.data.data is a pointer, so we need 2 reads in total
+		//tmp_frame.data = image_msg.header.stamp.sec;
+		//payload_addr[0] = tmp_frame.data;
+		//MEM_WRITE(payload_addr, output_buffer_addr, 8);
 
-		MEM_WRITE(&image_msg.height, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.width, output_buffer_addr + address_offset, MEM_STEP);
+
+		payload[0] = image_msg.header.stamp.sec;
+		MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 		address_offset += MEM_STEP;
 
-		MEM_WRITE(&image_msg.encoding.size, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.encoding.capacity, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(image_msg.encoding.data, output_buffer_addr + address_offset, MEM_STEP*ENCODING_SIZE);
-		address_offset += ENCODING_SIZE * MEM_STEP;
-
-		MEM_WRITE(&image_msg.is_bigendian, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.step, output_buffer_addr + address_offset, MEM_STEP);
+		payload[0] = image_msg.header.stamp.nanosec;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
 
-		MEM_WRITE(&image_msg.data.size, output_buffer_addr + address_offset, MEM_STEP);
+		// frame_id-string
+		payload[0] = image_msg.header.frame_id.size;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-		MEM_WRITE(&image_msg.data.capacity, output_buffer_addr + address_offset, MEM_STEP);
-		address_offset += MEM_STEP;
-		MEM_WRITE(image_msg.data.data, output_buffer_addr + address_offset, MEM_STEP*DATA_SIZE);
-		address_offset += DATA_SIZE * MEM_STEP;
-*/
 
+		payload[0] = image_msg.header.frame_id.capacity;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
+		MEM_WRITE(image_msg.header.frame_id.data, payload_address[0], MEM_STEP * FRAME_ID_SIZE);							
+		address_offset += MEM_STEP;		
+		// possible problem: if the pointer to the array doesnt point to a location outside of the message 
+		//
+
+		payload[0] = image_msg.height;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		payload[0] = image_msg.width;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		// encoding-array
+		payload[0] = image_msg.encoding.size;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		payload[0] = image_msg.encoding.capacity;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
+		MEM_WRITE(image_msg.encoding.data, payload_address[0], MEM_STEP * ENCODING_SIZE);							
+		address_offset += MEM_STEP;	
+		//
+
+		payload[0] = image_msg.is_bigendian;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		payload[0] = image_msg.step;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+
+		// data-array
+		payload[0] = image_msg.data.size;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		payload[0] = image_msg.data.capacity;
+		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
+		address_offset += MEM_STEP;
+
+		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
+		MEM_WRITE(image_msg.data.data, payload_address[0], MEM_STEP * DATA_SIZE);							
+		address_offset += MEM_STEP;	
+		//
 
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
 	}
