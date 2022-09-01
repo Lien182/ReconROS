@@ -392,7 +392,9 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 
 		if(len(dictionary["HWTOPICSPUB"]) != 0 or  len(dictionary["HWTOPICSSUB"]) != 0):
 			dictionary["RTIMPRESETDECLARATION"] = "ap_rst_n : in std_logic"
-			dictionary["RTIMPRESETMAPPING"] = "ap_rst_n => not HWT_Rst"
+			dictionary["RTIMPRESETMAPPING"] = "ap_rst_n => rst_sig_n" 
+			dictionary["RTIMPRESETREMAPPINGSIGNAL"] = "signal rst_sig_n : std_logic;"
+			dictionary["RTIMPRESETREMAPPING"] = "rst_sig_n <= not HWT_Rst;"
 		else:
 			dictionary["RTIMPRESETDECLARATION"] = "ap_rst : in std_logic"
 			dictionary["RTIMPRESETMAPPING"] = "ap_rst => HWT_Rst"

@@ -240,6 +240,7 @@ architecture implementation of rt_<<NAME>> is
 	signal memif_mem2hwt_v_dout    : std_logic_vector(63 downto 0);
 	signal memif_mem2hwt_v_empty_n : std_logic;
 	signal memif_mem2hwt_v_read    : std_logic;
+	<<RTIMPRESETREMAPPINGSIGNAL>>
 begin
 	osif_sw2hw_v_dout    <= OSIF_Sw2Hw_Data;
 	osif_sw2hw_v_empty_n <= not OSIF_Sw2Hw_Empty;
@@ -256,6 +257,8 @@ begin
 	memif_mem2hwt_v_dout    <= MEMIF64_Mem2Hwt_Data;
 	memif_mem2hwt_v_empty_n <= not MEMIF64_Mem2Hwt_Empty;
 	MEMIF64_Mem2Hwt_RE        <= memif_mem2hwt_v_read;
+
+	<<RTIMPRESETREMAPPING>>
 
 	-- DEBUG(135 downto 104) <= osif_sw2hw_v_dout;
 	-- DEBUG(103) <= not osif_sw2hw_v_empty_n;
