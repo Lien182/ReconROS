@@ -28,7 +28,15 @@
 #include "ap_int.h"
 
 #include "ap_axi_sdata.h"
-#include <sensor_msgs/msg/image.h>
+//#include <sensor_msgs/msg/image.h>
+
+<<generate for HWTOPICSPUB>>
+#include <<<include>>>
+<<end generate>>
+
+<<generate for HWTOPICSSUB>>
+#include <<<include>>>
+<<end generate>>
 
 /* == Helper definitions =============================================== */
 

@@ -40,10 +40,12 @@ def _parse_msg_directory(path):
     msg_paths = _get_all_msg_paths(path)
     msg_names = _get_msg_names_from_paths(path + "/", msg_paths)
     msg_datatypes = _get_msg_datatypes_from_paths(path + "/", msg_paths)
+    msg_includes = _get_msg_include_paths_from_paths(path + "/", msg_paths)
     msg_lib = {}
     for c,msg_path in enumerate(msg_paths):
         msg_lib[msg_names[c]] = _parse_msg_from_msgfile(msg_path)
         msg_lib[msg_names[c]]["datatype"] = msg_datatypes[c]
+        msg_lib[msg_names[c]]["include"] = msg_includes[c]
     return msg_lib
 
 def _get_all_msg_paths(path):
@@ -73,6 +75,16 @@ def _get_msg_datatypes_from_paths(prefix, msg_paths):
         temp2 = "#_" + temp
         msg_datatypes.append(temp2)
     return msg_datatypes
+
+def _get_msg_include_paths_from_paths(prefix, msg_paths):
+    msg_includes = []
+    for path in msg_paths:
+        temp = path.replace(prefix, "")
+        temp = temp.replace(".msg", ".h")
+        temp2 = "##_" + temp
+        temp2 = temp2.lower()
+        msg_includes.append(temp2)
+    return msg_includes
 
 '''
 Parses a .msg file into a dictionary. field names are used as keys,
@@ -208,6 +220,7 @@ def _sort_into_datatypes(msg, primitive_lib):
     arrays = []
     
     datatype_found = False
+    includepath_found = False
      
     for key in msg.keys():
         if(msg[key][-1]=="]" or msg[key] == "string"): # array or string
@@ -235,6 +248,11 @@ def _sort_into_datatypes(msg, primitive_lib):
                 print("msg datatype: ", msg[key])
                 sorted_dict["datatype"] = msg[key].replace("#_", "")
                 datatype_found = True
+
+            if(msg[key][0:3] == "##_" and not includepath_found):
+                print("msg include path: ", msg[key])
+                sorted_dict["include"] = msg[key].replace("##_", "")
+                includepath_found = True
     
     sorted_dict["Primitives"] = primitives
     sorted_dict["Arrays"] = arrays
