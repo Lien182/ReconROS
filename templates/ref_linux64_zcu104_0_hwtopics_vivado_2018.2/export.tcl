@@ -458,22 +458,38 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
         startgroup
         create_bd_cell -type ip -vlnv xilinx.com:ip:axis_interconnect:2.1 axis_interconnect_<<Name>>
         endgroup
-        #number of slave interfaces (publisher), number of master interfaces (subscriber)
-        set_property -dict [list CONFIG.NUM_SI {<<NUM_PUBS>>} CONFIG.NUM_MI {<<NUM_SUBS>>} CONFIG.ARB_ON_TLAST {0}] [get_bd_cells axis_interconnect_<<Name>>]
+        # Number of slave interfaces (publisher), number of master interfaces (subscriber)
+        set_property -dict [list CONFIG.NUM_SI {<<NUM_PUBS>>} CONFIG.NUM_MI {1} CONFIG.ARB_ON_TLAST {0}] [get_bd_cells axis_interconnect_<<Name>>]
 
         connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/ACLK] [get_bd_pins reconos_clock_0/CLK1_Out]
-        # connect publishers to slave interfaces of axis interconnect 
+        connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
+        # Connect publishers to slave interfaces of axis interconnect 
         <<=generate for PUBLISHERS=>>
             connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axis_interconnect_<<Name>>/S0<<PubNr>>_AXIS] [get_bd_intf_pins slot_<<SlotId>>/<<Name>>]
             connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/S0<<PubNr>>_AXIS_ACLK] [get_bd_pins reconos_clock_0/CLK1_Out]
             connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/S0<<PubNr>>_AXIS_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
             
         <<=end generate=>>
-        # connect subscribers to master interfaces of axis interconnect 
+        # Connect subscribers to master interfaces of axis interconnect 
+        connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/M00_AXIS_ACLK] [get_bd_pins reconos_clock_0/CLK1_Out]
+        connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/M00_AXIS_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
+
+        # Broadcaster
+        startgroup
+          create_bd_cell -type ip -vlnv xilinx.com:ip:axis_broadcaster:1.1 axis_broadcaster_<<Name>>
+        endgroup
+        set_property -dict [list CONFIG.S_TDATA_NUM_BYTES.VALUE_SRC USER CONFIG.M_TDATA_NUM_BYTES.VALUE_SRC USER] [get_bd_cells axis_broadcaster_<<Name>>]
+        set_property -dict [list CONFIG.NUM_MI {<<NUM_AXIS_BR_SUBS>>} CONFIG.M_TDATA_NUM_BYTES {8} CONFIG.S_TDATA_NUM_BYTES {8} <<=generate for SUBSCRIBERS=>>CONFIG.M0<<SubNr>>_TDATA_REMAP {tdata[63:0]} <<=end generate=>> ] [get_bd_cells axis_broadcaster_<<Name>>]
+	      
+        connect_bd_net [get_bd_pins axis_broadcaster_<<Name>>/aclk] [get_bd_pins reconos_clock_0/CLK1_Out]
+	      connect_bd_net [get_bd_pins axis_broadcaster_<<Name>>/aresetn] [get_bd_pins reset_0/interconnect_aresetn]
+        
+        # Connect axis interconnect output (master) with axis broadcaster input (slave)
+        connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axis_interconnect_<<Name>>/M00_AXIS] [get_bd_intf_pins axis_broadcaster_<<Name>>/S_AXIS]
+
+        # Connect broadcaster with subscribers of hwtopic
         <<=generate for SUBSCRIBERS=>>
-            connect_bd_intf_net [get_bd_intf_pins slot_<<SlotId>>/<<Name>>] -boundary_type upper [get_bd_intf_pins axis_interconnect_<<Name>>/M0<<SubNr>>_AXIS]
-            connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/M0<<SubNr>>_AXIS_ACLK] [get_bd_pins reconos_clock_0/CLK1_Out]
-            connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/M0<<SubNr>>_AXIS_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
+          connect_bd_intf_net [get_bd_intf_pins axis_broadcaster_<<Name>>/M0<<SubNr>>_AXIS] [get_bd_intf_pins slot_<<SlotId>>/<<Name>>]
         <<=end generate=>>
     <<end generate>>
 

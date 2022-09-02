@@ -109,6 +109,10 @@ def get_dict(prj):
 
 		d["NUM_SUBS"] = num_hw_subs
 		d["NUM_PUBS"] = num_hw_pubs
+		if(num_hw_subs <= 1):
+			d["NUM_AXIS_BR_SUBS"] = 2
+		else:
+			d["NUM_AXIS_BR_SUBS"] = num_hw_subs
 		dictionary["HWTOPICS"].append(d)
 
 
