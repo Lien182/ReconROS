@@ -416,12 +416,12 @@ inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
 
 
 // Extensions for hardware topics
-typedef ap_axis<32,1,1,1> t_stream;
+typedef ap_axis<64,1,1,1> t_stream;
 
 <<generate for HWTOPICSPUB>>void ROS_PUBLISH_HWTOPIC_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
 {
 	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<32,1,1,1> tmp_frame;
+	ap_axis<64,1,1,1> tmp_frame;
 	<<=generate for Primitives=>>
 		tmp_frame.data = msg-><<name>>; 
 		<<Name>>.write(tmp_frame);
@@ -446,7 +446,7 @@ typedef ap_axis<32,1,1,1> t_stream;
 <<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
 {
 	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<32,1,1,1> tmp_frame;
+	ap_axis<64,1,1,1> tmp_frame;
 
 	<<=generate for Primitives=>>
 		<<Name>>.read(tmp_frame);

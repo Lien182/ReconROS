@@ -35,11 +35,11 @@ entity rt_<<NAME>> is
 		HWT_Signal : in  std_logic;
 
 <<generate for HWTOPICSSUB>>
-		<<Name>>_TDATA : IN STD_LOGIC_VECTOR (31 downto 0);
+		<<Name>>_TDATA : IN STD_LOGIC_VECTOR (63 downto 0);
 		<<Name>>_TVALID : IN STD_LOGIC;
 		<<Name>>_TREADY : OUT STD_LOGIC;
-		<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (3 downto 0);
-		<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (3 downto 0);
+		<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (7 downto 0);
+		<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (7 downto 0);
 		<<Name>>_TUSER : IN STD_LOGIC_VECTOR (0 downto 0);
 		<<Name>>_TLAST : IN STD_LOGIC_VECTOR (0 downto 0);
 		<<Name>>_TID : IN STD_LOGIC_VECTOR (0 downto 0);
@@ -47,11 +47,11 @@ entity rt_<<NAME>> is
 <<end generate>>
 
 <<generate for HWTOPICSPUB>>
-		<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (31 downto 0);
+		<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (63 downto 0);
 		<<Name>>_TVALID : OUT STD_LOGIC;
 		<<Name>>_TREADY : IN STD_LOGIC;
-		<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (3 downto 0);
-		<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (3 downto 0);
+		<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (7 downto 0);
+		<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (7 downto 0);
 		<<Name>>_TUSER : OUT STD_LOGIC_VECTOR (0 downto 0);
 		<<Name>>_TLAST : OUT STD_LOGIC_VECTOR (0 downto 0);
 		<<Name>>_TID : 	OUT STD_LOGIC_VECTOR (0 downto 0);
@@ -127,11 +127,11 @@ architecture implementation of rt_<<NAME>> is
 		port (
 
 <<generate for HWTOPICSSUB>>
-			<<Name>>_TDATA : IN STD_LOGIC_VECTOR (31 downto 0);
+			<<Name>>_TDATA : IN STD_LOGIC_VECTOR (63 downto 0);
 			<<Name>>_TVALID : IN STD_LOGIC;
 			<<Name>>_TREADY : OUT STD_LOGIC;
-			<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (3 downto 0);
-			<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (3 downto 0);
+			<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (7 downto 0);
+			<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (7 downto 0);
 			<<Name>>_TUSER : IN STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TLAST : IN STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TID : IN STD_LOGIC_VECTOR (0 downto 0);
@@ -139,11 +139,11 @@ architecture implementation of rt_<<NAME>> is
 <<end generate>>
 
 <<generate for HWTOPICSPUB>>
-			<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (31 downto 0);
+			<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (63 downto 0);
 			<<Name>>_TVALID : OUT STD_LOGIC;
 			<<Name>>_TREADY : IN STD_LOGIC;
-			<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (3 downto 0);
-			<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (3 downto 0);
+			<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (7 downto 0);
+			<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (7 downto 0);
 			<<Name>>_TUSER : OUT STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TLAST : OUT STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TID : OUT STD_LOGIC_VECTOR (0 downto 0);
@@ -180,11 +180,11 @@ architecture implementation of rt_<<NAME>> is
 		port (
 
 <<generate for HWTOPICSSUB>>
-			<<Name>>_TDATA : IN STD_LOGIC_VECTOR (31 downto 0);
+			<<Name>>_TDATA : IN STD_LOGIC_VECTOR (63 downto 0);
 			<<Name>>_TVALID : IN STD_LOGIC;
 			<<Name>>_TREADY : OUT STD_LOGIC;
-			<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (3 downto 0);
-			<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (3 downto 0);
+			<<Name>>_TKEEP : IN STD_LOGIC_VECTOR (7 downto 0);
+			<<Name>>_TSTRB : IN STD_LOGIC_VECTOR (7 downto 0);
 			<<Name>>_TUSER : IN STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TLAST : IN STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TID : IN STD_LOGIC_VECTOR (0 downto 0);
@@ -192,11 +192,11 @@ architecture implementation of rt_<<NAME>> is
 <<end generate>>
 
 <<generate for HWTOPICSPUB>>
-			<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (31 downto 0);
+			<<Name>>_TDATA : OUT STD_LOGIC_VECTOR (63 downto 0);
 			<<Name>>_TVALID : OUT STD_LOGIC;
 			<<Name>>_TREADY : IN STD_LOGIC;
-			<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (3 downto 0);
-			<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (3 downto 0);
+			<<Name>>_TKEEP : OUT STD_LOGIC_VECTOR (7 downto 0);
+			<<Name>>_TSTRB : OUT STD_LOGIC_VECTOR (7 downto 0);
 			<<Name>>_TUSER : OUT STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TLAST : OUT STD_LOGIC_VECTOR (0 downto 0);
 			<<Name>>_TID : OUT STD_LOGIC_VECTOR (0 downto 0);

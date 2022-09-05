@@ -38,7 +38,7 @@
 #define <<NameLower>> 0x<<HexLocalId>>
 <<end generate>>
 
-typedef ap_axis<32,1,1,1> t_stream;
+typedef ap_axis<64,1,1,1> t_stream;
 /* == Thread helper macros ============================================= */
 
 /*

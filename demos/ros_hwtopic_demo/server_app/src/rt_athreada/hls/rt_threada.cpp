@@ -10,7 +10,7 @@
 
 #define FRAME_ID_SIZE 5
 #define ENCODING_SIZE 5
-#define DATA_SIZE 640 * 480 * 3 
+#define DATA_SIZE 320 * 240 * 3 
 #define MEM_STEP 8 // in bytes
 
 //extern rosidl_typesupport_introspection_c__MessageMembers_ Image__rosidl_typesupport_introspection_c__Image_message_members_;
@@ -50,7 +50,7 @@ THREAD_ENTRY() {
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
 
-	ap_axis<32,1,1,1> tmp_frame;
+	ap_axis<64,1,1,1> tmp_frame;
 
 	uint64_t address_offset = 0;
 
@@ -67,7 +67,7 @@ THREAD_ENTRY() {
 		//payload_addr[0] = tmp_frame.data;
 		//MEM_WRITE(payload_addr, output_buffer_addr, 8);
 
-
+		
 		payload[0] = image_msg.header.stamp.sec;
 		MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 		address_offset += MEM_STEP;
@@ -135,6 +135,7 @@ THREAD_ENTRY() {
 		MEM_WRITE(image_msg.data.data, payload_address[0], MEM_STEP * DATA_SIZE);							
 		address_offset += MEM_STEP;	
 		//
+		
 
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
 	}
