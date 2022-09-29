@@ -433,7 +433,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 		<<Name>>.write(tmp_frame);
 		tmp_frame.data = msg-><<name>>.capacity; 
 		<<Name>>.write(tmp_frame);
-		for (uint16_t i = 0; i < <<num_elems>>; i++)
+		for (uint32_t i = 0; i < <<num_elems>>; i++)
 		{
 			tmp_frame.data = msg-><<name>>.data[i];
 			<<Name>>.write(tmp_frame);
@@ -460,7 +460,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 		<<Name>>.read(tmp_frame);
 		msg-><<name>>.capacity = tmp_frame.data;
 		
-		for (uint16_t i = 0; i < <<num_elems>>; i++)
+		for (uint32_t i = 0; i < <<num_elems>>; i++)
 		{
 			<<Name>>.read(tmp_frame);
 			msg-><<name>>.data[i] = tmp_frame.data;

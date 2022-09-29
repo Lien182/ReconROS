@@ -46,6 +46,8 @@ THREAD_ENTRY() {
 		// HWThread b: subscribe to data from software-domain, publish to hwtopic
 
 		uint64_t msg = ROS_SUBSCRIBE_TAKE(rthreadb_subdata, rthreadb_img_input);
+
+		uint64_t input_buffer_addr = MEMORY_GETOBJECTADDR(rthreadb_img_input);
 		
 		MEM_READ(msg, payload, MEM_STEP);
 		image_msg.header.stamp.sec = payload[0];
@@ -110,11 +112,12 @@ THREAD_ENTRY() {
 		MEM_READ(msg + address_offset, payload, MEM_STEP);
 		image_msg.data.capacity = payload[0];
 		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
+		*/
+		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + input_buffer_addr, payload_addr,     8);
+		//MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
 		MEM_READ(payload_addr[0], image_msg.data.data, DATA_SIZE);
 		address_offset += MEM_STEP;
-		*/
+		
 		//
 
 		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);

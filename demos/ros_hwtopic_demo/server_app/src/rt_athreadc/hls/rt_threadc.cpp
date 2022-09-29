@@ -11,6 +11,8 @@
 #define DATA_SIZE 320 * 240 * 3
 #define MEM_STEP 8 // in bytes
 
+#define IMG_OFFSET 180646922848
+
 t_stream tmpdata;
 
 THREAD_ENTRY() {
@@ -66,11 +68,11 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 		*/
 		// frame_id-string
-		
+		/*
 		payload[0] = image_msg.header.frame_id.size;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-		/*
+		
 		payload[0] = image_msg.header.frame_id.capacity;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
@@ -122,12 +124,13 @@ THREAD_ENTRY() {
 		payload[0] = image_msg.data.capacity;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-
-		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
-		MEM_WRITE(image_msg.data.data, payload_address[0], MEM_STEP * DATA_SIZE);							
+		*/
+		//MEM_READ(output_buffer_addr + IMG_OFFSET, payload_address, MEM_STEP);		//Get the address of the data
+		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
+		MEM_WRITE(image_msg.data.data, payload_address[0], DATA_SIZE);							
 		address_offset += MEM_STEP;	
 		//
-		*/
+		
 
 		ROS_PUBLISH(rthreadc_pubdata, rthreadc_img_output);
 	}
