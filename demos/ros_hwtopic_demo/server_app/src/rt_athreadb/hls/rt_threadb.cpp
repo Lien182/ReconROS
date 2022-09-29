@@ -5,10 +5,12 @@
 
 #define BLOCK_SIZE 2048
 
-#define FRAME_ID_SIZE 5
-#define ENCODING_SIZE 5
-#define DATA_SIZE 320 * 240 * 3
+// size-definitions in byte, must be 8-byte aligned
+#define FRAME_ID_SIZE 8
+#define ENCODING_SIZE 8
 #define MEM_STEP 8
+#define DATA_SIZE 320 * 240 * 3
+
 
 t_stream tmpdata;
 
@@ -25,9 +27,9 @@ THREAD_ENTRY() {
 
 	sensor_msgs__msg__Image image_msg;
 
-	uint8_t image_data[200];
-	char encoding[5];
-	char frame_id[10];
+	uint8_t image_data[DATA_SIZE];
+	char encoding[ENCODING_SIZE];
+	char frame_id[FRAME_ID_SIZE];
 
 	image_msg.data.data = image_data;
 	image_msg.encoding.data = encoding;
@@ -48,11 +50,11 @@ THREAD_ENTRY() {
 		MEM_READ(msg, payload, MEM_STEP);
 		image_msg.header.stamp.sec = payload[0];
 		address_offset += MEM_STEP;
-
+		/*
 		MEM_READ(msg + address_offset, payload, MEM_STEP);
 		image_msg.header.stamp.nanosec = payload[0];
 		address_offset += MEM_STEP;
-
+		
 		// frame_id string
 		MEM_READ(msg + address_offset, payload, MEM_STEP);
 		image_msg.header.frame_id.size = payload[0];
@@ -63,12 +65,12 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 
 		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		MEM_READ(payload_addr[0], image_msg.header.frame_id.data, MEM_STEP * FRAME_ID_SIZE);
+		MEM_READ(payload_addr[0], image_msg.header.frame_id.data, FRAME_ID_SIZE);
 		address_offset += MEM_STEP;
 		//
 
 
-		MEM_READ(msg, payload, MEM_STEP);
+		MEM_READ(msg + address_offset, payload, MEM_STEP);
 		image_msg.height = payload[0];
 		address_offset += MEM_STEP;
 
@@ -87,11 +89,11 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 
 		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		MEM_READ(payload_addr[0], image_msg.encoding.data, MEM_STEP * ENCODING_SIZE);
+		MEM_READ(payload_addr[0], image_msg.encoding.data, ENCODING_SIZE);
 		address_offset += MEM_STEP;
 		//
 
-		MEM_READ(msg, payload, MEM_STEP);
+		MEM_READ(msg + address_offset, payload, MEM_STEP);
 		image_msg.is_bigendian = payload[0];
 		address_offset += MEM_STEP;
 
@@ -110,9 +112,9 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 
 		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		MEM_READ(payload_addr[0], image_msg.data.data, MEM_STEP * DATA_SIZE);
+		MEM_READ(payload_addr[0], image_msg.data.data, DATA_SIZE);
 		address_offset += MEM_STEP;
-		
+		*/
 		//
 
 		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);

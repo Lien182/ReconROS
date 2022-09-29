@@ -8,9 +8,10 @@
 
 #define BLOCK_SIZE 2048
 
-#define FRAME_ID_SIZE 5
-#define ENCODING_SIZE 5
-#define DATA_SIZE 320 * 240 * 3 
+// size-definitions in byte, must be 8-byte aligned
+#define FRAME_ID_SIZE 8
+#define ENCODING_SIZE 8
+#define DATA_SIZE 320 * 240 * 3
 #define MEM_STEP 8 // in bytes
 
 //extern rosidl_typesupport_introspection_c__MessageMembers_ Image__rosidl_typesupport_introspection_c__Image_message_members_;
@@ -28,14 +29,14 @@ THREAD_ENTRY() {
 	//#pragma HLS INTERFACE axis port=verynicehwtopic
 
 	//RAM(uint32_t, BLOCK_SIZE, ram);
-	uint32_t addr, initdata;	
+	uint32_t addr, initdata;				// not 64 bit for ReconOS64?
 	uint32_t pMessage;
 	uint64_t payload[1];
 	uint64_t payload_address[1];
 
-	uint8_t image_data[200];
-	char encoding[5];
-	char frame_id[10];
+	uint8_t image_data[DATA_SIZE];
+	char encoding[ENCODING_SIZE];
+	char frame_id[FRAME_ID_SIZE];
 	//char 
 
 	sensor_msgs__msg__Image image_msg;
@@ -71,26 +72,27 @@ THREAD_ENTRY() {
 		payload[0] = image_msg.header.stamp.sec;
 		MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 		address_offset += MEM_STEP;
-
+		/*
 		payload[0] = image_msg.header.stamp.nanosec;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-
+		*/
 		// frame_id-string
+		
 		payload[0] = image_msg.header.frame_id.size;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-
+		/*
 		payload[0] = image_msg.header.frame_id.capacity;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-
+		
 		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
 		MEM_WRITE(image_msg.header.frame_id.data, payload_address[0], MEM_STEP * FRAME_ID_SIZE);							
 		address_offset += MEM_STEP;		
 		// possible problem: if the pointer to the array doesnt point to a location outside of the message 
 		//
-
+		
 		payload[0] = image_msg.height;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
@@ -107,7 +109,7 @@ THREAD_ENTRY() {
 		payload[0] = image_msg.encoding.capacity;
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
-
+		
 		MEM_READ(output_buffer_addr + address_offset, payload_address, MEM_STEP);		//Get the address of the data
 		MEM_WRITE(image_msg.encoding.data, payload_address[0], MEM_STEP * ENCODING_SIZE);							
 		address_offset += MEM_STEP;	
@@ -135,7 +137,7 @@ THREAD_ENTRY() {
 		MEM_WRITE(image_msg.data.data, payload_address[0], MEM_STEP * DATA_SIZE);							
 		address_offset += MEM_STEP;	
 		//
-		
+		*/
 
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
 	}
