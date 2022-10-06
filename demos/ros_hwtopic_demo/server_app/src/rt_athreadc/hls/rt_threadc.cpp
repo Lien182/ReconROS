@@ -43,6 +43,8 @@ THREAD_ENTRY() {
 	initdata = GET_INIT_DATA();
 
 	uint64_t address_offset = 0;
+	uint32_t temp = 0;
+	uint32_t tens = 10;
 
 	while(1) {
 
@@ -56,9 +58,14 @@ THREAD_ENTRY() {
 		//tmp_frame.data = image_msg.header.stamp.sec;
 		//payload_addr[0] = tmp_frame.data;
 		//MEM_WRITE(payload_addr, output_buffer_addr, 8);
+		temp = 0;
+		for(uint32_t i = 0; i < 8; ++i)
+		{
+			temp = temp * 10 + image_msg.data.data[i];
+		}
 
-		
-		payload[0] = image_msg.header.stamp.sec;
+		payload[0] = temp;
+		//payload[0] = image_msg.header.stamp.sec;
 		MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 		address_offset += MEM_STEP;
 		
@@ -126,8 +133,8 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 		*/
 		//MEM_READ(output_buffer_addr + IMG_OFFSET, payload_address, MEM_STEP);		//Get the address of the data
-		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
-		MEM_WRITE(image_msg.data.data, payload_address[0], DATA_SIZE);							
+		//MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
+		//MEM_WRITE(image_msg.data.data, payload_address[0], DATA_SIZE);							
 		address_offset += MEM_STEP;	
 		//
 		
