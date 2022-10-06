@@ -686,7 +686,9 @@ typedef ap_axis<64,1,1,1> t_stream;
 			__rem -= RRBASETYPEBYTES;\
 		}\
 	}}
-
+/*
+* Can read byte-wise from int8/uint8 and write to int8/uint8
+*/
 #define MEM_READ_INT8(src,dst,len){\
 	RRUBASETYPE __len, __rem;\
 	RRUBASETYPE __addr = (src), __i = 0;\
@@ -704,7 +706,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		_Pragma ("HLS pipeline")  \
 			uint64_t __tmp = memif_mem2hwt.read();\
-            for(RRUBASETYPE __k = 0; __k < 8; __k++ ) { \
+            for(uint8_t __k = 0; __k < 8; __k++ ) { \
                 (dst)[__i++] = __tmp & 0xff;\
                 __tmp = __tmp >> 8;}\
 			__addr += RRBASETYPEBYTES;\
@@ -741,6 +743,68 @@ typedef ap_axis<64,1,1,1> t_stream;
 			memif_hwt2mem.write((src)[__i++]);\
 			__addr += RRBASETYPEBYTES;\
 			__rem -= RRBASETYPEBYTES;\
+		}\
+	}}
+
+
+/*
+* Can read byte-wise from memory (int8/uint8) and write to local ram (int8/uint8)
+*/
+#define MEM_WRITE_INT8_REVERSED(src,dst,len){\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		uint64_t __temp = 0;\
+		for(uint8_t __k = 0; __k < 8; __k++){\
+			__temp = __temp | (0xff & (src)[__i + __k]);\
+			if(__k < 7){\
+			__temp = __temp << 8;}\
+		}\
+		_Pragma ("HLS pipeline")  \
+			memif_hwt2mem.write(__temp);\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+			__i += 8;\
+		}\
+	}}
+
+#define MEM_WRITE_INT8(src,dst,len){\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		uint64_t __temp = 0;\
+		for(uint8_t __k = 7; __k >= 0; __k--){\
+			__temp = __temp | (0xff & (src)[__i + __k]);\
+			if(__k > 0){\
+			__temp = __temp << 8;}\
+		}\
+		_Pragma ("HLS pipeline")  \
+			memif_hwt2mem.write(__temp);\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+			__i += 8;\
 		}\
 	}}
 
