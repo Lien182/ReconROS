@@ -118,6 +118,10 @@ THREAD_ENTRY() {
 		//MEM_READ(payload_addr[0], image_msg.data.data, DATA_SIZE);
 		address_offset += MEM_STEP;
 		
+		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
+		MEM_READ_INT8(payload_addr[0],image_msg.data.data,8)
+
+		/*
 		image_msg.data.data[0] = 0;
 		image_msg.data.data[1] = 1;
 		image_msg.data.data[2] = 2;
@@ -126,6 +130,7 @@ THREAD_ENTRY() {
 		image_msg.data.data[5] = 5;
 		image_msg.data.data[6] = 6;
 		image_msg.data.data[7] = 7;
+		*/
 		//
 
 		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);

@@ -687,6 +687,31 @@ typedef ap_axis<64,1,1,1> t_stream;
 		}\
 	}}
 
+#define MEM_READ_INT8(src,dst,len){\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (src), __i = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+		_Pragma ("HLS pipeline")  \
+			uint64_t __tmp = memif_mem2hwt.read();\
+            for(RRUBASETYPE __k = 0; __k < 8; __k++ ) { \
+                (dst)[__i++] = __tmp & 0xff;\
+                __tmp = __tmp >> 8;}\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+		}\
+	}}
+
 /*
  * Writes several words from the local ram into main memory. Therefore,
  * divides a large request into smaller ones of length at most
