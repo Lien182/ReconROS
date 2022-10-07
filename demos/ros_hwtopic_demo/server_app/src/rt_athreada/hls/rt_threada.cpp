@@ -14,8 +14,6 @@
 #define DATA_SIZE 320 * 240 * 3
 #define MEM_STEP 8 // in bytes
 
-#define IMG_OFFSET 180646922848
-
 //extern rosidl_typesupport_introspection_c__MessageMembers_ Image__rosidl_typesupport_introspection_c__Image_message_members_;
 
 t_stream tmpdata;
@@ -141,9 +139,10 @@ THREAD_ENTRY() {
 		MEM_WRITE(payload, output_buffer_addr + address_offset, MEM_STEP);
 		address_offset += MEM_STEP;
 		*/
-		MEM_READ(output_buffer_addr + IMG_OFFSET, payload_address, MEM_STEP);		//Get the address of the data
+
+
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
-		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],8)
+		MEM_WRITE_INT8_REVERSED(image_msg.data.data,payload_address[0],8)
 		//MEM_WRITE(image_msg.data.data, payload_address[0], DATA_SIZE);							
 		address_offset += MEM_STEP;	
 		//
