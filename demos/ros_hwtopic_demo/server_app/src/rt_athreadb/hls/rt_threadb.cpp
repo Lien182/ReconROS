@@ -119,7 +119,7 @@ THREAD_ENTRY() {
 		address_offset += MEM_STEP;
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
-		MEM_READ_INT8(payload_addr[0],image_msg.data.data,8)
+		MEM_READ_INT8(payload_addr[0],image_msg.data.data,DATA_SIZE)
 
 		/*
 		image_msg.data.data[0] = 0;
