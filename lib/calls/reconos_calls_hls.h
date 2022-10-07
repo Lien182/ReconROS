@@ -795,7 +795,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 		\
 		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
 		uint64_t __temp = 0;\
-		for(uint8_t __k = 7; __k >= 0; __k--){\
+		for(int8_t __k = 7; __k >= 0; __k--){\
 			__temp = __temp | (0xff & (src)[__i + __k]);\
 			if(__k > 0){\
 			__temp = __temp << 8;}\
