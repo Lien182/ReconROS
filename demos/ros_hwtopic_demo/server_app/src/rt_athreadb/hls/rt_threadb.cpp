@@ -9,7 +9,7 @@
 #define FRAME_ID_SIZE 8
 #define ENCODING_SIZE 8
 #define MEM_STEP 8
-#define DATA_SIZE 320 * 240 * 3
+#define DATA_SIZE 100 * 100 * 3
 
 
 t_stream tmpdata;
@@ -41,13 +41,13 @@ THREAD_ENTRY() {
 	uint32_t ram[64];
 	uint64_t address_offset = 0;
 
+	uint64_t msg;
+
 	while(1) {
 
 		// HWThread b: subscribe to data from software-domain, publish to hwtopic
 
-		uint64_t msg = ROS_SUBSCRIBE_TAKE(rthreadb_subdata, rthreadb_img_input);
-
-		uint64_t input_buffer_addr = MEMORY_GETOBJECTADDR(rthreadb_img_input);
+		msg = ROS_SUBSCRIBE_TAKE(rthreadb_subdata, rthreadb_img_input);
 		
 		MEM_READ(msg, payload, MEM_STEP);
 		image_msg.header.stamp.sec = payload[0];
@@ -116,31 +116,15 @@ THREAD_ENTRY() {
 		//MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + input_buffer_addr, payload_addr,     8);
 		//MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
 		//MEM_READ(payload_addr[0], image_msg.data.data, DATA_SIZE);
-		address_offset += MEM_STEP;
+
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
-		MEM_READ_INT8(payload_addr[0],image_msg.data.data,DATA_SIZE)
+		MEM_READ_INT8(payload_addr[0],image_msg.data.data, 8000)
 
-		/*
-		image_msg.data.data[0] = 0;
-		image_msg.data.data[1] = 1;
-		image_msg.data.data[2] = 2;
-		image_msg.data.data[3] = 3;
-		image_msg.data.data[4] = 4;
-		image_msg.data.data[5] = 5;
-		image_msg.data.data[6] = 6;
-		image_msg.data.data[7] = 7;
-		*/
-		//
 
 		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
 
 
-		/*
-		ap_axis<64,1,1,1> tmp_frame;
-		tmp_frame.data = payload_addr[0]; 
-		nicehwtopic.write(tmp_frame);
-		*/
 	}
 }
 

@@ -8,7 +8,7 @@
 // size-definitions in byte, must be 8-byte aligned
 #define FRAME_ID_SIZE 8
 #define ENCODING_SIZE 8
-#define DATA_SIZE 320 * 240 * 3
+#define DATA_SIZE 100 * 100 * 3
 #define MEM_STEP 8 // in bytes
 
 
@@ -43,7 +43,7 @@ THREAD_ENTRY() {
 
 	uint64_t address_offset = 0;
 	uint32_t temp = 0;
-	uint32_t tens = 10;
+	uint64_t output_buffer_addr;
 
 	while(1) {
 
@@ -51,7 +51,7 @@ THREAD_ENTRY() {
 		
 
 		// copy message into external memory for publishing
-		uint64_t output_buffer_addr = MEMORY_GETOBJECTADDR(rthreadc_img_output);
+		output_buffer_addr = MEMORY_GETOBJECTADDR(rthreadc_img_output);
 		
 		//MEM_READ(output_buffer_addr,payload_addr, 8 ); // img_msg.data.data is a pointer, so we need 2 reads in total
 		//tmp_frame.data = image_msg.header.stamp.sec;
@@ -63,7 +63,7 @@ THREAD_ENTRY() {
 			temp = temp * 10 + image_msg.data.data[i];
 		}
 
-		payload[0] = temp;
+		payload[0] = 2;
 		//payload[0] = image_msg.header.stamp.sec;
 		MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 		address_offset += MEM_STEP;
@@ -137,10 +137,7 @@ THREAD_ENTRY() {
 
 
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
-		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],DATA_SIZE)
-
-		address_offset += MEM_STEP;	
-		//
+		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],32)
 		
 
 		ROS_PUBLISH(rthreadc_pubdata, rthreadc_img_output);
