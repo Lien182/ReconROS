@@ -38,6 +38,8 @@ THREAD_ENTRY() {
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
 
+	ap_axis<64,1,1,1> tmp_frame;
+
 	uint32_t ram[64];
 	uint64_t address_offset = 0;
 
@@ -52,76 +54,23 @@ THREAD_ENTRY() {
 		MEM_READ(msg, payload, MEM_STEP);
 		image_msg.header.stamp.sec = payload[0];
 		address_offset += MEM_STEP;
-		/*
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.header.stamp.nanosec = payload[0];
-		address_offset += MEM_STEP;
-		
-		// frame_id string
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.header.frame_id.size = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.header.frame_id.capacity = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		MEM_READ(payload_addr[0], image_msg.header.frame_id.data, FRAME_ID_SIZE);
-		address_offset += MEM_STEP;
-		//
-
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.height = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.width = payload[0];
-		address_offset += MEM_STEP;
-
-
-		// encoding string
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.encoding.size = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.encoding.capacity = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		MEM_READ(payload_addr[0], image_msg.encoding.data, ENCODING_SIZE);
-		address_offset += MEM_STEP;
-		//
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.is_bigendian = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.step = payload[0];
-		address_offset += MEM_STEP;
-
-
-		// data array
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.data.size = payload[0];
-		address_offset += MEM_STEP;
-
-		MEM_READ(msg + address_offset, payload, MEM_STEP);
-		image_msg.data.capacity = payload[0];
-		address_offset += MEM_STEP;
-		*/
-		//MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + input_buffer_addr, payload_addr,     8);
-		//MEM_READ(msg + address_offset, payload_addr, MEM_STEP);
-		//MEM_READ(payload_addr[0], image_msg.data.data, DATA_SIZE);
 
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
-		MEM_READ_INT8(payload_addr[0],image_msg.data.data, 8000)
+		MEM_READ_INT8(payload_addr[0],image_msg.data.data, 30000)
 
-
+		/*
+		for(int32_t i = 5; i < 30000; ++i){
+			image_msg.data.data[i] = i;
+		}
+		*/
+		/*
+		for (uint32_t i = 0; i < 30000; i++)
+		{
+			tmp_frame.data = image_msg.data.data[i];
+			nicehwtopic.write(tmp_frame);
+		}
+		*/
 		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
 
 

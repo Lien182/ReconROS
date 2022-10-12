@@ -422,23 +422,63 @@ typedef ap_axis<64,1,1,1> t_stream;
 {
 	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<64,1,1,1> tmp_frame;
+	
+	write_section : {
+	#pragma HLS protocol fixed
 	<<=generate for Primitives=>>
 		tmp_frame.data = msg-><<name>>; 
 		<<Name>>.write(tmp_frame);
 	<<=end generate=>>
-
+	
 	<<=generate for Arrays=>>
 		// <<name>>-array
+		/*
 		tmp_frame.data = msg-><<name>>.size; 
 		<<Name>>.write(tmp_frame);
 		tmp_frame.data = msg-><<name>>.capacity; 
 		<<Name>>.write(tmp_frame);
+		*/
 		for (uint32_t i = 0; i < <<num_elems>>; i++)
 		{
 			tmp_frame.data = msg-><<name>>.data[i];
 			<<Name>>.write(tmp_frame);
 		}
 	<<=end generate=>>
+	}
+}
+<<end generate>>
+
+
+<<generate for HWTOPICSPUB>>void ROS_PUBLISH_HWTOPIC_v2_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
+{
+	#pragma HLS INTERFACE axis port=<<Name>>
+	ap_axis<64,1,1,1> tmp_frame;
+
+	uint64_t serialization_buffer[30500];
+	uint32_t i = 0;
+
+	<<=generate for Primitives=>>
+		serialization_buffer[i] = msg-><<name>>; 
+		i += 1;
+	<<=end generate=>>
+
+	<<=generate for Arrays=>>
+		serialization_buffer[i] = msg-><<name>>.size; 
+		i += 1;
+		serialization_buffer[i] = msg-><<name>>.capacity; 
+		i += 1;
+		for(uint32_t j = 0; j < <<num_elems>>; j++)
+		{
+			serialization_buffer[i] = msg-><<name>>.data[j];
+			i += 1;
+		}
+	<<=end generate=>>
+
+	for(uint32_t k = 0; k < 30500; k++)
+	{
+		tmp_frame = serialization_buffer[k];
+		<<Name>>.write(tmp_frame);
+	}
 }
 <<end generate>>
 
@@ -448,24 +488,29 @@ typedef ap_axis<64,1,1,1> t_stream;
 	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<64,1,1,1> tmp_frame;
 
+	read_section : {
+	#pragma HLS protocol fixed
 	<<=generate for Primitives=>>
 		<<Name>>.read(tmp_frame);
 		msg-><<name>> = tmp_frame.data;
 	<<=end generate=>>
+	
 
 	<<=generate for Arrays=>>
 		// <<name>>-array
+		/*
 		<<Name>>.read(tmp_frame);
 		msg-><<name>>.size = tmp_frame.data;
 		<<Name>>.read(tmp_frame);
 		msg-><<name>>.capacity = tmp_frame.data;
-		
+		*/
 		for (uint32_t i = 0; i < <<num_elems>>; i++)
 		{
 			<<Name>>.read(tmp_frame);
 			msg-><<name>>.data[i] = tmp_frame.data;
 		}
 	<<=end generate=>>
+	}
 
 
 }
