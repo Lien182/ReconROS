@@ -51,10 +51,8 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		ROS_READ_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
-		
-
-
+		ROS_READ_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
+	
 		//payload[0] = temp;
 		//MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 
@@ -65,11 +63,9 @@ THREAD_ENTRY() {
 			image_msg.data.data[i] = tmp_frame.data;
 		}
 		*/
-		image_msg.data.data[0] = image_msg.is_bigendian;
 		
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
 		
-
 		ROS_PUBLISH(rthreadc_pubdata, rthreadc_img_output);
 	}
 }

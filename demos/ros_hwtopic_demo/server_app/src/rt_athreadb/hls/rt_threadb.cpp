@@ -59,19 +59,8 @@ THREAD_ENTRY() {
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
 		MEM_READ_INT8(payload_addr[0],image_msg.data.data, 30000)
 
-		/*
-		for(int32_t i = 5; i < 30000; ++i){
-			image_msg.data.data[i] = i;
-		}
-		*/
-		/*
-		for (uint32_t i = 0; i < 30000; i++)
-		{
-			tmp_frame.data = image_msg.data.data[i];
-			nicehwtopic.write(tmp_frame);
-		}
-		*/
-		ROS_PUBLISH_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
+
+		ROS_PUBLISH_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
 
 
 	}

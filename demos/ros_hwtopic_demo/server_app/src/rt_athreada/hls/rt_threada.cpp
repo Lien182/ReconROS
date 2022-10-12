@@ -61,21 +61,10 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		ROS_READ_HWTOPIC_nicehwtopic(nicehwtopic, &image_msg);
-
-		/*
-		for (uint32_t i = 0; i < 30000; i++)
-		{
-			nicehwtopic.read(tmp_frame);
-			image_msg.data.data[i] = tmp_frame.data;
-		}
-		*/
-
-		image_msg.data.data[0] = image_msg.is_bigendian;
+		ROS_READ_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
 
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
 									
-
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
 	}
 }

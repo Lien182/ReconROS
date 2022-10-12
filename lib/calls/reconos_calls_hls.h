@@ -476,7 +476,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 
 	for(uint32_t k = 0; k < 30500; k++)
 	{
-		tmp_frame = serialization_buffer[k];
+		tmp_frame.data = serialization_buffer[k];
 		<<Name>>.write(tmp_frame);
 	}
 }
@@ -512,6 +512,42 @@ typedef ap_axis<64,1,1,1> t_stream;
 	<<=end generate=>>
 	}
 
+
+}
+<<end generate>>
+
+
+<<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_v2_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
+{
+	#pragma HLS INTERFACE axis port=<<Name>>
+	ap_axis<64,1,1,1> tmp_frame;
+
+	uint64_t deserialization_buffer[30500];
+	uint32_t i = 0;
+
+	for (uint32_t j = 0; j < 30500; j++)
+	{
+		<<Name>>.read(tmp_frame);
+		deserialization_buffer[j] = tmp_frame.data;
+	}
+
+	<<=generate for Primitives=>>
+		msg-><<name>> = deserialization_buffer[i]; 
+		i += 1;
+	<<=end generate=>>
+
+	<<=generate for Arrays=>>
+		msg-><<name>>.size = deserialization_buffer[i];
+		i += 1;
+		msg-><<name>>.capacity = deserialization_buffer[i];
+		i += 1;
+
+		for(uint32_t j = 0; j < <<num_elems>>; j++)
+		{
+			msg-><<name>>.data[j] = deserialization_buffer[i]; 
+			i += 1;
+		}
+	<<=end generate=>>
 
 }
 <<end generate>>
