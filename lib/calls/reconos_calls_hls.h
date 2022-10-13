@@ -456,17 +456,18 @@ typedef ap_axis<64,1,1,1> t_stream;
 
 	uint64_t serialization_buffer[30500];
 	uint32_t i = 0;
-
+	write_section : {
+	#pragma HLS protocol fixed
 	<<=generate for Primitives=>>
-		serialization_buffer[i] = msg-><<name>>; 
-		i += 1;
+		//serialization_buffer[i] = msg-><<name>>; 
+		//i += 1;
 	<<=end generate=>>
 
 	<<=generate for Arrays=>>
-		serialization_buffer[i] = msg-><<name>>.size; 
-		i += 1;
-		serialization_buffer[i] = msg-><<name>>.capacity; 
-		i += 1;
+		//serialization_buffer[i] = msg-><<name>>.size; 
+		//i += 1;
+		//serialization_buffer[i] = msg-><<name>>.capacity; 
+		//i += 1;
 		for(uint32_t j = 0; j < <<num_elems>>; j++)
 		{
 			serialization_buffer[i] = msg-><<name>>.data[j];
@@ -478,6 +479,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 	{
 		tmp_frame.data = serialization_buffer[k];
 		<<Name>>.write(tmp_frame);
+	}
 	}
 }
 <<end generate>>
@@ -525,6 +527,8 @@ typedef ap_axis<64,1,1,1> t_stream;
 	uint64_t deserialization_buffer[30500];
 	uint32_t i = 0;
 
+	read_section : {
+	#pragma HLS protocol fixed
 	for (uint32_t j = 0; j < 30500; j++)
 	{
 		<<Name>>.read(tmp_frame);
@@ -532,23 +536,23 @@ typedef ap_axis<64,1,1,1> t_stream;
 	}
 
 	<<=generate for Primitives=>>
-		msg-><<name>> = deserialization_buffer[i]; 
-		i += 1;
+		//msg-><<name>> = deserialization_buffer[i]; 
+		//i += 1;
 	<<=end generate=>>
 
 	<<=generate for Arrays=>>
-		msg-><<name>>.size = deserialization_buffer[i];
-		i += 1;
-		msg-><<name>>.capacity = deserialization_buffer[i];
-		i += 1;
+		//msg-><<name>>.size = deserialization_buffer[i];
+		//i += 1;
+		//msg-><<name>>.capacity = deserialization_buffer[i];
+		//i += 1;
 
-		for(uint32_t j = 0; j < <<num_elems>>; j++)
+		for(uint32_t k = 0; k < <<num_elems>>; k++)
 		{
-			msg-><<name>>.data[j] = deserialization_buffer[i]; 
+			msg-><<name>>.data[k] = deserialization_buffer[i]; 
 			i += 1;
 		}
 	<<=end generate=>>
-
+	}
 }
 <<end generate>>
 

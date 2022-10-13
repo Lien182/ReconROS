@@ -45,6 +45,8 @@ THREAD_ENTRY() {
 
 	uint64_t msg;
 
+	uint64_t buffer[30500];
+
 	while(1) {
 
 		// HWThread b: subscribe to data from software-domain, publish to hwtopic
@@ -58,6 +60,18 @@ THREAD_ENTRY() {
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_addr,     8);
 		MEM_READ_INT8(payload_addr[0],image_msg.data.data, 30000)
+
+		/*
+		for(uint32_t i = 0; i < 30000; i++){
+			buffer[i] = image_msg.data.data[i];
+		}
+
+		for(uint32_t i = 0; i < 30500; i++){
+			tmp_frame.data = buffer[i];
+			nicehwtopic.write(tmp_frame);
+			
+		}
+		*/
 
 
 		ROS_PUBLISH_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);

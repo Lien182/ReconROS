@@ -48,11 +48,22 @@ THREAD_ENTRY() {
 	uint64_t output_buffer_addr;
 	output_buffer_addr = MEMORY_GETOBJECTADDR(rthreadc_img_output);
 	MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
+	uint64_t buffer[30500];
 
 	while(1) {
 
 		ROS_READ_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
-	
+		
+		/*
+		for(uint32_t i = 0; i < 30500; i++){
+			nicehwtopic.read(tmp_frame);
+			buffer[i] = tmp_frame.data;
+		}
+		for(uint32_t i = 0; i < 30000; i++){
+			image_msg.data.data[i] = buffer[i];
+		}
+		*/
+		
 		//payload[0] = temp;
 		//MEM_WRITE(payload, output_buffer_addr, MEM_STEP);
 
