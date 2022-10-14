@@ -456,7 +456,13 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
 
     ##############################################################
     <<if ONE_TO_ONE==True>>
-    # Direct AXIS connection for hardware topics
+      # Direct AXIS connection for hardware topics
+      <<generate for HWTOPICS>>
+
+      <<=generate for PUBLISHERS=>>
+        connect_bd_intf_net [get_bd_intf_pins slot_<<SlotId>>/<<Name>>] [get_bd_intf_pins slot_<<Sub_SlotId>>/<<Name>>]
+      <<=end generate=>>
+      <<end generate>>
     <<end if>>
 
     ##############################################################

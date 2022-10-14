@@ -112,12 +112,16 @@ def get_dict(prj):
 
 		if((num_hw_pubs == 1) and (num_hw_subs == 1)):
 			dictionary["ONE_TO_ONE"] = True
+			print("Found 1-to-1 config. Directly connecting pub/sub for hardware topic ", topic.name)
+			d["PUBLISHERS"][0]["Sub_SlotId"] = d["SUBSCRIBERS"][0]["SlotId"]
+
 		else:
 			dictionary["ONE_TO_ONE"] = False
 
 		if((num_hw_pubs == 1) and (num_hw_subs > 1)):
 			dictionary["ONE_TO_N"] = True
 			print("Found 1-to-N config. Selecting AXIS-Broadcaster-based architecture for hardware topic ", topic.name)
+			
 		else:
 			dictionary["ONE_TO_N"] = False
 
