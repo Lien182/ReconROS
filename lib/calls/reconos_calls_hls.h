@@ -454,7 +454,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<64,1,1,1> tmp_frame;
 
-	uint64_t serialization_buffer[30500];
+	uint64_t serialization_buffer[30000];
 	uint32_t i = 0;
 	write_section : {
 	#pragma HLS protocol fixed
@@ -475,7 +475,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 		}
 	<<=end generate=>>
 
-	for(uint32_t k = 0; k < 30500; k++)
+	for(uint32_t k = 0; k < 30000; k++)
 	{
 		tmp_frame.data = serialization_buffer[k];
 		<<Name>>.write(tmp_frame);
@@ -521,15 +521,16 @@ typedef ap_axis<64,1,1,1> t_stream;
 
 <<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_v2_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
 {
+	#pragma HLS INLINE
 	#pragma HLS INTERFACE axis port=<<Name>>
 	ap_axis<64,1,1,1> tmp_frame;
 
-	uint64_t deserialization_buffer[30500];
+	uint64_t deserialization_buffer[30000];
 	uint32_t i = 0;
 
 	read_section : {
 	#pragma HLS protocol fixed
-	for (uint32_t j = 0; j < 30500; j++)
+	for (uint32_t j = 0; j < 30000; j++)
 	{
 		<<Name>>.read(tmp_frame);
 		deserialization_buffer[j] = tmp_frame.data;
@@ -555,6 +556,24 @@ typedef ap_axis<64,1,1,1> t_stream;
 	}
 }
 <<end generate>>
+
+<<generate for HWTOPICSSUB>>
+
+#define ROS_READ_HWTOPIC_v3_<<Name>>( <<Name>>, msg){\
+	uint64_t ___deserialization_buffer[30000]; \
+	uint32_t ___i = 0; \
+	ap_axis<64,1,1,1> __tmp_frame; \
+	for (uint32_t j = 0; j < 30000; j++){ \
+		(<<Name>>).read(__tmp_frame); \
+		___deserialization_buffer[j] = __tmp_frame.data; \
+	}<<=generate for Arrays=>>
+	for(uint32_t k = 0; k < <<num_elems>>; k++){ \
+			(msg).<<name>>.data[k] = ___deserialization_buffer[___i]; \
+			___i += 1; \
+		}\   <<=end generate=>> }
+
+<<end generate>>
+
 
 
 // ROS Services
