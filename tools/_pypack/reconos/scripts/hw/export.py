@@ -109,10 +109,34 @@ def get_dict(prj):
 
 		d["NUM_SUBS"] = num_hw_subs
 		d["NUM_PUBS"] = num_hw_pubs
-		if(num_hw_subs <= 1):
-			d["NUM_AXIS_BR_SUBS"] = 2
+
+		if((num_hw_pubs == 1) and (num_hw_subs == 1)):
+			dictionary["ONE_TO_ONE"] = True
 		else:
-			d["NUM_AXIS_BR_SUBS"] = num_hw_subs
+			dictionary["ONE_TO_ONE"] = False
+
+		if((num_hw_pubs == 1) and (num_hw_subs > 1)):
+			dictionary["ONE_TO_N"] = True
+			print("Found 1-to-N config. Selecting AXIS-Broadcaster-based architecture for hardware topic ", topic.name)
+		else:
+			dictionary["ONE_TO_N"] = False
+
+		if((num_hw_pubs > 1) and (num_hw_subs == 1)):
+			dictionary["N_TO_ONE"] = True
+			print("Found N-to-1 config. Selecting AXIS-Interconnect-based architecture for hardware topic ", topic.name)
+		else:
+			dictionary["N_TO_ONE"] = False
+
+		if((num_hw_pubs > 1) and (num_hw_subs > 1)):
+			dictionary["N_TO_M"] = True
+			print("Found N-to-M config. Selecting AXIS-Interconnect and Broadcaster-based architecture for hardware topic ", topic.name)
+		else:
+			dictionary["N_TO_M"] = False
+
+		if(num_hw_subs <= 1):
+			dictionary["NUM_AXIS_BR_SUBS"] = 2
+		else:
+			dictionary["NUM_AXIS_BR_SUBS"] = num_hw_subs
 		dictionary["HWTOPICS"].append(d)
 
 
