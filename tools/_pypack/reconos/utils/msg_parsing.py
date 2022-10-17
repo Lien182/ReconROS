@@ -198,7 +198,7 @@ def _parse_array_size(string):
     m = re.findall(r'\[[\s+]*(-?\d+)\s*\]',string)
     if((m is None) or (len(m) == 0)):
         print("No array size given in msg definition for {}. Inferring 1 as array size".format(string))
-        m = 1
+        m = 10
                 
     else:
         print(m)
@@ -221,11 +221,14 @@ def _sort_into_datatypes(msg, primitive_lib):
     
     datatype_found = False
     includepath_found = False
+
+    num_msg_elems = 0
      
     for key in msg.keys():
         if(msg[key][-1]=="]" or msg[key] == "string"): # array or string
             print("array found")
             m = _parse_array_size(msg[key])
+            num_msg_elems += (m + 2)    # + 2 for size and capacity
             array_dict = {}
             array_dict["name"] = key
             array_dict["size"] = primitive_lib["size_t"]
@@ -238,6 +241,7 @@ def _sort_into_datatypes(msg, primitive_lib):
         else: # primitive data type
             if(msg[key] in primitive_lib.keys()):
                 primitive = {}
+                num_msg_elems += 1
                 primitive["name"] = key
                 primitive["dtype"] = msg[key]
                 primitives.append(primitive)
@@ -256,6 +260,7 @@ def _sort_into_datatypes(msg, primitive_lib):
     
     sorted_dict["Primitives"] = primitives
     sorted_dict["Arrays"] = arrays
+    sorted_dict["num_msg_elems"] = num_msg_elems
         
     return sorted_dict
 
