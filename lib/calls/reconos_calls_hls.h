@@ -576,6 +576,26 @@ typedef ap_axis<64,1,1,1> t_stream;
 
 
 
+<<generate for HWTOPICSSUB>>
+
+#define ROS_READ_HWTOPIC_v4_<<Name>>( <<Name>>, msg){\
+	uint64_t ___deserialization_buffer[<<num_msg_elems>>]; \
+	uint32_t ___i = 0; \
+	ap_axis<64,1,1,1> __tmp_frame; \
+	for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
+		(<<Name>>).read(__tmp_frame); \
+		___deserialization_buffer[j] = __tmp_frame.data; \
+	}\
+	<<=generate for Primitives=>>
+	(msg).<<name>> = ___deserialization_buffer[___i]; \
+	___i += 1;  <<=end generate=>>  <<=generate for Arrays=>> for(uint32_t k = 0; k < <<num_elems>>; k++){ \
+			(msg).<<name>>.data[k] = ___deserialization_buffer[___i]; \
+			___i += 1; \
+		}\   <<=end generate=>> }
+
+<<end generate>>
+
+
 // ROS Services
 
 #define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\
