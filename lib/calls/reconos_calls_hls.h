@@ -596,6 +596,28 @@ typedef ap_axis<64,1,1,1> t_stream;
 <<end generate>>
 
 
+
+<<generate for HWTOPICSPUB>>
+
+#define ROS_PUBLISH_HWTOPIC_v4_<<Name>>( <<Name>>, msg){\
+	uint64_t __serialization_buffer[<<num_msg_elems>>]; \
+	uint32_t __i = 0; \
+	uint32_t __j = 0; \
+	ap_axis<64,1,1,1> __tmp_frame; \
+	<<=generate for Primitives=>>
+	__serialization_buffer[__i] = (msg).<<name>>; \
+	__i += 1;  <<=end generate=>> <<=generate for Arrays=>> for(uint32_t k = 0; k < <<num_elems>>; k++){ \
+			__serialization_buffer[__i] = (msg).<<name>>.data[k]; \
+			__i += 1; \
+		} \ <<=end generate=>>  for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
+		__tmp_frame.data = __serialization_buffer[__j]; \
+		(<<Name>>).write(__tmp_frame); \
+		__j += 1; \
+	} \
+}
+
+<<end generate>>
+
 // ROS Services
 
 #define ROS_SERVICESERVER_SEND_RESPONSE(p_handle,p_handle_msg)(\

@@ -74,7 +74,8 @@ THREAD_ENTRY() {
 		*/
 
 
-		ROS_PUBLISH_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
+		//ROS_PUBLISH_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
+		ROS_PUBLISH_HWTOPIC_v4_nicehwtopic(nicehwtopic, image_msg);
 
 
 	}

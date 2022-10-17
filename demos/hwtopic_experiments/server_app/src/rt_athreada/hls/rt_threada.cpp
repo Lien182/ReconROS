@@ -63,7 +63,7 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		ROS_READ_HWTOPIC_v3_nicehwtopic(nicehwtopic, image_msg);
+		ROS_READ_HWTOPIC_v4_nicehwtopic(nicehwtopic, image_msg);
 		/*
 		for(uint32_t i = 0; i < 30000; i++){
 			nicehwtopic.read(tmp_frame);
