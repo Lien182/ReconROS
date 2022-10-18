@@ -64,13 +64,15 @@ THREAD_ENTRY() {
 	while(1) {
 
 		//ROS_READ_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
-		for(uint32_t i = 0; i < 30500; i++){
+		
+		for(uint32_t i = 0; i < 30000; i++){
 			nicehwtopic.read(tmp_frame);
 			buffer[i] = tmp_frame.data;
 		}
 		for(uint32_t i = 0; i < 30000; i++){
 			image_msg.data.data[i] = buffer[i];
 		}
+		
 
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
 									

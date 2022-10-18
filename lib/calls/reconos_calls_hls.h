@@ -583,6 +583,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 	uint32_t ___i = 0; \
 	ap_axis<64,1,1,1> __tmp_frame; \
 	for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
+		_Pragma ("HLS pipeline")  \
 		(<<Name>>).read(__tmp_frame); \
 		___deserialization_buffer[j] = __tmp_frame.data; \
 	}\
@@ -611,6 +612,7 @@ typedef ap_axis<64,1,1,1> t_stream;
 			__i += 1; \
 		} \ <<=end generate=>>  for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
 		__tmp_frame.data = __serialization_buffer[__j]; \
+		_Pragma ("HLS pipeline")  \
 		(<<Name>>).write(__tmp_frame); \
 		__j += 1; \
 	} \
