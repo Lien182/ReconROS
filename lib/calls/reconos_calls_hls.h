@@ -418,166 +418,7 @@ inline RRUBASETYPE stream_read_memif(hls::stream<RRUBASETYPE> &stream) {
 // Extensions for hardware topics
 typedef ap_axis<64,1,1,1> t_stream;
 
-<<generate for HWTOPICSPUB>>void ROS_PUBLISH_HWTOPIC_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
-{
-	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<64,1,1,1> tmp_frame;
-	
-	write_section : {
-	#pragma HLS protocol fixed
-	<<=generate for Primitives=>>
-		tmp_frame.data = msg-><<name>>; 
-		<<Name>>.write(tmp_frame);
-	<<=end generate=>>
-	
-	<<=generate for Arrays=>>
-		// <<name>>-array
-		/*
-		tmp_frame.data = msg-><<name>>.size; 
-		<<Name>>.write(tmp_frame);
-		tmp_frame.data = msg-><<name>>.capacity; 
-		<<Name>>.write(tmp_frame);
-		*/
-		for (uint32_t i = 0; i < <<num_elems>>; i++)
-		{
-			tmp_frame.data = msg-><<name>>.data[i];
-			<<Name>>.write(tmp_frame);
-		}
-	<<=end generate=>>
-	}
-}
-<<end generate>>
-
-
-<<generate for HWTOPICSPUB>>void ROS_PUBLISH_HWTOPIC_v2_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
-{
-	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<64,1,1,1> tmp_frame;
-
-	uint64_t serialization_buffer[30000];
-	uint32_t i = 0;
-	write_section : {
-	#pragma HLS protocol fixed
-	<<=generate for Primitives=>>
-		//serialization_buffer[i] = msg-><<name>>; 
-		//i += 1;
-	<<=end generate=>>
-
-	<<=generate for Arrays=>>
-		//serialization_buffer[i] = msg-><<name>>.size; 
-		//i += 1;
-		//serialization_buffer[i] = msg-><<name>>.capacity; 
-		//i += 1;
-		for(uint32_t j = 0; j < <<num_elems>>; j++)
-		{
-			serialization_buffer[i] = msg-><<name>>.data[j];
-			i += 1;
-		}
-	<<=end generate=>>
-
-	for(uint32_t k = 0; k < 30000; k++)
-	{
-		tmp_frame.data = serialization_buffer[k];
-		<<Name>>.write(tmp_frame);
-	}
-	}
-}
-<<end generate>>
-
-
-<<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
-{
-	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<64,1,1,1> tmp_frame;
-
-	read_section : {
-	#pragma HLS protocol fixed
-	<<=generate for Primitives=>>
-		<<Name>>.read(tmp_frame);
-		msg-><<name>> = tmp_frame.data;
-	<<=end generate=>>
-	
-
-	<<=generate for Arrays=>>
-		// <<name>>-array
-		/*
-		<<Name>>.read(tmp_frame);
-		msg-><<name>>.size = tmp_frame.data;
-		<<Name>>.read(tmp_frame);
-		msg-><<name>>.capacity = tmp_frame.data;
-		*/
-		for (uint32_t i = 0; i < <<num_elems>>; i++)
-		{
-			<<Name>>.read(tmp_frame);
-			msg-><<name>>.data[i] = tmp_frame.data;
-		}
-	<<=end generate=>>
-	}
-
-
-}
-<<end generate>>
-
-
-<<generate for HWTOPICSSUB>>void ROS_READ_HWTOPIC_v2_<<Name>>(hls::stream<t_stream>& <<Name>>, <<datatype>>* msg)
-{
-	#pragma HLS INLINE
-	#pragma HLS INTERFACE axis port=<<Name>>
-	ap_axis<64,1,1,1> tmp_frame;
-
-	uint64_t deserialization_buffer[30000];
-	uint32_t i = 0;
-
-	read_section : {
-	#pragma HLS protocol fixed
-	for (uint32_t j = 0; j < 30000; j++)
-	{
-		<<Name>>.read(tmp_frame);
-		deserialization_buffer[j] = tmp_frame.data;
-	}
-
-	<<=generate for Primitives=>>
-		//msg-><<name>> = deserialization_buffer[i]; 
-		//i += 1;
-	<<=end generate=>>
-
-	<<=generate for Arrays=>>
-		//msg-><<name>>.size = deserialization_buffer[i];
-		//i += 1;
-		//msg-><<name>>.capacity = deserialization_buffer[i];
-		//i += 1;
-
-		for(uint32_t k = 0; k < <<num_elems>>; k++)
-		{
-			msg-><<name>>.data[k] = deserialization_buffer[i]; 
-			i += 1;
-		}
-	<<=end generate=>>
-	}
-}
-<<end generate>>
-
 <<generate for HWTOPICSSUB>>
-
-#define ROS_READ_HWTOPIC_v3_<<Name>>( <<Name>>, msg){\
-	uint64_t ___deserialization_buffer[30000]; \
-	uint32_t ___i = 0; \
-	ap_axis<64,1,1,1> __tmp_frame; \
-	for (uint32_t j = 0; j < 30000; j++){ \
-		(<<Name>>).read(__tmp_frame); \
-		___deserialization_buffer[j] = __tmp_frame.data; \
-	}<<=generate for Arrays=>>
-	for(uint32_t k = 0; k < <<num_elems>>; k++){ \
-			(msg).<<name>>.data[k] = ___deserialization_buffer[___i]; \
-			___i += 1; \
-		}\   <<=end generate=>> }
-
-<<end generate>>
-
-
-
-<<generate for HWTOPICSSUB>>
-
 #define ROS_READ_HWTOPIC_v4_<<Name>>( <<Name>>, msg){\
 	uint64_t ___deserialization_buffer[<<num_msg_elems>>]; \
 	uint32_t ___i = 0; \
@@ -593,13 +434,10 @@ typedef ap_axis<64,1,1,1> t_stream;
 			(msg).<<name>>.data[k] = ___deserialization_buffer[___i]; \
 			___i += 1; \
 		}\   <<=end generate=>> }
-
 <<end generate>>
 
 
-
 <<generate for HWTOPICSPUB>>
-
 #define ROS_PUBLISH_HWTOPIC_v4_<<Name>>( <<Name>>, msg){\
 	uint64_t __serialization_buffer[<<num_msg_elems>>]; \
 	uint32_t __i = 0; \
@@ -617,7 +455,44 @@ typedef ap_axis<64,1,1,1> t_stream;
 		__j += 1; \
 	} \
 }
+<<end generate>>
 
+<<generate for HWTOPICSSUB>>
+#define ROS_READ_HWTOPIC_v5_<<Name>>( <<Name>>, msg){\
+	ap_axis<64,1,1,1> __tmp_frame; \
+	read_section : { \	
+	<<=generate for Primitives=>>
+		(<<Name>>).read(tmp_frame); \
+		(msg).<<name>> = tmp_frame.data;  <<=end generate=>> <<=generate for Arrays=>> (<<Name>>).read(tmp_frame); \
+		(msg).<<name>>.size = tmp_frame.data; \
+		(<<Name>>).read(tmp_frame); \
+		(msg).<<name>>.capacity = tmp_frame.data; \
+		for (uint32_t i = 0; i < <<num_elems>>; i++) \
+		{ \
+			_Pragma ("HLS pipeline") \
+			(<<Name>>).read(tmp_frame); \
+			(msg).<<name>>.data[i] = tmp_frame.data; \
+		} \ <<=end generate=>>	} \
+}
+<<end generate>>
+
+<<generate for HWTOPICSPUB>>
+#define ROS_PUBLISH_HWTOPIC_v5_<<Name>>( <<Name>>, msg){\
+	ap_axis<64,1,1,1> __tmp_frame; \
+	write_section : { \	
+	<<=generate for Primitives=>>
+		tmp_frame.data = (msg).<<name>>; \
+		(<<Name>>).write(tmp_frame);  <<=end generate=>> <<=generate for Arrays=>> tmp_frame.data = (msg).<<name>>.size;  \
+		(<<Name>>).write(tmp_frame); \
+		tmp_frame.data = (msg).<<name>>.capacity; \
+		(<<Name>>).write(tmp_frame); \
+		for (uint32_t i = 0; i < <<num_elems>>; i++) \
+		{ \
+			_Pragma ("HLS pipeline") \
+			tmp_frame.data = (msg).<<name>>.data[i]; \
+			(<<Name>>).write(tmp_frame); \
+		} \ <<=end generate=>>	} \
+}
 <<end generate>>
 
 // ROS Services
