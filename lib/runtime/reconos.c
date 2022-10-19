@@ -1161,10 +1161,15 @@ intr:
 	return -1;
 }
 
-static inline int dt_ros_publish(struct hwslot *slot) {
+static inline int dt_ros_publish(struct hwslot *slot) {	
 	int handle, ret;
 	int msg_handle;
-	timespec_diff(&t_start, &t_end, &t_res);
+	if(slot->id == 0){
+		clock_gettime(CLOCK_MONOTONIC, &t_end);
+		timespec_diff(&t_start, &t_end, &t_res);
+		printf("[reconos-dt-%d] (hwtopic time on %d) : %3.6f \n", slot->id, handle, (double)(t_res.tv_nsec)/1000000000);
+	}
+	
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSPUB);
 	msg_handle = reconos_osif_read(slot->osif);
@@ -1178,8 +1183,8 @@ static inline int dt_ros_publish(struct hwslot *slot) {
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
-
-	
+	if(slot->id == 0)
+		clock_gettime(CLOCK_MONOTONIC, &t_start);
 	
 	//printf("[reconos-dt-%d] hw thread calctime is %3.6f; \n",slot->id, (double)(t_res.tv_nsec)/1000000000);
 
