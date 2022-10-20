@@ -436,6 +436,58 @@ typedef ap_axis<64,1,1,1> t_stream;
 		}\<<=end generate=>>}
 <<end generate>>
 
+<<generate for HWTOPICSSUB>>
+#define ROS_READ_HWTOPIC_v4_timing_<<Name>>( <<Name>>, msg){\
+	uint64_t ___deserialization_buffer[<<num_msg_elems>>]; \
+	uint32_t ___i = 0; \
+	ap_axis<64,1,1,1> __tmp_frame; \
+	(<<Name>>).read(__tmp_frame); \
+	(<<Name>>).read(__tmp_frame); \
+	for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
+		_Pragma ("HLS pipeline")  \
+		(<<Name>>).read(__tmp_frame); \
+		___deserialization_buffer[j] = __tmp_frame.data; \
+	}\
+	<<=generate for Primitives=>>
+	(msg).<<name>> = ___deserialization_buffer[___i]; \
+	___i += 1;  <<=end generate=>>  <<=generate for Arrays=>> for(uint32_t k = 0; k < <<num_elems>>; k++){ \
+			(msg).<<name>>.data[k] = ___deserialization_buffer[___i]; \
+			___i += 1; \
+		}\<<=end generate=>>(<<Name>>).read(__tmp_frame);  \
+		}
+<<end generate>>
+
+<<generate for HWTOPICSPUB>>
+#define ROS_PUBLISH_HWTOPIC_v4_timing_<<Name>>( <<Name>>, msg){\
+	uint64_t __serialization_buffer[<<num_msg_elems>>]; \
+	uint32_t __i = 0; \
+	uint32_t __j = 0; \
+	write_section : { \
+	_Pragma ("HLS protocol") \
+	ap_axis<64,1,1,1> __tmp_frame; \
+	__tmp_frame.user = 0; \
+	__tmp_frame.last = 0; \
+	(<<Name>>).write(__tmp_frame); \
+	__tmp_frame.user = 1; \
+	(<<Name>>).write(__tmp_frame); \
+	<<=generate for Primitives=>>
+	__serialization_buffer[__i] = (msg).<<name>>; \
+	__i += 1;  <<=end generate=>> <<=generate for Arrays=>> for(uint32_t k = 0; k < <<num_elems>>; k++){ \
+			__serialization_buffer[__i] = (msg).<<name>>.data[k]; \
+			__i += 1; \
+		} \ <<=end generate=>>  for (uint32_t j = 0; j < <<num_msg_elems>>; j++){ \
+		_Pragma ("HLS pipeline")  \
+		__tmp_frame.data = __serialization_buffer[__j]; \
+		__tmp_frame.user = 1; \
+		(<<Name>>).write(__tmp_frame); \
+		__j += 1; \
+	} \
+	__tmp_frame.user = 0; \
+	__tmp_frame.last = 1; \
+	(<<Name>>).write(__tmp_frame); \
+} \
+}
+<<end generate>>
 
 <<generate for HWTOPICSPUB>>
 #define ROS_PUBLISH_HWTOPIC_v4_<<Name>>( <<Name>>, msg){\
@@ -457,21 +509,23 @@ typedef ap_axis<64,1,1,1> t_stream;
 }
 <<end generate>>
 
+
+
 <<generate for HWTOPICSSUB>>
 #define ROS_READ_HWTOPIC_v5_<<Name>>( <<Name>>, msg){\
 	ap_axis<64,1,1,1> __tmp_frame; \
 	read_section : { \
 	<<=generate for Primitives=>>
-		(<<Name>>).read(tmp_frame); \
-		(msg).<<name>> = tmp_frame.data;  <<=end generate=>> <<=generate for Arrays=>> (<<Name>>).read(tmp_frame); \
-		(msg).<<name>>.size = tmp_frame.data; \
-		(<<Name>>).read(tmp_frame); \
-		(msg).<<name>>.capacity = tmp_frame.data; \
+		(<<Name>>).read(__tmp_frame); \
+		(msg).<<name>> = __tmp_frame.data;  <<=end generate=>> <<=generate for Arrays=>> (<<Name>>).read(__tmp_frame); \
+		(msg).<<name>>.size = __tmp_frame.data; \
+		(<<Name>>).read(__tmp_frame); \
+		(msg).<<name>>.capacity = __tmp_frame.data; \
 		for (uint32_t i = 0; i < <<num_elems>>; i++) \
 		{ \
 			_Pragma ("HLS pipeline") \
-			(<<Name>>).read(tmp_frame); \
-			(msg).<<name>>.data[i] = tmp_frame.data; \
+			(<<Name>>).read(__tmp_frame); \
+			(msg).<<name>>.data[i] = __tmp_frame.data; \
 		} \ <<=end generate=>>	} \
 }
 <<end generate>>
@@ -481,17 +535,67 @@ typedef ap_axis<64,1,1,1> t_stream;
 	ap_axis<64,1,1,1> __tmp_frame; \
 	write_section : { \
 	<<=generate for Primitives=>>
-		tmp_frame.data = (msg).<<name>>; \
-		(<<Name>>).write(tmp_frame);  <<=end generate=>> <<=generate for Arrays=>> tmpfake_frame.data = (msg).<<name>>.size;  \
-		(<<Name>>).write(tmp_frame); \
-		tmp_frame.data = (msg).<<name>>.capacity; \
-		(<<Name>>).write(tmp_frame); \
+		__tmp_frame.data = (msg).<<name>>; \
+		(<<Name>>).write(__tmp_frame);  <<=end generate=>> <<=generate for Arrays=>> __tmp_frame.data = (msg).<<name>>.size;  \
+		(<<Name>>).write(__tmp_frame); \
+		__tmp_frame.data = (msg).<<name>>.capacity; \
+		(<<Name>>).write(__tmp_frame); \
 		for (uint32_t i = 0; i < <<num_elems>>; i++) \
 		{ \
 			_Pragma ("HLS pipeline") \
-			tmp_frame.data = (msg).<<name>>.data[i]; \
-			(<<Name>>).write(tmp_frame); \
+			__tmp_frame.data = (msg).<<name>>.data[i]; \
+			(<<Name>>).write(__tmp_frame); \
 		} \<<=end generate=>>} \
+}
+<<end generate>>
+
+
+<<generate for HWTOPICSSUB>>
+#define ROS_READ_HWTOPIC_v5_timing_<<Name>>( <<Name>>, msg){\
+	ap_axis<64,1,1,1> __tmp_frame; \
+	read_section : { \
+		(<<Name>>).read(__tmp_frame); \
+		(<<Name>>).read(__tmp_frame); \
+	<<=generate for Primitives=>>
+		(<<Name>>).read(__tmp_frame); \
+		(msg).<<name>> = __tmp_frame.data;  <<=end generate=>> <<=generate for Arrays=>> (<<Name>>).read(__tmp_frame); \
+		(msg).<<name>>.size = __tmp_frame.data; \
+		(<<Name>>).read(__tmp_frame); \
+		(msg).<<name>>.capacity = __tmp_frame.data; \
+		for (uint32_t i = 0; i < <<num_elems>>; i++) \
+		{ \
+			_Pragma ("HLS pipeline") \
+			(<<Name>>).read(__tmp_frame); \
+			(msg).<<name>>.data[i] = __tmp_frame.data; \
+		} \ <<=end generate=>> (<<Name>>).read(__tmp_frame); \
+		} \
+}
+<<end generate>>
+
+
+<<generate for HWTOPICSPUB>>
+#define ROS_PUBLISH_HWTOPIC_v5_timing_<<Name>>( <<Name>>, msg){\
+	ap_axis<64,1,1,1> __tmp_frame; \
+	write_section : { \
+	__tmp_frame.user = 0; \
+	(<<Name>>).write(__tmp_frame); \
+	__tmp_frame.user = 1; \
+	(<<Name>>).write(__tmp_frame); \
+	<<=generate for Primitives=>>
+		__tmp_frame.data = (msg).<<name>>; \
+		(<<Name>>).write(__tmp_frame);  <<=end generate=>> <<=generate for Arrays=>> __tmp_frame.data = (msg).<<name>>.size;  \
+		(<<Name>>).write(__tmp_frame); \
+		__tmp_frame.data = (msg).<<name>>.capacity; \
+		(<<Name>>).write(__tmp_frame); \
+		for (uint32_t i = 0; i < <<num_elems>>; i++) \
+		{ \
+			_Pragma ("HLS pipeline") \
+			__tmp_frame.data = (msg).<<name>>.data[i]; \
+			__tmp_frame.user = 1; \
+			(<<Name>>).write(__tmp_frame); \
+		} \<<=end generate=>>__tmp_frame.user = 0;\
+		(<<Name>>).write(__tmp_frame); \
+		}\
 }
 <<end generate>>
 
