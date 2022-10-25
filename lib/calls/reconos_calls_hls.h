@@ -690,15 +690,14 @@ typedef ap_axis<64,1,1,1> t_stream;
 		for (uint32_t i = 0; i < <<num_elems>>; i+=UNROLL_FACTOR) \
 		{ \
 			_Pragma ("HLS pipeline") \
-			__tmp_frame.data = 0; \
-			tmp_1 = (0xff & (msg).<<name>>.data[i]) << 56; \
-			tmp_2 = (0xff & (msg).<<name>>.data[i + 1]) << 48; \
-			tmp_3 = (0xff & (msg).<<name>>.data[i + 2]) << 40; \
-			tmp_4 = (0xff & (msg).<<name>>.data[i + 3]) << 32; \
-			tmp_5 = (0xff & (msg).<<name>>.data[i + 4]) << 24; \
-			tmp_6 = (0xff & (msg).<<name>>.data[i + 5]) << 16; \
-			tmp_7 = (0xff & (msg).<<name>>.data[i + 6]) << 8; \
-			tmp_8 = (0xff & (msg).<<name>>.data[i + 7]); \
+			tmp_1 = (0xff & ((uint64_t)(msg).<<name>>.data[i])) << 56; \
+			tmp_2 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 1])) << 48; \
+			tmp_3 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 2])) << 40; \
+			tmp_4 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 3])) << 32; \
+			tmp_5 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 4])) << 24; \
+			tmp_6 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 5])) << 16; \
+			tmp_7 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 6])) << 8; \
+			tmp_8 = (0xff & ((uint64_t)(msg).<<name>>.data[i + 7])); \
 			__tmp_frame.data = tmp_1 | tmp_2 | tmp_3 | tmp_4 | tmp_5 | tmp_6 | tmp_7 | tmp_8; \
 			(<<Name>>).write(__tmp_frame); \
 		} \<<=end generate=>>} \
