@@ -206,6 +206,19 @@ def _parse_array_size(string):
         print("Found array of size " + str(m))
         
     return m
+
+"""
+for (int_t/uint_t)8-64 returns 8-64,
+for string returns 8
+"""
+def _parse_dwidth(string):
+
+    if(string.startswith("string")):
+        width = 8
+    else:
+        width = re.findall(r'\d+', string)[0]
+
+    return width
     
     
 """
@@ -234,6 +247,7 @@ def _sort_into_datatypes(msg, primitive_lib):
             array_dict["size"] = primitive_lib["size_t"]
             array_dict["capacity"] = primitive_lib["size_t"]
             array_dict["dtype"] = re.sub("[\[].*?[\]]", "", msg[key])
+            array_dict["dwidth"] = _parse_dwidth(array_dict["dtype"])
             array_dict["num_elems"] = m
             arrays.append(array_dict)
             
