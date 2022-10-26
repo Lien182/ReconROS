@@ -28,6 +28,7 @@ THREAD_ENTRY() {
 	sensor_msgs__msg__Image image_msg;
 
 	uint8_t image_data[DATA_SIZE];
+	#pragma HLS array_partition cyclic factor=8 variable=image_data
 	char encoding[ENCODING_SIZE];
 	char frame_id[FRAME_ID_SIZE];
 
@@ -73,9 +74,9 @@ THREAD_ENTRY() {
 		}
 		*/
 
-
+		// for standard ReconROS topic: MBOX_GET, MEM_WRITE, ROS_PUBLISH
 		//ROS_PUBLISH_HWTOPIC_v2_nicehwtopic(nicehwtopic, &image_msg);
-		ROS_PUBLISH_HWTOPIC_v4_nicehwtopic(nicehwtopic, image_msg);
+		ROS_PUBLISH_HWTOPIC_v7_timing_nicehwtopic(nicehwtopic, image_msg);
 
 
 	}

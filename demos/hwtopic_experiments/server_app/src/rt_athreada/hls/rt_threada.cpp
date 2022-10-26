@@ -35,6 +35,7 @@ THREAD_ENTRY() {
 	uint64_t payload_address[1];
 
 	uint8_t image_data[DATA_SIZE];
+	#pragma HLS array_partition cyclic factor=8 variable=image_data
 	char encoding[ENCODING_SIZE];
 	char frame_id[FRAME_ID_SIZE];
 	//char 
@@ -63,7 +64,9 @@ THREAD_ENTRY() {
 
 	while(1) {
 
-		ROS_READ_HWTOPIC_v4_nicehwtopic(nicehwtopic, image_msg);
+		// for standard ReconROS topic: ROS_SUBSCRIBE_TAKE, MEM_READ, MBOX_PUT
+		//ROS_READ_HWTOPIC_v4_timing_nicehwtopic(nicehwtopic, image_msg);
+		ROS_READ_HWTOPIC_v7_timing_nicehwtopic(nicehwtopic, image_msg);
 		/*
 		for(uint32_t i = 0; i < 30000; i++){
 			nicehwtopic.read(tmp_frame);
@@ -74,6 +77,7 @@ THREAD_ENTRY() {
 		}
 		*/
 
+		
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
 									
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
