@@ -257,6 +257,7 @@ def _sort_into_datatypes(msg, primitive_lib):
             array_dict["dtype"] = re.sub("[\[].*?[\]]", "", msg[key])
             array_dict["dwidth"] = _parse_dwidth(array_dict["dtype"])
             array_dict["num_elems"] = m
+            array_dict["unroll_factor"] = int(64 / array_dict["dwidth"])
             if(array_dict["dwidth"] == 8):
                 arrays_8.append(array_dict)
             elif(array_dict["dwidth"] == 16):
