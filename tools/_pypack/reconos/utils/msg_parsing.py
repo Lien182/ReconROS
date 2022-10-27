@@ -291,6 +291,10 @@ def _sort_into_datatypes(msg, primitive_lib):
     
     sorted_dict["Primitives"] = primitives
     sorted_dict["Arrays"] = arrays
+    sorted_dict["Arrays_8bit"] = arrays_8
+    sorted_dict["Arrays_16bit"] = arrays_16
+    sorted_dict["Arrays_32bit"] = arrays_32
+    sorted_dict["Arrays_64bit"] = arrays_64
     sorted_dict["num_msg_elems"] = num_msg_elems
         
     return sorted_dict
