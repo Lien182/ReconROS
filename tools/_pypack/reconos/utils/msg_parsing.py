@@ -216,7 +216,11 @@ def _parse_dwidth(string):
     if(string.startswith("string")):
         width = 8
     else:
-        width = re.findall(r'\d+', string)[0]
+        try:
+            width = int(re.findall(r'\d+', string)[0])
+        except IndexError:
+            print("Data width could not be determined for array of type " + string)
+            width = 0
 
     return width
     
@@ -231,6 +235,10 @@ def _sort_into_datatypes(msg, primitive_lib):
     
     primitives = []
     arrays = []
+    arrays_8 = []
+    arrays_16 = []
+    arrays_32 = []
+    arrays_64 = []
     
     datatype_found = False
     includepath_found = False
@@ -249,7 +257,16 @@ def _sort_into_datatypes(msg, primitive_lib):
             array_dict["dtype"] = re.sub("[\[].*?[\]]", "", msg[key])
             array_dict["dwidth"] = _parse_dwidth(array_dict["dtype"])
             array_dict["num_elems"] = m
-            arrays.append(array_dict)
+            if(array_dict["dwidth"] == 8):
+                arrays_8.append(array_dict)
+            elif(array_dict["dwidth"] == 16):
+                arrays_16.append(array_dict)
+            elif(array_dict["dwidth"] == 32):
+                arrays_32.append(array_dict)
+            elif(array_dict["dwidth"] == 64):
+                arrays_64.append(array_dict)
+            else:
+                arrays.append(array_dict)
             
             
         else: # primitive data type
