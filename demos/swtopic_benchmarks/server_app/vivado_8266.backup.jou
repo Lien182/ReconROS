@@ -1,0 +1,19 @@
+#-----------------------------------------------------------
+# Vivado v2020.1 (64-bit)
+# SW Build 2902540 on Wed May 27 19:54:35 MDT 2020
+# IP Build 2902112 on Wed May 27 22:43:36 MDT 2020
+# Start of session at: Tue Aug 30 15:39:34 2022
+# Process ID: 8266
+# Current directory: /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app
+# Command line: vivado
+# Log file: /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.log
+# Journal file: /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project -read_only /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd}
+ipx::edit_ip_in_project -upgrade true -name rt_athreada_v1_0_project -directory /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.tmp/rt_athreada_v1_0_project /home/student/Desktop/ReconROS_fork/ReconROS/demos/ros_hwtopic_demo/server_app/build.hw/pcores/rt_athreada_v1_00_a/component.xml
+update_compile_order -fileset sources_1
+current_project myReconOS
+close_project

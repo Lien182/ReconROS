@@ -1,0 +1,1928 @@
+================================================================
+  Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
+  Version 2017.1
+  Build 1846317 on Fri Apr 14 19:19:38 MDT 2017
+  Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
+================================================================
+INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'aamir' on host 'aamir-HP' (Linux_x86_64 version 5.4.0-90-generic) on Wed Nov 24 14:45:34 CET 2021
+INFO: [HLS 200-10] On os Ubuntu 18.04.6 LTS
+INFO: [HLS 200-10] In directory '/tmp/tmprq2ie2de'
+INFO: [HLS 200-10] Creating and opening project '/tmp/tmprq2ie2de/hls'.
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'serialize.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'serialize1.h' to the project
+INFO: [HLS 200-10] Adding design file 'serialize1.cpp' to the project
+INFO: [HLS 200-10] Adding design file 'rt_threada.cpp' to the project
+INFO: [HLS 200-10] Adding design file 'serialize.cpp' to the project
+INFO: [HLS 200-10] Creating and opening solution '/tmp/tmprq2ie2de/hls/sol'.
+INFO: [HLS 200-10] Setting target device to 'xc7z020clg484-1'
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 8.33333ns.
+INFO: [HLS 200-10] Analyzing design file 'serialize1.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file 'rt_threada.cpp' ... 
+INFO: [HLS 200-10] Analyzing design file 'serialize.cpp' ... 
+INFO: [HLS 200-10] Validating synthesis directives ...
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:37 ; elapsed = 00:00:18 . Memory (MB): peak = 351.625 ; gain = 12.586 ; free physical = 333 ; free virtual = 4516
+Error in linking the design.
+    while executing
+"source [lindex $::argv 1] "
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel \#0 { source [lindex $::argv 1] } "
+
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source script_vivado_edn.tcl -notrace
+no files matched glob pattern "hls/sol/syn/verilog/*.v"
+    while executing
+"glob hls/sol/syn/verilog/*.v "
+    invoked from within
+"read_verilog [ glob hls/sol/syn/verilog/*.v ]"
+    (file "script_vivado_edn.tcl" line 2)
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:46:03 2021...
+================================================================
+  Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
+  Version 2017.1
+  Build 1846317 on Fri Apr 14 19:19:38 MDT 2017
+  Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
+================================================================
+INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'aamir' on host 'aamir-HP' (Linux_x86_64 version 5.4.0-90-generic) on Wed Nov 24 14:46:04 CET 2021
+INFO: [HLS 200-10] On os Ubuntu 18.04.6 LTS
+INFO: [HLS 200-10] In directory '/tmp/tmp9eu_m3vp'
+INFO: [HLS 200-10] Creating and opening project '/tmp/tmp9eu_m3vp/hls'.
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'rt_threadb.cpp' to the project
+INFO: [HLS 200-10] Creating and opening solution '/tmp/tmp9eu_m3vp/hls/sol'.
+INFO: [HLS 200-10] Setting target device to 'xc7z020clg484-1'
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 8.33333ns.
+INFO: [HLS 200-10] Analyzing design file 'rt_threadb.cpp' ... 
+INFO: [HLS 200-10] Validating synthesis directives ...
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.621 ; gain = 12.586 ; free physical = 664 ; free virtual = 4472
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.621 ; gain = 12.586 ; free physical = 659 ; free virtual = 4470
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'stream_read' (./reconos_calls.h:149).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:28).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:28).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:27).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:27).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:24).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:24).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:24).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadb.cpp:20).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadb.cpp:24).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadb.cpp:20).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadb.cpp:19).
+INFO: [XFORM 203-603] Inlining function 'stream_read_memif' into 'rt_imp' (rt_threadb.cpp:28).
+INFO: [XFORM 203-603] Inlining function 'stream_read_memif' into 'rt_imp' (rt_threadb.cpp:27).
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:25 ; elapsed = 00:00:12 . Memory (MB): peak = 351.879 ; gain = 12.844 ; free physical = 644 ; free virtual = 4463
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:25 ; elapsed = 00:00:12 . Memory (MB): peak = 351.879 ; gain = 12.844 ; free physical = 641 ; free virtual = 4461
+INFO: [XFORM 203-102] Partitioning array 'payload_addr' (rt_threadb.cpp:17) automatically.
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 479.855 ; gain = 140.820 ; free physical = 614 ; free virtual = 4435
+WARNING: [XFORM 203-561] 'Loop-3' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-561] 'Loop-7' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-561] 'Loop-10' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-562] Loop 'Loop-1' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+WARNING: [XFORM 203-562] Loop 'Loop-5' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+WARNING: [XFORM 203-562] Loop 'Loop-8.4' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 479.855 ; gain = 140.820 ; free physical = 611 ; free virtual = 4433
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'rt_imp' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'rt_imp' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 12.98 seconds; current allocated memory: 77.297 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.06 seconds; current allocated memory: 77.835 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'rt_imp' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/hwt_signal' to 'ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_data_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_keep_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_strb_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_user_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_last_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_id_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_dest_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/osif_sw2hw_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/osif_hw2sw_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/memif_hwt2mem_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/memif_mem2hwt_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'rt_imp' to 'ap_ctrl_none'.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_data_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_keep_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_keep_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_strb_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_strb_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_user_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_user_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_last_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_last_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_id_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_id_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Register 'tmpdata_dest_V' is power-on initialization.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_dest_V' will not be exposed as RTL port.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'rt_imp'.
+INFO: [HLS 200-111]  Elapsed time: 0.12 seconds; current allocated memory: 79.184 MB.
+INFO: [RTMG 210-278] Implementing memory 'rt_imp_ram_ram' using block RAMs.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:26 ; elapsed = 00:00:14 . Memory (MB): peak = 479.855 ; gain = 140.820 ; free physical = 609 ; free virtual = 4440
+INFO: [SYSC 207-301] Generating SystemC RTL for rt_imp.
+INFO: [VHDL 208-304] Generating VHDL RTL for rt_imp.
+INFO: [VLOG 209-307] Generating Verilog RTL for rt_imp.
+INFO: [IMPL 213-8] Exporting RTL as an IP in IP-XACT.
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source run_ippack.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:46:29 2021...
+INFO: [HLS 200-112] Total elapsed time: 43.62 seconds; peak allocated memory: 79.184 MB.
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source script_vivado_edn.tcl -notrace
+Command: synth_design -top rt_imp -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020-clg484'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020-clg484'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 19847 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1147.438 ; gain = 46.996 ; free physical = 147 ; free virtual = 4324
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'rt_imp' [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:12]
+	Parameter ap_ST_fsm_state1 bound to: 31'b0000000000000000000000000000001 
+	Parameter ap_ST_fsm_state2 bound to: 31'b0000000000000000000000000000010 
+	Parameter ap_ST_fsm_state3 bound to: 31'b0000000000000000000000000000100 
+	Parameter ap_ST_fsm_state4 bound to: 31'b0000000000000000000000000001000 
+	Parameter ap_ST_fsm_state5 bound to: 31'b0000000000000000000000000010000 
+	Parameter ap_ST_fsm_state6 bound to: 31'b0000000000000000000000000100000 
+	Parameter ap_ST_fsm_state7 bound to: 31'b0000000000000000000000001000000 
+	Parameter ap_ST_fsm_state8 bound to: 31'b0000000000000000000000010000000 
+	Parameter ap_ST_fsm_state9 bound to: 31'b0000000000000000000000100000000 
+	Parameter ap_ST_fsm_state10 bound to: 31'b0000000000000000000001000000000 
+	Parameter ap_ST_fsm_state11 bound to: 31'b0000000000000000000010000000000 
+	Parameter ap_ST_fsm_state12 bound to: 31'b0000000000000000000100000000000 
+	Parameter ap_ST_fsm_state13 bound to: 31'b0000000000000000001000000000000 
+	Parameter ap_ST_fsm_state14 bound to: 31'b0000000000000000010000000000000 
+	Parameter ap_ST_fsm_state15 bound to: 31'b0000000000000000100000000000000 
+	Parameter ap_ST_fsm_state16 bound to: 31'b0000000000000001000000000000000 
+	Parameter ap_ST_fsm_state17 bound to: 31'b0000000000000010000000000000000 
+	Parameter ap_ST_fsm_state18 bound to: 31'b0000000000000100000000000000000 
+	Parameter ap_ST_fsm_state19 bound to: 31'b0000000000001000000000000000000 
+	Parameter ap_ST_fsm_state20 bound to: 31'b0000000000010000000000000000000 
+	Parameter ap_ST_fsm_state21 bound to: 31'b0000000000100000000000000000000 
+	Parameter ap_ST_fsm_state22 bound to: 31'b0000000001000000000000000000000 
+	Parameter ap_ST_fsm_state23 bound to: 31'b0000000010000000000000000000000 
+	Parameter ap_ST_fsm_state24 bound to: 31'b0000000100000000000000000000000 
+	Parameter ap_ST_fsm_state25 bound to: 31'b0000001000000000000000000000000 
+	Parameter ap_ST_fsm_state26 bound to: 31'b0000010000000000000000000000000 
+	Parameter ap_ST_fsm_state27 bound to: 31'b0000100000000000000000000000000 
+	Parameter ap_ST_fsm_state28 bound to: 31'b0001000000000000000000000000000 
+	Parameter ap_ST_fsm_state29 bound to: 31'b0010000000000000000000000000000 
+	Parameter ap_ST_fsm_state30 bound to: 31'b0100000000000000000000000000000 
+	Parameter ap_ST_fsm_state31 bound to: 31'b1000000000000000000000000000000 
+INFO: [Synth 8-5534] Detected attribute (* fsm_encoding = "none" *) [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:209]
+INFO: [Synth 8-638] synthesizing module 'rt_imp_ram' [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp_ram.v:46]
+	Parameter DataWidth bound to: 32 - type: integer 
+	Parameter AddressRange bound to: 2048 - type: integer 
+	Parameter AddressWidth bound to: 11 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'rt_imp_ram_ram' [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp_ram.v:9]
+	Parameter DWIDTH bound to: 32 - type: integer 
+	Parameter AWIDTH bound to: 11 - type: integer 
+	Parameter MEM_SIZE bound to: 2048 - type: integer 
+INFO: [Synth 8-5534] Detected attribute (* ram_style = "block" *) [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp_ram.v:22]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp_ram_ram' (1#1) [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp_ram.v:9]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp_ram' (2#1) [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp_ram.v:46]
+WARNING: [Synth 8-589] replacing case/wildcard equality operator === with logical equality operator == [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1435]
+WARNING: [Synth 8-589] replacing case/wildcard equality operator === with logical equality operator == [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1441]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_TDATA_blk_n_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:866]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_dest_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:898]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_id_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:914]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_keep_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:930]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_last_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:946]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_strb_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:962]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_user_V_1_vld_in_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:978]
+WARNING: [Synth 8-6014] Unused sequential element tmp_11_reg_671_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:818]
+WARNING: [Synth 8-6014] Unused sequential element tmp_3_reg_629_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:830]
+WARNING: [Synth 8-6014] Unused sequential element tmp_3_reg_629_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1484]
+WARNING: [Synth 8-6014] Unused sequential element tmp_11_reg_671_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1485]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp' (3#1) [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:12]
+WARNING: [Synth 8-3331] design rt_imp_ram has unconnected port reset
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1187.938 ; gain = 87.496 ; free physical = 180 ; free virtual = 4323
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1187.938 ; gain = 87.496 ; free physical = 183 ; free virtual = 4325
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1195.941 ; gain = 95.500 ; free physical = 183 ; free virtual = 4326
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-4471] merging register 'tmp_11_reg_671_reg[31:9]' into 'tmp_3_reg_629_reg[31:9]' [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1485]
+WARNING: [Synth 8-6014] Unused sequential element tmp_11_reg_671_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:1485]
+INFO: [Synth 8-4490] FSM extraction disabled for register 'ap_CS_fsm_reg' through user attribute
+INFO: [Synth 8-4490] FSM extraction disabled for register 'ap_CS_fsm_reg' through user attribute
+INFO: [Synth 8-5545] ROM "tmp_9_fu_360_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_13_fu_404_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_5_fu_433_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_14_fu_477_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "exitcond_fu_512_p2" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-6014] Unused sequential element p_1_reg_230_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:614]
+WARNING: [Synth 8-6014] Unused sequential element p_addr3_1_reg_299_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:622]
+WARNING: [Synth 8-6014] Unused sequential element p_i4_1_reg_311_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:630]
+WARNING: [Synth 8-6014] Unused sequential element p_len1_1_reg_277_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:646]
+WARNING: [Synth 8-6014] Unused sequential element p_len_1_reg_208_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:654]
+WARNING: [Synth 8-6014] Unused sequential element p_rem2_1_reg_287_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:678]
+WARNING: [Synth 8-6014] Unused sequential element p_rem_1_reg_218_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:686]
+INFO: [Synth 8-5545] ROM "tmp_9_fu_360_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_13_fu_404_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_5_fu_433_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_14_fu_477_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "exitcond_fu_512_p2" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_data_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_data_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_dest_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_dest_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_id_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_id_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_keep_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_keep_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_last_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_last_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_strb_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_strb_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_user_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_user_V_1_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1216.980 ; gain = 116.539 ; free physical = 131 ; free virtual = 4255
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   2 Input     12 Bit       Adders := 1     
+	   2 Input      9 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 10    
+	               31 Bit    Registers := 1     
+	               23 Bit    Registers := 1     
+	               12 Bit    Registers := 2     
+	                9 Bit    Registers := 4     
+	                4 Bit    Registers := 4     
+	                2 Bit    Registers := 7     
+	                1 Bit    Registers := 22    
++---RAMs : 
+	              64K Bit         RAMs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 6     
+	   2 Input     31 Bit        Muxes := 2     
+	   2 Input     30 Bit        Muxes := 1     
+	   2 Input     29 Bit        Muxes := 1     
+	   2 Input     28 Bit        Muxes := 2     
+	   2 Input     27 Bit        Muxes := 1     
+	   2 Input     26 Bit        Muxes := 1     
+	   2 Input     23 Bit        Muxes := 1     
+	   2 Input     22 Bit        Muxes := 2     
+	   2 Input     21 Bit        Muxes := 1     
+	   2 Input     20 Bit        Muxes := 1     
+	   3 Input     16 Bit        Muxes := 1     
+	   2 Input     15 Bit        Muxes := 1     
+	   2 Input     13 Bit        Muxes := 1     
+	   2 Input     12 Bit        Muxes := 1     
+	   5 Input     12 Bit        Muxes := 1     
+	   2 Input     11 Bit        Muxes := 2     
+	   2 Input      9 Bit        Muxes := 3     
+	   2 Input      8 Bit        Muxes := 1     
+	   2 Input      7 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 3     
+	   2 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 28    
+	   2 Input      1 Bit        Muxes := 20    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module rt_imp 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   2 Input     12 Bit       Adders := 1     
+	   2 Input      9 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 9     
+	               31 Bit    Registers := 1     
+	               23 Bit    Registers := 1     
+	               12 Bit    Registers := 2     
+	                9 Bit    Registers := 4     
+	                4 Bit    Registers := 4     
+	                2 Bit    Registers := 7     
+	                1 Bit    Registers := 22    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 6     
+	   2 Input     31 Bit        Muxes := 2     
+	   2 Input     30 Bit        Muxes := 1     
+	   2 Input     29 Bit        Muxes := 1     
+	   2 Input     28 Bit        Muxes := 2     
+	   2 Input     27 Bit        Muxes := 1     
+	   2 Input     26 Bit        Muxes := 1     
+	   2 Input     23 Bit        Muxes := 1     
+	   2 Input     22 Bit        Muxes := 2     
+	   2 Input     21 Bit        Muxes := 1     
+	   2 Input     20 Bit        Muxes := 1     
+	   3 Input     16 Bit        Muxes := 1     
+	   2 Input     15 Bit        Muxes := 1     
+	   2 Input     13 Bit        Muxes := 1     
+	   2 Input     12 Bit        Muxes := 1     
+	   5 Input     12 Bit        Muxes := 1     
+	   2 Input     11 Bit        Muxes := 2     
+	   2 Input      9 Bit        Muxes := 3     
+	   2 Input      8 Bit        Muxes := 1     
+	   2 Input      7 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 3     
+	   2 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 28    
+	   2 Input      1 Bit        Muxes := 20    
+Module rt_imp_ram_ram 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 1     
++---RAMs : 
+	              64K Bit         RAMs := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5545] ROM "tmp_13_fu_404_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_9_fu_360_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_14_fu_477_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_5_fu_433_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "exitcond_fu_512_p2" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-6014] Unused sequential element p_1_reg_230_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:614]
+WARNING: [Synth 8-6014] Unused sequential element p_len_1_reg_208_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:654]
+WARNING: [Synth 8-6014] Unused sequential element p_rem_1_reg_218_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:686]
+WARNING: [Synth 8-6014] Unused sequential element p_addr3_1_reg_299_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:622]
+WARNING: [Synth 8-6014] Unused sequential element p_len1_1_reg_277_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:646]
+WARNING: [Synth 8-6014] Unused sequential element p_rem2_1_reg_287_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:678]
+WARNING: [Synth 8-6014] Unused sequential element p_i4_1_reg_311_reg was removed.  [/tmp/tmp9eu_m3vp/hls/sol/syn/verilog/rt_imp.v:630]
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[31] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[30] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[29] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[28] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[27] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[26] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[25] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[24] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[23] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[22] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[21] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[20] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[19] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[18] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[17] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[16] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[15] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[14] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[13] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[12] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[10] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[9] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[6] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[4] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[3] driven by constant 0
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[9]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[10]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[11]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[12]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[13]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[14]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[15]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[16]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[17]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[18]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[19]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[20]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[21]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[22]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[23]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[24]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[25]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[26]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[27]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[28]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[29]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_629_reg[30]' (FD) to 'tmp_3_reg_629_reg[31]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\tmp_3_reg_629_reg[31] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_dest_V_1_payload_B_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_dest_V_1_payload_A_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_id_V_1_payload_B_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_id_V_1_payload_A_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_last_V_1_payload_B_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_last_V_1_payload_A_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_user_V_1_payload_B_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_user_V_1_payload_A_reg[0] )
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_B_reg[0]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_B_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_A_reg[0]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_A_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_B_reg[1]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_B_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_A_reg[1]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_A_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_B_reg[2]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_B_reg[3]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_strb_V_1_payload_A_reg[2]' (FDE) to 'nicehwtopic_V_strb_V_1_payload_A_reg[3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_strb_V_1_payload_B_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_strb_V_1_payload_A_reg[3] )
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_B_reg[0]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_B_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_A_reg[0]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_A_reg[1]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_B_reg[1]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_B_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_A_reg[1]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_A_reg[2]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_B_reg[2]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_B_reg[3]'
+INFO: [Synth 8-3886] merging instance 'nicehwtopic_V_keep_V_1_payload_A_reg[2]' (FDE) to 'nicehwtopic_V_keep_V_1_payload_A_reg[3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_keep_V_1_payload_B_reg[3] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\nicehwtopic_V_keep_V_1_payload_A_reg[3] )
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[7]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (tmp_3_reg_629_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_state_reg[1]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_state_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_payload_A_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_keep_V_1_payload_B_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_state_reg[1]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_state_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_payload_A_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_strb_V_1_payload_B_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_state_reg[1]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_state_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_payload_A_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_user_V_1_payload_B_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_state_reg[1]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_state_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_payload_A_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_last_V_1_payload_B_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_state_reg[1]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_state_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_payload_A_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_id_V_1_payload_B_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_dest_V_1_sel_rd_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_dest_V_1_sel_wr_reg) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_dest_V_1_payload_A_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (nicehwtopic_V_dest_V_1_payload_B_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[30]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[29]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[28]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[27]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[26]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[25]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[24]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[22]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[21]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[20]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[19]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[18]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[17]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[16]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[15]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[13]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[12]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_reg_265_reg[11]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[11]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[12]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[13]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[15]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[16]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[17]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[18]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[19]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[20]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[21]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[22]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[24]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[25]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[26]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[27]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[28]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[29]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[30]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i4_1_reg_311_reg[31]) is unused and will be removed from module rt_imp.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 160 ; free virtual = 4126
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping  Report (see note below)
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name     | RTL Object | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|rt_imp_ram_ram: | ram_reg    | 2 K x 32(WRITE_FIRST)  | W | R |                        |   |   | Port A           | 0      | 2      | 
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 161 ; free virtual = 4127
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3332] Sequential element (p_len_8_reg_185_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_len_9_reg_242_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_rem_1_reg_218_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_rem2_1_reg_287_reg[0]) is unused and will be removed from module rt_imp.
+INFO: [Synth 8-4480] The timing for the instance ram_U/rt_imp_ram_ram_U/ram_reg_0 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+INFO: [Synth 8-4480] The timing for the instance ram_U/rt_imp_ram_ram_U/ram_reg_1 (implemented as a block RAM) might be sub-optimal as no optional output register could be merged into the block ram. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 162 ; free virtual = 4122
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 156 ; free virtual = 4119
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 154 ; free virtual = 4117
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 155 ; free virtual = 4118
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 155 ; free virtual = 4118
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 154 ; free virtual = 4117
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 155 ; free virtual = 4118
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |CARRY4   |    70|
+|2     |LUT1     |    42|
+|3     |LUT2     |    35|
+|4     |LUT3     |   181|
+|5     |LUT4     |   286|
+|6     |LUT5     |    94|
+|7     |LUT6     |    50|
+|8     |RAMB36E1 |     2|
+|9     |FDRE     |   558|
+|10    |FDSE     |     3|
++------+---------+------+
+
+Report Instance Areas: 
++------+---------------------+---------------+------+
+|      |Instance             |Module         |Cells |
++------+---------------------+---------------+------+
+|1     |top                  |               |  1321|
+|2     |  ram_U              |rt_imp_ram     |    15|
+|3     |    rt_imp_ram_ram_U |rt_imp_ram_ram |    15|
++------+---------------------+---------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 155 ; free virtual = 4117
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 138 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.699 ; gain = 264.258 ; free physical = 154 ; free virtual = 4117
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1364.707 ; gain = 264.258 ; free physical = 154 ; free virtual = 4116
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 72 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'rt_imp' is not ideal for floorplanning, since the cellview 'rt_imp' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+120 Infos, 139 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1452.711 ; gain = 364.855 ; free physical = 195 ; free virtual = 4060
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:47:09 2021...
+================================================================
+  Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC
+  Version 2017.1
+  Build 1846317 on Fri Apr 14 19:19:38 MDT 2017
+  Copyright (C) 1986-2017 Xilinx, Inc. All Rights Reserved.
+================================================================
+INFO: [HLS 200-10] Running '/opt/Xilinx/Vivado_HLS/2017.1/bin/unwrapped/lnx64.o/vivado_hls'
+INFO: [HLS 200-10] For user 'aamir' on host 'aamir-HP' (Linux_x86_64 version 5.4.0-90-generic) on Wed Nov 24 14:47:10 CET 2021
+INFO: [HLS 200-10] On os Ubuntu 18.04.6 LTS
+INFO: [HLS 200-10] In directory '/tmp/tmpioik6mc8'
+INFO: [HLS 200-10] Creating and opening project '/tmp/tmpioik6mc8/hls'.
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_thread.h' to the project
+INFO: [HLS 200-10] Adding design file 'reconos_calls.h' to the project
+INFO: [HLS 200-10] Adding design file 'rt_threadc.cpp' to the project
+INFO: [HLS 200-10] Creating and opening solution '/tmp/tmpioik6mc8/hls/sol'.
+INFO: [HLS 200-10] Setting target device to 'xc7z020clg484-1'
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 8.33333ns.
+INFO: [HLS 200-10] Analyzing design file 'rt_threadc.cpp' ... 
+INFO: [HLS 200-10] Validating synthesis directives ...
+INFO: [HLS 200-111] Finished Checking Pragmas Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.625 ; gain = 12.586 ; free physical = 422 ; free virtual = 4416
+INFO: [HLS 200-111] Finished Linking Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.625 ; gain = 12.586 ; free physical = 415 ; free virtual = 4413
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'stream_read' (./reconos_calls.h:149).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:32).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:32).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:32).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:31).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:31).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:31).
+INFO: [XFORM 203-603] Inlining function 'stream_write' into 'rt_imp' (rt_threadc.cpp:20).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadc.cpp:32).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadc.cpp:20).
+INFO: [XFORM 203-603] Inlining function 'stream_read' into 'rt_imp' (rt_threadc.cpp:19).
+INFO: [HLS 200-111] Finished Standard Transforms Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.883 ; gain = 12.844 ; free physical = 401 ; free virtual = 4407
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 351.883 ; gain = 12.844 ; free physical = 397 ; free virtual = 4403
+INFO: [HLS 200-111] Finished Pre-synthesis Time (s): cpu = 00:00:24 ; elapsed = 00:00:12 . Memory (MB): peak = 479.621 ; gain = 140.582 ; free physical = 379 ; free virtual = 4388
+WARNING: [XFORM 203-561] 'Loop-3' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-561] 'Loop-7' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-561] 'Loop-10' (./reconos_calls.h:149:88) in function 'rt_imp' is an infinite loop.
+WARNING: [XFORM 203-562] Loop 'Loop-1' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+WARNING: [XFORM 203-562] Loop 'Loop-5' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+WARNING: [XFORM 203-562] Loop 'Loop-8.6' (./reconos_calls.h:149) in function 'rt_imp' has unknown bound because it has multiple exiting blocks.
+INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 479.621 ; gain = 140.582 ; free physical = 386 ; free virtual = 4396
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'rt_imp' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Implementing module 'rt_imp' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111]  Elapsed time: 12.73 seconds; current allocated memory: 76.013 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111]  Elapsed time: 0.05 seconds; current allocated memory: 76.448 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'rt_imp' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/hwt_signal' to 'ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_data_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_keep_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_strb_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_user_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_last_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_id_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/nicehwtopic_V_dest_V' to 'axis' (register, both mode).
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/osif_sw2hw_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/osif_hw2sw_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/memif_hwt2mem_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'rt_imp/memif_mem2hwt_V' to 'ap_fifo'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'rt_imp' to 'ap_ctrl_none'.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_data_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_keep_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_strb_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_user_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_last_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_id_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Global scalar 'tmpdata_dest_V' will not be exposed as RTL port.
+WARNING: [RTGEN 206-101] Port 'rt_imp/memif_mem2hwt_V_dout' has no fanin or fanout and is left dangling.
+               Please use C simulation to confirm this function argument can be read from or written to.
+WARNING: [RTGEN 206-101] Port 'rt_imp/memif_mem2hwt_V_empty_n' has no fanin or fanout and is left dangling.
+               Please use C simulation to confirm this function argument can be read from or written to.
+WARNING: [RTGEN 206-101] Port 'rt_imp/memif_mem2hwt_V_read' has no fanin or fanout and is left dangling.
+               Please use C simulation to confirm this function argument can be read from or written to.
+WARNING: [RTGEN 206-101] Setting dangling out port 'rt_imp/memif_mem2hwt_V_read' to 0.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'rt_imp'.
+INFO: [HLS 200-111]  Elapsed time: 0.1 seconds; current allocated memory: 77.606 MB.
+INFO: [RTMG 210-278] Implementing memory 'rt_imp_ram_ram' using block RAMs.
+INFO: [HLS 200-111] Finished generating all RTL models Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 479.621 ; gain = 140.582 ; free physical = 373 ; free virtual = 4391
+INFO: [SYSC 207-301] Generating SystemC RTL for rt_imp.
+INFO: [VHDL 208-304] Generating VHDL RTL for rt_imp.
+INFO: [VLOG 209-307] Generating Verilog RTL for rt_imp.
+INFO: [IMPL 213-8] Exporting RTL as an IP in IP-XACT.
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source run_ippack.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:47:33 2021...
+INFO: [HLS 200-112] Total elapsed time: 41.3 seconds; peak allocated memory: 77.606 MB.
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source script_vivado_edn.tcl -notrace
+Command: synth_design -top rt_imp -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020-clg484'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020-clg484'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 20581 
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1146.434 ; gain = 45.996 ; free physical = 223 ; free virtual = 4289
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'rt_imp' [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:12]
+	Parameter ap_ST_fsm_state1 bound to: 24'b000000000000000000000001 
+	Parameter ap_ST_fsm_state2 bound to: 24'b000000000000000000000010 
+	Parameter ap_ST_fsm_state3 bound to: 24'b000000000000000000000100 
+	Parameter ap_ST_fsm_state4 bound to: 24'b000000000000000000001000 
+	Parameter ap_ST_fsm_state5 bound to: 24'b000000000000000000010000 
+	Parameter ap_ST_fsm_state6 bound to: 24'b000000000000000000100000 
+	Parameter ap_ST_fsm_state7 bound to: 24'b000000000000000001000000 
+	Parameter ap_ST_fsm_state8 bound to: 24'b000000000000000010000000 
+	Parameter ap_ST_fsm_state9 bound to: 24'b000000000000000100000000 
+	Parameter ap_ST_fsm_state10 bound to: 24'b000000000000001000000000 
+	Parameter ap_ST_fsm_state11 bound to: 24'b000000000000010000000000 
+	Parameter ap_ST_fsm_state12 bound to: 24'b000000000000100000000000 
+	Parameter ap_ST_fsm_state13 bound to: 24'b000000000001000000000000 
+	Parameter ap_ST_fsm_state14 bound to: 24'b000000000010000000000000 
+	Parameter ap_ST_fsm_state15 bound to: 24'b000000000100000000000000 
+	Parameter ap_ST_fsm_state16 bound to: 24'b000000001000000000000000 
+	Parameter ap_ST_fsm_state17 bound to: 24'b000000010000000000000000 
+	Parameter ap_ST_fsm_state18 bound to: 24'b000000100000000000000000 
+	Parameter ap_ST_fsm_state19 bound to: 24'b000001000000000000000000 
+	Parameter ap_ST_fsm_state20 bound to: 24'b000010000000000000000000 
+	Parameter ap_ST_fsm_state21 bound to: 24'b000100000000000000000000 
+	Parameter ap_ST_fsm_state22 bound to: 24'b001000000000000000000000 
+	Parameter ap_ST_fsm_state23 bound to: 24'b010000000000000000000000 
+	Parameter ap_ST_fsm_state24 bound to: 24'b100000000000000000000000 
+INFO: [Synth 8-5534] Detected attribute (* fsm_encoding = "none" *) [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:114]
+INFO: [Synth 8-638] synthesizing module 'rt_imp_ram' [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp_ram.v:46]
+	Parameter DataWidth bound to: 32 - type: integer 
+	Parameter AddressRange bound to: 2048 - type: integer 
+	Parameter AddressWidth bound to: 11 - type: integer 
+INFO: [Synth 8-638] synthesizing module 'rt_imp_ram_ram' [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp_ram.v:9]
+	Parameter DWIDTH bound to: 32 - type: integer 
+	Parameter AWIDTH bound to: 11 - type: integer 
+	Parameter MEM_SIZE bound to: 2048 - type: integer 
+INFO: [Synth 8-5534] Detected attribute (* ram_style = "block" *) [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp_ram.v:22]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp_ram_ram' (1#1) [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp_ram.v:9]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp_ram' (2#1) [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp_ram.v:46]
+WARNING: [Synth 8-589] replacing case/wildcard equality operator === with logical equality operator == [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:723]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_TDATA_blk_n_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:397]
+WARNING: [Synth 8-6014] Unused sequential element nicehwtopic_V_dest_V_0_ack_out_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:421]
+WARNING: [Synth 8-6014] Unused sequential element ram_we0_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:196]
+WARNING: [Synth 8-6014] Unused sequential element i_cast1_reg_462_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:328]
+WARNING: [Synth 8-6014] Unused sequential element p_len_2_cast_reg_484_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:352]
+WARNING: [Synth 8-6014] Unused sequential element tmp_3_reg_489_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:353]
+WARNING: [Synth 8-6014] Unused sequential element i_cast1_reg_462_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:748]
+WARNING: [Synth 8-6014] Unused sequential element p_len_2_cast_reg_484_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:749]
+WARNING: [Synth 8-6014] Unused sequential element tmp_3_reg_489_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:750]
+INFO: [Synth 8-256] done synthesizing module 'rt_imp' (3#1) [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:12]
+WARNING: [Synth 8-3917] design rt_imp has port memif_mem2hwt_V_read driven by constant 0
+WARNING: [Synth 8-3331] design rt_imp_ram has unconnected port reset
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TUSER[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TLAST[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TID[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TDEST[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[31]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[30]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[29]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[28]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[27]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[26]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[25]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[24]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[23]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[22]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[21]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[20]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[19]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[18]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[17]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[16]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[15]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[14]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[13]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[12]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[11]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[10]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[9]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[8]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[7]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[6]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[5]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[4]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[31]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[30]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[29]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[28]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[27]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[26]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[25]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[24]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[23]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[22]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[21]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[20]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[19]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[18]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[17]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[16]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[15]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[14]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[13]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[12]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[11]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[10]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[9]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[8]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[7]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[6]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[5]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[4]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_dout[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port memif_mem2hwt_V_empty_n
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1187.934 ; gain = 87.496 ; free physical = 222 ; free virtual = 4288
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1187.934 ; gain = 87.496 ; free physical = 224 ; free virtual = 4290
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1195.938 ; gain = 95.500 ; free physical = 223 ; free virtual = 4289
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-4471] merging register 'tmp_3_reg_489_reg[8:0]' into 'p_len_2_cast_reg_484_reg[8:0]' [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:353]
+WARNING: [Synth 8-6014] Unused sequential element tmp_3_reg_489_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:353]
+WARNING: [Synth 8-3936] Found unconnected internal register 'i_cast1_reg_462_reg' and it is trimmed from '12' to '11' bits. [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:328]
+WARNING: [Synth 8-6014] Unused sequential element i_cast1_reg_462_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:748]
+INFO: [Synth 8-4490] FSM extraction disabled for register 'ap_CS_fsm_reg' through user attribute
+INFO: [Synth 8-4490] FSM extraction disabled for register 'ap_CS_fsm_reg' through user attribute
+INFO: [Synth 8-5546] ROM "exitcond_fu_276_p2" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "tmp_7_fu_359_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_s_fu_411_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-6014] Unused sequential element p_1_reg_243_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:272]
+WARNING: [Synth 8-6014] Unused sequential element p_len_1_reg_221_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:300]
+WARNING: [Synth 8-6014] Unused sequential element p_rem_1_reg_231_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:318]
+INFO: [Synth 8-5546] ROM "exitcond_fu_276_p2" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "tmp_7_fu_359_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_s_fu_411_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ap_NS_fsm" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_data_V_0_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_data_V_0_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_dest_V_0_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "nicehwtopic_V_dest_V_0_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1212.961 ; gain = 112.523 ; free physical = 192 ; free virtual = 4258
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   2 Input     12 Bit       Adders := 1     
+	   2 Input      9 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 9     
+	               24 Bit    Registers := 1     
+	               23 Bit    Registers := 2     
+	               12 Bit    Registers := 2     
+	               11 Bit    Registers := 1     
+	                9 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 2     
++---RAMs : 
+	              64K Bit         RAMs := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   2 Input     24 Bit        Muxes := 1     
+	   3 Input     23 Bit        Muxes := 1     
+	   2 Input     22 Bit        Muxes := 1     
+	   2 Input     21 Bit        Muxes := 1     
+	   2 Input     20 Bit        Muxes := 1     
+	   2 Input     19 Bit        Muxes := 1     
+	   2 Input     18 Bit        Muxes := 1     
+	   2 Input     17 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input     15 Bit        Muxes := 1     
+	   2 Input     12 Bit        Muxes := 1     
+	   5 Input     12 Bit        Muxes := 1     
+	   2 Input     11 Bit        Muxes := 2     
+	   2 Input      9 Bit        Muxes := 2     
+	   2 Input      8 Bit        Muxes := 1     
+	   2 Input      7 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 6     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module rt_imp 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   2 Input     12 Bit       Adders := 1     
+	   2 Input      9 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 8     
+	               24 Bit    Registers := 1     
+	               23 Bit    Registers := 2     
+	               12 Bit    Registers := 2     
+	               11 Bit    Registers := 1     
+	                9 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   2 Input     24 Bit        Muxes := 1     
+	   3 Input     23 Bit        Muxes := 1     
+	   2 Input     22 Bit        Muxes := 1     
+	   2 Input     21 Bit        Muxes := 1     
+	   2 Input     20 Bit        Muxes := 1     
+	   2 Input     19 Bit        Muxes := 1     
+	   2 Input     18 Bit        Muxes := 1     
+	   2 Input     17 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input     15 Bit        Muxes := 1     
+	   2 Input     12 Bit        Muxes := 1     
+	   5 Input     12 Bit        Muxes := 1     
+	   2 Input     11 Bit        Muxes := 2     
+	   2 Input      9 Bit        Muxes := 2     
+	   2 Input      8 Bit        Muxes := 1     
+	   2 Input      7 Bit        Muxes := 1     
+	   2 Input      6 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   2 Input      4 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 2     
+	   4 Input      2 Bit        Muxes := 2     
+	   2 Input      1 Bit        Muxes := 6     
+Module rt_imp_ram_ram 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 1     
++---RAMs : 
+	              64K Bit         RAMs := 1     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5546] ROM "exitcond_fu_276_p2" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "tmp_s_fu_411_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "tmp_7_fu_359_p2" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-6014] Unused sequential element p_1_reg_243_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:272]
+WARNING: [Synth 8-6014] Unused sequential element p_len_1_reg_221_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:300]
+WARNING: [Synth 8-6014] Unused sequential element p_rem_1_reg_231_reg was removed.  [/tmp/tmpioik6mc8/hls/sol/syn/verilog/rt_imp.v:318]
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[31] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[30] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[29] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[28] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[27] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[26] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[25] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[24] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[23] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[22] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[21] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[20] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[19] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[18] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[17] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[16] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[15] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[14] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[13] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[12] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[10] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[9] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[6] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[4] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[3] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[2] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port osif_hw2sw_V_din[0] driven by constant 0
+WARNING: [Synth 8-3917] design rt_imp has port memif_mem2hwt_V_read driven by constant 0
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TKEEP[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[3]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[2]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[1]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TSTRB[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TUSER[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TLAST[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TID[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port nicehwtopic_TDEST[0]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[31]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[30]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[29]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[28]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[27]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[26]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[25]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[24]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[23]
+WARNING: [Synth 8-3331] design rt_imp has unconnected port osif_sw2hw_V_dout[22]
+INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[30]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[31]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[29]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[28]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[27]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[26]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[25]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[24]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[23]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[22]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[21]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[20]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[19]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[18]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[17]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[16]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[15]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[14]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[13]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[12]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[11]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[10]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'p_len_2_cast_reg_484_reg[9]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[9]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[10]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[11]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[12]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[13]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[14]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[15]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[16]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[17]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[18]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[19]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[20]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[21]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[22]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[23]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[24]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[25]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[26]' (FD) to 'tmp_3_reg_489_reg[27]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\tmp_3_reg_489_reg[27] )
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[28]' (FD) to 'tmp_3_reg_489_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[29]' (FD) to 'tmp_3_reg_489_reg[31]'
+INFO: [Synth 8-3886] merging instance 'tmp_3_reg_489_reg[30]' (FD) to 'tmp_3_reg_489_reg[31]'
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (\tmp_3_reg_489_reg[31] )
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[7]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (ap_CS_fsm_reg[3]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (tmp_3_reg_489_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[30]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[29]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[28]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[27]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[26]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[25]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[24]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[22]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[21]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[20]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[19]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[18]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[17]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[16]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[15]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[13]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[12]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_2_reg_503_reg[11]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[30]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[29]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[28]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[27]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[26]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[25]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[24]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[22]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[21]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[20]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[19]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[18]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[17]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[16]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[15]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[13]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[12]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_reg_209_reg[11]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[31]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[30]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[29]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[28]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[27]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[26]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[25]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[24]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[23]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[22]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[21]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[20]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[19]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[18]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[17]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[16]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[15]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[14]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[13]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[12]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_i_1_reg_255_reg[11]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (tmp_3_reg_489_reg[27]) is unused and will be removed from module rt_imp.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 1340.703 ; gain = 240.266 ; free physical = 147 ; free virtual = 4119
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Block RAM: Preliminary Mapping  Report (see note below)
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|Module Name     | RTL Object | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+|rt_imp_ram_ram: | ram_reg    | 2 K x 32(WRITE_FIRST)  | W | R |                        |   |   | Port A           | 0      | 2      | 
++----------------+------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
+
+Note: The table above is a preliminary report that shows the Block RAMs at the current stage of the synthesis flow. Some Block RAMs may be reimplemented as non Block RAM primitives later in the synthesis flow. Multiple instantiated Block RAMs are reported only once. 
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1340.703 ; gain = 240.266 ; free physical = 149 ; free virtual = 4121
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3332] Sequential element (tmp_1_reg_196_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_to_border_reg_478_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_len_4_reg_184_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_len_2_cast_reg_484_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_1_reg_243_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_rem_1_reg_231_reg[0]) is unused and will be removed from module rt_imp.
+WARNING: [Synth 8-3332] Sequential element (p_len_1_reg_221_reg[0]) is unused and will be removed from module rt_imp.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 147 ; free virtual = 4119
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 148 ; free virtual = 4120
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 147 ; free virtual = 4119
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 146 ; free virtual = 4119
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 146 ; free virtual = 4118
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 144 ; free virtual = 4117
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 144 ; free virtual = 4117
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |CARRY4   |    34|
+|2     |LUT1     |    24|
+|3     |LUT2     |    65|
+|4     |LUT3     |   189|
+|5     |LUT4     |    51|
+|6     |LUT5     |    22|
+|7     |LUT6     |     8|
+|8     |RAMB36E1 |     2|
+|9     |FDRE     |   329|
+|10    |FDSE     |     2|
++------+---------+------+
+
+Report Instance Areas: 
++------+---------------------+---------------+------+
+|      |Instance             |Module         |Cells |
++------+---------------------+---------------+------+
+|1     |top                  |               |   726|
+|2     |  ram_U              |rt_imp_ram     |    79|
+|3     |    rt_imp_ram_ram_U |rt_imp_ram_ram |    79|
++------+---------------------+---------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 144 ; free virtual = 4117
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 278 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.711 ; gain = 242.273 ; free physical = 145 ; free virtual = 4118
+Synthesis Optimization Complete : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1342.719 ; gain = 242.273 ; free physical = 145 ; free virtual = 4118
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 36 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+96 Infos, 223 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1443.723 ; gain = 355.871 ; free physical = 161 ; free virtual = 4049
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:48:11 2021...
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source create_ip_library.tcl -notrace
+[RDK] reconos_v3_01_a reconos pcores /tmp/reconos_tmp/
+[RDK] After infer_core
+[RDK] After save_core
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+[RDK] reconos_clock_v1_00_a reconos_clock pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'S_AXI_ARESETN' as interface 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'S_AXI_ACLK' as interface 'S_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'S_AXI_ARESETN'.
+[RDK] After infer_core
+[RDK] adding subcore xilinx.com:ip:axi_lite_ipif:3.0
+[RDK] After save_core
+[RDK] reconos_fifo_async_v1_00_a reconos_fifo_async pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'FIFO_Rst' as interface 'FIFO_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'FIFO_S_Clk' as interface 'FIFO_S_Clk'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'FIFO_M_Clk' as interface 'FIFO_M_Clk'.
+[RDK] After infer_core
+[RDK] After save_core
+[RDK] reconos_fifo_sync_v1_00_a reconos_fifo_sync pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'FIFO_Rst' as interface 'FIFO_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'FIFO_Clk' as interface 'FIFO_Clk'.
+INFO: [IP_Flow 19-4728] Bus Interface 'FIFO_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'FIFO_Rst'.
+[RDK] After infer_core
+[RDK] After save_core
+[RDK] reconos_hwt_idle_v1_00_a reconos_hwt_idle pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'HWT_Rst' as interface 'HWT_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'HWT_Clk' as interface 'HWT_Clk'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'HWT_Rst'.
+[RDK] After infer_core
+[RDK] After save_core
+[RDK] reconos_memif_arbiter_v1_00_a reconos_memif_arbiter pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+WARNING: [IP_Flow 19-4330] HDL Parser: Not inferring subcore reference 'xilinx.com:ip:reconos:3.01' from the library reference 'reconos_v3_01_a' as the subcore cannot be found from the IP catalog.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'SYS_Rst' as interface 'SYS_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'SYS_Clk' as interface 'SYS_Clk'.
+INFO: [IP_Flow 19-4728] Bus Interface 'SYS_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'SYS_Rst'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] After save_core
+[RDK] reconos_memif_memory_controller_v1_00_a reconos_memif_memory_controller pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+WARNING: [IP_Flow 19-4330] HDL Parser: Not inferring subcore reference 'xilinx.com:ip:reconos:3.01' from the library reference 'reconos_v3_01_a' as the subcore cannot be found from the IP catalog.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'M_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'M_AXI_ARESETN' as interface 'M_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'M_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'M_AXI_ACLK' as interface 'M_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'M_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'M_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'M_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'M_AXI_ARESETN'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] adding subcore xilinx.com:ip:axi_master_burst:2.0
+[RDK] After save_core
+[RDK] reconos_memif_mmu_microblaze_v1_00_a reconos_memif_mmu_microblaze pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'MMU_Rst' as interface 'MMU_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'MMU_Clk' as interface 'MMU_Clk'.
+INFO: [IP_Flow 19-4728] Bus Interface 'MMU_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'MMU_Rst'.
+[RDK] After infer_core
+[RDK] After save_core
+[RDK] reconos_memif_mmu_zynq_v1_00_a reconos_memif_mmu_zynq pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+WARNING: [IP_Flow 19-4330] HDL Parser: Not inferring subcore reference 'xilinx.com:ip:reconos:3.01' from the library reference 'reconos_v3_01_a' as the subcore cannot be found from the IP catalog.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'SYS_Rst' as interface 'SYS_Rst'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'SYS_Clk' as interface 'SYS_Clk'.
+INFO: [IP_Flow 19-4728] Bus Interface 'SYS_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'SYS_Rst'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] After save_core
+[RDK] reconos_osif_intc_v1_00_a reconos_osif_intc pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'S_AXI_ARESETN' as interface 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'S_AXI_ACLK' as interface 'S_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'S_AXI_ARESETN'.
+[RDK] After infer_core
+[RDK] adding subcore xilinx.com:ip:axi_lite_ipif:3.0
+[RDK] After save_core
+[RDK] reconos_osif_v1_00_a reconos_osif pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'S_AXI_ARESETN' as interface 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'S_AXI_ACLK' as interface 'S_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'S_AXI_ARESETN'.
+[RDK] After infer_core
+[RDK] adding subcore xilinx.com:ip:axi_lite_ipif:3.0
+[RDK] After save_core
+[RDK] reconos_proc_control_v1_00_a reconos_proc_control pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'S_AXI_ARESETN' as interface 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'S_AXI_ACLK' as interface 'S_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'PROC_Sys_Rst' as interface 'PROC_Sys_Rst'.
+[RDK] After infer_core
+[RDK] adding subcore xilinx.com:ip:axi_lite_ipif:3.0
+[RDK] After save_core
+[RDK] timer_v1_00_a timer pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'S_AXI' of definition 'xilinx.com:interface:aximm:1.0' (from Xilinx Repository).
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'S_AXI_ARESETN' as interface 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ARESETN': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-4753] Inferred signal 'clock' from port 'S_AXI_ACLK' as interface 'S_AXI_ACLK'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_BUSIF' with value 'S_AXI'.
+INFO: [IP_Flow 19-4728] Bus Interface 'S_AXI_ACLK': Added interface parameter 'ASSOCIATED_RESET' with value 'S_AXI_ARESETN'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'T_RST' as interface 'T_RST'.
+[RDK] After infer_core
+[RDK] adding subcore xilinx.com:ip:axi_lite_ipif:3.0
+[RDK] After save_core
+[RDK] rt_athreada_v1_00_a rt_athreada pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Hwt2Mem' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Hw2Sw' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Mem2Hwt' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Sw2Hw' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'nicehwtopic' of definition 'xilinx.com:interface:axis:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Clk' of definition 'xilinx.com:signal:clock:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'HWT_Rst'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'OSIF_Sw2Hw:OSIF_Hw2Sw:MEMIF_Hwt2Mem:MEMIF_Mem2Hwt:nicehwtopic'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Rst' of definition 'xilinx.com:signal:reset:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Rst': Added interface parameter 'POLARITY' with value 'ACTIVE_HIGH'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] After save_core
+[RDK] rt_athreadb_v1_00_a rt_athreadb pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Hwt2Mem' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Hw2Sw' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Mem2Hwt' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Sw2Hw' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'nicehwtopic' of definition 'xilinx.com:interface:axis:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Clk' of definition 'xilinx.com:signal:clock:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'HWT_Rst'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'OSIF_Sw2Hw:OSIF_Hw2Sw:MEMIF_Hwt2Mem:MEMIF_Mem2Hwt:nicehwtopic'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Rst' of definition 'xilinx.com:signal:reset:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Rst': Added interface parameter 'POLARITY' with value 'ACTIVE_HIGH'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] After save_core
+[RDK] rt_athreadc_v1_00_a rt_athreadc pcores /tmp/reconos_tmp/
+WARNING: [IP_Flow 19-3899] Cannot get the environment domain name variable for the component vendor name. Setting the vendor name to 'user.org'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/opt/Xilinx/Vivado/2017.1/data/ip'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Hwt2Mem' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Hw2Sw' of definition 'cs.upb.de:reconos:FIFO_M:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'MEMIF_Mem2Hwt' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'OSIF_Sw2Hw' of definition 'cs.upb.de:reconos:FIFO_S:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'nicehwtopic' of definition 'xilinx.com:interface:axis:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Clk' of definition 'xilinx.com:signal:clock:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_RESET' with value 'HWT_Rst'.
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Clk': Added interface parameter 'ASSOCIATED_BUSIF' with value 'OSIF_Sw2Hw:OSIF_Hw2Sw:MEMIF_Hwt2Mem:MEMIF_Mem2Hwt:nicehwtopic'.
+INFO: [IP_Flow 19-5107] Inferred bus interface 'HWT_Rst' of definition 'xilinx.com:signal:reset:1.0' (from 'X_INTERFACE_INFO' attribute).
+INFO: [IP_Flow 19-4728] Bus Interface 'HWT_Rst': Added interface parameter 'POLARITY' with value 'ACTIVE_HIGH'.
+[RDK] After infer_core
+[RDK] adding subcore cs.upb.de:reconos:reconos:3.01.a
+[RDK] After save_core
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:48:46 2021...
+
+****** Vivado v2017.1 (64-bit)
+  **** SW Build 1846317 on Fri Apr 14 18:54:47 MDT 2017
+  **** IP Build 1846188 on Fri Apr 14 20:52:08 MDT 2017
+    ** Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+
+source export.tcl -notrace
+Wrote  : </home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+CRITICAL WARNING: [filemgmt 20-730] Could not find a top module in the fileset sources_1.
+Resolution: With the gui up, review the source files in the Sources window. Use Add Sources to add any needed sources. If the files are disabled, enable them. You can also select the file and choose Set Used In from the pop-up menu. Review if they are being used at the proper points of the flow.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/pcores'.
+INFO: [Ipptcl 7-1463] No Compatible Board Interface found. Board Tab not created in customize GUI
+WARNING: [BD 41-1753] The name 'reconos_memif_memory_controller_0' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_0' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_0' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_0/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_0/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_0/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_0/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_1' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_1' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_1/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_1/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_1/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_1/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_2' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_2' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_2/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_2/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_2/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_2/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_3' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_3' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_3/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_3/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_3/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_3/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_4' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_4' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_4/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_4/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_4/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_4/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_5' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_5' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_5/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_5/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_5/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_5/FIFO_M_Clk(clk)
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_hwt2mem_6' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1753] The name 'reconos_fifo_memif_mem2hwt_6' you have specified is long. The Windows OS has path length limitations. It is recommended you use shorter names(less than 25 characters) to reduce the likelihood of issues when/if running on windows OS.
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_sw2hw_6/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_mem2hwt_6/FIFO_S_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_osif_hw2sw_6/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /reconos_fifo_memif_hwt2mem_6/FIFO_M_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_0/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_0(undef) and /slot_0/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_0(undef) and /reconos_fifo_memif_mem2hwt_0/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_0(undef) and /reconos_fifo_memif_hwt2mem_0/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_0(undef) and /reconos_fifo_osif_hw2sw_0/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_0(undef) and /reconos_fifo_osif_sw2hw_0/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_1/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_1(undef) and /slot_1/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_1(undef) and /reconos_fifo_memif_mem2hwt_1/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_1(undef) and /reconos_fifo_memif_hwt2mem_1/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_1(undef) and /reconos_fifo_osif_hw2sw_1/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_1(undef) and /reconos_fifo_osif_sw2hw_1/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_2/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_2(undef) and /slot_2/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_2(undef) and /reconos_fifo_memif_mem2hwt_2/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_2(undef) and /reconos_fifo_memif_hwt2mem_2/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_2(undef) and /reconos_fifo_osif_hw2sw_2/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_2(undef) and /reconos_fifo_osif_sw2hw_2/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_3/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_3(undef) and /slot_3/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_3(undef) and /reconos_fifo_memif_mem2hwt_3/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_3(undef) and /reconos_fifo_memif_hwt2mem_3/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_3(undef) and /reconos_fifo_osif_hw2sw_3/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_3(undef) and /reconos_fifo_osif_sw2hw_3/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_4/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_4(undef) and /slot_4/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_4(undef) and /reconos_fifo_memif_mem2hwt_4/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_4(undef) and /reconos_fifo_memif_hwt2mem_4/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_4(undef) and /reconos_fifo_osif_hw2sw_4/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_4(undef) and /reconos_fifo_osif_sw2hw_4/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_5/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_5(undef) and /slot_5/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_5(undef) and /reconos_fifo_memif_mem2hwt_5/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_5(undef) and /reconos_fifo_memif_hwt2mem_5/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_5(undef) and /reconos_fifo_osif_hw2sw_5/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_5(undef) and /reconos_fifo_osif_sw2hw_5/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /slot_6/HWT_Clk(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_6(undef) and /slot_6/HWT_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_6(undef) and /reconos_fifo_memif_mem2hwt_6/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_6(undef) and /reconos_fifo_memif_hwt2mem_6/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_6(undef) and /reconos_fifo_osif_hw2sw_6/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_proc_control_0/PROC_Hwt_Rst_6(undef) and /reconos_fifo_osif_sw2hw_6/FIFO_Rst(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /processing_system7_0/FCLK_CLK0(clk) and /reconos_clock_0/CLK_Ref(undef)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/S00_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M00_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M01_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M02_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M03_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M04_AXIS_ACLK(clk)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /reconos_clock_0/CLK1_Out(undef) and /axis_interconnect_0/M05_AXIS_ACLK(clk)
+</processing_system7_0/S_AXI_ACP/ACP_DDR_LOWOCM> is being mapped into </reconos_memif_memory_controller_0/M_AXI> at <0x00000000 [ 512M ]>
+</processing_system7_0/S_AXI_ACP/ACP_M_AXI_GP0> is being mapped into </reconos_memif_memory_controller_0/M_AXI> at <0x40000000 [ 1G ]>
+CRITICAL WARNING: [BD 41-1347] Reset pin /reconos_memif_arbiter_0/SYS_Rst (associated clock /reconos_memif_arbiter_0/SYS_Clk) is connected to asynchronous reset source /reconos_proc_control_0/PROC_Sys_Rst.
+This may prevent design from meeting timing. Instead it should be connected to reset source /reset_0/peripheral_aresetn.
+CRITICAL WARNING: [BD 41-1347] Reset pin /reconos_memif_mmu_zynq_0/SYS_Rst (associated clock /reconos_memif_mmu_zynq_0/SYS_Clk) is connected to asynchronous reset source /reconos_proc_control_0/PROC_Sys_Rst.
+This may prevent design from meeting timing. Instead it should be connected to reset source /reset_0/peripheral_aresetn.
+WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /axi_mem/s00_couplers/auto_us/S_AXI(0) and /axi_mem/s00_couplers/auto_pc/M_AXI(5)
+WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /axi_mem/s00_couplers/auto_us/S_AXI(0) and /axi_mem/s00_couplers/auto_pc/M_AXI(5)
+WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /processing_system7_0/S_AXI_ACP(5) and /axi_mem/s00_couplers/auto_us/M_AXI(0)
+WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /processing_system7_0/S_AXI_ACP(5) and /axi_mem/s00_couplers/auto_us/M_AXI(0)
+WARNING: [BD 41-927] Following properties on pin /reconos_clock_0/CLK0_Out have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=design_1_reconos_clock_0_0_CLK0_Out 
+CRITICAL WARNING: [BD 41-759] The input pins (listed below) are either not connected or do not have a source port, and they don't have a tie-off specified. These pins are tied-off to all 0's to avoid error in Implementation flow.
+Please check your design and connect them as needed: 
+/reconos_proc_control_0/MMU_Tlb_Hits
+/reconos_proc_control_0/MMU_Tlb_Misses
+/timer_0/T_RST
+/axis_interconnect_0/M00_AXIS_ARESETN
+
+Wrote  : </home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1.vhd
+VHDL Output written to : /home/aamir/gitlab_ws/reconros/demos/ros_hwtopic_demo/server_app/build.hw/myReconOS.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+[RDK]: Project creation finished.
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 24 14:49:11 2021...
+Found a subscriber!
+Added hwtopic "nicehwtopic" to global resource group __global_ressource_group___ 
+Added hwtopic "nicehwtopic" to local resource group RThreada; localtype hwtopicsub 
+Found a publisher!
+global topic already defined, set arg to[1, 1]
+Added hwtopic "nicehwtopic" to local resource group RThreadb; localtype hwtopicpub 
+Found a subscriber!
+global topic already defined, set arg to[2, 1]
+Added hwtopic "nicehwtopic" to local resource group RThreadc; localtype hwtopicsub 
+Video Out = False
+
+Video Out = False
+
+Video Out = False
+
+export_hw_vivado
+['aThreada' (0)]
+['sort_msg' (129), 'node_1' (130), 'PubData' (131), 'SubData' (132), 'nicehwtopic' (134)]
+found subscriber
+['aThreadb' (1)]
+['sort_msg' (135), 'node_1' (136), 'PubData' (137), 'nicehwtopic' (138), 'SubData' (139)]
+Resource 'nicehwtopic' 0
+found publisher aThreadb
+['aThreadc' (2)]
+['sort_msg' (140), 'node_1' (141), 'PubData' (142), 'SubData' (143), 'nicehwtopic' (144)]
+found subscriber
+['aThreadc' (2)]
+['sort_msg' (140), 'node_1' (141), 'PubData' (142), 'SubData' (143), 'nicehwtopic' (144)]
+found subscriber
+['aThreadc' (2)]
+['sort_msg' (140), 'node_1' (141), 'PubData' (142), 'SubData' (143), 'nicehwtopic' (144)]
+found subscriber
+['aThreadc' (2)]
+['sort_msg' (140), 'node_1' (141), 'PubData' (142), 'SubData' (143), 'nicehwtopic' (144)]
+found subscriber
+['aThreadc' (2)]
+['sort_msg' (140), 'node_1' (141), 'PubData' (142), 'SubData' (143), 'nicehwtopic' (144)]
+found subscriber
+[{'Name': 'nicehwtopic', 'SUBSCRIBERS': [{'SlotId': 0}, {'SlotId': 2}, {'SlotId': 3}, {'SlotId': 4}, {'SlotId': 5}, {'SlotId': 6}], 'PUBLISHERS': [{'SlotId': 1}]}]
+Using template directory ref_linux_zedboard_d_timer_vivado_2017.1
+Calling TCL script to generate Vivado IP Repository
+Calling TCL script to generate ReconOS in Vivado IP Integrator
