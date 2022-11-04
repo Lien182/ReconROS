@@ -69,6 +69,10 @@ def get_dict(prj):
 
 
 	dictionary["HWTOPICS"] = []
+	dictionary["ONE_TO_ONE"] = False
+	dictionary["ONE_TO_N"] = False
+	dictionary["N_TO_ONE"] = False
+	dictionary["N_TO_M"] = False
 
 	for i, topic in enumerate([_ for _ in prj.resources if (_.group == "__global_ressource_group___") and (_.type == "hwtopic")]):
 		d = {}
@@ -109,6 +113,8 @@ def get_dict(prj):
 
 		d["NUM_SUBS"] = num_hw_subs
 		d["NUM_PUBS"] = num_hw_pubs
+
+		
 
 		if((num_hw_pubs == 1) and (num_hw_subs == 1)):
 			dictionary["ONE_TO_ONE"] = True
