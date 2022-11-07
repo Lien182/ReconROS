@@ -434,6 +434,8 @@ def _export_hw_thread_vivado(prj, hwdir, link, thread):
 			dictionary["RTIMPRESETREMAPPINGSIGNAL"] = "signal rst_sig_n : std_logic;"
 			dictionary["RTIMPRESETREMAPPING"] = "rst_sig_n <= not HWT_Rst;"
 		else:
+			dictionary["RTIMPRESETREMAPPINGSIGNAL"] = ""
+			dictionary["RTIMPRESETREMAPPING"] = ""
 			dictionary["RTIMPRESETDECLARATION"] = "ap_rst : in std_logic"
 			dictionary["RTIMPRESETMAPPING"] = "ap_rst => HWT_Rst"
 
