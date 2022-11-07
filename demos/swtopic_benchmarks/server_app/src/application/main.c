@@ -205,11 +205,11 @@ int main(int argc, char **argv) {
 	reconos_thread_create_hwt_athreada(0);
 	reconos_thread_create_hwt_athreadb(0);
 	reconos_thread_create_hwt_athreadc(0);
-	uint64_t stuff = 0;
+	uint64_t stuff = 0; //must remain 0
 
 	struct timespec t_start, t_end, t_res;
 
-
+	uint16_t it_counter = 0;
 	while(1)
 	{
 		sleep(1);
@@ -218,7 +218,12 @@ int main(int argc, char **argv) {
 		mbox_get(rthreada_finish_mbox); // rthreada_finish_mbox
 		clock_gettime(CLOCK_MONOTONIC, &t_end);
 		timespec_diff(&t_start, &t_end, &t_res);
-		printf("[reconos-dt-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
+		printf("[---reconos-dt-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
+		it_counter++;
+		if(it_counter == 1000)
+		{
+			break;
+		}
 	} 
 
 	reconos_app_cleanup();

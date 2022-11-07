@@ -35,7 +35,7 @@ THREAD_ENTRY() {
 	uint64_t payload_address[1];
 
 	uint8_t image_data[DATA_SIZE];
-	#pragma HLS array_partition cyclic factor=8 variable=image_data
+	#pragma HLS array_partition cyclic factor=4 variable=image_data
 	char encoding[ENCODING_SIZE];
 	char frame_id[FRAME_ID_SIZE];
 	//char 
@@ -60,27 +60,26 @@ THREAD_ENTRY() {
 	output_buffer_addr = MEMORY_GETOBJECTADDR(rthreada_img_output);
 	
 
-	uint64_t buffer[30500];
-
 	uint64_t msg;
 
 	uint64_t mbox_value = 1;
 
 	while(1) {
 		
-		nicehwtopic.read(tmp_frame);
+		
 		
 		msg = ROS_SUBSCRIBE_TAKE(rthreada_subdata2, rthreada_img_input_hw);
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_address,     8);
-		MEM_READ_INT8(payload_address[0],image_msg.data.data, 30000);
+		MEM_READ_INT8(payload_address[0],image_msg.data.data, DATA_SIZE);
 		
+		mbox_value = image_msg.data.data[0];
 		MBOX_PUT(rthreada_finish_mbox, mbox_value);
-		nicehwtopic.read(tmp_frame); // for timing
 
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
-		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
+		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],DATA_SIZE)
 									
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
+		nicehwtopic.read(tmp_frame);
 	}
 }

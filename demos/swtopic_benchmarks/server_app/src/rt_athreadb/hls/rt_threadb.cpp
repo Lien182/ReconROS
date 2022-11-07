@@ -28,7 +28,7 @@ THREAD_ENTRY() {
 	sensor_msgs__msg__Image image_msg;
 
 	uint8_t image_data[DATA_SIZE];
-	#pragma HLS array_partition cyclic factor=8 variable=image_data
+	#pragma HLS array_partition cyclic factor=4 variable=image_data
 	char encoding[ENCODING_SIZE];
 	char frame_id[FRAME_ID_SIZE];
 
@@ -45,8 +45,6 @@ THREAD_ENTRY() {
 	uint64_t address_offset = 0;
 
 	uint64_t msg;
-
-	uint64_t buffer[30500];
 
 	uint64_t output_buffer_addr;
 	output_buffer_addr = MEMORY_GETOBJECTADDR(rthreadb_img_output_hw);
@@ -65,21 +63,19 @@ THREAD_ENTRY() {
 
 		
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_address,     8);
-		MEM_READ_INT8(payload_address[0],image_msg.data.data, 30000)
+		MEM_READ_INT8(payload_address[0],image_msg.data.data, DATA_SIZE)
 
 		// hwtopic replacement
 		mbox_value = MBOX_GET(rthreadb_start_mbox);
-		tmp_frame.last = mbox_value;
-		tmp_frame.user = 1;
-		nicehwtopic.write(tmp_frame);
 
-		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
-		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
+		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr +mbox_value, payload_address,     8);
+		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],DATA_SIZE)
 		ROS_PUBLISH(rthreadb_pubdata2, rthreadb_img_output_hw);
 
-		tmp_frame.last = 1;
-		tmp_frame.user = 0;
+		tmp_frame.data = mbox_value;
 		nicehwtopic.write(tmp_frame);
+
+
 
 
 		// for standard ReconROS topic: MBOX_GET, MEM_WRITE, ROS_PUBLISH
