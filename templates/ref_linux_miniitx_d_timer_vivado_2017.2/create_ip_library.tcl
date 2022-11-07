@@ -315,6 +315,9 @@ lappend hwt_list <<HwtCoreName>>_v[string map {. _} "<<HwtCoreVersion>>"]
 # make the elements of the list unique, i.e. remove duplicates
 set hwt_list [lsort -unique $hwt_list]
 
+# make sure project is using automatic compile order before importing pcores without legacy .pao files
+set_property source_mgmt_mode All [current_project]
+
 # now import all hardware threads exactly once
 foreach hwt $hwt_list {
     import_pcore $ip_repo $hwt "cs.upb.de:reconos:reconos:3.01.a"
