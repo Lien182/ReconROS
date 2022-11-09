@@ -1,6 +1,6 @@
 #include "reconos_calls.h"
 #include "reconos_thread.h"
-
+#include <sensor_msgs/msg/image.h>
 //#include <std_msgs/msg/u_int32_multi_array__struct.h>
 
 #define BLOCK_SIZE 2048
@@ -16,7 +16,7 @@ t_stream tmpdata;
 
 THREAD_ENTRY() {
 
-	#pragma HLS INTERFACE axis port=nicehwtopic
+	//#pragma HLS INTERFACE axis port=nicehwtopic
 
 	RAM(uint32_t, BLOCK_SIZE, ram);
 
@@ -63,6 +63,6 @@ THREAD_ENTRY() {
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],DATA_SIZE)
 		
 		ROS_PUBLISH(rthreadc_pubdata, rthreadc_img_output);
-		nicehwtopic.read(tmp_frame);
+		//nicehwtopic.read(tmp_frame);
 	}
 }

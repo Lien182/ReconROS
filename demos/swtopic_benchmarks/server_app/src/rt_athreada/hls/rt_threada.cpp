@@ -11,7 +11,7 @@
 // size-definitions in byte, must be 8-byte aligned
 #define FRAME_ID_SIZE 8
 #define ENCODING_SIZE 8
-#define DATA_SIZE 100 * 100 * 3
+#define DATA_SIZE 20 * 20 * 3
 #define MEM_STEP 8 // in bytes
 
 //extern rosidl_typesupport_introspection_c__MessageMembers_ Image__rosidl_typesupport_introspection_c__Image_message_members_;
@@ -20,7 +20,7 @@ t_stream tmpdata;
 
 THREAD_ENTRY() {
 
-	#pragma HLS INTERFACE axis port=nicehwtopic
+	//#pragma HLS INTERFACE axis port=nicehwtopic
 	#pragma HLS INTERFACE ap_fifo port=osif_sw2hw
 	#pragma HLS INTERFACE ap_fifo port=osif_hw2sw
 	#pragma HLS INTERFACE ap_fifo port=memif_hwt2mem
@@ -35,7 +35,7 @@ THREAD_ENTRY() {
 	uint64_t payload_address[1];
 
 	uint8_t image_data[DATA_SIZE];
-	#pragma HLS array_partition cyclic factor=4 variable=image_data
+	//#pragma HLS array_partition cyclic factor=4 variable=image_data
 	char encoding[ENCODING_SIZE];
 	char frame_id[FRAME_ID_SIZE];
 	//char 
@@ -52,7 +52,7 @@ THREAD_ENTRY() {
 	THREAD_INIT();
 	initdata = GET_INIT_DATA();
 
-	ap_axis<64,1,1,1> tmp_frame;
+	//ap_axis<64,1,1,1> tmp_frame;
 
 	uint64_t address_offset = 0;
 	uint32_t temp = 0;
@@ -66,8 +66,8 @@ THREAD_ENTRY() {
 
 	while(1) {
 		
-		
-		
+		io_section : {
+		#pragma HLS PROTOCOL fixed
 		msg = ROS_SUBSCRIBE_TAKE(rthreada_subdata2, rthreada_img_input_hw);
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + msg, payload_address,     8);
 		MEM_READ_INT8(payload_address[0],image_msg.data.data, DATA_SIZE);
@@ -75,11 +75,11 @@ THREAD_ENTRY() {
 		mbox_value = image_msg.data.data[0];
 		MBOX_PUT(rthreada_finish_mbox, mbox_value);
 
-		
+		ap_wait();
 		MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
 		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],DATA_SIZE)
-									
+		ap_wait();							
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
-		nicehwtopic.read(tmp_frame);
+		}
 	}
 }

@@ -9,8 +9,8 @@
 
 #define BLOCK_SIZE 2048
 
-#define DEFAULT_IMAGE_HEIGHT 100
-#define DEFAULT_IMAGE_WIDTH 100
+#define DEFAULT_IMAGE_HEIGHT 20
+#define DEFAULT_IMAGE_WIDTH 20
 
 static void timespec_diff(struct timespec *start, struct timespec *stop,
                    struct timespec *result)
@@ -129,82 +129,11 @@ int main(int argc, char **argv) {
     rthreadb_img_output_hw->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;
 
 
-	
-	// input image
-	/*
-	rthreadb_img_input->header.frame_id.size = 0;
-
-	rthreadb_img_input->header.frame_id.capacity = 8;
-
-	rthreadb_img_input->header.frame_id.data = "_______\n";
-
-	rthreadb_img_input->height = DEFAULT_IMAGE_HEIGHT;	        
-        
-    rthreadb_img_input->width = DEFAULT_IMAGE_WIDTH;	        
-        
-    rthreadb_img_input->encoding.data = "bgr8___\n";	        
-        
-    rthreadb_img_input->encoding.size = 8;	        
-        
-    rthreadb_img_input->encoding.capacity = 8;	        
-        
-    rthreadb_img_input->is_bigendian = 0;	        
-        
-    rthreadb_img_input->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadb_img_input->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);	        
-        
-    rthreadb_img_input->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadb_img_input->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	
-	*/
-
-		// output image
-
-	rthreadc_img_output->header.stamp.sec = 0;
-
-	log("c->header.stamp.sec: %p\n", (void*)&rthreadc_img_output->header.stamp.sec);
-
-	rthreadc_img_output->header.stamp.nanosec = 0;
-
-	log("c->header.stamp.nanosec: %p\n", (void*)&rthreadc_img_output->header.stamp.nanosec);
-	
-	rthreadc_img_output->header.frame_id.size=7;
-
-	log("c->header.frame_id.size: %p\n", (void*)&rthreadc_img_output->header.frame_id.size);
-
-	rthreadc_img_output->header.frame_id.capacity=8;
-
-	log("c->header.frame_id.capacity: %p\n", (void*)&rthreadc_img_output->header.frame_id.capacity);
-
-	rthreadc_img_output->header.frame_id.data="______\n";
-
-
-	rthreadc_img_output->height = DEFAULT_IMAGE_HEIGHT;	        
-        
-    rthreadc_img_output->width = DEFAULT_IMAGE_WIDTH;	        
-        
-    rthreadc_img_output->encoding.data = "bgr8";	        
-        
-    rthreadc_img_output->encoding.size = 4;	        
-        
-    rthreadc_img_output->encoding.capacity = 8;	        
-        
-    rthreadc_img_output->is_bigendian = 0;	        
-        
-    rthreadc_img_output->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadc_img_output->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);	        
-        
-    rthreadc_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadc_img_output->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;
-
-	log("creating %d hw-threads(clk = %d):", num_hwts,clk);
+	printf("creating %d hw-threads(clk = %d):\n", num_hwts,clk);
 
 	reconos_thread_create_hwt_athreada(0);
 	reconos_thread_create_hwt_athreadb(0);
-	reconos_thread_create_hwt_athreadc(0);
+	//reconos_thread_create_hwt_athreadc(0);
 	uint64_t stuff = 0; //must remain 0
 
 	struct timespec t_start, t_end, t_res;
@@ -212,13 +141,14 @@ int main(int argc, char **argv) {
 	uint16_t it_counter = 0;
 	while(1)
 	{
-		sleep(1);
+		sleep(0.05);
 		clock_gettime(CLOCK_MONOTONIC, &t_start);
 		mbox_put(rthreadb_start_mbox, stuff); // rthreadb_start_mbox
 		mbox_get(rthreada_finish_mbox); // rthreada_finish_mbox
 		clock_gettime(CLOCK_MONOTONIC, &t_end);
 		timespec_diff(&t_start, &t_end, &t_res);
-		printf("[---reconos-dt-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
+		printf(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        counter: %d !!!!!!!!!!!!!!!!\n", it_counter);
+		printf("[-------------------reconos-dt-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
 		it_counter++;
 		if(it_counter == 1000)
 		{
