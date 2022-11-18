@@ -435,8 +435,6 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_ACP/ACP_DDR_LOWOCM }]
     assign_bd_address [get_bd_addr_segs {processing_system7_0/S_AXI_ACP/ACP_M_AXI_GP0 }]
 
-    
-                            
     # Update layout of block design
     regenerate_bd_layout
 
@@ -446,6 +444,9 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     update_compile_order -fileset sources_1
     update_compile_order -fileset sim_1
     set_property top design_1_wrapper [current_fileset]
+
+    # Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
+	  set_property synth_checkpoint_mode None [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
     save_bd_design
 }
 
