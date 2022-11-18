@@ -1,4 +1,0 @@
--g TdoPin:PULLNONE
--g StartUpClk:JTAGCLK
--g Binary:Yes
-#add otehr options here.

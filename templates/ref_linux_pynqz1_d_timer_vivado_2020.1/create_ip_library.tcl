@@ -25,8 +25,6 @@ proc load_fifo_interfaces {repo_path} {
 	#
 	ipx::open_ipxact_file $repo_path/FIFO_M.xml
 	ipx::open_ipxact_file $repo_path/FIFO_S.xml
-	ipx::open_ipxact_file $repo_path/FIFO64_M.xml
-	ipx::open_ipxact_file $repo_path/FIFO64_S.xml
 }
 
 proc import_pcore { repo_path ip_name {libs ""} } {
@@ -41,7 +39,7 @@ proc import_pcore { repo_path ip_name {libs ""} } {
 		ipx::infer_core -set_current true -as_library true -vendor cs.upb.de -taxonomy /ReconOS  $reconos_pcore_dir/$reconos_pcore
 		set_property display_name ReconosLib [ipx::current_core]
 	} else {
-		ipx::infer_core -set_current true -as_library false -vendor cs.upb.de -taxonomy /ReconOS  $reconos_pcore_dir/$reconos_pcore
+		ipx::infer_core -verbose -set_current true -as_library false -vendor cs.upb.de -taxonomy /ReconOS  $reconos_pcore_dir/$reconos_pcore
 	}
 
 	puts "\[RDK\] After infer_core"
@@ -57,6 +55,7 @@ proc import_pcore { repo_path ip_name {libs ""} } {
 		ipx::add_subcore $lib [ipx::get_file_groups xilinx_anylanguagesynthesis -of_objects [ipx::current_core]]
 	}
 	
+	set_property top $reconos_pcore_name [current_fileset]
 	set_property core_revision 1 [ipx::current_core]
 	ipx::create_xgui_files [ipx::current_core]
 	ipx::update_checksums [ipx::current_core]
@@ -71,10 +70,10 @@ proc import_pcore { repo_path ip_name {libs ""} } {
 set ip_repo "pcores"
 set temp_dir "/tmp/reconos_tmp/"
 
-create_project -force managed_ip_project $temp_dir/managed_ip_project -part xczu7ev-ffvc1156-2-e -ip
+create_project -force managed_ip_project $temp_dir/managed_ip_project -part xc7z020clg484-1 -ip
 set_property  ip_repo_paths  $ip_repo [current_project]
 
-# load IP-XACT definitions of FIFO interfaces (these are supplied with the template)
+#create_fifo_interfaces $ip_repo 
 load_fifo_interfaces   $ip_repo
 
 # make sure project is using automatic compile order before importing pcores without legacy .pao files
@@ -85,17 +84,15 @@ update_ip_catalog ;#-rebuild -repo_path $ip_repo
 
 import_pcore $ip_repo reconos_clock_v1_00_a  "xilinx.com:ip:axi_lite_ipif:3.0" 
 import_pcore $ip_repo reconos_fifo_async_v1_00_a ""
-import_pcore $ip_repo reconos_fifo64_async_v1_00_a ""
 import_pcore $ip_repo reconos_fifo_sync_v1_00_a ""
-import_pcore $ip_repo reconos_fifo64_sync_v1_00_a ""
 import_pcore $ip_repo reconos_hwt_idle_v1_00_a ""
 import_pcore $ip_repo reconos_memif_arbiter_v1_00_a "cs.upb.de:reconos:reconos:3.01.a"
-import_pcore $ip_repo reconos_memif_memory_controller_v1_00_a "cs.upb.de:reconos:reconos:3.01.a"
+import_pcore $ip_repo reconos_memif_memory_controller_v1_00_a "cs.upb.de:reconos:reconos:3.01.a xilinx.com:ip:axi_master_burst:2.0"
 import_pcore $ip_repo reconos_memif_mmu_microblaze_v1_00_a ""
-import_pcore $ip_repo reconos_memif_mmu_usp_v1_00_a "cs.upb.de:reconos:reconos:3.01.a"
+import_pcore $ip_repo reconos_memif_mmu_zynq_v1_00_a "cs.upb.de:reconos:reconos:3.01.a"
 import_pcore $ip_repo reconos_osif_intc_v1_00_a "xilinx.com:ip:axi_lite_ipif:3.0" 
-import_pcore $ip_repo reconos_osif_v1_00_a "" 
-import_pcore $ip_repo reconos_proc_control_v1_00_a 
+import_pcore $ip_repo reconos_osif_v1_00_a "xilinx.com:ip:axi_lite_ipif:3.0" 
+import_pcore $ip_repo reconos_proc_control_v1_00_a "xilinx.com:ip:axi_lite_ipif:3.0" 
 import_pcore $ip_repo timer_v1_00_a "xilinx.com:ip:axi_lite_ipif:3.0" 
 
 # create empty list

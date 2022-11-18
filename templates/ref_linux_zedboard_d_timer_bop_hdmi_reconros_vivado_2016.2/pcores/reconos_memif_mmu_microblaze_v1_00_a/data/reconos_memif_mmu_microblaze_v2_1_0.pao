@@ -1,9 +1,0 @@
-##############################################################################
-## Filename:          /home/christoph/Documents/reconos_zynq/exp/axi_fifo/pcores/axi_fifo_v1_00_a/data/reconos_axi_fifo_v2_1_0.pao
-## Description:       Peripheral Analysis Order
-## Date:              Mon Apr  8 19:06:49 2013 (by Create and Import Peripheral Wizard)
-##############################################################################
-
-lib proc_common_v3_00_a  all 
-lib reconos_memif_mmu_microblaze_v1_00_a reconos_memif_mmu_microblaze vhdl
-lib reconos_memif_mmu_microblaze_v1_00_a tlb vhdl

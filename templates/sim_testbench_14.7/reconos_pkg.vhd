@@ -1,1 +1,0 @@
-../../lib/pcores/reconos_v3_01_a/hdl/vhdl/reconos_pkg.vhd
