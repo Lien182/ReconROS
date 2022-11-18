@@ -25,11 +25,6 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_misc.all;
 use ieee.math_real.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use proc_common_v3_00_a.proc_common_pkg.all;
-<<end if>>
-
 entity tlb is
 	generic (
 		C_TLB_SIZE  : integer := 128;

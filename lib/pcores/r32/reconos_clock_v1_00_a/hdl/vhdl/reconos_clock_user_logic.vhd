@@ -26,7 +26,7 @@ use ieee.numeric_std.all;
 library unisim;
 use unisim.vcomponents.all;
 
-entity user_logic is
+entity reconos_clock_user_logic is
 	--
 	-- Generic definitions
 	--
@@ -76,9 +76,9 @@ entity user_logic is
 		IP2BUS_WrAck  : out std_logic;
 		IP2BUS_Error  : out std_logic
 	);
-end entity user_logic;
+end entity reconos_clock_user_logic;
 
-architecture imp of user_logic is
+architecture imp of reconos_clock_user_logic is
 	--
 	-- Internal state machine
 	--

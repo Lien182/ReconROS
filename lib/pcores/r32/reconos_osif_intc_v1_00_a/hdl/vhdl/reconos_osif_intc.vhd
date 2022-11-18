@@ -23,24 +23,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use 	 proc_common_v3_00_a.proc_common_pkg.all;
-use 	 proc_common_v3_00_a.ipif_pkg.all;
-
-library axi_lite_ipif_v1_01_a;
-use 	 axi_lite_ipif_v1_01_a.axi_lite_ipif;
-<<end if>>
-
-<<if TOOL=="vivado">>
 library axi_lite_ipif_v3_0_4;
 use		 axi_lite_ipif_v3_0_4.ipif_pkg.all;
 use		 axi_lite_ipif_v3_0_4.axi_lite_ipif;
-<<end if>>
-
-library reconos_osif_intc_v1_00_a;
-use reconos_osif_intc_v1_00_a.user_logic;
-
 
 entity reconos_osif_intc is
 	generic (
@@ -93,6 +78,18 @@ end entity reconos_osif_intc;
 
 
 architecture implementation of reconos_osif_intc is
+
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_INTC_In_<<Id>>: SIGNAL is "xilinx.com:signal:interrupt:1.0 OSIF_INTC_In_<<Id>> INTERRUPT";
+	ATTRIBUTE X_INTERFACE_PARAMETER of OSIF_INTC_In_<<Id>>: SIGNAL is "SENSITIVITY LEVEL_HIGH";
+	<<end generate>>
+
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_INTC_Out: SIGNAL is "xilinx.com:signal:interrupt:1.0 OSIF_INTC_Out INTERRUPT";
+	ATTRIBUTE X_INTERFACE_PARAMETER of OSIF_INTC_Out: SIGNAL is "SENSITIVITY LEVEL_HIGH";
 
 	constant USER_SLV_DWIDTH   : integer   := C_S_AXI_DATA_WIDTH;
 	constant IPIF_SLV_DWIDTH   : integer   := C_S_AXI_DATA_WIDTH;
@@ -147,12 +144,9 @@ architecture implementation of reconos_osif_intc is
 
 begin
 
-<<if TOOL=="ise">>
-	AXI_LITE_IPIF_I : entity axi_lite_ipif_v1_01_a.axi_lite_ipif
-<<end if>>
-<<if TOOL=="vivado">>
+
         AXI_LITE_IPIF_I : entity axi_lite_ipif_v3_0_4.axi_lite_ipif
-<<end if>>
+
 		generic map (
 			C_S_AXI_DATA_WIDTH       => IPIF_SLV_DWIDTH,
 			C_S_AXI_ADDR_WIDTH       => C_S_AXI_ADDR_WIDTH,
@@ -198,7 +192,7 @@ begin
 			IP2Bus_Data     => ipif_IP2Bus_Data
 		);
 
-	USER_LOGIC_I : entity reconos_osif_intc_v1_00_a.user_logic
+	USER_LOGIC_I : entity work.reconos_osif_intc_user_logic
 		generic map (
 			-- INTC ports
 			C_NUM_INTERRUPTS   => C_NUM_INTERRUPTS,

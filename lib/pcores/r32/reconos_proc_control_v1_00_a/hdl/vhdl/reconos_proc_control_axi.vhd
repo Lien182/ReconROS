@@ -49,12 +49,7 @@ use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_misc.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use proc_common_v3_00_a.proc_common_pkg.all;
-<<end if>>
-
-entity user_logic is
+entity ProcControlAXI_S00_AXI is
 	generic (
 		-- Proc Control parameters
 		C_NUM_HWTS     : integer := 1;
@@ -90,10 +85,10 @@ entity user_logic is
 		IP2Bus_WrAck     : out std_logic;
 		IP2Bus_Error     : out std_logic
 	);
-end entity user_logic;
+end entity ProcControlAXI_S00_AXI;
 
 
-architecture imp of user_logic is
+architecture imp of ProcControlAXI_S00_AXI is
 
 	constant NUM_HWT_REGS : integer := ((C_NUM_HWTS - 1) / C_SLV_DWIDTH) + 1;
 

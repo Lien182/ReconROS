@@ -83,6 +83,30 @@ entity reconos_memif_mmu_zynq is
 end entity reconos_memif_mmu_zynq;
 
 architecture imp of reconos_memif_mmu_zynq is
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	ATTRIBUTE X_INTERFACE_INFO of SYS_Clk: SIGNAL is "xilinx.com:signal:clock:1.0 SYS_Clk CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of SYS_Clk: SIGNAL is "ASSOCIATED_RESET SYS_Rst, ASSOCIATED_BUSIF MEMIF_Hwt2Mem_In:MEMIF_Mem2Hwt_In:MEMIF_Mem2Hwt_Out:MEMIF_Hwt2Mem_Out";
+
+	ATTRIBUTE X_INTERFACE_INFO of SYS_Rst: SIGNAL is "xilinx.com:signal:reset:1.0 SYS_Rst RST";
+	ATTRIBUTE X_INTERFACE_PARAMETER of SYS_Rst: SIGNAL is "POLARITY ACTIVE_HIGH";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_Data:   SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_Empty:  SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_RE:     SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_RE";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_Data:   SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_Full:   SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_WE:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_WE";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_Full:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_WE:    SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_WE";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_Empty: SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_RE:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_RE";
 	--
 	-- Internal state machine
 	--
@@ -305,7 +329,7 @@ begin
 	-- == TLB =============================================================
 
 	tlb_gen : if C_TLB_SIZE > 0 generate
-		tlb : entity reconos_memif_mmu_zynq_v1_00_a.tlb
+		tlb : entity work.reconos_memif_mmu_zynq_tlb
 			generic map (
 				C_TLB_SIZE  => C_TLB_SIZE,
 				C_TAG_SIZE  => 20,

@@ -24,11 +24,6 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use proc_common_v3_00_a.proc_common_pkg.all;
-<<end if>>
-
 entity user_logic is
 	generic (
 		-- Bus protocol parameters

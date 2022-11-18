@@ -25,7 +25,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity user_logic is
+entity reconos_osif_axi is
 	--
 	-- Generic definitions
 	--
@@ -74,9 +74,9 @@ entity user_logic is
 		IP2BUS_WrAck  : out std_logic;
 		IP2BUS_Error  : out std_logic
 	);
-end entity user_logic;
+end entity reconos_osif_axi;
 
-architecture imp of user_logic is
+architecture imp of reconos_osif_axi is
 
 begin
 

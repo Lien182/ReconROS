@@ -24,7 +24,7 @@ use ieee.numeric_std.all;
 library reconos_v3_01_a;
 use reconos_v3_01_a.reconos_pkg.all;
 
-entity user_logic is
+entity reconos_memif_axicontroller_v0_91_M00_AXI is
 	--
 	-- Port definitions
 	--
@@ -71,9 +71,9 @@ entity user_logic is
 		BUS2IP_MstWr_Dst_Rdy_N : in  std_logic;
 		BUS2IP_MstWr_Dst_Dsc_N : in  std_logic
 	);
-end entity user_logic;
+end entity reconos_memif_axicontroller_v0_91_M00_AXI;
 
-architecture imp of user_logic is
+architecture imp of reconos_memif_axicontroller_v0_91_M00_AXI is
 	--
 	-- Internal state machine
 	--
