@@ -50,124 +50,40 @@ int main(int argc, char **argv) {
 
 	clk = reconos_clock_threads_set(100000);
 
-	//struct reconos_resource res[2];
-	uint8_t img_1[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
-	uint8_t img_2[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
-
-	// output image
+	// output image of thread a 
 	rthreada_img_output->header.stamp.sec = 0;
-
-	log("a->header.stamp.sec: %p\n", (void*)&rthreada_img_output->header.stamp.sec);
-
 	rthreada_img_output->header.stamp.nanosec = 0;
-	log("a->header.stamp.nanosec: %p\n", (void*)&rthreada_img_output->header.stamp.nanosec);
-
 	rthreada_img_output->header.frame_id.size=7;
-
-	log("a->header.frame_id.size: %p\n", (void*)&rthreada_img_output->header.frame_id.size);
-
 	rthreada_img_output->header.frame_id.capacity=8;
-
-	log("a->header.frame_id.capacity: %p\n", (void*)&rthreada_img_output->header.frame_id.capacity);
-
 	rthreada_img_output->header.frame_id.data="______\n";
-
-
 	rthreada_img_output->height = DEFAULT_IMAGE_HEIGHT;	        
-        
-    rthreada_img_output->width = DEFAULT_IMAGE_WIDTH;	        
-        
+    rthreada_img_output->width = DEFAULT_IMAGE_WIDTH;	         
     rthreada_img_output->encoding.data = "bgr8";	        
-        
-    rthreada_img_output->encoding.size = 4;	        
-        
-    rthreada_img_output->encoding.capacity = 8;	        
-        
-    rthreada_img_output->is_bigendian = 0;	        
-        
-    rthreada_img_output->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
+    rthreada_img_output->encoding.size = 4;	         
+    rthreada_img_output->encoding.capacity = 8;	          
+    rthreada_img_output->is_bigendian = 0;	          
+    rthreada_img_output->step = DEFAULT_IMAGE_WIDTH*3;	            
     rthreada_img_output->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);
-
-	log("a->header.data.data[0]: %p\n", rthreada_img_output->data.data);
-	log("a->header.data.data[1]: %p\n", rthreada_img_output->data.data+1);
-	log("a->header.data.data[-1]: %p\n", (void*)&rthreada_img_output->data.data[DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3-1]);	        
-        
-    rthreada_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
+    rthreada_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	          
     rthreada_img_output->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;
 	
-	// input image
-	/*
-	rthreadb_img_input->header.frame_id.size = 0;
 
-	rthreadb_img_input->header.frame_id.capacity = 8;
-
-	rthreadb_img_input->header.frame_id.data = "_______\n";
-
-	rthreadb_img_input->height = DEFAULT_IMAGE_HEIGHT;	        
-        
-    rthreadb_img_input->width = DEFAULT_IMAGE_WIDTH;	        
-        
-    rthreadb_img_input->encoding.data = "bgr8___\n";	        
-        
-    rthreadb_img_input->encoding.size = 8;	        
-        
-    rthreadb_img_input->encoding.capacity = 8;	        
-        
-    rthreadb_img_input->is_bigendian = 0;	        
-        
-    rthreadb_img_input->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadb_img_input->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);	        
-        
-    rthreadb_img_input->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreadb_img_input->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	
-	*/
-
-		// output image
-
+	// output image of thread c
 	rthreadc_img_output->header.stamp.sec = 0;
-
-	log("c->header.stamp.sec: %p\n", (void*)&rthreadc_img_output->header.stamp.sec);
-
 	rthreadc_img_output->header.stamp.nanosec = 0;
-
-	log("c->header.stamp.nanosec: %p\n", (void*)&rthreadc_img_output->header.stamp.nanosec);
-	
 	rthreadc_img_output->header.frame_id.size=7;
-
-	log("c->header.frame_id.size: %p\n", (void*)&rthreadc_img_output->header.frame_id.size);
-
 	rthreadc_img_output->header.frame_id.capacity=8;
-
-	log("c->header.frame_id.capacity: %p\n", (void*)&rthreadc_img_output->header.frame_id.capacity);
-
 	rthreadc_img_output->header.frame_id.data="______\n";
-
-
-	rthreadc_img_output->height = DEFAULT_IMAGE_HEIGHT;	        
-        
-    rthreadc_img_output->width = DEFAULT_IMAGE_WIDTH;	        
-        
-    rthreadc_img_output->encoding.data = "bgr8";	        
-        
+	rthreadc_img_output->height = DEFAULT_IMAGE_HEIGHT;	         
+    rthreadc_img_output->width = DEFAULT_IMAGE_WIDTH;	          
+    rthreadc_img_output->encoding.data = "bgr8";	         
     rthreadc_img_output->encoding.size = 4;	        
-        
-    rthreadc_img_output->encoding.capacity = 8;	        
-        
-    rthreadc_img_output->is_bigendian = 0;	        
-        
-    rthreadc_img_output->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
+    rthreadc_img_output->encoding.capacity = 8;	         
+    rthreadc_img_output->is_bigendian = 0;	          
+    rthreadc_img_output->step = DEFAULT_IMAGE_WIDTH*3;	         
     rthreadc_img_output->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);	        
-        
     rthreadc_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
     rthreadc_img_output->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;
-
-	log("creating %d hw-threads(clk = %d):", num_hwts,clk);
 
 	reconos_thread_create_hwt_athreada(0);
 	reconos_thread_create_hwt_athreadb(0);
@@ -176,7 +92,6 @@ int main(int argc, char **argv) {
 	while(1)
 	{
 		sleep(1);
-		
 	} 
 
 	reconos_app_cleanup();
