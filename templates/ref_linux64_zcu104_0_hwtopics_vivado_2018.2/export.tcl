@@ -497,7 +497,8 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     <<generate for HWTOPICS>>
     startgroup
         create_bd_cell -type ip -vlnv xilinx.com:ip:axis_interconnect:2.1 axis_interconnect_<<Name>>
-        endgroup
+        set_property -dict [list CONFIG.ARB_ON_MAX_XFERS {0} CONFIG.ARB_ON_TLAST {1} CONFIG.ARB_ALGORITHM {3}] [get_bd_cells axis_interconnect_<<Name>>]
+    endgroup
         # Number of slave interfaces (publisher), number of master interfaces (subscriber)
         set_property -dict [list CONFIG.NUM_SI {<<NUM_PUBS>>} CONFIG.NUM_MI {1} CONFIG.ARB_ON_TLAST {0}] [get_bd_cells axis_interconnect_<<Name>>]
         connect_bd_net [get_bd_pins axis_interconnect_<<Name>>/ACLK] [get_bd_pins reconos_clock_0/CLK1_Out]
