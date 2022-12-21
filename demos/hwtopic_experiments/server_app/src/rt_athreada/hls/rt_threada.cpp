@@ -60,25 +60,12 @@ THREAD_ENTRY() {
 	output_buffer_addr = MEMORY_GETOBJECTADDR(rthreada_img_output);
 	MEM_READ(OFFSETOF(sensor_msgs__msg__Image, data.data) + output_buffer_addr, payload_address,     8);
 
-	uint64_t buffer[30500];
 
 	while(1) {
 
-		// for standard ReconROS topic: ROS_SUBSCRIBE_TAKE, MEM_READ, MBOX_PUT
-		//ROS_READ_HWTOPIC_v4_timing_nicehwtopic(nicehwtopic, image_msg);
-		ROS_READ_HWTOPIC_v7_timing_nicehwtopic(nicehwtopic, image_msg);
-		/*
-		for(uint32_t i = 0; i < 30000; i++){
-			nicehwtopic.read(tmp_frame);
-			buffer[i] = tmp_frame.data;
-		}
-		for(uint32_t i = 0; i < 30000; i++){
-			image_msg.data.data[i] = buffer[i];
-		}
-		*/
+		ROS_READ_HWTOPIC_v2_timing_nicehwtopic(nicehwtopic, image_msg);
 
-		
-		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],30000)
+		MEM_WRITE_INT8(image_msg.data.data,payload_address[0],8)
 									
 		ROS_PUBLISH(rthreada_pubdata, rthreada_img_output);
 	}
