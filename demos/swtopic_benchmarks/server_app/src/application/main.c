@@ -9,8 +9,8 @@
 
 #define BLOCK_SIZE 2048
 
-#define DEFAULT_IMAGE_HEIGHT 20
-#define DEFAULT_IMAGE_WIDTH 20
+#define DEFAULT_IMAGE_HEIGHT 280
+#define DEFAULT_IMAGE_WIDTH 280
 
 static void timespec_diff(struct timespec *start, struct timespec *stop,
                    struct timespec *result)
@@ -68,48 +68,23 @@ int main(int argc, char **argv) {
 	uint8_t img_1[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
 	uint8_t img_2[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
 
-	// output image
+	// output image a
 	rthreada_img_output->header.stamp.sec = 0;
-
-	log("a->header.stamp.sec: %p\n", (void*)&rthreada_img_output->header.stamp.sec);
-
 	rthreada_img_output->header.stamp.nanosec = 0;
-	log("a->header.stamp.nanosec: %p\n", (void*)&rthreada_img_output->header.stamp.nanosec);
-
 	rthreada_img_output->header.frame_id.size=7;
-
-	log("a->header.frame_id.size: %p\n", (void*)&rthreada_img_output->header.frame_id.size);
-
 	rthreada_img_output->header.frame_id.capacity=8;
-
-	log("a->header.frame_id.capacity: %p\n", (void*)&rthreada_img_output->header.frame_id.capacity);
-
 	rthreada_img_output->header.frame_id.data="______\n";
-
-
 	rthreada_img_output->height = DEFAULT_IMAGE_HEIGHT;	        
-        
     rthreada_img_output->width = DEFAULT_IMAGE_WIDTH;	        
-        
     rthreada_img_output->encoding.data = "bgr8";	        
-        
     rthreada_img_output->encoding.size = 4;	        
-        
     rthreada_img_output->encoding.capacity = 8;	        
-        
     rthreada_img_output->is_bigendian = 0;	        
-        
     rthreada_img_output->step = DEFAULT_IMAGE_WIDTH*3;	        
-        
-    rthreada_img_output->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);
-
-	log("a->header.data.data[0]: %p\n", rthreada_img_output->data.data);
-	log("a->header.data.data[1]: %p\n", rthreada_img_output->data.data+1);
-	log("a->header.data.data[-1]: %p\n", (void*)&rthreada_img_output->data.data[DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3-1]);	        
-        
-    rthreada_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	        
-        
+    rthreada_img_output->data.data = malloc(DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3);  
+    rthreada_img_output->data.size = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;	            
     rthreada_img_output->data.capacity = DEFAULT_IMAGE_HEIGHT*DEFAULT_IMAGE_WIDTH*3;
+
 
 	///////
 	rthreadb_img_output_hw->header.stamp.sec = 0;
@@ -133,7 +108,6 @@ int main(int argc, char **argv) {
 
 	reconos_thread_create_hwt_athreada(0);
 	reconos_thread_create_hwt_athreadb(0);
-	//reconos_thread_create_hwt_athreadc(0);
 	uint64_t stuff = 0; //must remain 0
 
 	struct timespec t_start, t_end, t_res;
@@ -147,8 +121,8 @@ int main(int argc, char **argv) {
 		mbox_get(rthreada_finish_mbox); // rthreada_finish_mbox
 		clock_gettime(CLOCK_MONOTONIC, &t_end);
 		timespec_diff(&t_start, &t_end, &t_res);
-		printf(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        counter: %d !!!!!!!!!!!!!!!!\n", it_counter);
-		printf("[-------------------reconos-dt-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
+		printf(" iteration counter: %d\n", it_counter);
+		printf("[reconos-main] (swtopic time) : %3.6f \n", (double)(t_res.tv_nsec)/1000000000);
 		it_counter++;
 		if(it_counter == 1000)
 		{
