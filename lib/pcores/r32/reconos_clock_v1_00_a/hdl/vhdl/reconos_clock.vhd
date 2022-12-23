@@ -23,23 +23,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use 	 proc_common_v3_00_a.ipif_pkg.all;
-
-library axi_lite_ipif_v1_01_a;
-use 	 axi_lite_ipif_v1_01_a.axi_lite_ipif;
-<<end if>>
-
-<<if TOOL=="vivado">>
 library axi_lite_ipif_v3_0_4;
 use 	axi_lite_ipif_v3_0_4.ipif_pkg.all;
 use 	axi_lite_ipif_v3_0_4.axi_lite_ipif;
-<<end if>>
 
 
-library reconos_clock_v1_00_a;
-use reconos_clock_v1_00_a.user_logic;
 
 entity reconos_clock is
 	--
@@ -65,15 +53,10 @@ entity reconos_clock is
 
 		C_NUM_CLOCKS: integer := 1;
 
-<<if TOOL=="ise">>
-		C_CLKIN_PERIOD : real := 10.00;
-<<end if>>
 
-<<if TOOL=="vivado">>
--- Silly Vivado does not yet (Version 2017.1) support real typed generics.
--- See AR# 58038 : https://www.xilinx.com/support/answers/58038.html
+		-- Silly Vivado does not yet (Version 2017.1) support real typed generics.
+		-- See AR# 58038 : https://www.xilinx.com/support/answers/58038.html
 		C_CLKIN_PERIOD : integer := 10;
-<<end if>>
 
 		<<generate for CLOCKS>>
 		C_CLK<<Id>>_CLKFBOUT_MULT : integer := 16;
@@ -122,6 +105,18 @@ entity reconos_clock is
 end entity reconos_clock;
 
 architecture imp of reconos_clock is
+
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	ATTRIBUTE X_INTERFACE_INFO of CLK_Ref: SIGNAL is "xilinx.com:signal:clock:1.0 CLK_Ref CLK";
+
+	<<generate for CLOCKS>>
+	ATTRIBUTE X_INTERFACE_INFO of CLK<<Id>>_Out: SIGNAL is "xilinx.com:signal:clock:1.0 CLK<<Id>>_Out CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of CLK<<Id>>_Out: SIGNAL is "FREQ_HZ 100000000";
+	<<end generate>>
+
 	--
 	-- Internal ipif signals
 	--
@@ -166,12 +161,9 @@ begin
 	--
 	--   @see axi_lite_ipif_ds765.pdf
 	--
-<<if TOOL=="ise">>
-	ipif : entity axi_lite_ipif_v1_01_a.axi_lite_ipif
-<<end if>>
-<<if TOOL=="vivado">>
+
+
         ipif : entity axi_lite_ipif_v3_0_4.axi_lite_ipif
-<<end if>>
 
 		generic map (
 			C_S_AXI_ADDR_WIDTH => C_S_AXI_ADDR_WIDTH,
@@ -221,7 +213,7 @@ begin
 	--   The user logic includes the actual implementation of the bus
 	--   attachment.
 	--
-	ul : entity reconos_clock_v1_00_a.user_logic
+	ul : entity work.reconos_clock_user_logic
 		generic map (
 			C_NUM_CLOCKS => C_NUM_CLOCKS,
 

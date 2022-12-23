@@ -81,6 +81,26 @@ end entity reconos_fifo_sync;
 
 
 architecture imp of reconos_fifo_sync is
+		-- Declare port attributes for the Vivado IP Packager
+		ATTRIBUTE X_INTERFACE_INFO : STRING;
+		ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+	
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_Has_Data: SIGNAL is "xilinx.com:signal:interrupt:1.0 FIFO_Has_Data INTERRUPT";
+		ATTRIBUTE X_INTERFACE_PARAMETER of FIFO_Has_Data: SIGNAL is "SENSITIVITY LEVEL_HIGH";
+	
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_Clk: SIGNAL is "xilinx.com:signal:clock:1.0 FIFO_Clk CLK";
+		ATTRIBUTE X_INTERFACE_PARAMETER of FIFO_Clk: SIGNAL is "ASSOCIATED_BUSIF FIFO_M:FIFO_S";
+	
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_Rst: SIGNAL is "xilinx.com:signal:reset:1.0 FIFO_Rst RST";
+		ATTRIBUTE X_INTERFACE_PARAMETER of FIFO_Rst: SIGNAL is "POLARITY ACTIVE_HIGH";
+	
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_M_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 FIFO_M FIFO_M_Data";
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_M_Full:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 FIFO_M FIFO_M_Full";
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_M_WE:       SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 FIFO_M FIFO_M_WE";
+	
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_S_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 FIFO_S FIFO_S_Data";
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_S_Empty:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 FIFO_S FIFO_S_Empty";
+		ATTRIBUTE X_INTERFACE_INFO of FIFO_S_RE:       SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 FIFO_S FIFO_S_RE";
 	--
 	-- Internal constants
 	--

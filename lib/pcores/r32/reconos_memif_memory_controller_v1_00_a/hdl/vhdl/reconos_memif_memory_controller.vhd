@@ -20,19 +20,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
-<<if TOOL=="ise">>
-library axi_master_burst_v1_00_a;
-use 	 axi_master_burst_v1_00_a.axi_master_burst;
-<<end if>>
-
-<<if TOOL=="vivado">>
 library axi_master_burst_v2_0_7;
 use 	 axi_master_burst_v2_0_7.axi_master_burst;
-<<end if>>
 
-library reconos_memif_memory_controller_v1_00_a;
-use reconos_memif_memory_controller_v1_00_a.user_logic;
 
 entity reconos_memif_memory_controller is
 	--
@@ -110,6 +100,21 @@ end entity reconos_memif_memory_controller;
 
 
 architecture imp of reconos_memif_memory_controller is
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+	
+	ATTRIBUTE X_INTERFACE_INFO of M_AXI_ACLK: SIGNAL is "xilinx.com:signal:clock:1.0 M_AXI_ACLK CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of M_AXI_ACLK: SIGNAL is "ASSOCIATED_BUSIF MEMIF_Hwt2Mem_In:MEMIF_Mem2Hwt_In:M_AXI";
+	
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_Empty:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_In_RE:       SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_In FIFO_S_RE";
+	
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_Full:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_In_WE:       SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_In FIFO_M_WE";
+
 	--
 	-- Internal ipif signals
 	--
@@ -186,12 +191,7 @@ begin
 	--
 	--   @see ds844_axi_master_burst.pdf
 	--
-<<if TOOL=="ise">>
-	ipif : entity axi_master_burst_v1_00_a.axi_master_burst
-<<end if>>
-<<if TOOL=="vivado">>
         ipif : entity axi_master_burst_v2_0_7.axi_master_burst
-<<end if>>
 		generic map (
 			C_M_AXI_ADDR_WIDTH => C_M_AXI_ADDR_WIDTH,
 			C_M_AXI_DATA_WIDTH => C_M_AXI_DATA_WIDTH,
@@ -265,7 +265,7 @@ begin
 	--   The user logic includes the actual implementation of the memory
 	--   controller.
 	--
-	ul : entity reconos_memif_memory_controller_v1_00_a.user_logic
+	ul : entity work.reconos_memif_axicontroller_v0_91_M00_AXI
 		port map (
 			MEMIF_Hwt2Mem_In_Data  => MEMIF_Hwt2Mem_In_Data_d,
 			MEMIF_Hwt2Mem_In_Empty => MEMIF_Hwt2Mem_In_Empty_d,

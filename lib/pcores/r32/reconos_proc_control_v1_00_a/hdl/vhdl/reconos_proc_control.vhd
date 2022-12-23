@@ -48,20 +48,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use 	 proc_common_v3_00_a.proc_common_pkg.all;
-use 	 proc_common_v3_00_a.ipif_pkg.all;
-
-library axi_lite_ipif_v1_01_a;
-use 	 axi_lite_ipif_v1_01_a.axi_lite_ipif;
-<<end if>>
-
-<<if TOOL=="vivado">>
 library axi_lite_ipif_v3_0_4;
 use 	 axi_lite_ipif_v3_0_4.ipif_pkg.all;
 use 	 axi_lite_ipif_v3_0_4.axi_lite_ipif;
-<<end if>>
 
 
 library reconos_proc_control_v1_00_a;
@@ -128,6 +117,23 @@ end entity reconos_proc_control;
 
 
 architecture implementation of reconos_proc_control is
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	ATTRIBUTE X_INTERFACE_INFO of S_AXI_ACLK: SIGNAL is "xilinx.com:signal:clock:1.0 S_AXI_ACLK CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of S_AXI_ACLK: SIGNAL is "ASSOCIATED_RESET <<generate for SLOTS>>PROC_Hwt_Rst_<<Id>>:<<end generate>>PROC_Sys_Rst:S_AXI_ARESETN";
+
+	ATTRIBUTE X_INTERFACE_INFO of PROC_Pgf_Int: SIGNAL is "xilinx.com:signal:interrupt:1.0 PROC_Pgf_Int INTERRUPT";
+	ATTRIBUTE X_INTERFACE_PARAMETER of PROC_Pgf_Int: SIGNAL is "SENSITIVITY LEVEL_HIGH";
+
+	ATTRIBUTE X_INTERFACE_INFO of PROC_Sys_Rst: SIGNAL is "xilinx.com:signal:reset:1.0 PROC_Sys_Rst RST";
+	ATTRIBUTE X_INTERFACE_PARAMETER of PROC_Sys_Rst: SIGNAL is "POLARITY ACTIVE_HIGH";
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of PROC_Hwt_Rst_<<Id>>: SIGNAL is "xilinx.com:signal:reset:1.0 PROC_Hwt_Rst_<<Id>> RST";
+	ATTRIBUTE X_INTERFACE_PARAMETER of PROC_Hwt_Rst_<<Id>>: SIGNAL is "POLARITY ACTIVE_HIGH";
+	<<end generate>>
 
 	constant USER_SLV_DWIDTH   : integer   := C_S_AXI_DATA_WIDTH;
 	constant IPIF_SLV_DWIDTH   : integer   := C_S_AXI_DATA_WIDTH;
@@ -184,12 +190,7 @@ architecture implementation of reconos_proc_control is
 
 begin
 
-<<if TOOL=="ise">>
-	AXI_LITE_IPIF_I : entity axi_lite_ipif_v1_01_a.axi_lite_ipif
-<<end if>>
-<<if TOOL=="vivado">>
         AXI_LITE_IPIF_I : entity axi_lite_ipif_v3_0_4.axi_lite_ipif
-<<end if>>
 		generic map (
 			C_S_AXI_DATA_WIDTH       => IPIF_SLV_DWIDTH,
 			C_S_AXI_ADDR_WIDTH       => C_S_AXI_ADDR_WIDTH,
@@ -235,7 +236,7 @@ begin
 			IP2Bus_Data     => ipif_IP2Bus_Data
 		);
 
-	USER_LOGIC_I : entity reconos_proc_control_v1_00_a.user_logic
+	USER_LOGIC_I : entity work.ProcControlAXI_S00_AXI
 		generic map (
 			-- Proc Control parameters
 			C_NUM_HWTS   => C_NUM_HWTS,

@@ -21,17 +21,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
-<<if TOOL=="ise">>
 library reconos_v3_01_a;
 use reconos_v3_01_a.reconos_pkg.all;
-<<end if>>
 
-
-<<if TOOL=="vivado">>
-library reconos_v3_01_a;
-use reconos_v3_01_a.reconos_pkg.all;
-<<end if>>
 
 entity reconos_memif_arbiter is
 	--
@@ -85,6 +77,36 @@ end entity reconos_memif_arbiter;
 
 
 architecture imp of reconos_memif_arbiter is
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	ATTRIBUTE X_INTERFACE_INFO of SYS_Clk: SIGNAL is "xilinx.com:signal:clock:1.0 SYS_Clk CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of SYS_Clk: SIGNAL is "ASSOCIATED_RESET SYS_Rst, ASSOCIATED_BUSIF <<generate for SLOTS>>MEMIF_Mem2Hwt_<<Id>>:MEMIF_Hwt2Mem_<<Id>>:<<end generate>>MEMIF_Mem2Hwt_Out:MEMIF_Hwt2Mem_Out";
+
+	ATTRIBUTE X_INTERFACE_INFO of SYS_Rst: SIGNAL is "xilinx.com:signal:reset:1.0 SYS_Rst RST";
+	ATTRIBUTE X_INTERFACE_PARAMETER of SYS_Rst: SIGNAL is "POLARITY ACTIVE_HIGH";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_Full:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_Out_WE:    SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_Out FIFO_M_WE";
+
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_Empty: SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_Out_RE:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_Out FIFO_S_RE";
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_<<Id>>_In_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_<<Id>> FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_<<Id>>_In_Full:  SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_<<Id>> FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Mem2Hwt_<<Id>>_In_WE:    SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 MEMIF_Mem2Hwt_<<Id>> FIFO_M_WE";
+	<<end generate>>
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_<<Id>>_In_Data:  SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_<<Id>> FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_<<Id>>_In_Empty: SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_<<Id>> FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of MEMIF_Hwt2Mem_<<Id>>_In_RE:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 MEMIF_Hwt2Mem_<<Id>> FIFO_S_RE";
+	<<end generate>>
+
 	--
 	-- Internal state machine
 	--

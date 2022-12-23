@@ -413,16 +413,16 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     connect_bd_net [get_bd_pins xlconcat_0/dout] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq0]
 
 
-    create_bd_cell -type ip -vlnv user.org:user:zycap:1.0 zycap_0
-    set_property -dict [list CONFIG.NUM_MI {6}] [get_bd_cells axi_hwt]
-    connect_bd_net [get_bd_pins zycap_0/axi_resetn] [get_bd_pins axi_hwt/M05_ARESETN]
-    connect_bd_net [get_bd_pins axi_hwt/M05_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
-    connect_bd_intf_net [get_bd_intf_pins zycap_0/S_AXI_LITE] -boundary_type upper [get_bd_intf_pins axi_hwt/M05_AXI]
-    connect_bd_net [get_bd_pins zycap_0/s_axi_lite_aclk] [get_bd_pins axi_hwt/M05_ACLK]
-    connect_bd_net [get_bd_pins axi_hwt/M05_ACLK] [get_bd_pins reconos_clock_0/CLK0_Out]
-    set_property -dict [list CONFIG.PSU__USE__S_AXI_GP2 {1} CONFIG.PSU__SAXIGP2__DATA_WIDTH {32}] [get_bd_cells zynq_ultra_ps_e_0]
-    connect_bd_intf_net [get_bd_intf_pins zycap_0/M_AXI_MM2S] [get_bd_intf_pins zynq_ultra_ps_e_0/S_AXI_HP0_FPD]
-    connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/saxihp0_fpd_aclk] [get_bd_pins reconos_clock_0/CLK0_Out]
+    # create_bd_cell -type ip -vlnv user.org:user:zycap:1.0 zycap_0
+    # set_property -dict [list CONFIG.NUM_MI {6}] [get_bd_cells axi_hwt]
+    # connect_bd_net [get_bd_pins zycap_0/axi_resetn] [get_bd_pins axi_hwt/M05_ARESETN]
+    # connect_bd_net [get_bd_pins axi_hwt/M05_ARESETN] [get_bd_pins reset_0/interconnect_aresetn]
+    # connect_bd_intf_net [get_bd_intf_pins zycap_0/S_AXI_LITE] -boundary_type upper [get_bd_intf_pins axi_hwt/M05_AXI]
+    # connect_bd_net [get_bd_pins zycap_0/s_axi_lite_aclk] [get_bd_pins axi_hwt/M05_ACLK]
+    # connect_bd_net [get_bd_pins axi_hwt/M05_ACLK] [get_bd_pins reconos_clock_0/CLK0_Out]
+    # set_property -dict [list CONFIG.PSU__USE__S_AXI_GP2 {1} CONFIG.PSU__SAXIGP2__DATA_WIDTH {32}] [get_bd_cells zynq_ultra_ps_e_0]
+    # connect_bd_intf_net [get_bd_intf_pins zycap_0/M_AXI_MM2S] [get_bd_intf_pins zynq_ultra_ps_e_0/S_AXI_HP0_FPD]
+    # connect_bd_net [get_bd_pins zynq_ultra_ps_e_0/saxihp0_fpd_aclk] [get_bd_pins reconos_clock_0/CLK0_Out]
 
 
 
@@ -431,7 +431,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     # Memory Map of peripherals
     #
 
-    set_property -dict [list CONFIG.C_BASEADDR {0xA0000000} CONFIG.C_HIGHADDR {0xA000FFFF}] [get_bd_cells zycap_0]
+    #set_property -dict [list CONFIG.C_BASEADDR {0xA0000000} CONFIG.C_HIGHADDR {0xA000FFFF}] [get_bd_cells zycap_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0130000} CONFIG.C_HIGHADDR {0xA013FFFF}] [get_bd_cells timer_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0110000} CONFIG.C_HIGHADDR {0xA011FFFF}] [get_bd_cells reconos_osif_intc_0]
     set_property -dict [list CONFIG.C_BASEADDR {0xA0040000} CONFIG.C_HIGHADDR {0xA004FFFF}] [get_bd_cells reconos_clock_0]
@@ -446,7 +446,7 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     create_bd_addr_seg -range 0x00010000 -offset 0xA0100000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs reconos_osif_0/s00_axi/reg0] SEG_reconos_osif_0_reg0
     create_bd_addr_seg -range 0x00010000 -offset 0xA0110000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs reconos_osif_intc_0/S_AXI/reg0] SEG_reconos_osif_intc_0_reg0
     create_bd_addr_seg -range 0x00010000 -offset 0xA0130000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs timer_0/S_AXI/reg0] SEG_timer_0_reg0
-    create_bd_addr_seg -range 0x00010000 -offset 0xA0000000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs zycap_0/S_AXI_LITE/reg0] SEG_zycap_0_reg0
+    #create_bd_addr_seg -range 0x00010000 -offset 0xA0000000 [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs zycap_0/S_AXI_LITE/reg0] SEG_zycap_0_reg0
 
 
     assign_bd_address [get_bd_addr_segs {zynq_ultra_ps_e_0/SAXIGP2/HP0_DDR_LOW }]
@@ -464,11 +464,22 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     update_compile_order -fileset sim_1
     set_property top design_1_wrapper [current_fileset]
 	
-	# Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
-	set_property synth_checkpoint_mode None [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
-	
-  # Generate bitstream in .bin format (in addition to .bit)
-  set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
+    # Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
+    #set_property synth_checkpoint_mode HIERARCHICAL [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
+    
+    # Generate bitstream in .bin format (in addition to .bit)
+    set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
+
+    # CL 12.07.2022: Does not work
+    #generate_target -verbose all [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
+
+    #	# Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
+    set_property synth_checkpoint_mode None [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
+    #	
+    #  # Generate bitstream in .bin format (in addition to .bit)
+    #  set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
+
+
 
     save_bd_design
 }

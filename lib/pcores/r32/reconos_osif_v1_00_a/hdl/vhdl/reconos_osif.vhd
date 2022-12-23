@@ -25,19 +25,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-<<if TOOL=="ise">>
-library proc_common_v3_00_a;
-use proc_common_v3_00_a.ipif_pkg.all;
-
-library axi_lite_ipif_v1_01_a;
-use axi_lite_ipif_v1_01_a.axi_lite_ipif;
-<<end if>>
-
-<<if TOOL=="vivado">>
 library axi_lite_ipif_v3_0_4;
 use 	 axi_lite_ipif_v3_0_4.ipif_pkg.all;
 use 	 axi_lite_ipif_v3_0_4.axi_lite_ipif;
-<<end if>>
+
 
 
 library reconos_osif_v1_00_a;
@@ -115,6 +106,26 @@ entity reconos_osif is
 end entity reconos_osif;
 
 architecture imp of reconos_osif is
+
+	-- Declare port attributes for the Vivado IP Packager
+	ATTRIBUTE X_INTERFACE_INFO : STRING;
+	ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
+
+	ATTRIBUTE X_INTERFACE_INFO of S_AXI_ACLK: SIGNAL is "xilinx.com:signal:clock:1.0 S_AXI_ACLK CLK";
+	ATTRIBUTE X_INTERFACE_PARAMETER of S_AXI_ACLK: SIGNAL is "ASSOCIATED_BUSIF <<generate for SLOTS>>OSIF_Hw2Sw_<<Id>>:OSIF_Sw2Hw_<<Id>>:<<end generate>>S_AXI";
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Hw2Sw_<<Id>>_In_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 OSIF_Hw2Sw_<<Id>> FIFO_S_Data";
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Hw2Sw_<<Id>>_In_Empty:    SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 OSIF_Hw2Sw_<<Id>> FIFO_S_Empty";
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Hw2Sw_<<Id>>_In_RE:       SIGNAL is "cs.upb.de:reconos:FIFO_S:1.0 OSIF_Hw2Sw_<<Id>> FIFO_S_RE";
+	<<end generate>>
+
+	<<generate for SLOTS>>
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Sw2Hw_<<Id>>_In_Data:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 OSIF_Sw2Hw_<<Id>> FIFO_M_Data";
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Sw2Hw_<<Id>>_In_Full:     SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 OSIF_Sw2Hw_<<Id>> FIFO_M_Full";
+	ATTRIBUTE X_INTERFACE_INFO of OSIF_Sw2Hw_<<Id>>_In_WE:       SIGNAL is "cs.upb.de:reconos:FIFO_M:1.0 OSIF_Sw2Hw_<<Id>> FIFO_M_WE";
+	<<end generate>>
+
 	--
 	-- Internal ipif signals
 	--
@@ -159,12 +170,8 @@ begin
 	--
 	--   @see axi_lite_ipif_ds765.pdf
 	--
-<<if TOOL=="ise">>
-	ipif : entity axi_lite_ipif_v1_01_a.axi_lite_ipif
-<<end if>>
-<<if TOOL=="vivado">>
+
         ipif : entity axi_lite_ipif_v3_0_4.axi_lite_ipif
-<<end if>>
 		generic map (
 			C_S_AXI_ADDR_WIDTH => C_S_AXI_ADDR_WIDTH,
 			C_S_AXI_DATA_WIDTH => C_S_AXI_DATA_WIDTH,
@@ -212,7 +219,7 @@ begin
 	--   The user logic includes the actual implementation of the bus
 	--   attachment.
 	--
-	ul : entity reconos_osif_v1_00_a.user_logic
+	ul : entity work.reconos_osif_axi
 		generic map (
 			C_NUM_HWTS => C_NUM_HWTS,
 

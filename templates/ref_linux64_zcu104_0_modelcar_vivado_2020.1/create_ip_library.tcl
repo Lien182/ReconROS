@@ -79,7 +79,6 @@ load_fifo_interfaces   $ip_repo
 
 # make sure project is using automatic compile order before importing pcores without legacy .pao files
 set_property source_mgmt_mode All [current_project]
-
 import_pcore $ip_repo reconos_v3_01_a ""; # ReconOS Lib has to be imported first, so other IP can use it
 
 update_ip_catalog ;#-rebuild -repo_path $ip_repo

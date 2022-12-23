@@ -1,1 +1,0 @@
-../../lib/pcores/reconos_fifo_sync_v1_00_a/hdl/vhdl/reconos_fifo_sync.vhd
