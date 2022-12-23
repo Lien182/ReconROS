@@ -64,10 +64,6 @@ int main(int argc, char **argv) {
 
 	clk = reconos_clock_threads_set(100000);
 
-	//struct reconos_resource res[2];
-	uint8_t img_1[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
-	uint8_t img_2[DEFAULT_IMAGE_HEIGHT * DEFAULT_IMAGE_WIDTH * 3];
-
 	// output image a
 	rthreada_img_output->header.stamp.sec = 0;
 	rthreada_img_output->header.stamp.nanosec = 0;
