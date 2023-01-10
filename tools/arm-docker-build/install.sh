@@ -5,7 +5,7 @@
 
 if [ "$1" == "" ] || [ "$2" == "" ]
 then
-  echo "Usage: $0  <arm32,arm64> <dashing,foxy>"
+  echo "Usage: $0  <arm32,arm64> <dashing,foxy,galactic>"
   exit
 fi
 
