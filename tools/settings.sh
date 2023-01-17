@@ -5,5 +5,5 @@ echo "PYTHONPATH=$reconos/tools/_pypack"
 echo "PATH=$reconos/tools:\$PATH"
 
 export RECONOS=$reconos
-export PYTHONPATH=$reconos/tools/_pypack
+export PYTHONPATH=$reconos/tools/_pypack:$PYTHONPATH
 export PATH=$reconos/tools:$PATH
