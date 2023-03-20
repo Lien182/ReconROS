@@ -5,7 +5,7 @@
 #  * see gather_rosdeps.sh for all-caps required input environment
 
 #foxy only for ubuntu 20
-FROM arm32v7/ubuntu:bionic
+FROM arm32v7/ubuntu:focal
 
 COPY qemu-arm-static /usr/bin/qemu-arm-static
 
@@ -15,6 +15,8 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 RUN apt-get update && apt-get install --no-install-recommends -y curl gnupg2 lsb-release dirmngr ca-certificates 
+
+RUN update-ca-certificates -f
 
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
@@ -46,7 +48,7 @@ RUN apt update && apt install -y \
 
 #install cmake
 
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.2/cmake-3.20.2.tar.gz && tar -zxvf cmake-3.20.2.tar.gz && cd cmake-3.20.2 && ./bootstrap && make && make install 
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.2/cmake-3.23.2.tar.gz && tar -zxvf cmake-3.23.2.tar.gz && cd cmake-3.23.2 && ./bootstrap && make && make install 
 
 
 # install some pip packages needed for testing
@@ -80,11 +82,19 @@ WORKDIR /ros2_build
 RUN wget https://raw.githubusercontent.com/ros2/ros2/galactic/ros2.repos --no-check-certificate
 RUN vcs import src < ros2.repos
 
+
 RUN c_rehash /etc/ssl/certs
 
 RUN rosdep init
 RUN rosdep update
 RUN rosdep install --from-paths src --ignore-src --rosdistro galactic -y --skip-keys "fastcdr rti-connext-dds-5.3.1 urdfdom_headers"
+
+RUN rm src/eclipse-cyclonedds -r -f
+RUN rm src/eclipse-iceoryx/ -r -f
+RUN rm src/ros2/rmw_connextdds -r -f
+RUN rm src/ros2/rmw_cyclonedds/ -r -f
+RUN rm src/ros2/demos -r -f
+RUN rm src/ros2/examples -r -f
 
 
 RUN cd /ros2_build/
