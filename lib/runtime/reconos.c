@@ -230,7 +230,7 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 	FILE *file;
 	unsigned int i, size;
 	char filepath[512];
-	char command[1024];
+	//char command[1024];
 
 	debug("[reconos-core] loading bitstreams from %s\n", path);
 
@@ -284,7 +284,7 @@ void reconos_thread_loadbitstream(struct reconos_thread *rt,
 		//system(command);
 
 
-		unsigned int bytes_read = fread(rt->bitstreams[i], sizeof(char), size, file);
+		fread(rt->bitstreams[i], sizeof(char), size, file);
 
 		fclose(file);
 	}
@@ -1071,6 +1071,9 @@ static inline int dt_mbox_get(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (mbox_get on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, msg);
+	clock_gettime(CLOCK_MONOTONIC, &t_start);
+
+
 
 	return 0;
 
@@ -1089,6 +1092,10 @@ static inline int dt_mbox_put(struct hwslot *slot) {
 	int handle, ret;
 	RRUBASETYPE arg0;
 
+	static cntarray[10] = {0};
+ 
+	clock_gettime(CLOCK_MONOTONIC, &t_end);
+
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_MBOX);
 
@@ -1099,6 +1106,10 @@ static inline int dt_mbox_put(struct hwslot *slot) {
 	debug("[reconos-dt-%d] (mbox_put on %d) done\n", slot->id, handle);
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
+
+	timespec_diff(&t_start, &t_end, &t_res);	
+	printf("%02d; %02d; %3.6f; \n",slot->id, cntarray[slot->id]++, (double)(t_res.tv_nsec)/1000000000);
+
 
 	return 0;
 
@@ -1164,6 +1175,10 @@ intr:
 static inline int dt_ros_publish(struct hwslot *slot) {
 	int handle, ret;
 	int msg_handle;
+
+	if(slot->id == 4)
+		clock_gettime(CLOCK_MONOTONIC, &t_end);
+
 	timespec_diff(&t_start, &t_end, &t_res);
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSPUB);
@@ -1171,17 +1186,15 @@ static inline int dt_ros_publish(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSMSG);
 
 	debug("[reconos-dt-%d] (ros publish on %d) ...\n", slot->id, handle);
-	
 	SYSCALL_NONBLOCK(ret = ros_publisher_publish(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
-	printf("[reconos-dt-%d] (ros publish on %d) done\n", slot->id, handle);
+	//printf("[reconos-dt-%d] (ros publish on %s) done\n", slot->id, ((struct ros_publisher_t*)slot->rt->resources[handle].ptr)->topic);
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)ret);
 
 
-	
-	
-	//printf("[reconos-dt-%d] hw thread calctime is %3.6f; \n",slot->id, (double)(t_res.tv_nsec)/1000000000);
+	//if(slot->id == 4)
+	//	printf("%3.6f; \n",(double)(t_res.tv_nsec)/1000000000);
 
 	return 0;
 
@@ -1199,11 +1212,13 @@ static inline int dt_ros_take(struct hwslot *slot) {
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSMSG);
 
 	debug("[reconos-dt-%d] (ros_take on %d) ...\n", slot->id, handle);
+	//printf("[reconos-dt-%d] (ros_take on %s) ...\n", slot->id, ((struct ros_subscriber_t*)slot->rt->resources[handle].ptr)->topic);
 	SYSCALL_BLOCK(ros_subscriber_message_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
-	printf("[reconos-dt-%d] (ros_take on %d) done\n", slot->id, handle);
+	//printf("[reconos-dt-%d] (ros_take on %s) done\n", slot->id, ((struct ros_subscriber_t*)slot->rt->resources[handle].ptr)->topic);
 
-	clock_gettime(CLOCK_MONOTONIC, &t_start);
+	//if(slot->id == 0)
+		
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
@@ -1213,6 +1228,50 @@ static inline int dt_ros_take(struct hwslot *slot) {
 intr:
 	return -1;
 }
+
+static inline int dt_ros_take_interruptable(struct hwslot *slot) {
+	int handle;
+	int msg_handle;
+	int ret = 0;
+	RRUBASETYPE osif_data = 0;
+
+	handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSSUB);
+	msg_handle = reconos_osif_read(slot->osif);
+	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSMSG);
+
+	debug("[reconos-dt-%d] (dt_ros_take_interruptable on %d) ...\n", slot->id, handle);
+	//printf("[reconos-dt-%d] (ros_take on %s) ...\n", slot->id, ((struct ros_subscriber_t*)slot->rt->resources[handle].ptr)->topic);
+
+	while(1)
+	{
+		ret = ros_subscriber_message_try_take(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr);
+		if(ret == 0) // data received
+		{
+			debug("[reconos-dt-%d] (dt_ros_take_interruptable on %d) done\n", slot->id, handle);
+			//printf("[reconos-dt-%d] (dt_ros_take_interruptable on %s) done\n", slot->id, ((struct ros_subscriber_t*)slot->rt->resources[handle].ptr)->topic);
+
+			reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
+			break;
+		}
+
+		ret = reconos_osif_tryread(slot->osif, &osif_data);
+		if(ret) // interrupt received
+		{
+			debug("[reconos-dt-%d] (dt_ros_take_interruptable on %d) canceled: data read from osif \n", slot->id, handle);
+			reconos_osif_write(slot->osif, RRUBASETYPEMAX);
+			break;
+		}
+
+		usleep(1000);
+
+	}
+	
+
+	return 0;
+}
+
+
 
 static inline int dt_ros_trytake(struct hwslot *slot) {
 	int handle, ret, msg_handle;
@@ -1242,10 +1301,6 @@ static inline int dt_ros_services_response(struct hwslot *slot) {
 	msg_handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(msg_handle, RECONOS_RESOURCE_TYPE_ROSSRVMSGRES);
 
-	//Time Measurement
-	//end = clock();		
-	//debug("[reconos-dt-%d] ros service service time %3.6f; \n",slot->id, (double)(end-start)/CLOCKS_PER_SEC);
-
 	debug("[reconos-dt-%d] (ros service response on %d) ...\n", slot->id, handle);
 	SYSCALL_NONBLOCK(ret = ros_service_server_response_send(slot->rt->resources[handle].ptr, slot->rt->resources[msg_handle].ptr));
 	debug("[reconos-dt-%d] (ros service response on %d) done\n", slot->id, handle);
@@ -1273,9 +1328,6 @@ static inline int dt_ros_services_take(struct hwslot *slot) {
 
 	reconos_osif_write(slot->osif, (RRUBASETYPE)slot->rt->resources[msg_handle].ptr);
 	
-	//Time Measurement
-	//start = clock();
-
 	return 0;
 
 intr:
@@ -1472,7 +1524,6 @@ intr:
 
 static inline int dt_ros_actions_cancel_send(struct hwslot *slot) {
 	int handle, ret;
-	int msg_handle;
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONS);
 
@@ -1707,8 +1758,7 @@ intr:
 }
 
 static inline int dt_ros_actionc_cancel_take(struct hwslot *slot) {
-	int handle, ret, msg_handle;
-
+	int handle, ret;
 	handle = reconos_osif_read(slot->osif);
 	RESOURCE_CHECK_TYPE(handle, RECONOS_RESOURCE_TYPE_ROSACTIONC);
 
@@ -2008,6 +2058,10 @@ void *dt_delegate(void *arg) {
 				dt_ros_take(slot);
 				break;
 
+			case OSIF_CMD_ROS_TAKE_INTERRUPTABLE:
+				dt_ros_take_interruptable(slot);
+				break;
+				
 			case OSIF_CMD_ROS_TRYTAKE:
 				dt_ros_trytake(slot);
 				break;

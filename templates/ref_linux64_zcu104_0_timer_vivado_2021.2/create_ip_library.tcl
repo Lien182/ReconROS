@@ -112,7 +112,7 @@ set hwt_list [lsort -unique $hwt_list]
 
 # now import all hardware threads exactly once
 foreach hwt $hwt_list {
-    import_pcore $ip_repo $hwt "cs.upb.de:reconos:reconos:3.01.a"
+    import_pcore $ip_repo $hwt [list "cs.upb.de:reconos:reconos:3.01.a" "xilinx.com:ip:floating_point:7.1"]
 }
 
 close_project

@@ -29,6 +29,7 @@
 
 extern int reconos_osif_open(int num);
 extern uint64_t reconos_osif_read(int fd);
+extern uint64_t reconos_osif_tryread(int fd, uint64_t * data);
 extern void reconos_osif_write(int fd, uint64_t data);
 extern void reconos_osif_break(int fd);
 extern void reconos_osif_close(int fd);

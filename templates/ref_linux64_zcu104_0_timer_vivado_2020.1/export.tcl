@@ -441,11 +441,11 @@ proc reconos_hw_setup {new_project_name new_project_path reconos_ip_dir} {
     update_compile_order -fileset sim_1
     set_property top design_1_wrapper [current_fileset]
 	
-	# Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
-	set_property synth_checkpoint_mode None [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
-	
-  # Generate bitstream in .bin format (in addition to .bit)
-  set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
+    # Set BD generation mode to global (defaults to OOC only from Vivado 2016.3 onwards)
+    set_property synth_checkpoint_mode None [get_files $proj_dir/$proj_name.srcs/sources_1/bd/design_1/design_1.bd]
+    
+    # Generate bitstream in .bin format (in addition to .bit)
+    set_property STEPS.WRITE_BITSTREAM.ARGS.BIN_FILE true [get_runs impl_1]
 
     save_bd_design
 }

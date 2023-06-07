@@ -17,15 +17,11 @@ int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_
   rcl_ret_t rc = 0;
 
   ros_pub->rcl_pub= rcl_get_zero_initialized_publisher();
+  ros_pub->topic = topic_name;
   rcl_publisher_options_t pub_options = rcl_publisher_get_default_options();
 
-    pub_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_ALL;
-    pub_options.qos.lifespan.sec = 100;
 
-    //my_subscription_options.qos.liveliness = RMW_QOS_POLICY_LIVELINESS_MANUAL_BY_TOPIC;
-
-
-    pub_options.qos.depth = 1000;
+ pub_options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
 
   rc = rcl_publisher_init(
       &ros_pub->rcl_pub,
@@ -44,6 +40,17 @@ int ros_publisher_init(struct ros_publisher_t *ros_pub, struct ros_node_t * ros_
     debug("[ROS Publisher] Created publisher: %s\n", topic_name);
   } 
 
+  ros_publisher_get_gid(ros_pub, ros_pub->guid);
+
+  printf("[ROS Publisher] GUID: ");
+  for(int i = 0; i < 24; i ++)
+  {
+    printf("%x", (ros_pub->guid)[i]);
+  }
+  printf("\n");
+
+
+
   return 0;
 }
 
@@ -55,7 +62,6 @@ int ros_publisher_destroy(struct ros_publisher_t *ros_pub)
 int ros_publisher_publish(struct ros_publisher_t *ros_pub, void * msg)
 {
   rcl_ret_t rc;
-
   rc = rcl_publish(&ros_pub->rcl_pub, msg, NULL);
   if (rc == RCL_RET_OK) {
     debug("[ROS Publisher] Published message!\n");
@@ -64,4 +70,19 @@ int ros_publisher_publish(struct ros_publisher_t *ros_pub, void * msg)
     debug("[ROS Publisher] Error publishing message!\n");
     return rc;
   }
+}
+
+int ros_publisher_get_gid(struct ros_publisher_t *ros_pub, uint8_t * guid)
+{
+  int ret = 0;
+
+  rmw_gid_t gid;
+
+  rmw_publisher_t * rmw_handle = rcl_publisher_get_rmw_handle(&ros_pub->rcl_pub);
+
+  ret = rmw_get_gid_for_publisher(rmw_handle, &gid);
+
+  memcpy(guid, gid.data, 16);
+
+  return ret;
 }

@@ -73,6 +73,8 @@ RUN apt update && apt install -y ros-dashing-ros-base nano gcc g++ libopencv-dev
 
 #RUN apt install -y ros-dashing-rmw-fastrtps-cpp
 
+RUN mkdir /ros2_build/ && ln -s /opt/ros/dashing/ /ros2_build/install
+
 WORKDIR /ws
 
 #----------------------------------------------------------

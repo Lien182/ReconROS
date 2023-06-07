@@ -11,6 +11,7 @@
 #include <rcl/allocator.h>
 #include <rcl/node.h>
 #include <rcl/publisher.h>
+#include <rmw/rmw.h>
 #include <stdint.h>
 
 /*
@@ -19,6 +20,8 @@
 struct ros_publisher_t {
     rcl_node_t*     node;
     rcl_publisher_t rcl_pub;
+    char*           topic;
+    uint8_t         guid[24];       
 };
 
 /*
@@ -45,5 +48,13 @@ extern int ros_publisher_destroy(struct ros_publisher_t *ros_pub);
  */
 extern int ros_publisher_publish(struct ros_publisher_t *ros_pub, void * msg);
 
+
+/*
+ * Puts a single word into the mbox and blocks if it is full.
+ *
+ *   mb  - pointer to the mbox
+ *   msg - message to put into the mbox
+ */
+extern int ros_publisher_get_gid(struct ros_publisher_t *ros_pub, uint8_t * guid);
 
 #endif /* MBOX_H */

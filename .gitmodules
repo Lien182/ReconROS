@@ -1,0 +1,6 @@
+[submodule "lib/ros_msgs/rcl_interfaces"]
+	path = lib/ros_msgs/rcl_interfaces
+	url = https://github.com/Lien182/rcl_interfaces.git
+[submodule "lib/ros_msgs/common_interfaces"]
+	path = lib/ros_msgs/common_interfaces
+	url = https://github.com/Lien182/common_interfaces.git

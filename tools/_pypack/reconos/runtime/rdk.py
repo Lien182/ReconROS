@@ -64,7 +64,7 @@ def main():
 	  ReconOS Development Kit - Toolchain integrating different
 	  scripts into an extendable development environment for
 	  hardware software codesigns.""")
-	parser.add_argument("-l", "--log", help="log level", choices=["debug", "warning", "error"], default="warning")
+	parser.add_argument("-l", "--log", help="log level", choices=["debug", "info", "warning", "error"], default="warning")
 	subparsers = parser.add_subparsers(title="commands", dest="cmd")
 	for cmd,attr in cmds.items():
 		c = subparsers.add_parser(cmd, add_help=False, parents=[attr[1]])
@@ -76,6 +76,8 @@ def main():
 		logging.getLogger().setLevel(level=logging.DEBUG)
 	elif args.log == "warning":
 		logging.getLogger().setLevel(level=logging.WARNING)
+	elif args.log == "info":
+		logging.getLogger().setLevel(level=logging.INFO)
 	else:
 		logging.getLogger().setLevel(level=logging.ERROR)
 

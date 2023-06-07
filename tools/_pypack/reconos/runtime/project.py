@@ -54,6 +54,8 @@ class Clock:
 	def __repr__(self):
 		return "'" + self.name + "' (" + str(self.id) + ")"
 
+
+
 #
 # Class representing a resource in the project.
 #
@@ -143,6 +145,16 @@ class Thread:
 	def __repr__(self):
 		return "'" + self.name + "' (" + str(self.id) + ")"
 
+
+class ROSGateway(Thread):
+	def __init__(self, name, slots, res,  hwtopic, swtopic, msgtype):
+		super().__init__(name, slots, "hls", None, res, True, False, [], False)
+		self.hwtopic = hwtopic
+		self.swtopic = swtopic
+		self.msgtype = msgtype
+
+
+
 #
 # Class representing implementation related information.
 #
@@ -175,6 +187,7 @@ class Project:
 	#
 	def __init__(self, repo=None):
 		self.clocks = []
+		self.rosgateways = []
 		self.resources = []
 		self.slots = []
 		self.threads = []
@@ -227,9 +240,8 @@ class Project:
 		self.threads = []
 		self.file = shutil2.abspath(filepath)
 		self.dir = shutil2.dirname(self.file)
+		shutil2.setenviron("PROJECT", self.dir)
 		self.basedir = shutil2.trimext(self.file)
-		#self.hwdir = shutil2.trimext(self.file) + ".hw"
-		#self.swdir = shutil2.trimext(self.file) + ".sw"
 
 		cfg = configparser.RawConfigParser()
 		cfg.optionxform = str
@@ -279,9 +291,14 @@ class Project:
 			self.impinfo.cpuarchitecture = "arm32"
 
 		if cfg.has_option("General", "Hls_CFlags"):
-			self.impinfo.hls_cflags = cfg.get("General", "Hls_CFlags")
+			self.impinfo.hls_cflags = shutil2.expandenvironvars(cfg.get("General", "Hls_CFlags"))
 		else:
 			self.impinfo.hls_cflags = ""
+
+		if cfg.has_option("General", "HLSMultithreading"):
+			self.impinfo.hlsmultithreading = cfg.get("General", "HLSMultithreading") in ["True", "true"]
+		else:
+			self.impinfo.hlsmultithreading = False
 
 		if cfg.has_option("General", "TargetBoardAddress"):
 			self.impinfo.targetboardaddress = cfg.get("General", "TargetBoardAddress")
@@ -304,7 +321,8 @@ class Project:
 		self._parse_resources(cfg)
 		self._parse_slots(cfg)
 		self._parse_threads(cfg)
-
+		self._parse_rosgateways(cfg)
+		
 		clock = [_ for _ in self.clocks if _.name == cfg.get("General", "SystemClock")]
 		if not clock:
 			log.error("Clock not found")
@@ -329,6 +347,128 @@ class Project:
 
 			clock = Clock(name, source, freq)
 			self.clocks.append(clock)
+
+
+	#
+	# Internal method parsing the ros gateways from the project file.
+	#
+	#   cfg - configparser referencing the project file
+	#
+	def _parse_rosgateways(self, cfg):
+		for c in [_ for _ in cfg.sections() if _.startswith("ROSGateway")]:
+			match = re.search(r"^.*@(?P<name>.+)", c)
+			if match is None:
+				log.error("ROSGateway must have a name")
+
+			name = match.group("name")
+			hwtopic = cfg.get(c, "HWTopic").replace('"', '')
+			swtopic = cfg.get(c, "SWTopic").replace('"', '')
+			msgtype = cfg.get(c, "MsgType").replace('"', '')
+
+			if cfg.has_option(c, "Slot"):
+				slots = cfg.get(c, "Slot")
+				slots = slots.replace("(", "\\(")
+				slots = slots.replace(")", "\\)")
+				slots = slots.replace(",", "|")
+				slots = slots.replace("*", ".*")
+				slots = [_ for _ in self.slots if re.match(slots, _.name) is not None]
+			else:
+				slots = []
+
+			log.debug("Found ROSGateway '" + str(name) + "' ("+ str(slots) + ","+ str(hwtopic) + "," + str(swtopic)+"," + str(msgtype)+")")
+
+			msgtypelist = [msgtype.split("/")[0] , "msg", msgtype.split("/")[1] ] 
+			#print("msgtype = " + str(msgtypelist))
+
+			#Add resources
+			res = Resource("node", 		"rosnode", 	['"'+name + "_rosnode"+'"'], 	name + "_ressourcegroup")
+			self.resources.append(res)
+			res = Resource("msg_in", 	"rosmsg",  	msgtypelist, 		name + "_ressourcegroup")
+			self.resources.append(res)
+			res = Resource("msg_out", 	"rosmsg", 	msgtypelist, 		name + "_ressourcegroup")
+			self.resources.append(res)
+			res = Resource("pub", 		"rospub",  	["node", "msg_out", '"'+swtopic+'"'], name + "_ressourcegroup")
+			self.resources.append(res)
+			res = Resource("sub", 		"rossub", 	["node", "msg_in",  '"'+swtopic+'"', "1000"], name + "_ressourcegroup")
+			self.resources.append(res)		
+
+
+			group = name + "_ressourcegroup"
+			localtype = "hwtopicsub"
+			pubsub_incr = [1, 0]
+	
+			hwtopic_sub = hwtopic
+
+			###Global resource group
+			hwtopicisnotyetinthelist = 1
+
+			for r in self.resources:
+				if r.name == hwtopic_sub.replace('"', '').replace("/", "") and r.group == "__global_ressource_group___":
+					hwtopicisnotyetinthelist = 0
+					r.args[0][0] += pubsub_incr[0]
+					r.args[0][1] += pubsub_incr[1]
+					log.debug("global topic already defined, set arg to" + str(r.args))
+		
+
+			if(hwtopicisnotyetinthelist == 1):
+				self.resources.append(Resource(hwtopic_sub.replace('"', '').replace("/", ""), "hwtopic", [pubsub_incr ,msgtype],"__global_ressource_group___")) # 1 = first 
+				log.debug("Added hwtopic {} to global resource group {} ".format(hwtopic_sub, "__global_ressource_group___") )
+
+
+			###Local resource group
+			hwtopicisnotyetinthelist = 1
+
+			for r in self.resources:
+				if r.name == hwtopic_sub.replace('"', '').replace("/", "") and r.group == group and r.type == localtype:
+					hwtopicisnotyetinthelist = 0
+
+			if(hwtopicisnotyetinthelist == 1):
+				self.resources.append(Resource(hwtopic_sub.replace('"', '').replace("/", ""), localtype, msgtype, group))
+				log.debug("Added hwtopic {} to local resource group {}; localtype {} ".format(hwtopic_sub, group, localtype) )
+
+
+			localtype = "hwtopicpub"
+			pubsub_incr = [0, 1]
+			hwtopic_pub = hwtopic
+
+			###Global resource group
+			hwtopicisnotyetinthelist = 1
+
+			for r in self.resources:
+				if r.name == hwtopic.replace('"', '').replace("/", "") and r.group == "__global_ressource_group___":
+					hwtopicisnotyetinthelist = 0
+					r.args[0][0] += pubsub_incr[0]
+					r.args[0][1] += pubsub_incr[1]
+					log.debug("global topic already defined, set arg to" + str(r.args))
+		
+
+			if(hwtopicisnotyetinthelist == 1):
+				self.resources.append(Resource(hwtopic_pub.replace('"', '').replace("/", ""), "hwtopic", [pubsub_incr ,msgtype],"__global_ressource_group___")) # 1 = first 
+				log.debug("Added hwtopic {} to global resource group {} ".format(hwtopic_pub, "__global_ressource_group___") )
+
+
+			###Local resource group
+			hwtopicisnotyetinthelist = 1
+
+			for r in self.resources:
+				if r.name == hwtopic_pub.replace('"', '').replace("/", "") and r.group == group and r.type == localtype:
+					hwtopicisnotyetinthelist = 0
+
+			if(hwtopicisnotyetinthelist == 1):
+				self.resources.append(Resource(hwtopic_pub.replace('"', '').replace("/", ""), localtype, msgtype, group))
+				log.debug("Added hwtopic {} to local resource group {}; localtype {} ".format(hwtopic_pub, group, localtype) )
+
+
+	
+			res = [_ for _ in self.resources if _.group == group]
+
+
+			rosgw = ROSGateway(name,slots, res, hwtopic, swtopic,msgtype)
+			
+
+			for s in slots: s.threads.append(rosgw)
+			self.threads.append(rosgw)
+
 
 	#
 	# Internal method parsing the resources from the project file.
@@ -406,7 +546,55 @@ class Project:
 						self.resources.append(resource)
 
 					else:
-						self.resources.append(resource)
+						if(not ((resource.type == "rossub" and (resource.args[len(resource.args)-1] == "hw" or resource.args[len(resource.args)-2] == "hw")) or (resource.type == "rospub" and resource.args[len(resource.args)-1] == "hw"))):
+							self.resources.append(resource)
+
+					if (resource.type == "rossub" and (resource.args[len(resource.args)-1] == "hw" or resource.args[len(resource.args)-2] == "hw")) or (resource.type == "rospub" and resource.args[len(resource.args)-1] == "hw"):
+						#we found a hw topic.
+						#is it already in the resources?
+						#def __init__(self, name, type_, args, group):
+						#resource = Resource(r, match[0], match[1:], group)
+						if resource.type == "rossub":
+							localtype = "hwtopicsub"
+							log.debug("Found a subscriber!")
+							pubsub_incr = [1, 0]
+
+						elif (resource.type == "rospub") :
+							localtype = "hwtopicpub"
+							log.debug("Found a publisher!")
+							pubsub_incr = [0, 1]
+
+
+						###Global resource group
+						hwtopicisnotyetinthelist = 1
+
+						for r in self.resources:
+							if r.name == match[3].replace('"', '').replace("/", "") and r.group == "__global_ressource_group___":
+								hwtopicisnotyetinthelist = 0
+								r.args[0][0] += pubsub_incr[0]
+								r.args[0][1] += pubsub_incr[1]
+								log.debug("global topic already defined, set arg to" + str(r.args))
+					
+
+						if(hwtopicisnotyetinthelist == 1):
+							self.resources.append(Resource(match[3].replace('"', '').replace("/", ""), "hwtopic", [pubsub_incr ,resource.args[1]],"__global_ressource_group___")) # 1 = first 
+							log.debug("Added hwtopic {} to global resource group {} ".format(match[3], "__global_ressource_group___") )
+
+
+						###Local resource group
+						hwtopicisnotyetinthelist = 1
+
+						for r in self.resources:
+							if r.name == match[3].replace('"', '').replace("/", "") and r.group == resource.group and r.type == localtype:
+								hwtopicisnotyetinthelist = 0
+
+						if(hwtopicisnotyetinthelist == 1):
+							if len(resource.args) == 5:
+								self.resources.append(Resource(match[3].replace('"', '').replace("/", ""), localtype, [resource.args[1], resource.args[4]], group))
+							else:
+								self.resources.append(Resource(match[3].replace('"', '').replace("/", ""), localtype, [resource.args[1]], group))
+							log.debug("Added hwtopic {} to local resource group {}; localtype {} ".format(match[3], group, localtype) )
+				
 				
 
 	#
@@ -441,7 +629,6 @@ class Project:
 						if cfg.get(s, "Reconfigurable") == "true":
 							reconfigurable = True
 							if cfg.has_option(s, "Region_" + str(i)):
-								#region = cfg.get(s, "Region_" + str(i))
 								region = re.split(r"[, ]+", cfg.get(s, "Region_" + str(i)))
 							else:
 								log.error("PL region must be defined for every reconfigurable slot")
