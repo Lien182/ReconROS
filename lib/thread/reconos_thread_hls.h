@@ -26,6 +26,7 @@
 #include "hls_stream.h"
 #include "ap_int.h"
 #include "ap_fixed.h"
+#include "ap_axi_sdata.h"
 
 /* == Thread resources ================================================= */
 
@@ -38,7 +39,7 @@
 #define <<NameLower>> 0x<<HexLocalId>>
 <<end generate>>
 
-
+typedef ap_axis<64,1,1,1> t_stream;
 /* == Thread helper macros ============================================= */
 
 /*
@@ -50,7 +51,9 @@
  *   }
  }
  */
-#define THREAD_ENTRY() void rt_imp(volatile bool &hwt_signal, \
+#define THREAD_ENTRY() void rt_imp_<<NAME>>(volatile bool &hwt_signal, \
+        <<generate for HWTOPICSSUB>>hls::stream<t_stream> &<<Name>>,<<end generate>> \
+        <<generate for HWTOPICSPUB>>hls::stream<t_stream> &<<Name>>,<<end generate>> \
                                    hls::stream<RRUBASETYPE> & osif_sw2hw,\
                                    hls::stream<RRUBASETYPE> & osif_hw2sw,\
                                    hls::stream<RRUBASETYPE> & memif_hwt2mem,\

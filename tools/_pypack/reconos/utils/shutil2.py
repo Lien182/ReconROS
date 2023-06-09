@@ -22,6 +22,12 @@ def environ(var):
 	else:
 		return None
 
+def setenviron(var, value):
+	os.environ[var] = value
+
+def expandenvironvars(string):
+	return os.path.expandvars(string)
+
 def chdir(path):
 	return os.chdir(path)
 

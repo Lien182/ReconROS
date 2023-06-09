@@ -1,3 +1,4 @@
+import reconos.utils.custom_msgs as custom_msgs
 import reconos.utils.shutil2 as shutil2
 import reconos.utils.template as template
 
@@ -49,8 +50,13 @@ def export_sw(args, swdir, link):
 	dictionary["CFLAGS"] = prj.impinfo.cflags
 	dictionary["LDFLAGS"] = prj.impinfo.ldflags
 	dictionary["ROS2_DISTRIBUTION"] = prj.impinfo.ros2distribution[:1].upper()
+	dictionary["ROS2_DISTRO"] = prj.impinfo.ros2distribution
 	dictionary["THREADS"] = []
 	dictionary["ROSMsgHeader"] = ""
+	dictionary["MSGINCLUDEDIR"] = " ".join([
+		"-I " + shutil2.relpath(msg_include_dir, swdir)
+		for msg_include_dir in custom_msgs.get_absolute_include_paths(prj.dir)
+	])
 
 	if prj.impinfo.cpuarchitecture == "arm64":
 		dictionary["RRBASETYPE"] 		= "int64_t"
@@ -71,8 +77,8 @@ def export_sw(args, swdir, link):
 		d["Name"] = t.name.lower()
 		d["Slots"] = ",".join([str(_.id) for _ in t.slots])
 		d["SlotCount"] = len(t.slots)
-		d["Resources"] = ",".join(["&" + (_.group + "_" + _.name).lower() + "_res" for _ in t.resources])
-		d["ResourceCount"] = len(t.resources)
+		d["Resources"] = ",".join(["&" + (_.group + "_" + _.name).lower() + "_res" for _ in t.resources if not (_.type=="hwtopic" or _.type=="hwtopicpub" or _.type=="hwtopicsub")])
+		d["ResourceCount"] = len([t.resources for _ in t.resources if not (_.type=="hwtopic" or _.type=="hwtopicpub" or _.type=="hwtopicsub")])
 		d["HasHw"] = t.hwsource is not None
 		d["HasSw"] = t.swsource is not None
 		dictionary["THREADS"].append(d)
@@ -91,7 +97,7 @@ def export_sw(args, swdir, link):
 			for msg in prj.resources:
 				if (msg.name == r.args[1]) and (msg.group == r.group):
 					d["Args"] = r.args[0] + "," + "rosidl_typesupport_c__get_message_type_support_handle__" + msg.args[0] +"__"+ msg.args[1] +"__"+ msg.args[2].replace('_', '') +"(), " + r.args[2]+ ", " + r.args[3] 
-					print(d["Args"])
+					#print(d["Args"])
 					break
 
 		elif r.type == "rospub":
@@ -129,7 +135,10 @@ def export_sw(args, swdir, link):
 					#print(d["Args"])
 					break
 		else:
-			d["Args"] = ", ".join(r.args)
+			if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+				#print(r.type +";" +  str(r.args))
+				d["Args"] = ", ".join(r.args)
+				
 		d["Id"] = r.id
 		if r.type == "rosmsg":
 			if len(r.args) == 3:
@@ -143,7 +152,7 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2].replace('_', '') + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 				dictionary["ROSMsgHeader"] += ("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower()
-				print(("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower())
+				#print(("#include <" + r.args[0] +"/"+ r.args[1] +"/"+ r.args[2].lower() + ".h>\n").lower())
 			elif len(r.args) == 4:
 				d["ROSDataType"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2]+"__Sequence"
 				d["ROSDataTypeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] +"__Sequence__create"
@@ -199,7 +208,10 @@ def export_sw(args, swdir, link):
 				d["ROSDataTypeDeInitFunc"] = r.args[0] +"__"+ r.args[1] +"__"+ r.args[2] + "_FeedbackMessage" + "__destroy"
 				d["ROSDataTypeSequenceLength"] = " "
 
-		dictionary["RESOURCES"].append(d)
+		if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+			dictionary["RESOURCES"].append(d)
+		
+		#dictionary["RESOURCES"].append(d)
 
 
 		for idx in range(len(dictionary["RESOURCEGROUPS"])):
@@ -211,11 +223,12 @@ def export_sw(args, swdir, link):
 			e["Name"] = r.group.lower()
 			e["Items"]= []
 			e["Items"].append(d)
-			print(r.group.lower())
+			#print(r.group.lower())
 			dictionary["RESOURCEGROUPS"].append(e)
 			
-		
-	print(dictionary["RESOURCEGROUPS"])
+	
+	log.debug("RESOURCEGROUPS")
+	log.debug(dictionary["RESOURCEGROUPS"])
 
 	dictionary["CLOCKS"] = []
 	for c in prj.clocks:
@@ -279,7 +292,9 @@ def export_sw_thread(args, swdir, link, thread):
 		d["HexLocalId"] = "%08x" % i
 		d["Type"] = r.type
 		d["TypeUpper"] = r.type.upper()
-		dictionary["RESOURCES"].append(d)
+		#dictionary["RESOURCES"].append(d)
+		if not (r.type=="hwtopic" or r.type=="hwtopicpub" or r.type=="hwtopicsub"):
+			dictionary["RESOURCES"].append(d)
 	dictionary["SOURCES"] = [shutil2.join(prj.dir, "src", "rt_" + thread.name.lower(), thread.swsource)]
 
 	log.info("Generating export files ...")

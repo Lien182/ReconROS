@@ -1,8 +1,8 @@
 <<reconos_preproc>>
 
 CC = gcc
-CFLAGS += -Wall -I <<REPO_REL>> -I lib/include -I /opt/ros/dashing/include/ -I ../build.msg/install/*/include/ -D RECONOS_OS_<<OS>> -D RECONOS_BOARD_<<BOARD>> -DROS2_DISTRIBUTION=<<ROS2_DISTRIBUTION>> <<CFLAGS>>
-LDFLAGS += -lpthread <<LDFLAGS>> -Bdynamic -L /opt/ros/dashing/lib/*.so -L ../build.msg/install/*/lib/*.so
+CFLAGS += -Wall -I <<REPO_REL>> -I lib/include -I /opt/ros/<<ROS2_DISTRO>>/include/ <<MSGINCLUDEDIR>> -D RECONOS_OS_<<OS>> -D RECONOS_BOARD_<<BOARD>> -DROS2_DISTRIBUTION=<<ROS2_DISTRIBUTION>> <<CFLAGS>>
+LDFLAGS += -lpthread <<LDFLAGS>> -Bdynamic -L /opt/ros/<<ROS2_DISTRO>>/lib/*.so -L /opt/ros/<<ROS2_DISTRO>>/lib/*/*.so -L ../build.msg/install/*/lib/*.so
 
 MKDIRP = mkdir -p
 

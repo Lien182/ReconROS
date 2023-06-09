@@ -122,11 +122,37 @@ uint64_t reconos_osif_read(int fd) {
 	dev->fifo_fill--;
 
 	debug("[reconos64-osif-%d] "
-	      "reading finished 0x%lx\n", fd, data);
+	      "reading finished 0x%lx\n", fd, (long unsigned int)data);
 
 
 	return data;
 }
+
+
+uint64_t reconos_osif_tryread(int fd, uint64_t * data) {
+	struct osif_fifo_dev *dev = &osif_fifo_dev[fd];
+
+	if (dev->fifo_fill == 0) {
+		//debug("[reconos64-osif-%d] "
+		//      "try reading data, no data available ...\n", fd);
+
+		dev->fifo_fill = osif_fifo_hw2sw_fill(dev);
+
+		if (dev->fifo_fill == 0) {
+			return 0;
+		}
+	}
+
+	*data = dev->ptr[OSIF_FIFO_RECV_REG];
+	dev->fifo_fill--;
+
+	debug("[reconos64-osif-%d] "
+	      "reading finished 0x%lx\n", fd, (long unsigned int)data);
+
+
+	return 1;
+}
+
 
 void reconos_osif_write(int fd, uint64_t data) {
 	struct osif_fifo_dev *dev = &osif_fifo_dev[fd];
@@ -194,7 +220,7 @@ uint64_t reconos_proc_control_get_fault_addr(int fd) {
 
 	ioctl(fd, RECONOS_PROC_CONTROL_GET_FAULT_ADDR, &data);
 
-	debug("reconos_proc_control_get_fault_addr = %ld", data);
+	debug("reconos_proc_control_get_fault_addr = %ld \n", data);
 
 	return data;
 }

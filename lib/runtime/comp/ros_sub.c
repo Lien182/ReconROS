@@ -28,11 +28,13 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     //rcl_allocator_t allocator = rcl_get_default_allocator();
     //rmw_init_subscription_allocation(&ros_sub->alloc, msg_type, bounds);
 
-#if 1
+    my_subscription_options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_RELIABLE;
+
+#if 0
 
     //QOS Signal
     my_subscription_options.qos.history = RMW_QOS_POLICY_HISTORY_KEEP_LAST;
-    my_subscription_options.qos.depth = 5;
+    my_subscription_options.qos.depth = 100;
     my_subscription_options.qos.reliability = RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT;
     my_subscription_options.qos.durability = RMW_QOS_POLICY_DURABILITY_VOLATILE;
     //my_subscription_options.qos.deadline = RMW_QOS_DEADLINE_DEFAULT;
@@ -66,6 +68,9 @@ int ros_subscriber_init(struct ros_subscriber_t *ros_sub, struct ros_node_t * ro
     } 
 
     ros_sub->wait_time = wait_time;
+    ros_sub->topic = topic;
+    ros_sub->bFilterSet = 0;
+    memset(ros_sub->filter, 0, 24);
 
     
     return 0;
@@ -87,7 +92,8 @@ int ros_subscriber_message_try_take(struct ros_subscriber_t *ros_sub, void * msg
     rmw_message_info_t messageInfo;
 
     rc = rcl_take(&ros_sub->sub, msg,  &messageInfo,NULL );
-    
+
+
     if(rc != RCL_RET_OK)
     {
         if(rc != RCL_RET_SUBSCRIPTION_TAKE_FAILED)
@@ -102,6 +108,17 @@ int ros_subscriber_message_try_take(struct ros_subscriber_t *ros_sub, void * msg
         }        
     }
 
+    if(!memcmp(messageInfo.publisher_gid.data, ros_sub->filter, 24))
+    {
+        debug("[ROS Subscriber] Filter match, message discarded \n");
+        return 2;
+    }
+        
+
+    //printf("[ROS Subscriber] Publisher ID: ");
+    //for(int i = 0; i < 24; i ++)
+    //    printf("%x ", messageInfo.publisher_gid.data[i]);
+    //printf("\n");
     return 0;
 }
 
@@ -112,4 +129,10 @@ int ros_subscriber_message_take(struct ros_subscriber_t *ros_sub, void * msg)
         usleep(ros_sub->wait_time);
 
     return 0;
+}
+
+void ros_subscriber_set_publishfilter(struct ros_subscriber_t *ros_sub, uint8_t * filter)
+{
+    memcpy(ros_sub->filter, filter, 24);
+    ros_sub->bFilterSet = 1;
 }

@@ -121,7 +121,7 @@ struct reconos_resource <<NameLower>>_res = {
 int <<Name>>_init(void)
 {
 	<<=generate for Items(Type == "mbox")=>>mbox_init(<<NameLower>>, <<Args>>);<<=end generate=>>
-	<<=generate for Items(Type == "sem")=>>sem_init(<<NameLower>>, <<Args>>);<<end generate=>>
+	<<=generate for Items(Type == "sem")=>>sem_init(<<NameLower>>, <<Args>>);<<=end generate=>>
 	<<=generate for Items(Type == "mutex")=>>pthread_mutex_init(<<NameLower>>, NULL);<<end generate=>>
 	<<=generate for Items(Type == "cond")=>>pthread_cond_init(<<NameLower>>, NULL);	<<=end generate=>>
 	<<=generate for Items(Type == "mem")=>>mem_init(<<NameLower>>, <<Args>>);<<=end generate=>>

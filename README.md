@@ -31,6 +31,18 @@ configure a serial terminal program. The COM port usually will be configured as
 If everything works fine, you will see the device boot, and it will then automatically log you in as 
 xilinx.
 
+## Initialize repository
+
+Since the generation of the hardware-mapped topics rely on raw message definition files, the mandatory submodules have to be updated after clone.
+
+```bash
+$ git submodule init && git submodule update
+```
+
+### Knows Issues
+
+The naming of standard message types is not consistant for ROS 2. Therefore, the naming of the message definition file must be changed for some cases (e.g. for the ReconROS Turtlebot 3 example, the UINT64 definition file (`UInt64.msg` to `U_Int64.msg`))
+
 ## Installing
 ReconROS uses an emulated docker container for the compilation of the application and building costum ROS message packages. 
 

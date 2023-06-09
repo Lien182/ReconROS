@@ -125,7 +125,12 @@ int ros_action_server_goal_decide(struct ros_action_server_t *ros_action_server,
         rcl_action_goal_info_t goal_info = rcl_action_get_zero_initialized_goal_info();
         // ... populate goal_info.uuid (unique_identifier_msgs/UUID)
         // ... populate goal_info.stamp (builtin_interfaces/Time)
-        rcl_action_goal_handle_t * goal_handle = rcl_action_accept_new_goal(&ros_action_server->action, &goal_info);
+        
+        rcl_action_goal_handle_t * goal_handle = 
+        rcl_action_accept_new_goal(&ros_action_server->action, &goal_info);
+        
+        debug("[ROS Action Server] Goal received: %p", goal_handle);
+
         // ... error_handling
         // ... Populate goal response (client library type)
 

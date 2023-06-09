@@ -116,11 +116,8 @@ int Zycap_Deinit (t_zycap * zycap )
 
 int Zycap_Prefetch_Bitstream    ( char * bs_name, t_bitstream * bitstream)
 {
-    int bs_pres;
-    int pres_first;
-    int pres_last;
     int size;
-	FILE *fd,*fp;   
+	FILE *fp;   
 	char fname[100];     
     
     strcpy (fname, bs_name);
