@@ -1676,6 +1676,32 @@ typedef ap_axis<64,1,1,1> t_stream;
 		}\
 	}}
 
+#define MEM_READ_INT32(src,dst,len){\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (src), __i = 0;\
+	uint64_t __tmp = 0;\
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_READ | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+			_Pragma ("HLS pipeline")  \
+			__tmp = memif_mem2hwt.read();\
+			(dst)[__i++] = __tmp & 0xffffffff;\
+			__tmp = __tmp >> 32; \
+			(dst)[__i++] = __tmp & 0xffffffff;\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+		}\
+	}}	
+
 /*
  * Writes several words from the local ram into main memory. Therefore,
  * divides a large request into smaller ones of length at most
@@ -1790,6 +1816,34 @@ typedef ap_axis<64,1,1,1> t_stream;
 			__addr += RRBASETYPEBYTES;\
 			__rem -= RRBASETYPEBYTES;\
 			__i += 8;\
+		}\
+	}}
+
+#define MEM_WRITE_INT32(src,dst,len){\
+	RRUBASETYPE __len, __rem;\
+	RRUBASETYPE __addr = (dst), __i = 0;\
+	uint64_t __temp; \
+	for (__rem = (len); __rem > 0;) {\
+		RRUBASETYPE __to_border = MEMIF_CHUNK_BYTES - (__addr & MEMIF_CHUNK_MASK);\
+		RRUBASETYPE __to_rem = __rem;\
+		if (__to_rem < __to_border)\
+			__len = __to_rem;\
+		else\
+			__len = __to_border;\
+		\
+		stream_write(memif_hwt2mem, MEMIF_CMD_WRITE | __len);\
+		stream_write(memif_hwt2mem, __addr);\
+		\
+		for (; __len > 0; __len -= RRBASETYPEBYTES) {\
+			__temp = 0;\
+			__temp = __temp | (0xffffffff & (src)[__i]);\
+			__temp = __temp << 32; \
+			__temp = __temp | (0xffffffff & (src)[__i+1]);\
+		_Pragma ("HLS pipeline")  \
+			memif_hwt2mem.write(__temp);\
+			__addr += RRBASETYPEBYTES;\
+			__rem -= RRBASETYPEBYTES;\
+			__i += 2;\
 		}\
 	}}
 

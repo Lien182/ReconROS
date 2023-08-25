@@ -3,7 +3,7 @@
 cd /mnt/project/build.msg/
 
 source /mnt/reconos/tools/settings.sh
-source /ros2_build/install/setup.bash
+source /opt/ros/galactic/setup.sh
 
 #build costum messages
 colcon build
